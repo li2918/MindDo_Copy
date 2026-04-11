@@ -122,6 +122,31 @@
       line-height: 1.6;
     }
 
+    .hero-cta {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .cta-link {
+      display: inline-block;
+      border: 1px solid rgba(0, 246, 255, 0.35);
+      background: rgba(0, 246, 255, 0.08);
+      color: #bdfdff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .cta-link:hover {
+      background: rgba(0, 246, 255, 0.2);
+      color: #ecfeff;
+      box-shadow: 0 0 12px rgba(0, 246, 255, 0.3);
+    }
+
     .flow-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -285,6 +310,16 @@
         <span data-lang="zh">目标：把“获客、转化、交付、续费”串成可执行的标准动作。下方流程可用于销售、教务、班主任和学管团队协同，帮助提升试听转化率和续课率。</span>
         <span data-lang="en">Goal: Turn acquisition, conversion, delivery, and renewal into standardized and executable actions. The process below helps sales, academic operations, homeroom staff, and student management teams collaborate to improve trial-to-enrollment conversion and renewal rates.</span>
       </p>
+      <div class="hero-cta">
+        <a class="cta-link" href="trial.html">
+          <span data-lang="zh">进入 Trial 试课报名页面</span>
+          <span data-lang="en">Open Trial Registration Page</span>
+        </a>
+        <a class="cta-link" href="signup.html">
+          <span data-lang="zh">直接进入 Sign Up 注册</span>
+          <span data-lang="en">Go Directly To Sign Up</span>
+        </a>
+      </div>
     </section>
 
     <section class="flow-grid" aria-label="business workflow">

@@ -1,0 +1,592 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>试课报名 | Trial Registration</title>
+  <style>
+    :root {
+      --bg: #05070c;
+      --bg-2: #0a1222;
+      --card: rgba(12, 18, 32, 0.72);
+      --line: rgba(0, 255, 247, 0.25);
+      --primary: #00f6ff;
+      --text: #e7f4ff;
+      --muted: #97adc9;
+      --success: #5bffa4;
+      --error: #ff7a8a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(63, 123, 255, 0.2), transparent 40%),
+        radial-gradient(circle at 86% 90%, rgba(0, 246, 255, 0.16), transparent 42%),
+        linear-gradient(145deg, var(--bg), var(--bg-2));
+      color: var(--text);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0, 255, 247, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 247, 0.07) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 34px 20px 52px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .link-btn,
+    .lang-btn,
+    .submit-btn {
+      border: 1px solid rgba(0, 246, 255, 0.35);
+      background: rgba(0, 246, 255, 0.08);
+      color: #bdfdff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .link-btn:hover,
+    .lang-btn:hover,
+    .lang-btn.active,
+    .submit-btn:hover {
+      background: rgba(0, 246, 255, 0.2);
+      color: #ecfeff;
+      box-shadow: 0 0 12px rgba(0, 246, 255, 0.3);
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+    }
+
+    .hero {
+      background: linear-gradient(160deg, rgba(16, 28, 48, 0.86), rgba(8, 14, 25, 0.88));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow:
+        inset 0 0 24px rgba(0, 246, 255, 0.08),
+        0 16px 40px rgba(0, 0, 0, 0.5);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(24px, 4vw, 36px);
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 12px rgba(0, 246, 255, 0.35);
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow:
+        inset 0 0 16px rgba(0, 246, 255, 0.05),
+        0 10px 22px rgba(0, 0, 0, 0.38);
+      padding: 20px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      color: #d2ecff;
+      font-size: 20px;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .highlight-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .highlight-list li {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 246, 255, 0.2);
+      background: rgba(0, 246, 255, 0.05);
+      color: #cde3f8;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .metric {
+      border-radius: 10px;
+      border: 1px solid rgba(0, 246, 255, 0.2);
+      background: rgba(0, 246, 255, 0.06);
+      padding: 10px;
+    }
+
+    .metric strong {
+      display: block;
+      color: #a9feff;
+      margin-bottom: 4px;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #c5dbef;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(0, 246, 255, 0.25);
+      background: rgba(3, 10, 20, 0.7);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(0, 246, 255, 0.6);
+      box-shadow: 0 0 0 3px rgba(0, 246, 255, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 92px;
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .consent input {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+    }
+
+    .submit-btn {
+      justify-self: start;
+      min-width: 180px;
+    }
+
+    .result {
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-top: 2px;
+      display: none;
+    }
+
+    .result.success {
+      display: block;
+      border: 1px solid rgba(91, 255, 164, 0.4);
+      background: rgba(91, 255, 164, 0.1);
+      color: var(--success);
+    }
+
+    .result.error {
+      display: block;
+      border: 1px solid rgba(255, 122, 138, 0.4);
+      background: rgba(255, 122, 138, 0.1);
+      color: var(--error);
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 22px 14px 38px;
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="topbar">
+      <div class="nav-links">
+        <a class="link-btn" href="index.html" data-i18n="backToFlow"></a>
+        <a class="link-btn" href="signup.html" data-i18n="goSignup"></a>
+      </div>
+      <div class="lang-switch" aria-label="language switch">
+        <button class="lang-btn" type="button" data-set-lang="zh-CN">中文</button>
+        <button class="lang-btn" type="button" data-set-lang="en">English</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h1 data-i18n="pageTitle"></h1>
+      <p data-i18n="pageDesc"></p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2 data-i18n="leftTitle"></h2>
+        <p class="muted" data-i18n="leftDesc"></p>
+        <ul class="highlight-list" id="highlightList"></ul>
+
+        <div class="metrics" id="metrics"></div>
+      </article>
+
+      <article class="card">
+        <h2 data-i18n="formTitle"></h2>
+        <p class="muted" data-i18n="formDesc"></p>
+
+        <form id="trialForm" novalidate>
+          <div class="row">
+            <div>
+              <label for="studentName" data-i18n="studentName"></label>
+              <input id="studentName" name="studentName" type="text" required />
+            </div>
+            <div>
+              <label for="grade" data-i18n="grade"></label>
+              <input id="grade" name="grade" type="text" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="parentName" data-i18n="parentName"></label>
+              <input id="parentName" name="parentName" type="text" required />
+            </div>
+            <div>
+              <label for="phone" data-i18n="phone"></label>
+              <input id="phone" name="phone" type="tel" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="city" data-i18n="city"></label>
+              <input id="city" name="city" type="text" required />
+            </div>
+            <div>
+              <label for="subject" data-i18n="subject"></label>
+              <select id="subject" name="subject" required></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="timeSlot" data-i18n="timeSlot"></label>
+              <select id="timeSlot" name="timeSlot" required></select>
+            </div>
+            <div>
+              <label for="channel" data-i18n="channel"></label>
+              <select id="channel" name="channel" required></select>
+            </div>
+          </div>
+
+          <div>
+            <label for="goal" data-i18n="goal"></label>
+            <textarea id="goal" name="goal"></textarea>
+          </div>
+
+          <label class="consent" for="consent">
+            <input id="consent" name="consent" type="checkbox" required />
+            <span data-i18n="consent"></span>
+          </label>
+
+          <button class="submit-btn" type="submit" data-i18n="submit"></button>
+          <div id="submitResult" class="result" role="status" aria-live="polite"></div>
+        </form>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var I18N = {
+        "zh-CN": {
+          backToFlow: "返回总流程页",
+          goSignup: "前往 Sign Up 注册",
+          pageTitle: "Trial 试课报名页面",
+          pageDesc: "作为业务流程起点，该页面用于获客和线索登记，帮助快速完成学生报名并进入试课安排。",
+          leftTitle: "为什么从 Trial 开始",
+          leftDesc: "通过标准化试课报名，我们可以更快完成线索分层、课程匹配和顾问跟进。",
+          highlights: [
+            "统一收集学员基础信息与目标，减少沟通损耗。",
+            "自动沉淀高意向线索，支持后续转化动作。",
+            "连接教务与销售，形成可追踪的首触达闭环。"
+          ],
+          metrics: [
+            { value: "24h", label: "首联跟进时效" },
+            { value: "90%+", label: "表单信息完整率目标" },
+            { value: "T+1", label: "试课安排完成目标" }
+          ],
+          formTitle: "学生注册报名",
+          formDesc: "提交后将进入顾问待跟进列表，可用于后续试课邀约。",
+          studentName: "学生姓名",
+          grade: "年级/学段",
+          parentName: "家长姓名",
+          phone: "联系电话",
+          city: "所在城市",
+          subject: "意向科目",
+          timeSlot: "偏好时段",
+          channel: "获客渠道",
+          goal: "学习目标（选填）",
+          consent: "我同意用于课程咨询与试课安排的联系与信息记录。",
+          submit: "提交 Trial 报名",
+          subjectOptions: ["请选择", "AI启蒙", "编程", "数学", "英语", "综合素养"],
+          timeSlotOptions: ["请选择", "工作日晚上", "周末上午", "周末下午", "周末晚上"],
+          channelOptions: ["请选择", "抖音", "小红书", "公众号", "朋友推荐", "线下活动"],
+          success: "报名已提交，顾问将在24小时内联系。",
+          error: "请完整填写必填项，并确认联系电话格式正确。"
+        },
+        en: {
+          backToFlow: "Back To Workflow",
+          goSignup: "Go To Sign Up",
+          pageTitle: "Trial Registration Page",
+          pageDesc: "As the starting point of the workflow, this page captures leads and student registrations before trial-class scheduling.",
+          leftTitle: "Why Start With Trial",
+          leftDesc: "A standardized registration flow helps us segment leads, match courses, and trigger consultant follow-up faster.",
+          highlights: [
+            "Collect student profile and goals in one entry point.",
+            "Store high-intent leads for conversion actions.",
+            "Connect sales and academic ops with a traceable first-touch loop."
+          ],
+          metrics: [
+            { value: "24h", label: "First Follow-Up SLA" },
+            { value: "90%+", label: "Target Form Completeness" },
+            { value: "T+1", label: "Target Trial Scheduling" }
+          ],
+          formTitle: "Student Registration",
+          formDesc: "After submission, this lead enters the consultant follow-up list for trial invitation.",
+          studentName: "Student Name",
+          grade: "Grade / Stage",
+          parentName: "Parent Name",
+          phone: "Phone Number",
+          city: "City",
+          subject: "Interested Subject",
+          timeSlot: "Preferred Time Slot",
+          channel: "Lead Source",
+          goal: "Learning Goal (Optional)",
+          consent: "I agree to be contacted and have my information recorded for consultation and trial scheduling.",
+          submit: "Submit Trial Registration",
+          subjectOptions: ["Please select", "AI Fundamentals", "Programming", "Mathematics", "English", "General Competency"],
+          timeSlotOptions: ["Please select", "Weekday Evening", "Weekend Morning", "Weekend Afternoon", "Weekend Evening"],
+          channelOptions: ["Please select", "Douyin", "Xiaohongshu", "Official Account", "Referral", "Offline Event"],
+          success: "Registration submitted. A consultant will contact you within 24 hours.",
+          error: "Please complete required fields and provide a valid phone number."
+        }
+      };
+
+      var html = document.documentElement;
+      var buttons = document.querySelectorAll("[data-set-lang]");
+      var form = document.getElementById("trialForm");
+      var result = document.getElementById("submitResult");
+      var highlightList = document.getElementById("highlightList");
+      var metrics = document.getElementById("metrics");
+      var subject = document.getElementById("subject");
+      var timeSlot = document.getElementById("timeSlot");
+      var channel = document.getElementById("channel");
+
+      function buildOptions(select, options) {
+        select.innerHTML = options
+          .map(function (item, idx) {
+            var selected = idx === 0 ? " selected" : "";
+            return "<option value=\"" + item + "\"" + selected + ">" + item + "</option>";
+          })
+          .join("");
+      }
+
+      function setLang(lang) {
+        var data = I18N[lang] || I18N["zh-CN"];
+        html.setAttribute("lang", lang);
+        localStorage.setItem("minddo_lang", lang);
+        document.title = data.pageTitle + " | Trial";
+
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var key = el.getAttribute("data-i18n");
+          if (data[key]) {
+            el.textContent = data[key];
+          }
+        });
+
+        highlightList.innerHTML = data.highlights
+          .map(function (item) {
+            return "<li>" + item + "</li>";
+          })
+          .join("");
+
+        metrics.innerHTML = data.metrics
+          .map(function (item) {
+            return "<div class=\"metric\"><strong>" + item.value + "</strong><span>" + item.label + "</span></div>";
+          })
+          .join("");
+
+        buildOptions(subject, data.subjectOptions);
+        buildOptions(timeSlot, data.timeSlotOptions);
+        buildOptions(channel, data.channelOptions);
+
+        buttons.forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
+        });
+
+        result.className = "result";
+        result.textContent = "";
+      }
+
+      function isValidPhone(phone) {
+        return /^[0-9+\-\s()]{6,20}$/.test(phone);
+      }
+
+      function saveLead(data) {
+        var key = "minddo_trial_leads";
+        var leads = JSON.parse(localStorage.getItem(key) || "[]");
+        leads.push(data);
+        localStorage.setItem(key, JSON.stringify(leads));
+      }
+
+      var saved = localStorage.getItem("minddo_lang");
+      var initialLang = saved === "en" ? "en" : "zh-CN";
+      setLang(initialLang);
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setLang(btn.getAttribute("data-set-lang"));
+        });
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var currentLang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
+        var t = I18N[currentLang];
+
+        var formData = {
+          studentName: form.studentName.value.trim(),
+          grade: form.grade.value.trim(),
+          parentName: form.parentName.value.trim(),
+          phone: form.phone.value.trim(),
+          city: form.city.value.trim(),
+          subject: form.subject.value,
+          timeSlot: form.timeSlot.value,
+          channel: form.channel.value,
+          goal: form.goal.value.trim(),
+          consent: form.consent.checked,
+          createdAt: new Date().toISOString()
+        };
+
+        var hasRequired =
+          formData.studentName &&
+          formData.grade &&
+          formData.parentName &&
+          formData.phone &&
+          formData.city &&
+          formData.subject !== t.subjectOptions[0] &&
+          formData.timeSlot !== t.timeSlotOptions[0] &&
+          formData.channel !== t.channelOptions[0] &&
+          formData.consent;
+
+        if (!hasRequired || !isValidPhone(formData.phone)) {
+          result.className = "result error";
+          result.textContent = t.error;
+          return;
+        }
+
+        saveLead(formData);
+        form.reset();
+        setLang(currentLang);
+        result.className = "result success";
+        result.textContent = t.success;
+      });
+    })();
+  </script>
+</body>
+</html>

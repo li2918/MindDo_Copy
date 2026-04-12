@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback | 课堂反馈</title>
+  <style>
+    :root {
+      --bg: #f6efe4;
+      --line: rgba(151, 84, 21, 0.14);
+      --primary-deep: #8c3d14;
+      --text: #4f2410;
+      --muted: #8b6e58;
+      --success: #6f8f57;
+      --error: #c46a4d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 204, 97, 0.3), transparent 30%),
+        radial-gradient(circle at 85% 18%, rgba(244, 162, 38, 0.14), transparent 24%),
+        linear-gradient(180deg, #fffdf9, #f6efe4);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 20px 52px;
+    }
+
+    .topbar,
+    .hero,
+    .card {
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(252, 244, 232, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 24px 56px rgba(123, 72, 24, 0.08);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .brand-copy strong {
+      font-size: 19px;
+      color: var(--primary-deep);
+    }
+
+    .brand-copy span {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #aa6a2b;
+    }
+
+    .toolbar,
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .chip,
+    .lang-btn,
+    .submit-btn {
+      border: 1px solid var(--line);
+      background: rgba(255, 247, 236, 0.96);
+      color: var(--primary-deep);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover,
+    .lang-btn:hover,
+    .lang-btn.active,
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #fff6de, #ffd977);
+      border-color: rgba(208, 129, 36, 0.5);
+      box-shadow: 0 10px 24px rgba(192, 123, 39, 0.18);
+      color: var(--primary-deep);
+    }
+
+    .hero,
+    .card {
+      padding: 22px;
+    }
+
+    .hero {
+      margin-bottom: 16px;
+    }
+
+    h1,
+    h2 {
+      margin: 0 0 10px;
+      color: var(--primary-deep);
+    }
+
+    .muted {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 18px;
+    }
+
+    .info-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .info-list li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 248, 238, 0.8);
+      border: 1px solid rgba(151, 84, 21, 0.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    form { display: grid; gap: 12px; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #7b5b43;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(151, 84, 21, 0.16);
+      background: rgba(255, 252, 247, 0.88);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .result {
+      display: none;
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 14px;
+    }
+
+    .result.success {
+      display: block;
+      border: 1px solid rgba(111, 143, 87, 0.28);
+      background: rgba(111, 143, 87, 0.1);
+      color: var(--success);
+    }
+
+    .result.error {
+      display: block;
+      border: 1px solid rgba(196, 106, 77, 0.28);
+      background: rgba(196, 106, 77, 0.1);
+      color: var(--error);
+    }
+
+    @media (max-width: 860px) {
+      .grid,
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 22px 14px 38px; }
+      .topbar { justify-content: center; }
+      .info-list li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="topbar">
+      <a class="brand" href="index.html" aria-label="MindDo home">
+        <img src="assets/logo.png" alt="Mindo AI logo" />
+        <div class="brand-copy">
+          <span>Mindo AI</span>
+          <strong>Mindo AI</strong>
+        </div>
+      </a>
+      <div class="toolbar">
+        <a class="chip" href="student-account.html" data-i18n="goAccount"></a>
+        <a class="chip" href="trial.html" data-i18n="goTrial"></a>
+        <div class="lang-switch">
+          <button class="lang-btn" type="button" data-set-lang="zh-CN">中文</button>
+          <button class="lang-btn" type="button" data-set-lang="en">English</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h1 data-i18n="title"></h1>
+      <p class="muted" data-i18n="hero"></p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2 data-i18n="latestTrial"></h2>
+        <p class="muted" data-i18n="latestTrialDesc"></p>
+        <ul class="info-list" id="trialInfo"></ul>
+      </article>
+
+      <article class="card">
+        <h2 data-i18n="formTitle"></h2>
+        <p class="muted" data-i18n="formDesc"></p>
+
+        <form id="feedbackForm" novalidate>
+          <div class="row">
+            <div>
+              <label for="rating" data-i18n="rating"></label>
+              <select id="rating" name="rating" required></select>
+            </div>
+            <div>
+              <label for="nextStep" data-i18n="nextStep"></label>
+              <select id="nextStep" name="nextStep" required></select>
+            </div>
+          </div>
+
+          <div>
+            <label for="highlights" data-i18n="highlights"></label>
+            <textarea id="highlights" name="highlights"></textarea>
+          </div>
+
+          <div>
+            <label for="suggestion" data-i18n="suggestion"></label>
+            <textarea id="suggestion" name="suggestion"></textarea>
+          </div>
+
+          <button class="submit-btn" type="submit" data-i18n="submit"></button>
+          <div id="result" class="result" role="status" aria-live="polite"></div>
+        </form>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var I18N = {
+        "zh-CN": {
+          goAccount: "返回 Account",
+          goTrial: "前往 Trial",
+          title: "课堂反馈页面",
+          hero: "学生可以在这里查看最近一次试课信息，并提交体验反馈。",
+          latestTrial: "最近一次试课信息",
+          latestTrialDesc: "如果你已经预约或完成试课，这里会展示最近一条记录。",
+          formTitle: "提交反馈",
+          formDesc: "填写试课体验、亮点和后续需求，帮助顾问跟进。",
+          rating: "满意度评分",
+          nextStep: "下一步意向",
+          highlights: "课堂亮点（选填）",
+          suggestion: "建议或期待（选填）",
+          submit: "提交反馈",
+          success: "反馈已提交，顾问会结合你的试课体验继续跟进。",
+          error: "请先完成必填项后再提交。",
+          noTrial: "暂无试课记录",
+          noTrialDesc: "请先前往 Trial 页面完成预约。",
+          trialLabels: ["学生姓名", "试课科目", "试课时间", "时间备注"],
+          ratingOptions: ["请选择", "5 - 非常满意", "4 - 满意", "3 - 一般", "2 - 不满意", "1 - 很不满意"],
+          nextStepOptions: ["请选择", "希望继续正式课", "希望再安排一次试课", "需要顾问联系", "暂时观望"]
+        },
+        en: {
+          goAccount: "Back To Account",
+          goTrial: "Go To Trial",
+          title: "Feedback Page",
+          hero: "Students can review the latest trial information here and submit their class feedback.",
+          latestTrial: "Latest Trial Information",
+          latestTrialDesc: "If a trial has been scheduled or completed, the latest record will appear here.",
+          formTitle: "Submit Feedback",
+          formDesc: "Share your trial experience, highlights, and next expectations for consultant follow-up.",
+          rating: "Satisfaction Rating",
+          nextStep: "Preferred Next Step",
+          highlights: "Class Highlights (Optional)",
+          suggestion: "Suggestions or Expectations (Optional)",
+          submit: "Submit Feedback",
+          success: "Feedback submitted. A consultant will follow up based on your trial experience.",
+          error: "Please complete the required fields first.",
+          noTrial: "No trial record yet",
+          noTrialDesc: "Please complete the Trial page first.",
+          trialLabels: ["Student Name", "Subject", "Trial Time", "Time Note"],
+          ratingOptions: ["Please select", "5 - Very Satisfied", "4 - Satisfied", "3 - Neutral", "2 - Unsatisfied", "1 - Very Unsatisfied"],
+          nextStepOptions: ["Please select", "Continue to formal course", "Schedule another trial", "Need consultant contact", "Still deciding"]
+        }
+      };
+
+      var html = document.documentElement;
+      var buttons = document.querySelectorAll("[data-set-lang]");
+      var trialInfo = document.getElementById("trialInfo");
+      var rating = document.getElementById("rating");
+      var nextStep = document.getElementById("nextStep");
+      var form = document.getElementById("feedbackForm");
+      var result = document.getElementById("result");
+
+      function readJson(key) {
+        try {
+          return JSON.parse(localStorage.getItem(key) || "[]");
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function buildOptions(select, options) {
+        select.innerHTML = options.map(function (item, idx) {
+          var selected = idx === 0 ? " selected" : "";
+          return "<option value=\"" + item + "\"" + selected + ">" + item + "</option>";
+        }).join("");
+      }
+
+      function latestByDate(list) {
+        return list.slice().sort(function (a, b) {
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        })[0] || null;
+      }
+
+      function renderTrialInfo(t, lead) {
+        if (!lead) {
+          trialInfo.innerHTML = "<li><span>" + t.noTrial + "</span><strong>" + t.noTrialDesc + "</strong></li>";
+          return;
+        }
+
+        var values = [
+          lead.studentName || "-",
+          lead.subjectLabel || lead.subject || "-",
+          (lead.trialDate && lead.trialTime) ? (lead.trialDate + " " + lead.trialTime) : "-",
+          lead.timeNote || "-"
+        ];
+
+        trialInfo.innerHTML = t.trialLabels.map(function (label, index) {
+          return "<li><span>" + label + "</span><strong>" + values[index] + "</strong></li>";
+        }).join("");
+      }
+
+      function setLang(lang) {
+        var t = I18N[lang] || I18N["zh-CN"];
+        var latestLead = latestByDate(readJson("minddo_trial_leads"));
+
+        html.setAttribute("lang", lang);
+        localStorage.setItem("minddo_lang", lang);
+        document.title = t.title + " | MindDo";
+
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var key = el.getAttribute("data-i18n");
+          if (t[key]) el.textContent = t[key];
+        });
+
+        buildOptions(rating, t.ratingOptions);
+        buildOptions(nextStep, t.nextStepOptions);
+        renderTrialInfo(t, latestLead);
+
+        buttons.forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
+        });
+
+        result.className = "result";
+        result.textContent = "";
+      }
+
+      var saved = localStorage.getItem("minddo_lang");
+      setLang(saved === "en" ? "en" : "zh-CN");
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setLang(btn.getAttribute("data-set-lang"));
+        });
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
+        var t = I18N[lang];
+        var latestLead = latestByDate(readJson("minddo_trial_leads"));
+        var payload = {
+          studentName: latestLead ? latestLead.studentName : "",
+          trialDate: latestLead ? latestLead.trialDate : "",
+          trialTime: latestLead ? latestLead.trialTime : "",
+          subject: latestLead ? (latestLead.subjectLabel || latestLead.subject) : "",
+          rating: rating.value,
+          nextStep: nextStep.value,
+          highlights: form.highlights.value.trim(),
+          suggestion: form.suggestion.value.trim(),
+          createdAt: new Date().toISOString()
+        };
+
+        if (payload.rating === t.ratingOptions[0] || payload.nextStep === t.nextStepOptions[0]) {
+          result.className = "result error";
+          result.textContent = t.error;
+          return;
+        }
+
+        var list = readJson("minddo_feedback");
+        list.push(payload);
+        localStorage.setItem("minddo_feedback", JSON.stringify(list));
+
+        form.reset();
+        setLang(lang);
+        result.className = "result success";
+        result.textContent = t.success;
+      });
+    })();
+  </script>
+</body>
+</html>

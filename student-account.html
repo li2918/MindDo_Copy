@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Account | 学生账户</title>
+  <style>
+    :root {
+      --bg: #f6efe4;
+      --card: rgba(255, 250, 242, 0.94);
+      --line: rgba(151, 84, 21, 0.14);
+      --primary: #f0a11f;
+      --primary-deep: #8c3d14;
+      --text: #4f2410;
+      --muted: #8b6e58;
+      --success: #6f8f57;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 204, 97, 0.3), transparent 30%),
+        radial-gradient(circle at 85% 18%, rgba(244, 162, 38, 0.14), transparent 24%),
+        linear-gradient(180deg, #fffdf9, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 20px 52px;
+    }
+
+    .topbar,
+    .hero,
+    .card,
+    .module {
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(252, 244, 232, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 24px 56px rgba(123, 72, 24, 0.08);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .brand-copy strong {
+      font-size: 19px;
+      color: var(--primary-deep);
+    }
+
+    .brand-copy span {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #aa6a2b;
+    }
+
+    .toolbar,
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .chip,
+    .lang-btn,
+    .action-btn {
+      border: 1px solid var(--line);
+      background: rgba(255, 247, 236, 0.96);
+      color: var(--primary-deep);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .chip:hover,
+    .lang-btn:hover,
+    .lang-btn.active,
+    .action-btn:hover {
+      background: linear-gradient(135deg, #fff6de, #ffd977);
+      border-color: rgba(208, 129, 36, 0.5);
+      box-shadow: 0 10px 24px rgba(192, 123, 39, 0.18);
+      color: var(--primary-deep);
+    }
+
+    .hero {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1,
+    .card h2,
+    .module h2 {
+      margin: 0 0 10px;
+      color: var(--primary-deep);
+    }
+
+    .hero h1 {
+      font-size: clamp(26px, 4vw, 38px);
+    }
+
+    .muted {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .card,
+    .module {
+      padding: 20px;
+    }
+
+    .summary-list,
+    .status-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-list li,
+    .status-list li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 248, 238, 0.8);
+      border: 1px solid rgba(151, 84, 21, 0.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .modules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(240, 161, 31, 0.12);
+      color: var(--primary-deep);
+      font-size: 12px;
+    }
+
+    .module p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .module .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    @media (max-width: 860px) {
+      .overview,
+      .modules {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 22px 14px 38px; }
+      .topbar { justify-content: center; }
+      .summary-list li,
+      .status-list li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="topbar">
+      <a class="brand" href="index.html" aria-label="MindDo home">
+        <img src="assets/logo.png" alt="Mindo AI logo" />
+        <div class="brand-copy">
+          <span>Mindo AI</span>
+          <strong>Mindo AI</strong>
+        </div>
+      </a>
+      <div class="toolbar">
+        <a class="chip" href="index.html" data-i18n="backFlow"></a>
+        <a class="chip" href="signup.html" data-i18n="goSignup"></a>
+        <a class="chip" href="assessment.html" data-i18n="goAssessment"></a>
+        <div class="lang-switch">
+          <button class="lang-btn" type="button" data-set-lang="zh-CN">中文</button>
+          <button class="lang-btn" type="button" data-set-lang="en">English</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h1 data-i18n="title"></h1>
+      <p class="muted" id="heroDesc"></p>
+    </section>
+
+    <section class="overview">
+      <article class="card">
+        <h2 data-i18n="summaryTitle"></h2>
+        <p class="muted" data-i18n="summaryDesc"></p>
+        <ul class="summary-list" id="summaryList"></ul>
+      </article>
+
+      <article class="card">
+        <h2 data-i18n="statusTitle"></h2>
+        <p class="muted" data-i18n="statusDesc"></p>
+        <ul class="status-list" id="statusList"></ul>
+      </article>
+    </section>
+
+    <section class="modules">
+      <article class="module">
+        <span class="tag" data-i18n="trialTag"></span>
+        <h2 data-i18n="trialTitle"></h2>
+        <p data-i18n="trialDesc"></p>
+        <div class="actions">
+          <a class="action-btn" href="trial.html" data-i18n="openTrial"></a>
+        </div>
+      </article>
+
+      <article class="module">
+        <span class="tag" data-i18n="feedbackTag"></span>
+        <h2 data-i18n="feedbackTitle"></h2>
+        <p data-i18n="feedbackDesc"></p>
+        <div class="actions">
+          <a class="action-btn" href="feedback.html" data-i18n="openFeedback"></a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var I18N = {
+        "zh-CN": {
+          backFlow: "返回流程总览",
+          goSignup: "前往注册",
+          goAssessment: "前往评估",
+          title: "学生 Account 页面",
+          hero: "在这里集中查看试课安排、课后反馈与后续动作。",
+          summaryTitle: "学生概览",
+          summaryDesc: "该页面是学生端入口，帮助学生快速找到当前最需要处理的事项。",
+          statusTitle: "当前状态",
+          statusDesc: "根据最近一次 Trial 和反馈记录，展示当前进度。",
+          trialTag: "Trial",
+          trialTitle: "试课页面",
+          trialDesc: "进入试课报名页，学生可以自己选择试课日期与时间，并补充时间备注。",
+          openTrial: "进入试课页面",
+          feedbackTag: "Feedback",
+          feedbackTitle: "反馈页面",
+          feedbackDesc: "查看最近一次试课信息，提交课堂反馈、满意度和后续期待。",
+          openFeedback: "进入反馈页面",
+          summaryItems: [
+            { label: "最近试课科目", fallback: "暂无记录" },
+            { label: "最近试课时间", fallback: "尚未预约" },
+            { label: "最近反馈状态", fallback: "尚未提交" }
+          ],
+          statusItems: {
+            noTrial: "还没有试课预约，建议先完成 Trial 报名。",
+            hasTrial: "已完成试课预约，可在反馈页查看并提交课堂反馈。",
+            noFeedback: "试课后还未提交反馈。",
+            hasFeedback: "已完成反馈提交。"
+          }
+        },
+        en: {
+          backFlow: "Back To Workflow",
+          goSignup: "Go To Sign Up",
+          goAssessment: "Go To Assessment",
+          title: "Student Account",
+          hero: "Use this page to access trial scheduling, class feedback, and next-step actions in one place.",
+          summaryTitle: "Student Overview",
+          summaryDesc: "This is the student-side home page for the most important next actions.",
+          statusTitle: "Current Status",
+          statusDesc: "Progress is shown based on the latest Trial and feedback records.",
+          trialTag: "Trial",
+          trialTitle: "Trial Page",
+          trialDesc: "Go to the Trial page where students can choose their own trial date and time.",
+          openTrial: "Open Trial Page",
+          feedbackTag: "Feedback",
+          feedbackTitle: "Feedback Page",
+          feedbackDesc: "Review the latest trial details and submit class feedback, satisfaction, and next expectations.",
+          openFeedback: "Open Feedback Page",
+          summaryItems: [
+            { label: "Latest Trial Subject", fallback: "No record yet" },
+            { label: "Latest Trial Time", fallback: "Not scheduled" },
+            { label: "Latest Feedback", fallback: "Not submitted" }
+          ],
+          statusItems: {
+            noTrial: "No trial is scheduled yet. Completing the Trial form is the best next step.",
+            hasTrial: "Trial has been scheduled. The feedback page is ready after class.",
+            noFeedback: "Feedback has not been submitted yet.",
+            hasFeedback: "Feedback has already been submitted."
+          }
+        }
+      };
+
+      var html = document.documentElement;
+      var buttons = document.querySelectorAll("[data-set-lang]");
+      var heroDesc = document.getElementById("heroDesc");
+      var summaryList = document.getElementById("summaryList");
+      var statusList = document.getElementById("statusList");
+
+      function readJson(key) {
+        try {
+          return JSON.parse(localStorage.getItem(key) || "[]");
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function latestByDate(list) {
+        return list.slice().sort(function (a, b) {
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        })[0] || null;
+      }
+
+      function formatTrialTime(lead) {
+        if (!lead || !lead.trialDate || !lead.trialTime) return "";
+        return lead.trialDate + " " + lead.trialTime;
+      }
+
+      function setLang(lang) {
+        var t = I18N[lang] || I18N["zh-CN"];
+        var leads = readJson("minddo_trial_leads");
+        var feedbacks = readJson("minddo_feedback");
+        var latestLead = latestByDate(leads);
+        var latestFeedback = latestByDate(feedbacks);
+
+        html.setAttribute("lang", lang);
+        localStorage.setItem("minddo_lang", lang);
+        document.title = t.title + " | MindDo";
+
+        document.querySelectorAll("[data-i18n]").forEach(function (el) {
+          var key = el.getAttribute("data-i18n");
+          if (t[key]) el.textContent = t[key];
+        });
+
+        heroDesc.textContent = t.hero;
+
+        var summaryValues = [
+          latestLead ? (latestLead.subjectLabel || latestLead.subject || t.summaryItems[0].fallback) : t.summaryItems[0].fallback,
+          latestLead ? (formatTrialTime(latestLead) || t.summaryItems[1].fallback) : t.summaryItems[1].fallback,
+          latestFeedback ? (latestFeedback.rating ? latestFeedback.rating + "/5" : t.summaryItems[2].fallback) : t.summaryItems[2].fallback
+        ];
+
+        summaryList.innerHTML = t.summaryItems.map(function (item, index) {
+          return "<li><span>" + item.label + "</span><strong>" + summaryValues[index] + "</strong></li>";
+        }).join("");
+
+        var statuses = [
+          latestLead ? t.statusItems.hasTrial : t.statusItems.noTrial,
+          latestFeedback ? t.statusItems.hasFeedback : t.statusItems.noFeedback
+        ];
+
+        statusList.innerHTML = statuses.map(function (item) {
+          return "<li><span>" + item + "</span><span class='status'>OK</span></li>";
+        }).join("");
+
+        buttons.forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
+        });
+      }
+
+      var saved = localStorage.getItem("minddo_lang");
+      setLang(saved === "en" ? "en" : "zh-CN");
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setLang(btn.getAttribute("data-set-lang"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

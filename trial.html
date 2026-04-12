@@ -324,6 +324,8 @@
         <a class="link-btn" href="course-selection.html" data-i18n="goCourseSelection"></a>
         <a class="link-btn" href="course-system.html" data-i18n="goCourseSystem"></a>
         <a class="link-btn" href="semester-report.html" data-i18n="goSemesterReport"></a>
+        <a class="link-btn" href="student-account.html" data-i18n="goAccount"></a>
+        <a class="link-btn" href="feedback.html" data-i18n="goFeedback"></a>
         <a class="link-btn" href="assessment.html" data-i18n="goAssessment"></a>
         <a class="link-btn" href="dashboard.html" data-i18n="goDashboard"></a>
         <a class="link-btn" href="signup.html" data-i18n="goSignup"></a>
@@ -387,12 +389,23 @@
 
           <div class="row">
             <div>
-              <label for="timeSlot" data-i18n="timeSlot"></label>
-              <select id="timeSlot" name="timeSlot" required></select>
+              <label for="trialDate" data-i18n="trialDate"></label>
+              <input id="trialDate" name="trialDate" type="date" required />
             </div>
+            <div>
+              <label for="trialTime" data-i18n="trialTime"></label>
+              <select id="trialTime" name="trialTime" required></select>
+            </div>
+          </div>
+
+          <div class="row">
             <div>
               <label for="channel" data-i18n="channel"></label>
               <select id="channel" name="channel" required></select>
+            </div>
+            <div>
+              <label for="timeNote" data-i18n="timeNote"></label>
+              <input id="timeNote" name="timeNote" type="text" data-i18n-placeholder="timeNotePlaceholder" />
             </div>
           </div>
 
@@ -422,6 +435,8 @@
           goCourseSelection: "前往选课",
           goCourseSystem: "查看课程体系",
           goSemesterReport: "查看学期报告",
+          goAccount: "学生 Account",
+          goFeedback: "反馈页面",
           goAssessment: "前往 Assessment",
           goDashboard: "前往看板",
           goSignup: "前往 Sign Up 注册",
@@ -440,23 +455,49 @@
             { value: "T+1", label: "试课安排完成目标" }
           ],
           formTitle: "学生注册报名",
-          formDesc: "提交后将进入顾问待跟进列表，可用于后续试课邀约。",
+          formDesc: "学生可直接选择期望试课日期与时间，提交后进入顾问待确认列表。",
           studentName: "学生姓名",
           grade: "年级/学段",
           parentName: "家长姓名",
           phone: "联系电话",
           city: "所在城市",
           subject: "意向科目",
-          timeSlot: "偏好时段",
+          trialDate: "试课日期",
+          trialTime: "试课时间",
           channel: "获客渠道",
+          timeNote: "时间备注（选填）",
+          timeNotePlaceholder: "例如：放学后可上课 / 需要避开周三",
           goal: "学习目标（选填）",
           consent: "我同意用于课程咨询与试课安排的联系与信息记录。",
           submit: "提交 Trial 报名",
-          subjectOptions: ["请选择", "AI启蒙", "编程", "数学", "英语", "综合素养"],
-          timeSlotOptions: ["请选择", "工作日晚上", "周末上午", "周末下午", "周末晚上"],
-          channelOptions: ["请选择", "抖音", "小红书", "公众号", "朋友推荐", "线下活动"],
-          success: "报名已提交，顾问将在24小时内联系。",
-          error: "请完整填写必填项，并确认联系电话格式正确。"
+          subjectOptions: [
+            { value: "", label: "请选择" },
+            { value: "ai", label: "AI启蒙" },
+            { value: "programming", label: "编程" },
+            { value: "math", label: "数学" },
+            { value: "english", label: "英语" },
+            { value: "competency", label: "综合素养" }
+          ],
+          trialTimeOptions: [
+            { value: "", label: "请选择" },
+            { value: "15:00", label: "15:00" },
+            { value: "16:00", label: "16:00" },
+            { value: "17:00", label: "17:00" },
+            { value: "18:00", label: "18:00" },
+            { value: "19:00", label: "19:00" },
+            { value: "20:00", label: "20:00" },
+            { value: "21:00", label: "21:00" }
+          ],
+          channelOptions: [
+            { value: "", label: "请选择" },
+            { value: "douyin", label: "抖音" },
+            { value: "xiaohongshu", label: "小红书" },
+            { value: "official-account", label: "公众号" },
+            { value: "referral", label: "朋友推荐" },
+            { value: "offline-event", label: "线下活动" }
+          ],
+          success: "报名已提交，顾问将在24小时内联系并确认试课时间。",
+          error: "请完整填写必填项，并确认联系电话格式正确且试课时间晚于当前时间。"
         },
         en: {
           backFlow: "Back To Workflow",
@@ -464,6 +505,8 @@
           goCourseSelection: "Course Selection",
           goCourseSystem: "View Curriculum System",
           goSemesterReport: "View Semester Report",
+          goAccount: "Student Account",
+          goFeedback: "Feedback Page",
           goAssessment: "Go To Assessment",
           goDashboard: "Go To Dashboard",
           goSignup: "Go To Sign Up",
@@ -482,23 +525,49 @@
             { value: "T+1", label: "Target Trial Scheduling" }
           ],
           formTitle: "Student Registration",
-          formDesc: "After submission, this lead enters the consultant follow-up list for trial invitation.",
+          formDesc: "Students can directly choose a preferred trial date and time before the consultant confirms it.",
           studentName: "Student Name",
           grade: "Grade / Stage",
           parentName: "Parent Name",
           phone: "Phone Number",
           city: "City",
           subject: "Interested Subject",
-          timeSlot: "Preferred Time Slot",
+          trialDate: "Trial Date",
+          trialTime: "Trial Time",
           channel: "Lead Source",
+          timeNote: "Time Note (Optional)",
+          timeNotePlaceholder: "Example: Available after school / Avoid Wednesdays",
           goal: "Learning Goal (Optional)",
           consent: "I agree to be contacted and have my information recorded for consultation and trial scheduling.",
           submit: "Submit Trial Registration",
-          subjectOptions: ["Please select", "AI Fundamentals", "Programming", "Mathematics", "English", "General Competency"],
-          timeSlotOptions: ["Please select", "Weekday Evening", "Weekend Morning", "Weekend Afternoon", "Weekend Evening"],
-          channelOptions: ["Please select", "Douyin", "Xiaohongshu", "Official Account", "Referral", "Offline Event"],
-          success: "Registration submitted. A consultant will contact you within 24 hours.",
-          error: "Please complete required fields and provide a valid phone number."
+          subjectOptions: [
+            { value: "", label: "Please select" },
+            { value: "ai", label: "AI Fundamentals" },
+            { value: "programming", label: "Programming" },
+            { value: "math", label: "Mathematics" },
+            { value: "english", label: "English" },
+            { value: "competency", label: "General Competency" }
+          ],
+          trialTimeOptions: [
+            { value: "", label: "Please select" },
+            { value: "15:00", label: "15:00" },
+            { value: "16:00", label: "16:00" },
+            { value: "17:00", label: "17:00" },
+            { value: "18:00", label: "18:00" },
+            { value: "19:00", label: "19:00" },
+            { value: "20:00", label: "20:00" },
+            { value: "21:00", label: "21:00" }
+          ],
+          channelOptions: [
+            { value: "", label: "Please select" },
+            { value: "douyin", label: "Douyin" },
+            { value: "xiaohongshu", label: "Xiaohongshu" },
+            { value: "official-account", label: "Official Account" },
+            { value: "referral", label: "Referral" },
+            { value: "offline-event", label: "Offline Event" }
+          ],
+          success: "Registration submitted. A consultant will contact you within 24 hours to confirm the trial time.",
+          error: "Please complete required fields, provide a valid phone number, and choose a future trial time."
         }
       };
 
@@ -509,16 +578,42 @@
       var highlightList = document.getElementById("highlightList");
       var metrics = document.getElementById("metrics");
       var subject = document.getElementById("subject");
-      var timeSlot = document.getElementById("timeSlot");
+      var trialDate = document.getElementById("trialDate");
+      var trialTime = document.getElementById("trialTime");
       var channel = document.getElementById("channel");
 
       function buildOptions(select, options) {
         select.innerHTML = options
           .map(function (item, idx) {
-            var selected = idx === 0 ? " selected" : "";
-            return "<option value=\"" + item + "\"" + selected + ">" + item + "</option>";
+            var value = typeof item === "string" ? item : item.value;
+            var label = typeof item === "string" ? item : item.label;
+            var selected = idx === 0 && !select.value ? " selected" : "";
+            var active = select.value === value ? " selected" : selected;
+            return "<option value=\"" + value + "\"" + active + ">" + label + "</option>";
           })
           .join("");
+      }
+
+      function syncTranslatedFields(data) {
+        var subjectLabel = (data.subjectOptions.find(function (item) { return item.value === subject.value; }) || {}).label || "";
+        var trialTimeLabel = (data.trialTimeOptions.find(function (item) { return item.value === trialTime.value; }) || {}).label || "";
+        var channelLabel = (data.channelOptions.find(function (item) { return item.value === channel.value; }) || {}).label || "";
+
+        form.subject.dataset.label = subjectLabel;
+        form.trialTime.dataset.label = trialTimeLabel;
+        form.channel.dataset.label = channelLabel;
+      }
+
+      function setMinTrialDate() {
+        var now = new Date();
+        var minDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().split("T")[0];
+        trialDate.min = minDate;
+      }
+
+      function isFutureTrial(dateValue, timeValue) {
+        if (!dateValue || !timeValue) return false;
+        var chosen = new Date(dateValue + "T" + timeValue + ":00");
+        return !Number.isNaN(chosen.getTime()) && chosen.getTime() > Date.now();
       }
 
       function setLang(lang) {
@@ -531,6 +626,13 @@
           var key = el.getAttribute("data-i18n");
           if (data[key]) {
             el.textContent = data[key];
+          }
+        });
+
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+          var key = el.getAttribute("data-i18n-placeholder");
+          if (data[key]) {
+            el.setAttribute("placeholder", data[key]);
           }
         });
 
@@ -547,8 +649,9 @@
           .join("");
 
         buildOptions(subject, data.subjectOptions);
-        buildOptions(timeSlot, data.timeSlotOptions);
+        buildOptions(trialTime, data.trialTimeOptions);
         buildOptions(channel, data.channelOptions);
+        syncTranslatedFields(data);
 
         buttons.forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
@@ -571,7 +674,15 @@
 
       var saved = localStorage.getItem("minddo_lang");
       var initialLang = saved === "en" ? "en" : "zh-CN";
+      setMinTrialDate();
       setLang(initialLang);
+
+      [subject, trialTime, channel].forEach(function (field) {
+        field.addEventListener("change", function () {
+          var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
+          syncTranslatedFields(I18N[lang]);
+        });
+      });
 
       buttons.forEach(function (btn) {
         btn.addEventListener("click", function () {
@@ -592,8 +703,16 @@
           phone: form.phone.value.trim(),
           city: form.city.value.trim(),
           subject: form.subject.value,
-          timeSlot: form.timeSlot.value,
+          subjectLabel: form.subject.dataset.label || "",
+          trialDate: form.trialDate.value,
+          trialTime: form.trialTime.value,
+          trialTimeLabel: form.trialTime.dataset.label || form.trialTime.value,
+          preferredTrialDateTime: form.trialDate.value && form.trialTime.value
+            ? new Date(form.trialDate.value + "T" + form.trialTime.value + ":00").toISOString()
+            : "",
           channel: form.channel.value,
+          channelLabel: form.channel.dataset.label || "",
+          timeNote: form.timeNote.value.trim(),
           goal: form.goal.value.trim(),
           consent: form.consent.checked,
           createdAt: new Date().toISOString()
@@ -605,12 +724,13 @@
           formData.parentName &&
           formData.phone &&
           formData.city &&
-          formData.subject !== t.subjectOptions[0] &&
-          formData.timeSlot !== t.timeSlotOptions[0] &&
-          formData.channel !== t.channelOptions[0] &&
+          formData.subject &&
+          formData.trialDate &&
+          formData.trialTime &&
+          formData.channel &&
           formData.consent;
 
-        if (!hasRequired || !isValidPhone(formData.phone)) {
+        if (!hasRequired || !isValidPhone(formData.phone) || !isFutureTrial(formData.trialDate, formData.trialTime)) {
           result.className = "result error";
           result.textContent = t.error;
           return;

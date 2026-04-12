@@ -267,6 +267,169 @@
       }
     }
 
+    .phase-overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .phase-card,
+    .timeline,
+    .rule-panel,
+    .summary-panel {
+      background: var(--card);
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 46px rgba(123, 72, 24, 0.08);
+    }
+
+    .phase-card {
+      padding: 18px;
+    }
+
+    .phase-card h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: var(--primary-deep);
+    }
+
+    .phase-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .phase-points {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .timeline {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .timeline-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .timeline-head h3 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      color: var(--primary-deep);
+    }
+
+    .timeline-head p {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .phase-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 204, 97, 0.18);
+      border: 1px solid rgba(208, 129, 36, 0.22);
+      color: #aa631a;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step-card {
+      border: 1px solid rgba(151, 84, 21, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 248, 238, 0.78);
+      padding: 16px;
+    }
+
+    .step-card h4 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: var(--primary-deep);
+    }
+
+    .step-note {
+      margin: 0 0 12px;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .detail-box {
+      border-radius: 14px;
+      border: 1px solid rgba(151, 84, 21, 0.12);
+      background: rgba(255, 252, 247, 0.82);
+      padding: 12px;
+    }
+
+    .detail-box strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--primary-deep);
+      font-size: 13px;
+    }
+
+    .detail-box ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      margin-bottom: 18px;
+    }
+
+    .rule-panel,
+    .summary-panel {
+      padding: 18px;
+    }
+
+    .rule-panel h3,
+    .summary-panel h3 {
+      margin: 0 0 10px;
+      color: var(--primary-deep);
+      font-size: 18px;
+    }
+
+    .rule-panel p,
+    .summary-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    .summary-panel {
+      margin-top: 18px;
+    }
+
     .kpi {
       background: var(--card);
       border-radius: 22px;
@@ -343,6 +506,14 @@
         align-items: flex-start;
       }
     }
+
+    @media (max-width: 980px) {
+      .phase-overview,
+      .detail-grid,
+      .rule-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -364,14 +535,18 @@
 
     <section class="hero">
       <h1>
-        <span data-lang="zh">新AI教育品牌业务流程总览（试课 → 排课/选课 → 续课）</span>
-        <span data-lang="en">New AI Education Brand Workflow Overview (Trial Class → Scheduling/Course Selection → Renewal)</span>
+        <span data-lang="zh">新AI教育品牌全流程自动化总览（自助试课 → 自动报名排课 → 在读自动化 → 自动续课）</span>
+        <span data-lang="en">AI Education Automation Workflow Overview (Self-Serve Trial → Auto Enrollment & Scheduling → In-Progress Automation → Auto Renewal)</span>
       </h1>
       <p>
-        <span data-lang="zh">目标：把“获客、转化、交付、续费”串成可执行的标准动作。下方流程可用于销售、教务、班主任和学管团队协同，帮助提升试听转化率和续课率。</span>
-        <span data-lang="en">Goal: Turn acquisition, conversion, delivery, and renewal into standardized and executable actions. The process below helps sales, academic operations, homeroom staff, and student management teams collaborate to improve trial-to-enrollment conversion and renewal rates.</span>
+        <span data-lang="zh">目标：把前端转化、中段交付和后端续课尽量做成“系统自动推进”，让人工只介入高意向、高价值和异常风险节点。下面按 4 个阶段、16 个步骤展示整套自动化业务流。</span>
+        <span data-lang="en">Goal: Make conversion, delivery, and renewal system-driven by default, with humans only stepping in for high-intent, high-value, or exception cases. The workflow below maps the full automation journey in 4 phases and 16 steps.</span>
       </p>
       <div class="hero-cta">
+        <a class="cta-link" href="student-account.html">
+          <span data-lang="zh">进入学生 Account</span>
+          <span data-lang="en">Open Student Account</span>
+        </a>
         <a class="cta-link" href="course-system.html">
           <span data-lang="zh">查看课程体系</span>
           <span data-lang="en">View Curriculum System</span>
@@ -403,104 +578,255 @@
       </div>
     </section>
 
-    <section class="flow-grid" aria-label="business workflow">
-      <article class="stage">
-        <span class="badge">Step 01</span>
-        <h2><span data-lang="zh">试课流程</span><span data-lang="en">Trial Class Workflow</span></h2>
-        <ul data-lang-block="zh">
-          <li>线索进入：登记家长/学员基础信息与学习目标。</li>
-          <li>课前诊断：能力测评 + 学情访谈，输出试听策略。</li>
-          <li>试听执行：Demo教学 + 互动反馈 + 课堂亮点记录。</li>
-          <li>课后转化：24小时内发送测评报告并邀约选课。</li>
-        </ul>
-        <ul data-lang-block="en">
-          <li>Lead Intake: Register parent/student profile and learning goals.</li>
-          <li>Pre-Class Diagnosis: Conduct ability assessment + learning interview to define trial strategy.</li>
-          <li>Trial Delivery: Demo teaching + interactive feedback + highlight capture.</li>
-          <li>Post-Class Conversion: Send assessment report and course invitation within 24 hours.</li>
+    <section class="phase-overview" aria-label="phase overview">
+      <article class="phase-card">
+        <span class="badge">Phase 1</span>
+        <h2><span data-lang="zh">自助试课阶段</span><span data-lang="en">Self-Serve Trial</span></h2>
+        <p><span data-lang="zh">目标：像 Code.org 一样，让前半段几乎 0 人工完成。</span><span data-lang="en">Goal: Make the early funnel nearly zero-touch, similar to Code.org.</span></p>
+        <ul class="phase-points">
+          <li><span data-lang="zh">Lead 自动生成与打标</span><span data-lang="en">Automatic lead creation and tagging</span></li>
+          <li><span data-lang="zh">学生自助预约试课</span><span data-lang="en">Student self-serve trial booking</span></li>
+          <li><span data-lang="zh">系统自动报告与跟进</span><span data-lang="en">Automated reports and follow-up</span></li>
         </ul>
       </article>
 
-      <div class="arrow" aria-hidden="true">➜</div>
-
-      <article class="stage">
-        <span class="badge">Step 02</span>
-        <h2><span data-lang="zh">排课（选课）流程</span><span data-lang="en">Scheduling (Course Selection) Workflow</span></h2>
-        <ul data-lang-block="zh">
-          <li>方案确认：按学段与目标定制课程包和阶段目标。</li>
-          <li>会员选择：按学习节奏选择每周1/2/3节 membership。</li>
-          <li>资源匹配：匹配主讲老师、时段、班型（1v1/小班）。</li>
-          <li>排课锁定：确认正式课表，生成开课日历与提醒机制。</li>
-          <li>服务建群：建立家校沟通群，明确周反馈节奏。</li>
-        </ul>
-        <ul data-lang-block="en">
-          <li>Plan Confirmation: Customize course package and stage goals by grade and objective.</li>
-          <li>Membership Selection: Choose 1/2/3 classes per week by learning rhythm.</li>
-          <li>Resource Matching: Assign lead teacher, timeslot, and class type (1-on-1/small group).</li>
-          <li>Schedule Lock-in: Finalize timetable and set class calendar with reminders.</li>
-          <li>Service Group Setup: Build home-school communication group with weekly feedback rhythm.</li>
+      <article class="phase-card">
+        <span class="badge">Phase 2</span>
+        <h2><span data-lang="zh">自动报名 + 自动排课</span><span data-lang="en">Auto Enrollment & Scheduling</span></h2>
+        <p><span data-lang="zh">目标：采用 membership 制，学生必须先付款，再进入排课，后续按月自动扣费。</span><span data-lang="en">Goal: Run on a membership model where students must pay before scheduling, then continue on monthly auto-charge.</span></p>
+        <ul class="phase-points">
+          <li><span data-lang="zh">家长自助开通 membership 与首月支付</span><span data-lang="en">Self-serve membership activation with first-month payment</span></li>
+          <li><span data-lang="zh">Ready Pool 自动准入</span><span data-lang="en">Automatic Ready Pool gating</span></li>
+          <li><span data-lang="zh">自助锁时间 + 老师确认约束</span><span data-lang="en">Self-serve timeslot locking with teacher confirmation rules</span></li>
         </ul>
       </article>
 
-      <div class="arrow" aria-hidden="true">➜</div>
-
-      <article class="stage">
-        <span class="badge">Step 03</span>
-        <h2><span data-lang="zh">续课流程</span><span data-lang="en">Renewal Workflow</span></h2>
-        <ul data-lang-block="zh">
-          <li>过程跟踪：每周学习报告 + 作业达成 + 阶段测评。</li>
-          <li>学期报告：汇总能力成长、项目成果与下学期建议。</li>
-          <li>续课预警：剩余课时 ≤ 20% 触发续课沟通。</li>
-          <li>价值复盘：展示成长曲线、目标达成与下一阶段路径。</li>
-          <li>续费成交：确认新课包、课表衔接与优惠政策。</li>
+      <article class="phase-card">
+        <span class="badge">Phase 3</span>
+        <h2><span data-lang="zh">在读阶段自动化</span><span data-lang="en">In-Progress Automation</span></h2>
+        <p><span data-lang="zh">目标：课堂记录、关键节点触发和风险识别都由系统持续驱动。</span><span data-lang="en">Goal: Use the system to continuously track classes, milestones, and risks.</span></p>
+        <ul class="phase-points">
+          <li><span data-lang="zh">自动记录出勤、进度、作业</span><span data-lang="en">Automatic attendance, progress, and homework logging</span></li>
+          <li><span data-lang="zh">节点式满意度与中期报告</span><span data-lang="en">Milestone-driven surveys and mid-term reports</span></li>
+          <li><span data-lang="zh">学习行为风险预警</span><span data-lang="en">Learning behavior risk flags</span></li>
         </ul>
-        <ul data-lang-block="en">
-          <li>Progress Tracking: Weekly report + homework completion + milestone assessment.</li>
-          <li>Semester Report: Summarize growth, project outcomes, and next-term plan.</li>
-          <li>Renewal Alert: Trigger renewal communication when remaining class hours ≤ 20%.</li>
-          <li>Value Review: Present growth curve, target achievement, and next-stage roadmap.</li>
-          <li>Renewal Closing: Confirm new package, timetable continuity, and offer policy.</li>
+      </article>
+
+      <article class="phase-card">
+        <span class="badge">Phase 4</span>
+        <h2><span data-lang="zh">自动续课系统</span><span data-lang="en">Auto Renewal System</span></h2>
+        <p><span data-lang="zh">目标：让 membership 自动续费与续课节奏同步运行，彻底避免“没付款先排课”。</span><span data-lang="en">Goal: Keep membership auto-renewal synchronized with renewal cadence and fully enforce no scheduling before payment.</span></p>
+        <ul class="phase-points">
+          <li><span data-lang="zh">剩余课时阈值自动触发</span><span data-lang="en">Threshold-based renewal initiation</span></li>
+          <li><span data-lang="zh">系统自动推荐下一阶段课程</span><span data-lang="en">Automatic next-stage course recommendation</span></li>
+          <li><span data-lang="zh">未续课自动进入 Win-back Pool</span><span data-lang="en">Auto diversion into a win-back pool</span></li>
         </ul>
       </article>
     </section>
 
+    <section class="timeline">
+      <div class="timeline-head">
+        <div>
+          <div class="phase-tag">PHASE 1</div>
+          <h3><span data-lang="zh">阶段1：自助试课阶段（几乎0人工）</span><span data-lang="en">Phase 1: Self-Serve Trial (Near Zero Human Touch)</span></h3>
+          <p><span data-lang="zh">核心思路：用户进入系统后，由系统完成 lead 生成、标签归类、预约试课、发送提醒、生成报告和跟进节奏，顾问只在高意向和高价值客户上介入。</span><span data-lang="en">Core idea: Once a user enters the system, the system handles lead creation, tagging, trial booking, reminders, reporting, and follow-up cadence. Humans only step in for high-intent and high-value accounts.</span></p>
+        </div>
+      </div>
+      <div class="step-list">
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 1：用户进入系统（Lead 自动生成）</span><span data-lang="en">Step 1: User Enters System (Lead Auto-Creation)</span></h4>
+          <p class="step-note"><span data-lang="zh">来源包括官网、广告、微信和推荐，系统自动创建 Lead，并自动打上年级、兴趣、课程等标签。</span><span data-lang="en">Traffic can come from the website, ads, WeChat, or referrals. The system automatically creates a lead and tags it by grade, interests, and course relevance.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">来源</span><span data-lang="en">Sources</span></strong><ul><li><span data-lang="zh">官网</span><span data-lang="en">Website</span></li><li><span data-lang="zh">广告</span><span data-lang="en">Ads</span></li><li><span data-lang="zh">微信</span><span data-lang="en">WeChat</span></li><li><span data-lang="zh">推荐</span><span data-lang="en">Referral</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">系统动作</span><span data-lang="en">System Actions</span></strong><ul><li><span data-lang="zh">自动创建 Lead</span><span data-lang="en">Create lead automatically</span></li><li><span data-lang="zh">自动分配标签</span><span data-lang="en">Assign tags automatically</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">价值</span><span data-lang="en">Value</span></strong><ul><li><span data-lang="zh">不依赖人工录入</span><span data-lang="en">No manual intake dependency</span></li><li><span data-lang="zh">进入系统即进入漏斗</span><span data-lang="en">Immediate funnel entry</span></li></ul></div>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 2：自助预约试课</span><span data-lang="en">Step 2: Self-Serve Trial Booking</span></h4>
+          <p class="step-note"><span data-lang="zh">核心变化：不再由顾问手动安排，系统展示老师空闲时间，自动匹配老师并自动确认。</span><span data-lang="en">Core change: Consultants no longer manually schedule trials. The system shows teacher availability, matches the teacher, and confirms automatically.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">系统提供</span><span data-lang="en">System Provides</span></strong><ul><li><span data-lang="zh">可选时间</span><span data-lang="en">Available slots</span></li><li><span data-lang="zh">自动匹配老师</span><span data-lang="en">Teacher auto-matching</span></li><li><span data-lang="zh">自动确认</span><span data-lang="en">Automatic confirmation</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">自动完成</span><span data-lang="en">Automations</span></strong><ul><li><span data-lang="zh">确认通知</span><span data-lang="en">Confirmation notice</span></li><li><span data-lang="zh">课前准备资料</span><span data-lang="en">Pre-class material</span></li><li><span data-lang="zh">T-24h / T-2h 提醒</span><span data-lang="en">T-24h / T-2h reminders</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">结果</span><span data-lang="en">Outcome</span></strong><ul><li><span data-lang="zh">预约不压顾问</span><span data-lang="en">No consultant bottleneck</span></li><li><span data-lang="zh">试课安排更快</span><span data-lang="en">Faster trial setup</span></li></ul></div>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 3：试课执行</span><span data-lang="en">Step 3: Trial Delivery</span></h4>
+          <p class="step-note"><span data-lang="zh">老师只负责上课，并在系统中填写结构化反馈模板。</span><span data-lang="en">The teacher only needs to teach the trial and complete a structured feedback template in the system.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">老师动作</span><span data-lang="en">Teacher Actions</span></strong><ul><li><span data-lang="zh">上课</span><span data-lang="en">Deliver class</span></li><li><span data-lang="zh">填写模板化反馈</span><span data-lang="en">Fill structured feedback</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">系统沉淀</span><span data-lang="en">System Capture</span></strong><ul><li><span data-lang="zh">课堂记录</span><span data-lang="en">Class notes</span></li><li><span data-lang="zh">可直接进入报告生成</span><span data-lang="en">Ready for report generation</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">价值</span><span data-lang="en">Value</span></strong><ul><li><span data-lang="zh">反馈结构统一</span><span data-lang="en">Standardized feedback</span></li><li><span data-lang="zh">减少老师写长文负担</span><span data-lang="en">Less manual write-up work</span></li></ul></div>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 4-5：自动生成试课报告 + 推荐方案 + 自动发送跟进</span><span data-lang="en">Step 4-5: Auto Report, Recommendation, and Follow-Up</span></h4>
+          <p class="step-note"><span data-lang="zh">系统根据模板自动生成报告、课程路径和报名方案，并按照 D0、D1、D3、D7 的节奏自动跟进，不需要顾问写文案。</span><span data-lang="en">The system generates the report, learning path, and enrollment proposal from templates, then follows up on a D0, D1, D3, and D7 cadence without consultant copywriting.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">自动生成</span><span data-lang="en">Auto-Generated</span></strong><ul><li><span data-lang="zh">试课报告</span><span data-lang="en">Trial report</span></li><li><span data-lang="zh">课程路径</span><span data-lang="en">Course path</span></li><li><span data-lang="zh">报名方案</span><span data-lang="en">Pricing/package proposal</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">自动节奏</span><span data-lang="en">Automated Cadence</span></strong><ul><li><span data-lang="zh">D0：发送报告 + 报名入口</span><span data-lang="en">D0: send report + signup entry</span></li><li><span data-lang="zh">D1 / D3：自动提醒</span><span data-lang="en">D1 / D3: reminder touches</span></li><li><span data-lang="zh">D7：进入冷却池</span><span data-lang="en">D7: move to cooling pool</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">人工介入</span><span data-lang="en">Human Intervention</span></strong><ul><li><span data-lang="zh">仅高意向客户</span><span data-lang="en">High-intent customers only</span></li><li><span data-lang="zh">仅高价值客户</span><span data-lang="en">High-value customers only</span></li></ul></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="timeline">
+      <div class="timeline-head">
+        <div>
+          <div class="phase-tag">PHASE 2</div>
+          <h3><span data-lang="zh">阶段2：自动报名 + 自动排课</span><span data-lang="en">Phase 2: Auto Enrollment + Auto Scheduling</span></h3>
+          <p><span data-lang="zh">核心原则：采用 membership 制，必须先完成首月付款才允许进入排课；之后系统按月自动扣费，排课由家长自助完成，系统负责锁时间、生成课表和约束老师确认。</span><span data-lang="en">Core principle: This runs on a membership model. The first monthly payment must be completed before scheduling is allowed; after that, the system auto-charges monthly while parents self-select time and the system handles locking, timetables, and teacher confirmation.</span></p>
+        </div>
+      </div>
+      <div class="step-list">
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 6：家长自助开通 membership + 首月支付</span><span data-lang="en">Step 6: Parent Self-Serve Membership Activation + First Payment</span></h4>
+          <p class="step-note"><span data-lang="zh">系统提供 membership 方案选择与在线支付（Stripe）。学生必须先完成首月付款，才能进入下一步；开通后系统按月自动扣费。</span><span data-lang="en">The system offers membership plan selection and online payment via Stripe. The student must complete the first monthly payment before moving forward, and the system auto-charges every month after activation.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">系统</span><span data-lang="en">System</span></strong><ul><li><span data-lang="zh">membership 方案选择</span><span data-lang="en">Membership plan selection</span></li><li><span data-lang="zh">Stripe 首月支付</span><span data-lang="en">Stripe first-month payment</span></li><li><span data-lang="zh">自动续费开关</span><span data-lang="en">Auto-renew enablement</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">规则</span><span data-lang="en">Rule</span></strong><ul><li><span data-lang="zh">首月付款成功 = 可继续</span><span data-lang="en">First payment success = continue</span></li><li><span data-lang="zh">未付款 = 不可排课</span><span data-lang="en">No payment = no scheduling</span></li><li><span data-lang="zh">之后每月自动扣费</span><span data-lang="en">Monthly auto-charge afterward</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">价值</span><span data-lang="en">Value</span></strong><ul><li><span data-lang="zh">不会出现没付款先排课</span><span data-lang="en">Prevents scheduling before payment</span></li><li><span data-lang="zh">续费节奏前置标准化</span><span data-lang="en">Standardizes renewal upfront</span></li></ul></div>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 7-9：Ready Pool → 自助选时间 → 老师确认机制</span><span data-lang="en">Step 7-9: Ready Pool → Self-Serve Slot Selection → Teacher Confirmation</span></h4>
+          <p class="step-note"><span data-lang="zh">系统判断 membership 已激活且首月 payment_completed = TRUE 才进入 Ready Pool；家长像使用 Calendly 一样选择时间，系统自动锁定并生成课表。如果老师 24 小时内未确认，系统自动提醒，仍未确认则自动重新分配老师。</span><span data-lang="en">Only students with an active membership and `payment_completed = TRUE` for the first month enter the Ready Pool. Parents choose time like Calendly; the system locks the slot and generates the schedule. If the teacher does not confirm within 24 hours, reminders and reassignment are automated.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">系统判断</span><span data-lang="en">Gate Logic</span></strong><ul><li><span data-lang="zh">IF membership_active = TRUE</span><span data-lang="en">IF membership_active = TRUE</span></li><li><span data-lang="zh">AND payment_completed = TRUE</span><span data-lang="en">AND payment_completed = TRUE</span></li><li><span data-lang="zh">→ 进入 Ready Pool</span><span data-lang="en">→ Enter Ready Pool</span></li><li><span data-lang="zh">ELSE → 不允许排课</span><span data-lang="en">ELSE → No scheduling allowed</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">家长与系统动作</span><span data-lang="en">Parent + System Actions</span></strong><ul><li><span data-lang="zh">系统提供可选时间段</span><span data-lang="en">System shows available slots</span></li><li><span data-lang="zh">家长自己选时间</span><span data-lang="en">Parent selects time</span></li><li><span data-lang="zh">系统自动锁定并通知老师</span><span data-lang="en">System locks slot and notifies teacher</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">老师确认约束</span><span data-lang="en">Teacher Confirmation Constraint</span></strong><ul><li><span data-lang="zh">24h 未确认 → 自动提醒</span><span data-lang="en">No confirmation in 24h → reminder</span></li><li><span data-lang="zh">仍未确认 → 自动重分配老师</span><span data-lang="en">Still no confirmation → auto reassignment</span></li><li><span data-lang="zh">解决教学事故</span><span data-lang="en">Prevents delivery accidents</span></li></ul></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="timeline">
+      <div class="timeline-head">
+        <div>
+          <div class="phase-tag">PHASE 3</div>
+          <h3><span data-lang="zh">阶段3：在读阶段自动化</span><span data-lang="en">Phase 3: In-Progress Automation</span></h3>
+          <p><span data-lang="zh">核心目标：让课堂后端变成一个持续运转的自动化监控系统，及时触发满意度调查、中期报告和学习风险提醒。</span><span data-lang="en">Core goal: Turn ongoing learning into an automated monitoring system that triggers surveys, mid-term reports, and learning risk flags at the right time.</span></p>
+        </div>
+      </div>
+      <div class="step-list">
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 10：课堂自动记录</span><span data-lang="en">Step 10: Automatic Class Logging</span></h4>
+          <p class="step-note"><span data-lang="zh">系统持续记录出勤、进度与作业完成情况，为后续报告和续课判断提供统一数据底座。</span><span data-lang="en">The system continuously records attendance, progress, and homework completion as the shared data foundation for reporting and renewal logic.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">系统记录</span><span data-lang="en">Tracked Data</span></strong><ul><li><span data-lang="zh">出勤</span><span data-lang="en">Attendance</span></li><li><span data-lang="zh">进度</span><span data-lang="en">Progress</span></li><li><span data-lang="zh">作业</span><span data-lang="en">Homework</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">作用</span><span data-lang="en">Purpose</span></strong><ul><li><span data-lang="zh">后续节点自动触发</span><span data-lang="en">Auto-trigger later milestones</span></li><li><span data-lang="zh">支撑风险识别</span><span data-lang="en">Support risk detection</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">好处</span><span data-lang="en">Benefit</span></strong><ul><li><span data-lang="zh">老师少写重复记录</span><span data-lang="en">Less repetitive admin work</span></li><li><span data-lang="zh">家长反馈更及时</span><span data-lang="en">More timely parent updates</span></li></ul></div>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 11：自动触发关键节点</span><span data-lang="en">Step 11: Automatic Milestone Triggers</span></h4>
+          <p class="step-note"><span data-lang="zh">第 2 节课自动发满意度调查，课时达到 50% 自动生成中期报告并发送给家长；同时系统像 Code.org 一样监控连续缺课和作业未完成风险。</span><span data-lang="en">After class 2, the system sends a satisfaction survey. At 50% of lessons completed, it generates and sends a mid-term report. It also monitors consecutive absences and missed homework like Code.org-style behavior tracking.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">关键节点</span><span data-lang="en">Milestones</span></strong><ul><li><span data-lang="zh">第2节课：满意度调查</span><span data-lang="en">Lesson 2: satisfaction survey</span></li><li><span data-lang="zh">50%课时：中期报告</span><span data-lang="en">50% progress: mid-term report</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">自动发送</span><span data-lang="en">Auto Send</span></strong><ul><li><span data-lang="zh">发给家长</span><span data-lang="en">Send to parents</span></li><li><span data-lang="zh">沉淀到学生档案</span><span data-lang="en">Store in student record</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">行为监控</span><span data-lang="en">Behavior Monitoring</span></strong><ul><li><span data-lang="zh">连续缺课 → 风险标记</span><span data-lang="en">Consecutive absences → risk flag</span></li><li><span data-lang="zh">作业未完成 → 自动提醒</span><span data-lang="en">Homework incomplete → reminder</span></li></ul></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="timeline">
+      <div class="timeline-head">
+        <div>
+          <div class="phase-tag">PHASE 4</div>
+          <h3><span data-lang="zh">阶段4：自动续课系统（核心）</span><span data-lang="en">Phase 4: Auto Renewal System (Core)</span></h3>
+          <p><span data-lang="zh">核心目标：membership 的自动续费、续课推荐和排课约束都由系统执行，彻底避免“家长没确认却问排课”的问题。</span><span data-lang="en">Core goal: Let the system run membership auto-renewal, renewal recommendations, and scheduling constraints so “asking for scheduling before confirmation” no longer happens.</span></p>
+        </div>
+      </div>
+      <div class="step-list">
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 12-15：自动续课触发、推荐与 membership 自动续费</span><span data-lang="en">Step 12-15: Automated Renewal Trigger, Recommendation, and Membership Auto-Renewal</span></h4>
+          <p class="step-note"><span data-lang="zh">当 remaining_sessions ≤ 4 时，系统自动发起续课流程；结合当前课程、学生表现和学习路径生成推荐课程、推荐理由和课包。随后按 T-4 节、T-2 节、T-1 节自动提醒。如果家长确认继续，系统续上 membership 并按月自动扣费；只有当续费成功时，才允许继续锁定后续时间。</span><span data-lang="en">When `remaining_sessions ≤ 4`, the system initiates renewal automatically. It generates the next course, rationale, and package based on current course, performance, and learning path. Then it sends automated reminders at T-4, T-2, and T-1 lessons. Once the parent confirms, the system renews the membership and continues monthly auto-charge; only successful renewal allows future slots to be locked.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">触发条件</span><span data-lang="en">Trigger</span></strong><ul><li><span data-lang="zh">IF remaining_sessions ≤ 4</span><span data-lang="en">IF remaining_sessions ≤ 4</span></li><li><span data-lang="zh">→ Renewal Initiated</span><span data-lang="en">→ Renewal initiated</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">自动生成</span><span data-lang="en">Auto-Generated</span></strong><ul><li><span data-lang="zh">推荐课程</span><span data-lang="en">Recommended course</span></li><li><span data-lang="zh">推荐理由</span><span data-lang="en">Recommendation rationale</span></li><li><span data-lang="zh">课包方案</span><span data-lang="en">Package proposal</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">续课规则</span><span data-lang="en">Renewal Rule</span></strong><ul><li><span data-lang="zh">T-4 / T-2 / T-1 自动提醒</span><span data-lang="en">T-4 / T-2 / T-1 reminders</span></li><li><span data-lang="zh">续费成功后继续每月自动扣费</span><span data-lang="en">Continue monthly auto-charge after renewal</span></li><li><span data-lang="zh">未付款 = 不允许锁时间</span><span data-lang="en">No payment = no time lock</span></li></ul></div>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <h4><span data-lang="zh">Step 16：未续课自动分流</span><span data-lang="en">Step 16: Automatic Diversion for Non-Renewals</span></h4>
+          <p class="step-note"><span data-lang="zh">如果 7 天内没有回复，系统自动把家长放入 Win-back Pool，并按周推送活动、新课和重新激活内容。</span><span data-lang="en">If there is no reply after 7 days, the system automatically routes the account into a Win-back Pool and sends weekly campaigns, new-course pushes, and reactivation content.</span></p>
+          <div class="detail-grid">
+            <div class="detail-box"><strong><span data-lang="zh">分流条件</span><span data-lang="en">Diversion Condition</span></strong><ul><li><span data-lang="zh">7天无回复</span><span data-lang="en">No reply after 7 days</span></li><li><span data-lang="zh">→ Win-back Pool</span><span data-lang="en">→ Win-back Pool</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">系统动作</span><span data-lang="en">System Actions</span></strong><ul><li><span data-lang="zh">每周触达</span><span data-lang="en">Weekly outreach</span></li><li><span data-lang="zh">推活动</span><span data-lang="en">Campaign pushes</span></li><li><span data-lang="zh">推新课</span><span data-lang="en">New course pushes</span></li></ul></div>
+            <div class="detail-box"><strong><span data-lang="zh">价值</span><span data-lang="en">Value</span></strong><ul><li><span data-lang="zh">不丢沉默客户</span><span data-lang="en">Preserve inactive leads</span></li><li><span data-lang="zh">续课后链路延长</span><span data-lang="en">Extend lifecycle value</span></li></ul></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="rule-grid">
+      <article class="rule-panel">
+        <h3><span data-lang="zh">核心自动化规则</span><span data-lang="en">Core Automation Rules</span></h3>
+        <p><span data-lang="zh">只有 `membership_active = TRUE` 且 `payment_completed = TRUE` 才能进入排课；首月必须先付费，之后按月自动扣费；老师 24 小时未确认自动提醒，再未确认自动重分配。</span><span data-lang="en">Scheduling requires both `membership_active = TRUE` and `payment_completed = TRUE`; the first month must be paid upfront, then the system auto-charges monthly. If a teacher does not confirm within 24 hours, reminders and reassignment happen automatically.</span></p>
+      </article>
+
+      <article class="rule-panel">
+        <h3><span data-lang="zh">人工只做什么</span><span data-lang="en">What Humans Still Do</span></h3>
+        <p><span data-lang="zh">人工只介入高意向客户、高价值客户、教学异常、风险学生和关键续费节点，其余默认由系统推进。</span><span data-lang="en">Humans only step in for high-intent accounts, high-value accounts, teaching exceptions, risk students, and critical renewal moments. Everything else is system-led by default.</span></p>
+      </article>
+
+      <article class="rule-panel">
+        <h3><span data-lang="zh">这套流程解决什么</span><span data-lang="en">What This Solves</span></h3>
+        <p><span data-lang="zh">解决手动试课安排、没付款先排课、membership 续费不清晰、老师确认滞后、续课跟进散乱、沉默客户流失等问题。</span><span data-lang="en">This solves manual trial scheduling, scheduling before payment, unclear membership renewal logic, delayed teacher confirmations, fragmented renewal follow-up, and silent customer leakage.</span></p>
+      </article>
+    </section>
+
     <section class="kpi">
-      <h3><span data-lang="zh">关键运营控制点（建议）</span><span data-lang="en">Key Operational Control Points (Recommended)</span></h3>
+      <h3><span data-lang="zh">关键运营控制点（自动化版本）</span><span data-lang="en">Key Operational Control Points (Automation Version)</span></h3>
       <table>
         <thead>
           <tr>
             <th><span data-lang="zh">流程环节</span><span data-lang="en">Stage</span></th>
             <th><span data-lang="zh">关键动作</span><span data-lang="en">Key Actions</span></th>
             <th><span data-lang="zh">核心指标（KPI）</span><span data-lang="en">Core KPI</span></th>
-            <th><span data-lang="zh">责任角色</span><span data-lang="en">Owner</span></th>
+            <th><span data-lang="zh">默认责任方</span><span data-lang="en">Default Owner</span></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><span data-lang="zh">试课</span><span data-lang="en">Trial Class</span></td>
-            <td><span data-lang="zh">测评 + 试听 + 24小时跟进</span><span data-lang="en">Assessment + trial + 24-hour follow-up</span></td>
-            <td><span class="tag"><span data-lang="zh">试听到报名转化率</span><span data-lang="en">Trial-to-enrollment conversion rate</span></span></td>
-            <td><span data-lang="zh">课程顾问 / 试听老师</span><span data-lang="en">Course Consultant / Trial Instructor</span></td>
+            <td><span data-lang="zh">自助试课</span><span data-lang="en">Self-Serve Trial</span></td>
+            <td><span data-lang="zh">Lead 自动生成、预约、提醒、报告与跟进</span><span data-lang="en">Auto lead creation, booking, reminders, report, and follow-up</span></td>
+            <td><span class="tag"><span data-lang="zh">预约完成率 / Trial 到报名转化率</span><span data-lang="en">Booking completion / trial-to-enrollment conversion</span></span></td>
+            <td><span data-lang="zh">系统为主，顾问仅处理高意向</span><span data-lang="en">System-led, consultant only for high intent</span></td>
           </tr>
           <tr>
-            <td><span data-lang="zh">排课（选课）</span><span data-lang="en">Scheduling (Course Selection)</span></td>
-            <td><span data-lang="zh">班型确认 + 师资匹配 + 课表落地</span><span data-lang="en">Class model confirmation + teacher matching + timetable launch</span></td>
-            <td><span class="tag"><span data-lang="zh">48小时排课完成率</span><span data-lang="en">48-hour scheduling completion rate</span></span></td>
-            <td><span data-lang="zh">教务 / 学管师</span><span data-lang="en">Academic Ops / Student Manager</span></td>
+            <td><span data-lang="zh">membership 开通 + 自动排课</span><span data-lang="en">Membership Activation + Auto Scheduling</span></td>
+            <td><span data-lang="zh">首月付款门槛、月度自动扣费、Ready Pool、自助选时间、老师确认约束</span><span data-lang="en">First-payment gate, monthly auto-charge, Ready Pool, self-serve slot selection, teacher confirmation rules</span></td>
+            <td><span class="tag"><span data-lang="zh">membership 开通率 / 自动扣费成功率 / 24h 老师确认率</span><span data-lang="en">Membership activation / auto-charge success / 24h confirmation</span></span></td>
+            <td><span data-lang="zh">系统为主，教务处理异常</span><span data-lang="en">System-led, ops for exceptions</span></td>
           </tr>
           <tr>
-            <td><span data-lang="zh">续课</span><span data-lang="en">Renewal</span></td>
-            <td><span data-lang="zh">阶段复盘 + 续费邀约 + 新计划签约</span><span data-lang="en">Stage review + renewal invitation + new-plan closure</span></td>
-            <td><span class="tag"><span data-lang="zh">到期学员续课率</span><span data-lang="en">Renewal rate of expiring students</span></span></td>
-            <td><span data-lang="zh">班主任 / 课程顾问</span><span data-lang="en">Homeroom Teacher / Course Consultant</span></td>
+            <td><span data-lang="zh">在读自动化 + 续课</span><span data-lang="en">In-Progress Automation + Renewal</span></td>
+            <td><span data-lang="zh">自动记录、节点触发、membership 续费衔接、风险监控与 Win-back 分流</span><span data-lang="en">Auto logging, milestone triggers, membership renewal continuity, risk monitoring, and win-back routing</span></td>
+            <td><span class="tag"><span data-lang="zh">满意度 / 中期报告触发率 / 自动扣费成功率 / Win-back 激活率</span><span data-lang="en">CSAT / mid-term trigger rate / auto-charge success / win-back reactivation</span></span></td>
+            <td><span data-lang="zh">系统为主，老师和班主任处理风险节点</span><span data-lang="en">System-led, teachers and homeroom staff handle risk nodes</span></td>
           </tr>
         </tbody>
       </table>
     </section>
 
+    <section class="summary-panel">
+      <h3><span data-lang="zh">一句话总结</span><span data-lang="en">One-Line Summary</span></h3>
+      <p><span data-lang="zh">这套设计的本质不是“把人全拿掉”，而是让系统承担标准动作、节奏控制和硬规则，把人工集中在真正影响转化和体验的少数节点上。</span><span data-lang="en">The point of this design is not to remove people entirely. It is to let the system carry standard actions, cadence control, and hard rules, while humans focus on the few moments that truly change conversion and experience.</span></p>
+    </section>
+
     <footer>
-      <span data-lang="zh">建议将以上流程接入CRM与教务系统，统一沉淀：线索标签、课消进度、续费节点、家长沟通记录。</span>
-      <span data-lang="en">Recommend integrating this workflow into CRM and academic systems to centralize lead tags, lesson consumption progress, renewal milestones, and parent communication records.</span>
+      <span data-lang="zh">建议将以上流程接入 CRM、membership 支付、排课与教务系统，统一沉淀：Lead 标签、membership 状态、首月付款状态、月度自动扣费结果、Ready Pool、课消进度、风险标记与家长沟通记录。</span>
+      <span data-lang="en">Recommend integrating this workflow with CRM, membership billing, scheduling, and academic systems to centralize lead tags, membership status, first-payment status, monthly auto-charge outcomes, Ready Pool gating, lesson consumption, risk flags, and parent communication logs.</span>
     </footer>
   </main>
 

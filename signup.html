@@ -77,8 +77,8 @@
     }
 
     .brand img {
-      width: 58px;
-      height: 58px;
+      width: 72px;
+      height: 72px;
       object-fit: contain;
       flex-shrink: 0;
     }
@@ -308,16 +308,19 @@
   <main class="container">
     <div class="topbar">
       <a class="brand" href="index.html" aria-label="MindDo home">
-        <img src="assets/logo.png" alt="馒头AI logo" />
+        <img src="assets/logo.png" alt="Mindo AI logo" />
         <div class="brand-copy">
           <span>Mindo AI</span>
-          <strong>馒头AI</strong>
+          <strong>Mindo AI</strong>
         </div>
       </a>
       <div class="nav-links">
         <a class="chip" href="index.html" data-i18n="backFlow"></a>
+        <a class="chip" href="course-selection.html" data-i18n="goCourseSelection"></a>
         <a class="chip" href="course-system.html" data-i18n="goCourseSystem"></a>
         <a class="chip" href="semester-report.html" data-i18n="goSemesterReport"></a>
+        <a class="chip" href="assessment.html" data-i18n="goAssessment"></a>
+        <a class="chip" href="dashboard.html" data-i18n="goDashboard"></a>
         <a class="chip" href="trial.html" data-i18n="backTrial"></a>
       </div>
       <div class="lang-switch" aria-label="language switch">
@@ -398,8 +401,11 @@
       var I18N = {
         "zh-CN": {
           backFlow: "返回流程总览",
+          goCourseSelection: "前往选课",
           goCourseSystem: "查看课程体系",
           goSemesterReport: "查看学期报告",
+          goAssessment: "前往 Assessment",
+          goDashboard: "前往看板",
           backTrial: "返回 Trial 页面",
           pageTitle: "Sign Up 注册页面",
           pageDesc: "注册成功后，系统将发送注册成功邮件，并自动跳转到评估页面。",
@@ -427,8 +433,11 @@
         },
         en: {
           backFlow: "Back To Workflow",
+          goCourseSelection: "Course Selection",
           goCourseSystem: "View Curriculum System",
           goSemesterReport: "View Semester Report",
+          goAssessment: "Go To Assessment",
+          goDashboard: "Go To Dashboard",
           backTrial: "Back To Trial",
           pageTitle: "Sign Up Page",
           pageDesc: "After successful sign-up, a confirmation email is sent and users are redirected to the assessment page.",
@@ -626,4 +635,5 @@
   </script>
 </body>
 </html>
+
 

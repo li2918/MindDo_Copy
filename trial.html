@@ -121,6 +121,10 @@
       transition: all 0.2s ease;
     }
 
+    button {
+      font: inherit;
+    }
+
     .link-btn:hover,
     .lang-btn:hover,
     .lang-btn.active,
@@ -302,6 +306,27 @@
       color: var(--primary-deep);
     }
 
+    .schedule-block {
+      display: grid;
+      gap: 8px;
+    }
+
+    .picker-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-deep);
+    }
+
+    .picker-label span:last-child {
+      font-weight: 500;
+      color: var(--muted);
+    }
+
     .schedule-scroll {
       overflow-x: auto;
       padding-bottom: 4px;
@@ -341,6 +366,7 @@
       gap: 6px;
       text-align: left;
       align-content: start;
+      appearance: none;
     }
 
     .date-card:hover,
@@ -389,6 +415,7 @@
       font-size: 14px;
       font-weight: 700;
       text-align: center;
+      appearance: none;
     }
 
     .time-slot[disabled] {
@@ -402,6 +429,7 @@
       min-height: 22px;
       font-size: 13px;
       color: var(--muted);
+      padding-top: 2px;
     }
 
     .result {
@@ -541,7 +569,11 @@
               <p class="muted" data-i18n="scheduleDesc"></p>
             </div>
 
-            <div>
+            <div class="schedule-block">
+              <div class="picker-label">
+                <span data-i18n="trialDate"></span>
+                <span data-i18n="dateHelper"></span>
+              </div>
               <label class="sr-only" for="trialDate" data-i18n="trialDate"></label>
               <input id="trialDate" name="trialDate" type="date" required class="sr-only" />
               <div class="schedule-scroll">
@@ -549,7 +581,11 @@
               </div>
             </div>
 
-            <div>
+            <div class="schedule-block">
+              <div class="picker-label">
+                <span data-i18n="trialTime"></span>
+                <span data-i18n="timeHelper"></span>
+              </div>
               <label class="sr-only" for="trialTime" data-i18n="trialTime"></label>
               <select id="trialTime" name="trialTime" required class="sr-only"></select>
               <div id="timeGrid" class="time-grid" role="listbox" aria-label="Trial time options"></div>
@@ -626,6 +662,8 @@
           trialTime: "试课时间",
           scheduleTitle: "像日历一样选择试课时间",
           scheduleDesc: "先选日期，再点选可预约时间段。今天的过期时段会自动置灰。",
+          dateHelper: "未来 12 天",
+          timeHelper: "点击即可选中",
           channel: "获客渠道",
           timeNote: "时间备注（选填）",
           timeNotePlaceholder: "例如：放学后可上课 / 需要避开周三",
@@ -703,6 +741,8 @@
           trialTime: "Trial Time",
           scheduleTitle: "Choose a trial slot like a calendar",
           scheduleDesc: "Pick a date first, then tap an available time slot. Expired times for today are disabled automatically.",
+          dateHelper: "Next 12 days",
+          timeHelper: "Tap to select",
           channel: "Lead Source",
           timeNote: "Time Note (Optional)",
           timeNotePlaceholder: "Example: Available after school / Avoid Wednesdays",

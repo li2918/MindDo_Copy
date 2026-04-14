@@ -502,17 +502,217 @@
       .hero { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 980px) {
+      .container {
+        width: min(100% - 24px, 1240px);
+      }
+
+      .brand-subtitle,
+      .hero-main p,
+      .section-head p {
+        max-width: none;
+      }
+
+      .hero-main, .hero-side {
+        padding: 24px;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rules-grid,
+      .entries-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 760px) {
       .container { width: min(100% - 20px, 1240px); padding: 18px 0 44px; }
-      .topbar { flex-direction: column; align-items: flex-start; }
-      .topbar-side { width: 100%; justify-content: flex-start; }
+      body::before {
+        background-size: 22px 22px;
+        opacity: 0.28;
+      }
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        border-radius: 20px;
+      }
+      .brand {
+        width: 100%;
+        align-items: flex-start;
+      }
+      .brand-copy {
+        min-width: 0;
+      }
+      .brand-title {
+        font-size: 20px;
+      }
+      .brand-subtitle {
+        font-size: 12px;
+      }
+      .topbar-side {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .lang-switch {
+        width: 100%;
+      }
+      .lang-btn {
+        flex: 1 1 0;
+        min-height: 42px;
+      }
+      .hero {
+        gap: 14px;
+      }
       .hero-main, .hero-side, .phase-card, .spine, .module-card, .rule-card, .entry-card, .footer-note {
         border-radius: 20px;
         padding: 20px;
       }
+      .hero-main h1 {
+        margin-top: 14px;
+      }
+      .hero-main p {
+        font-size: 15px;
+        line-height: 1.72;
+      }
+      .hero-actions {
+        flex-direction: column;
+      }
+      .hero-actions .cta,
+      .hero-actions .link-pill,
+      .topbar-side > .link-pill {
+        width: 100%;
+      }
       .brand img { width: 62px; height: 62px; }
       .hero-stats, .loop-grid, .module-grid, .rules-grid, .entries-grid, .spine-grid {
         grid-template-columns: 1fr;
+      }
+      .section-head {
+        align-items: flex-start;
+        margin-bottom: 12px;
+      }
+      .section-head h2 {
+        margin-top: 8px;
+      }
+      .phase-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .phase-note {
+        max-width: none;
+        text-align: left;
+      }
+      .spine-card::after {
+        top: auto;
+        right: auto;
+        left: 24px;
+        bottom: -10px;
+        width: 2px;
+        height: 20px;
+        background: linear-gradient(180deg, rgba(176, 112, 39, 0.4), transparent);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(100% - 16px, 1240px);
+        padding: 14px 0 36px;
+      }
+
+      .topbar,
+      .hero-main,
+      .hero-side,
+      .phase-card,
+      .spine,
+      .module-card,
+      .rule-card,
+      .entry-card,
+      .footer-note {
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      .brand {
+        gap: 10px;
+      }
+
+      .brand img {
+        width: 54px;
+        height: 54px;
+      }
+
+      .brand-kicker,
+      .eyebrow,
+      .section-tag,
+      .module-tag,
+      .phase-pill {
+        font-size: 11px;
+        letter-spacing: 0.06em;
+      }
+
+      .hero-main h1 {
+        font-size: clamp(28px, 10vw, 38px);
+        line-height: 1.08;
+      }
+
+      .hero-main p,
+      .section-head p,
+      .phase-card p,
+      .module-card p,
+      .rule-card p,
+      .footer-note {
+        font-size: 14px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .stat {
+        padding: 14px;
+        border-radius: 16px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+      }
+
+      .hero-side h2,
+      .phase-card h3 {
+        font-size: 20px;
+      }
+
+      .module-card h3,
+      .rule-card h3,
+      .entry-card h3 {
+        font-size: 18px;
+      }
+
+      .loop-step {
+        grid-template-columns: 36px 1fr;
+        gap: 10px;
+        padding: 10px;
+      }
+
+      .loop-num {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+      }
+
+      .point,
+      .entry-list a,
+      .exception {
+        padding: 11px 12px;
+        border-radius: 14px;
+      }
+
+      .spine-card {
+        padding: 16px;
       }
     }
   </style>

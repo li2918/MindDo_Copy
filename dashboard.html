@@ -359,6 +359,7 @@
     </section>
   </main>
 
+  <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
       var I18N = {
@@ -744,14 +745,19 @@
           return normEmail(u.email) === normEmail(email);
         });
 
-        list.push({
+        var payload = {
           email: email,
           amount: amount,
           source: matched && matched.provider ? matched.provider : "email",
           createdAt: new Date().toISOString()
-        });
+        };
 
-        localStorage.setItem(STORAGE.payments, JSON.stringify(list));
+        if (window.MindDoFlow && window.MindDoFlow.savePayment) {
+          window.MindDoFlow.savePayment(payload);
+        } else {
+          list.push(payload);
+          localStorage.setItem(STORAGE.payments, JSON.stringify(list));
+        }
         paymentForm.reset();
         paymentStatus.className = "status ok";
         paymentStatus.textContent = t.successPaid;

@@ -298,6 +298,7 @@
     </section>
   </main>
 
+  <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
       var I18N = {
@@ -396,7 +397,10 @@
 
       function setLang(lang) {
         var t = I18N[lang] || I18N["zh-CN"];
-        var latestLead = latestByDate(readJson("minddo_trial_leads"));
+        var snapshot = window.MindDoFlow && window.MindDoFlow.getSnapshot
+          ? window.MindDoFlow.getSnapshot()
+          : null;
+        var latestLead = snapshot && snapshot.lead ? snapshot.lead : latestByDate(readJson("minddo_trial_leads"));
 
         html.setAttribute("lang", lang);
         localStorage.setItem("minddo_lang", lang);
@@ -433,7 +437,10 @@
 
         var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
         var t = I18N[lang];
-        var latestLead = latestByDate(readJson("minddo_trial_leads"));
+        var snapshot = window.MindDoFlow && window.MindDoFlow.getSnapshot
+          ? window.MindDoFlow.getSnapshot()
+          : null;
+        var latestLead = snapshot && snapshot.lead ? snapshot.lead : latestByDate(readJson("minddo_trial_leads"));
         var payload = {
           studentName: latestLead ? latestLead.studentName : "",
           trialDate: latestLead ? latestLead.trialDate : "",
@@ -452,9 +459,13 @@
           return;
         }
 
-        var list = readJson("minddo_feedback");
-        list.push(payload);
-        localStorage.setItem("minddo_feedback", JSON.stringify(list));
+        if (window.MindDoFlow && window.MindDoFlow.saveFeedback) {
+          window.MindDoFlow.saveFeedback(payload);
+        } else {
+          var list = readJson("minddo_feedback");
+          list.push(payload);
+          localStorage.setItem("minddo_feedback", JSON.stringify(list));
+        }
 
         form.reset();
         setLang(lang);

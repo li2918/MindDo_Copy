@@ -286,6 +286,7 @@
     </section>
   </main>
 
+  <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
       var I18N = {
@@ -348,8 +349,11 @@
       var welcomeText = document.getElementById("welcomeText");
 
       var params = new URLSearchParams(window.location.search);
-      var name = params.get("name") || "";
-      var email = params.get("email") || "";
+      var currentStudent = window.MindDoFlow && window.MindDoFlow.getCurrentStudent
+        ? window.MindDoFlow.getCurrentStudent()
+        : null;
+      var name = params.get("name") || (currentStudent && (currentStudent.studentName || currentStudent.name)) || "";
+      var email = params.get("email") || (currentStudent && currentStudent.email) || "";
 
       function buildOptions(select, options) {
         select.innerHTML = options.map(function (item, idx) {
@@ -417,10 +421,14 @@
           return;
         }
 
-        var key = "minddo_assessments";
-        var list = JSON.parse(localStorage.getItem(key) || "[]");
-        list.push(payload);
-        localStorage.setItem(key, JSON.stringify(list));
+        if (window.MindDoFlow && window.MindDoFlow.saveAssessment) {
+          window.MindDoFlow.saveAssessment(payload);
+        } else {
+          var key = "minddo_assessments";
+          var list = JSON.parse(localStorage.getItem(key) || "[]");
+          list.push(payload);
+          localStorage.setItem(key, JSON.stringify(list));
+        }
 
         form.reset();
         setLang(lang);

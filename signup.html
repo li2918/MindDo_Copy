@@ -389,6 +389,7 @@
     </section>
   </main>
 
+  <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
       var CONFIG = {
@@ -518,6 +519,10 @@
       }
 
       function saveUser(user) {
+        if (window.MindDoFlow && window.MindDoFlow.saveSignupUser) {
+          window.MindDoFlow.saveSignupUser(user);
+          return;
+        }
         var key = "minddo_signup_users";
         var users = JSON.parse(localStorage.getItem(key) || "[]");
         users.push(user);
@@ -525,6 +530,10 @@
       }
 
       function setCurrentStudent(user) {
+        if (window.MindDoFlow && window.MindDoFlow.setCurrentStudent) {
+          window.MindDoFlow.setCurrentStudent(user);
+          return;
+        }
         localStorage.setItem("minddo_current_student", JSON.stringify(user));
       }
 
@@ -588,6 +597,9 @@
 
       var savedLang = localStorage.getItem("minddo_lang");
       setLang(savedLang === "en" ? "en" : "zh-CN");
+      if (window.MindDoFlow && window.MindDoFlow.prefillSignupForm) {
+        window.MindDoFlow.prefillSignupForm(form);
+      }
 
       buttons.forEach(function (btn) {
         btn.addEventListener("click", function () {

@@ -286,6 +286,7 @@
     </section>
   </main>
 
+  <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
       var I18N = {
@@ -378,10 +379,13 @@
 
       function setLang(lang) {
         var t = I18N[lang] || I18N["zh-CN"];
+        var snapshot = window.MindDoFlow && window.MindDoFlow.getSnapshot
+          ? window.MindDoFlow.getSnapshot()
+          : null;
         var leads = readJson("minddo_trial_leads");
         var feedbacks = readJson("minddo_feedback");
-        var latestLead = latestByDate(leads);
-        var latestFeedback = latestByDate(feedbacks);
+        var latestLead = snapshot && snapshot.lead ? snapshot.lead : latestByDate(leads);
+        var latestFeedback = snapshot && snapshot.feedback ? snapshot.feedback : latestByDate(feedbacks);
 
         html.setAttribute("lang", lang);
         localStorage.setItem("minddo_lang", lang);

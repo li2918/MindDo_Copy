@@ -628,6 +628,7 @@
     </section>
   </main>
 
+  <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
       var I18N = {
@@ -1002,6 +1003,10 @@
       }
 
       function saveLead(data) {
+        if (window.MindDoFlow && window.MindDoFlow.saveLead) {
+          window.MindDoFlow.saveLead(data);
+          return;
+        }
         var key = "minddo_trial_leads";
         var leads = JSON.parse(localStorage.getItem(key) || "[]");
         leads.push(data);
@@ -1012,6 +1017,9 @@
       var initialLang = saved === "en" ? "en" : "zh-CN";
       setMinTrialDate();
       setLang(initialLang);
+      if (window.MindDoFlow && window.MindDoFlow.prefillTrialForm) {
+        window.MindDoFlow.prefillTrialForm(form);
+      }
 
       [subject, trialTime, channel].forEach(function (field) {
         field.addEventListener("change", function () {

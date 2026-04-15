@@ -529,6 +529,7 @@
     </section>
   </main>
 
+  <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
       var I18N = {
@@ -737,10 +738,14 @@
           createdAt: new Date().toISOString()
         };
 
-        var key = "minddo_membership_orders";
-        var list = JSON.parse(localStorage.getItem(key) || "[]");
-        list.push(payload);
-        localStorage.setItem(key, JSON.stringify(list));
+        if (window.MindDoFlow && window.MindDoFlow.saveMembershipOrder) {
+          window.MindDoFlow.saveMembershipOrder(payload);
+        } else {
+          var key = "minddo_membership_orders";
+          var list = JSON.parse(localStorage.getItem(key) || "[]");
+          list.push(payload);
+          localStorage.setItem(key, JSON.stringify(list));
+        }
 
         result.className = "result success";
         result.textContent = t.submitSuccess;
@@ -780,6 +785,9 @@
 
       var saved = localStorage.getItem("minddo_lang");
       setLang(saved === "en" ? "en" : "zh-CN");
+      if (window.MindDoFlow && window.MindDoFlow.populateCourseMeta) {
+        window.MindDoFlow.populateCourseMeta();
+      }
       updateMembershipUI();
       updateSummary();
     })();

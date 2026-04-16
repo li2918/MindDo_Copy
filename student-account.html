@@ -372,6 +372,32 @@
       font-weight: 700;
     }
 
+    .slot-stack {
+      display: grid;
+      gap: 8px;
+    }
+
+    .slot-chip {
+      display: grid;
+      gap: 4px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(151, 84, 21, 0.12);
+    }
+
+    .slot-chip strong {
+      color: var(--primary-deep);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .slot-chip span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
     .day-empty {
       color: var(--muted);
       font-size: 12px;
@@ -764,6 +790,15 @@
         })[0] || null;
       }
 
+      function matchCurrentStudent(item, current) {
+        if (!item || !current) return false;
+        var itemEmail = String(item.email || "").trim().toLowerCase();
+        var currentEmail = String(current.email || "").trim().toLowerCase();
+        var itemName = String(item.studentName || item.name || "").trim().toLowerCase();
+        var currentName = String(current.studentName || current.name || "").trim().toLowerCase();
+        return (itemEmail && currentEmail && itemEmail === currentEmail) || (itemName && currentName && itemName === currentName);
+      }
+
       function formatTrialTime(lead) {
         if (!lead || !lead.trialDate || !lead.trialTime) return "";
         return lead.trialDate + " " + lead.trialTime;
@@ -795,6 +830,23 @@
           report: lang === "en" ? "Parent Deep Report" : "家长深度报告"
         };
         return list.map(function (item) { return map[item] || item; }).join(", ");
+      }
+
+      function formatClassMode(mode, lang) {
+        if (!mode) return "";
+        if (mode === "1v1") return "1v1";
+        if (mode === "small") return lang === "en" ? "Small Group 1v4" : "小组课 1v4";
+        return mode;
+      }
+
+      function uniqueByText(list) {
+        var seen = {};
+        return list.filter(function (item) {
+          var key = String(item || "");
+          if (!key || seen[key]) return false;
+          seen[key] = true;
+          return true;
+        });
       }
 
       function getWeekDays(lang) {
@@ -871,6 +923,9 @@
         var latestAssessment = snapshot && snapshot.assessment ? snapshot.assessment : latestByDate(readJson("minddo_assessments"));
         var latestFeedback = snapshot && snapshot.feedback ? snapshot.feedback : latestByDate(readJson("minddo_feedback"));
         var latestMembership = snapshot && snapshot.membership ? snapshot.membership : latestByDate(readJson("minddo_membership_orders"));
+        var memberships = readJson("minddo_membership_orders")
+          .filter(function (item) { return matchCurrentStudent(item, current); })
+          .sort(function (a, b) { return new Date(b.createdAt || 0) - new Date(a.createdAt || 0); });
         var stage = getStage(snapshot);
 
         html.setAttribute("lang", lang);
@@ -923,20 +978,40 @@
           return "<li><span>" + item.label + "</span><strong>" + summaryValues[index] + "</strong></li>";
         }).join("");
 
+        var coursePlans = uniqueByText(memberships.map(function (item) {
+          return formatPlan(item.plan, lang);
+        }).filter(Boolean));
+        var classModes = uniqueByText(memberships.map(function (item) {
+          return formatClassMode(item.classMode, lang);
+        }).filter(Boolean));
+        var billingCycles = uniqueByText(memberships.map(function (item) {
+          return item.billingCycle || "";
+        }).filter(Boolean));
+
         var courseValues = [
-          latestMembership ? (formatPlan(latestMembership.plan, lang) || t.courseItems[0].fallback) : t.courseItems[0].fallback,
-          latestMembership ? (latestMembership.classMode || t.courseItems[1].fallback) : t.courseItems[1].fallback,
-          latestMembership ? (latestMembership.billingCycle || t.courseItems[2].fallback) : t.courseItems[2].fallback
+          coursePlans.length ? coursePlans.join(" / ") : (latestMembership ? (formatPlan(latestMembership.plan, lang) || t.courseItems[0].fallback) : t.courseItems[0].fallback),
+          classModes.length ? classModes.join(" / ") : (latestMembership ? (formatClassMode(latestMembership.classMode, lang) || t.courseItems[1].fallback) : t.courseItems[1].fallback),
+          billingCycles.length ? billingCycles.join(" / ") : (latestMembership ? (latestMembership.billingCycle || t.courseItems[2].fallback) : t.courseItems[2].fallback)
         ];
 
         courseList.innerHTML = t.courseItems.map(function (item, index) {
           return "<li><span>" + item.label + "</span><strong>" + courseValues[index] + "</strong></li>";
         }).join("");
 
+        var scheduleDays = uniqueByText(memberships.map(function (item) {
+          return item.weekday || "";
+        }).filter(Boolean));
+        var scheduleTimes = uniqueByText(memberships.map(function (item) {
+          return item.timeSlot || "";
+        }).filter(Boolean));
+        var scheduleAddons = uniqueByText(memberships.map(function (item) {
+          return formatAddons(item.addons, lang);
+        }).filter(Boolean));
+
         var scheduleValues = [
-          latestMembership ? (latestMembership.weekday || t.scheduleItems[0].fallback) : t.scheduleItems[0].fallback,
-          latestMembership ? (latestMembership.timeSlot || t.scheduleItems[1].fallback) : t.scheduleItems[1].fallback,
-          latestMembership ? (formatAddons(latestMembership.addons, lang) || t.scheduleItems[2].fallback) : t.scheduleItems[2].fallback
+          scheduleDays.length ? scheduleDays.join(" / ") : (latestMembership ? (latestMembership.weekday || t.scheduleItems[0].fallback) : t.scheduleItems[0].fallback),
+          scheduleTimes.length ? scheduleTimes.join(" / ") : (latestMembership ? (latestMembership.timeSlot || t.scheduleItems[1].fallback) : t.scheduleItems[1].fallback),
+          scheduleAddons.length ? scheduleAddons.join(" / ") : (latestMembership ? (formatAddons(latestMembership.addons, lang) || t.scheduleItems[2].fallback) : t.scheduleItems[2].fallback)
         ];
 
         scheduleList.innerHTML = t.scheduleItems.map(function (item, index) {
@@ -945,14 +1020,22 @@
 
         var days = getWeekDays(lang);
         weekBoard.innerHTML = days.map(function (day) {
-          var isActive = latestMembership && matchesDay(latestMembership.weekday, day.key);
+          var dayMemberships = memberships.filter(function (item) {
+            return matchesDay(item.weekday, day.key);
+          });
+          var isActive = dayMemberships.length > 0;
+          var slotMarkup = dayMemberships.length
+            ? "<div class='slot-stack'>" + dayMemberships.map(function (item) {
+                var title = formatPlan(item.plan, lang) || t.courseItems[0].fallback;
+                var meta = [item.timeSlot || "", formatClassMode(item.classMode, lang) || ""].filter(Boolean).join(" · ");
+                return "<div class='slot-chip'><strong>" + title + "</strong><span>" + meta + "</span></div>";
+              }).join("") + "</div>"
+            : "<div class='day-empty'>" + t.scheduleItems[1].fallback + "</div>";
           return [
             "<article class='day-card" + (isActive ? " active" : "") + "'>",
             "<div class='day-name'>" + day.short + "</div>",
             "<div class='day-title'>" + day.key + "</div>",
-            isActive
-              ? "<div class='day-slot'>" + (latestMembership.timeSlot || t.scheduleItems[1].fallback) + "</div>"
-              : "<div class='day-empty'>" + t.scheduleItems[1].fallback + "</div>",
+            slotMarkup,
             "</article>"
           ].join("");
         }).join("");

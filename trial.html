@@ -135,6 +135,13 @@
       color: var(--primary-deep);
     }
 
+    .link-btn.is-locked {
+      opacity: 0.45;
+      filter: saturate(0.7);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
     .hero,
     .card {
       background: linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(252, 244, 232, 0.96));
@@ -682,6 +689,7 @@
           chooseDateFirst: "请先选择一个试课日期。",
           chooseTimeHint: "请选择一个可预约时间段。",
           scheduleSelected: "已选择：{date} {time}",
+          nextStepLocked: "请先完成试课报名并选择试课时间，然后再进入下一个环节。",
           subjectOptions: [
             { value: "", label: "请选择" },
             { value: "ai-course", label: "AI课程" }
@@ -757,6 +765,7 @@
           chooseDateFirst: "Please choose a trial date first.",
           chooseTimeHint: "Please choose an available time slot.",
           scheduleSelected: "Selected: {date} {time}",
+          nextStepLocked: "Please complete trial registration and choose a trial time before moving to the next step.",
           subjectOptions: [
             { value: "", label: "Please select" },
             { value: "ai-course", label: "AI Course" }
@@ -797,6 +806,7 @@
       var calendarGrid = document.getElementById("calendarGrid");
       var timeGrid = document.getElementById("timeGrid");
       var scheduleSummary = document.getElementById("scheduleSummary");
+      var navLinks = document.querySelectorAll(".nav-links a");
       var dateOptionCount = 12;
 
       function buildOptions(select, options) {
@@ -951,6 +961,38 @@
         return !Number.isNaN(chosen.getTime()) && chosen.getTime() > Date.now();
       }
 
+      function hasUnlockedNextStep() {
+        if (isFutureTrial(trialDate.value, trialTime.value)) {
+          return true;
+        }
+
+        if (window.MindDoFlow && window.MindDoFlow.getSnapshot) {
+          var snapshot = window.MindDoFlow.getSnapshot();
+          var lead = snapshot && snapshot.lead;
+          return !!(lead && isFutureTrial(lead.trialDate, lead.trialTime));
+        }
+
+        try {
+          var leads = JSON.parse(localStorage.getItem("minddo_trial_leads") || "[]");
+          var latest = leads.slice().sort(function (a, b) {
+            return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+          })[0];
+          return !!(latest && isFutureTrial(latest.trialDate, latest.trialTime));
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function updateNavGate() {
+        var unlocked = hasUnlockedNextStep();
+        navLinks.forEach(function (link) {
+          var href = link.getAttribute("href");
+          var isLockedTarget = href && href !== "index.html";
+          link.classList.toggle("is-locked", isLockedTarget && !unlocked);
+          link.setAttribute("aria-disabled", isLockedTarget && !unlocked ? "true" : "false");
+        });
+      }
+
       function setLang(lang) {
         var data = I18N[lang] || I18N["zh-CN"];
         html.setAttribute("lang", lang);
@@ -989,6 +1031,7 @@
         syncTranslatedFields(data);
         renderCalendar(data);
         renderTimeGrid(data);
+        updateNavGate();
 
         buttons.forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
@@ -1020,6 +1063,7 @@
       if (window.MindDoFlow && window.MindDoFlow.prefillTrialForm) {
         window.MindDoFlow.prefillTrialForm(form);
       }
+      updateNavGate();
 
       [subject, trialTime, channel].forEach(function (field) {
         field.addEventListener("change", function () {
@@ -1043,6 +1087,7 @@
         var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
         renderCalendar(I18N[lang]);
         renderTimeGrid(I18N[lang]);
+        updateNavGate();
       });
 
       timeGrid.addEventListener("click", function (e) {
@@ -1053,6 +1098,23 @@
         var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
         syncTranslatedFields(I18N[lang]);
         renderTimeGrid(I18N[lang]);
+        updateNavGate();
+      });
+
+      navLinks.forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          var href = link.getAttribute("href");
+          if (!href || href === "index.html" || hasUnlockedNextStep()) {
+            return;
+          }
+
+          e.preventDefault();
+          var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
+          var t = I18N[lang];
+          result.className = "result error";
+          result.textContent = t.nextStepLocked;
+          scheduleSummary.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
       });
 
       buttons.forEach(function (btn) {
@@ -1110,6 +1172,7 @@
         saveLead(formData);
         form.reset();
         setLang(currentLang);
+        updateNavGate();
         result.className = "result success";
         result.textContent = t.success;
       });

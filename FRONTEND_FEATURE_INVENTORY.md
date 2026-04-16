@@ -44,12 +44,14 @@ Acts as the main front door for the full frontend system and links into the high
 
 Current implemented capabilities:
 
-1. Landing-style hero section
-2. Primary launch dock for common pages
+1. Center-style marketing hero section
+2. Strong top-level CTA for trial, registration, and assessment
 3. Role-based portals for visitor, student, and operations
 4. Full page library for all available prototype pages
-5. Bilingual switching consistent with the rest of the site
-6. No project explanation blocks; this page now focuses only on entry and navigation
+5. Parent/student review section for trust-building
+6. Closing CTA band for high-conversion entry
+7. Bilingual switching consistent with the rest of the site
+8. No project explanation blocks; this page now focuses only on entry and navigation
 
 Safe removal note:
 If only the front-door landing is not needed, this file can be simplified or replaced without breaking the shared local data flow logic.

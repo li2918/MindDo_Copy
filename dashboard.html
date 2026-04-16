@@ -417,6 +417,24 @@
         </table>
       </div>
     </section>
+
+    <section class="panel" style="margin-top:14px;">
+      <h2 data-i18n="recentRequests"></h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="colRequestType"></th>
+              <th data-i18n="colStudent"></th>
+              <th data-i18n="colTarget"></th>
+              <th data-i18n="colReason"></th>
+              <th data-i18n="colTime"></th>
+            </tr>
+          </thead>
+          <tbody id="requestTable"></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 
   <script src="assets/minddo-flow.js"></script>
@@ -463,10 +481,15 @@
           paymentOps: "付费登记",
           markPaid: "登记付费",
           recentPayments: "最近付费记录",
+          recentRequests: "最近请假 / 改期申请",
           colEmail: "邮箱",
           colAmount: "金额",
           colSource: "来源",
           colTime: "时间",
+          colRequestType: "申请类型",
+          colStudent: "学生",
+          colTarget: "目标课程",
+          colReason: "说明",
           noData: "暂无数据",
           unknown: "未知",
           successPaid: "付费记录已写入。",
@@ -476,7 +499,8 @@
             signupWeek: "7日新增注册",
             googleShare: "Google 登录占比",
             microsoftShare: "Microsoft 登录占比",
-            avgLeadToAssess: "试课线索转评估率"
+            avgLeadToAssess: "试课线索转评估率",
+            pendingRequests: "待处理请假/改期"
           },
           provider: {
             google: "Google",
@@ -524,10 +548,15 @@
           paymentOps: "Payment Entry",
           markPaid: "Mark Paid",
           recentPayments: "Recent Payment Records",
+          recentRequests: "Recent Leave / Reschedule Requests",
           colEmail: "Email",
           colAmount: "Amount",
           colSource: "Source",
           colTime: "Time",
+          colRequestType: "Request Type",
+          colStudent: "Student",
+          colTarget: "Target Class",
+          colReason: "Reason",
           noData: "No data",
           unknown: "Unknown",
           successPaid: "Payment record saved.",
@@ -537,7 +566,8 @@
             signupWeek: "New Signups (7d)",
             googleShare: "Google Sign-In Share",
             microsoftShare: "Microsoft Sign-In Share",
-            avgLeadToAssess: "Trial Lead To Assessment"
+            avgLeadToAssess: "Trial Lead To Assessment",
+            pendingRequests: "Pending Leave/Reschedule"
           },
           provider: {
             google: "Google",
@@ -551,7 +581,8 @@
         signups: "minddo_signup_users",
         assessments: "minddo_assessments",
         leads: "minddo_trial_leads",
-        payments: "minddo_payments"
+        payments: "minddo_payments",
+        requests: "minddo_schedule_requests"
       };
 
       var html = document.documentElement;
@@ -562,6 +593,7 @@
       var extraList = document.getElementById("extraList");
       var channelList = document.getElementById("channelList");
       var paymentTable = document.getElementById("paymentTable");
+      var requestTable = document.getElementById("requestTable");
       var rangeGroup = document.getElementById("rangeGroup");
       var refreshBtn = document.getElementById("refreshBtn");
       var paymentForm = document.getElementById("paymentForm");
@@ -689,7 +721,8 @@
           { label: t.metrics.pending, value: data.pending, sub: "" },
           { label: t.extra.signupToday, value: data.signupToday, sub: "" },
           { label: t.extra.signupWeek, value: data.signupWeek, sub: "" },
-          { label: t.extra.avgLeadToAssess, value: data.leadToAssessRate, sub: "" }
+          { label: t.extra.avgLeadToAssess, value: data.leadToAssessRate, sub: "" },
+          { label: t.extra.pendingRequests, value: data.pendingRequests, sub: "" }
         ];
 
         metricGrid.innerHTML = items.map(function (m) {
@@ -713,6 +746,20 @@
         }).join("");
       }
 
+      function renderRequestTable(requests, t) {
+        if (!requests.length) {
+          requestTable.innerHTML = "<tr><td colspan='5'>" + t.noData + "</td></tr>";
+          return;
+        }
+
+        requestTable.innerHTML = requests.slice().sort(function (a, b) {
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        }).slice(0, 12).map(function (item) {
+          var time = safeDate(item.createdAt);
+          return "<tr><td>" + (item.type || "-") + "</td><td>" + (item.studentName || "-") + "</td><td>" + (item.targetLabel || "-") + "</td><td>" + (item.reason || "-") + "</td><td>" + (time ? time.toLocaleString() : "-") + "</td></tr>";
+        }).join("");
+      }
+
       function render() {
         var t = I18N[state.lang];
         html.setAttribute("lang", state.lang);
@@ -733,11 +780,13 @@
         var assessmentsAll = readJson(STORAGE.assessments);
         var leadsAll = readJson(STORAGE.leads);
         var paymentsAll = readJson(STORAGE.payments);
+        var requestsAll = readJson(STORAGE.requests);
 
         var signups = signupsAll.filter(function (x) { return inRange(x, state.range); });
         var assessments = assessmentsAll.filter(function (x) { return inRange(x, state.range); });
         var leads = leadsAll.filter(function (x) { return inRange(x, state.range); });
         var payments = paymentsAll.filter(function (x) { return inRange(x, state.range); });
+        var requests = requestsAll.filter(function (x) { return inRange(x, state.range); });
 
         var registered = signups.length;
 
@@ -791,6 +840,7 @@
           var d = safeDate(s.createdAt);
           return d && d >= startToday;
         }).length;
+        var pendingRequests = requests.length;
 
         var signupWeek = signupsAll.filter(function (s) {
           var d = safeDate(s.createdAt);
@@ -810,7 +860,8 @@
           pending: pending,
           signupToday: signupToday,
           signupWeek: signupWeek,
-          leadToAssessRate: leadToAssessRate
+          leadToAssessRate: leadToAssessRate,
+          pendingRequests: pendingRequests
         }, t);
 
         renderAlerts({
@@ -834,11 +885,13 @@
         var extraItems = [
           { label: t.extra.googleShare, value: googleShare },
           { label: t.extra.microsoftShare, value: msShare },
-          { label: t.provider.email, value: providers.email || 0 }
+          { label: t.provider.email, value: providers.email || 0 },
+          { label: t.extra.pendingRequests, value: pendingRequests }
         ];
         renderKvList(extraList, extraItems, t.noData);
 
         renderPaymentsTable(payments, t);
+        renderRequestTable(requests, t);
         document.title = t.title + " | Dashboard";
       }
 

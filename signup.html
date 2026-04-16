@@ -177,7 +177,18 @@
       font-size: 20px;
     }
 
+    h3 {
+      margin: 0 0 8px;
+      color: var(--primary-deep);
+      font-size: 17px;
+    }
+
     .stack { display: grid; gap: 12px; }
+
+    .auth-section {
+      display: grid;
+      gap: 12px;
+    }
 
     .oauth-row {
       display: grid;
@@ -277,6 +288,12 @@
       flex: 1;
       height: 1px;
       background: rgba(151, 84, 21, 0.12);
+    }
+
+    .section-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
     }
 
     form { display: grid; gap: 12px; }
@@ -408,37 +425,69 @@
       <article class="card stack">
         <h2 data-i18n="authTitle"></h2>
 
-        <form id="signupForm" novalidate>
-          <div class="row">
-            <div>
-              <label for="studentName" data-i18n="studentName"></label>
-              <input id="studentName" name="studentName" type="text" required />
-            </div>
-            <div>
-              <label for="email" data-i18n="email"></label>
-              <input id="email" name="email" type="email" required />
-            </div>
+        <section class="auth-section">
+          <div>
+            <h3 data-i18n="registerTitle"></h3>
+            <p class="section-copy" data-i18n="registerIntro"></p>
           </div>
 
-          <div class="row">
-            <div>
-              <label for="password" data-i18n="password"></label>
-              <input id="password" name="password" type="password" required />
+          <form id="signupForm" novalidate>
+            <div class="row">
+              <div>
+                <label for="studentName" data-i18n="studentName"></label>
+                <input id="studentName" name="studentName" type="text" required />
+              </div>
+              <div>
+                <label for="email" data-i18n="email"></label>
+                <input id="email" name="email" type="email" required />
+              </div>
             </div>
-            <div>
-              <label for="confirmPassword" data-i18n="confirmPassword"></label>
-              <input id="confirmPassword" name="confirmPassword" type="password" required />
+
+            <div class="row">
+              <div>
+                <label for="password" data-i18n="password"></label>
+                <input id="password" name="password" type="password" required />
+              </div>
+              <div>
+                <label for="confirmPassword" data-i18n="confirmPassword"></label>
+                <input id="confirmPassword" name="confirmPassword" type="password" required />
+              </div>
             </div>
+
+            <label class="consent">
+              <input id="consent" name="consent" type="checkbox" required />
+              <span data-i18n="consent"></span>
+            </label>
+
+            <button class="submit-btn" type="submit" data-i18n="submit"></button>
+            <div id="submitResult" class="result" role="status" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <div class="divider" data-i18n="loginDivider"></div>
+
+        <section class="auth-section">
+          <div>
+            <h3 data-i18n="loginTitle"></h3>
+            <p class="section-copy" data-i18n="loginIntro"></p>
           </div>
 
-          <label class="consent">
-            <input id="consent" name="consent" type="checkbox" required />
-            <span data-i18n="consent"></span>
-          </label>
+          <form id="loginForm" novalidate>
+            <div class="row">
+              <div>
+                <label for="loginEmail" data-i18n="email"></label>
+                <input id="loginEmail" name="loginEmail" type="email" required />
+              </div>
+              <div>
+                <label for="loginPassword" data-i18n="password"></label>
+                <input id="loginPassword" name="loginPassword" type="password" required />
+              </div>
+            </div>
 
-          <button class="submit-btn" type="submit" data-i18n="submit"></button>
-          <div id="submitResult" class="result" role="status" aria-live="polite"></div>
-        </form>
+            <button class="submit-btn" type="submit" data-i18n="loginSubmit"></button>
+            <div id="loginResult" class="result" role="status" aria-live="polite"></div>
+          </form>
+        </section>
 
         <div class="divider" data-i18n="or"></div>
 
@@ -486,6 +535,11 @@
           backTrial: "返回 Trial 页面",
           pageTitle: "Sign Up 注册页面",
           authTitle: "创建学员账户",
+          registerTitle: "新用户注册",
+          registerIntro: "首次使用时创建账户，完成后会直接进入学生档案页面。",
+          loginDivider: "已有账户？直接登录",
+          loginTitle: "已有账户登录",
+          loginIntro: "输入已经注册过的邮箱即可进入学生页面，当前原型不强制校验真实密码。",
           or: "或使用以下方式继续",
           google: "Google",
           microsoft: "Microsoft",
@@ -496,10 +550,15 @@
           confirmPassword: "确认密码",
           consent: "我同意接收注册成功邮件，并用于后续学习评估通知。",
           submit: "完成注册并进入学生档案",
+          loginSubmit: "登录并进入学生档案",
           invalid: "请填写完整信息，且两次密码保持一致（至少6位）。",
+          loginInvalid: "请输入已注册邮箱和密码。",
+          loginNotFound: "未找到该账户，请先完成注册。",
           emailInvalid: "请输入有效的邮箱地址。",
           success: "注册成功，邮件已发送，正在跳转学生 profile 页面...",
+          successNoEmail: "注册成功。邮件暂未发送成功，但系统会先带你进入学生档案页面。",
           oauthSuccess: "登录成功，正在发送邮件并跳转学生 profile 页面...",
+          loginSuccess: "登录成功，正在进入学生档案页面...",
           failed: "注册流程失败，请稍后重试。"
         },
         en: {
@@ -514,6 +573,11 @@
           backTrial: "Back To Trial",
           pageTitle: "Sign Up Page",
           authTitle: "Create Student Account",
+          registerTitle: "New Account Registration",
+          registerIntro: "Create a new account first, then the flow will open the student profile directly.",
+          loginDivider: "Already have an account?",
+          loginTitle: "Existing Account Login",
+          loginIntro: "Use a previously registered email to enter the student page. This prototype does not enforce real password verification yet.",
           or: "or continue with",
           google: "Google",
           microsoft: "Microsoft",
@@ -524,10 +588,15 @@
           confirmPassword: "Confirm Password",
           consent: "I agree to receive registration confirmation emails and assessment notifications.",
           submit: "Sign Up And Open Profile",
+          loginSubmit: "Log In And Open Profile",
           invalid: "Please complete all fields and keep both passwords matched (min 6 chars).",
+          loginInvalid: "Please enter a registered email and password.",
+          loginNotFound: "This account was not found. Please sign up first.",
           emailInvalid: "Please enter a valid email address.",
           success: "Sign-up successful. Confirmation email sent. Redirecting to student profile...",
+          successNoEmail: "Sign-up successful. Email sending is unavailable right now, but we will open the student profile first.",
           oauthSuccess: "Login successful. Sending email and redirecting to student profile...",
+          loginSuccess: "Login successful. Opening the student profile...",
           failed: "Sign-up flow failed. Please try again later."
         }
       };
@@ -535,7 +604,9 @@
       var html = document.documentElement;
       var buttons = document.querySelectorAll("[data-set-lang]");
       var form = document.getElementById("signupForm");
+      var loginForm = document.getElementById("loginForm");
       var result = document.getElementById("submitResult");
+      var loginResult = document.getElementById("loginResult");
       var googleBtn = document.getElementById("googleBtn");
       var microsoftBtn = document.getElementById("microsoftBtn");
       var appleBtn = document.getElementById("appleBtn");
@@ -547,6 +618,11 @@
       function setResult(kind, text) {
         result.className = "result " + kind;
         result.textContent = text;
+      }
+
+      function setLoginResult(kind, text) {
+        loginResult.className = "result " + kind;
+        loginResult.textContent = text;
       }
 
       function setLang(lang) {
@@ -568,6 +644,8 @@
 
         result.className = "result";
         result.textContent = "";
+        loginResult.className = "result";
+        loginResult.textContent = "";
       }
 
       function isValidEmail(email) {
@@ -583,6 +661,21 @@
         var users = JSON.parse(localStorage.getItem(key) || "[]");
         users.push(user);
         localStorage.setItem(key, JSON.stringify(users));
+      }
+
+      function findUserByEmail(email) {
+        var target = String(email || "").trim().toLowerCase();
+        var users = [];
+
+        if (window.MindDoFlow && window.MindDoFlow.readJson && window.MindDoFlow.keys && window.MindDoFlow.keys.signups) {
+          users = window.MindDoFlow.readJson(window.MindDoFlow.keys.signups, []);
+        } else {
+          users = JSON.parse(localStorage.getItem("minddo_signup_users") || "[]");
+        }
+
+        return users.find(function (user) {
+          return String((user && user.email) || "").trim().toLowerCase() === target;
+        }) || null;
       }
 
       function setCurrentStudent(user) {
@@ -723,8 +816,43 @@
           setResult("success", data.success);
           redirectToStudentProfile(studentName, email);
         }).catch(function () {
-          setResult("error", data.failed);
+          setResult("success", data.successNoEmail);
+          redirectToStudentProfile(studentName, email);
         });
+      });
+
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var data = I18N[currentLang()];
+        var email = loginForm.loginEmail.value.trim();
+        var password = loginForm.loginPassword.value;
+
+        if (!email || !password) {
+          setLoginResult("error", data.loginInvalid);
+          return;
+        }
+
+        if (!isValidEmail(email)) {
+          setLoginResult("error", data.emailInvalid);
+          return;
+        }
+
+        var existingUser = findUserByEmail(email);
+        if (!existingUser) {
+          setLoginResult("error", data.loginNotFound);
+          return;
+        }
+
+        setCurrentStudent({
+          studentName: existingUser.studentName || existingUser.name || "",
+          name: existingUser.studentName || existingUser.name || "",
+          email: existingUser.email,
+          provider: existingUser.provider || "email",
+          studentId: existingUser.studentId
+        });
+
+        setLoginResult("success", data.loginSuccess);
+        redirectToStudentProfile(existingUser.studentName || existingUser.name || "", existingUser.email);
       });
     })();
   </script>

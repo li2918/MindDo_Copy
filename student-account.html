@@ -152,6 +152,7 @@
       padding: 20px;
     }
 
+    .identity,
     .summary-list,
     .status-list {
       margin: 14px 0 0;
@@ -161,6 +162,7 @@
       gap: 10px;
     }
 
+    .identity li,
     .summary-list li,
     .status-list li {
       padding: 12px 14px;
@@ -217,6 +219,7 @@
     @media (max-width: 640px) {
       .container { padding: 22px 14px 38px; }
       .topbar { justify-content: center; }
+      .identity li,
       .summary-list li,
       .status-list li {
         flex-direction: column;
@@ -248,11 +251,13 @@
 
     <section class="hero">
       <h1 data-i18n="title"></h1>
+      <p class="muted" data-i18n="heroIntro"></p>
     </section>
 
     <section class="overview">
       <article class="card">
         <h2 data-i18n="summaryTitle"></h2>
+        <ul class="identity" id="identityList"></ul>
         <ul class="summary-list" id="summaryList"></ul>
       </article>
 
@@ -290,8 +295,15 @@
           goSignup: "前往注册",
           goAssessment: "前往评估",
           title: "学生 Account 页面",
+          heroIntro: "注册完成或第三方登录后，学生会直接进入这里，后续试课、评估和反馈也会围绕同一个学生档案继续。",
           summaryTitle: "学生概览",
           statusTitle: "当前状态",
+          identityItems: [
+            { label: "学生姓名", fallback: "未知学生" },
+            { label: "账号邮箱", fallback: "未绑定" },
+            { label: "学生 ID", fallback: "待生成" },
+            { label: "登录方式", fallback: "email" }
+          ],
           trialTag: "Trial",
           trialTitle: "试课页面",
           openTrial: "进入试课页面",
@@ -315,8 +327,15 @@
           goSignup: "Go To Sign Up",
           goAssessment: "Go To Assessment",
           title: "Student Account",
+          heroIntro: "After sign-up or login, the student lands here first so the later trial, assessment, and feedback flow can continue on the same profile.",
           summaryTitle: "Student Overview",
           statusTitle: "Current Status",
+          identityItems: [
+            { label: "Student Name", fallback: "Unknown Student" },
+            { label: "Account Email", fallback: "Not linked" },
+            { label: "Student ID", fallback: "Pending" },
+            { label: "Login Method", fallback: "email" }
+          ],
           trialTag: "Trial",
           trialTitle: "Trial Page",
           openTrial: "Open Trial Page",
@@ -339,6 +358,7 @@
 
       var html = document.documentElement;
       var buttons = document.querySelectorAll("[data-set-lang]");
+      var identityList = document.getElementById("identityList");
       var summaryList = document.getElementById("summaryList");
       var statusList = document.getElementById("statusList");
 
@@ -361,11 +381,47 @@
         return lead.trialDate + " " + lead.trialTime;
       }
 
+      function titleCaseProvider(provider) {
+        var raw = String(provider || "").toLowerCase();
+        if (!raw) return "";
+        if (raw === "google") return "Google";
+        if (raw === "microsoft") return "Microsoft";
+        if (raw === "apple") return "Apple";
+        return raw.charAt(0).toUpperCase() + raw.slice(1);
+      }
+
+      function syncCurrentStudentFromQuery() {
+        var params = new URLSearchParams(window.location.search);
+        var name = params.get("name") || "";
+        var email = params.get("email") || "";
+        if (!name && !email) return;
+
+        if (window.MindDoFlow && window.MindDoFlow.setCurrentStudent) {
+          window.MindDoFlow.setCurrentStudent({
+            studentName: name,
+            name: name,
+            email: email
+          });
+          return;
+        }
+
+        try {
+          var current = JSON.parse(localStorage.getItem("minddo_current_student") || "{}");
+          localStorage.setItem("minddo_current_student", JSON.stringify(Object.assign({}, current, {
+            studentName: name || current.studentName || current.name || "",
+            name: name || current.name || current.studentName || "",
+            email: email || current.email || ""
+          })));
+        } catch (_) {}
+      }
+
       function setLang(lang) {
         var t = I18N[lang] || I18N["zh-CN"];
+        syncCurrentStudentFromQuery();
         var snapshot = window.MindDoFlow && window.MindDoFlow.getSnapshot
           ? window.MindDoFlow.getSnapshot()
           : null;
+        var current = snapshot && snapshot.currentStudent ? snapshot.currentStudent : {};
         var leads = readJson("minddo_trial_leads");
         var feedbacks = readJson("minddo_feedback");
         var latestLead = snapshot && snapshot.lead ? snapshot.lead : latestByDate(leads);
@@ -379,6 +435,17 @@
           var key = el.getAttribute("data-i18n");
           if (t[key]) el.textContent = t[key];
         });
+
+        var identityValues = [
+          current.studentName || current.name || t.identityItems[0].fallback,
+          current.email || t.identityItems[1].fallback,
+          current.studentId || t.identityItems[2].fallback,
+          titleCaseProvider(current.provider) || t.identityItems[3].fallback
+        ];
+
+        identityList.innerHTML = t.identityItems.map(function (item, index) {
+          return "<li><span>" + item.label + "</span><strong>" + identityValues[index] + "</strong></li>";
+        }).join("");
 
         var summaryValues = [
           latestLead ? (latestLead.subjectLabel || latestLead.subject || t.summaryItems[0].fallback) : t.summaryItems[0].fallback,

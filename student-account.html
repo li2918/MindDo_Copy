@@ -202,6 +202,40 @@
       font-size: 15px;
     }
 
+    .reminder-card {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 248, 238, 0.82);
+      border: 1px solid rgba(151, 84, 21, 0.12);
+      display: grid;
+      gap: 8px;
+    }
+
+    .reminder-card strong {
+      color: var(--primary-deep);
+      font-size: 15px;
+    }
+
+    .reminder-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .reminder-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(151, 84, 21, 0.12);
+      color: var(--primary-deep);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     .layout {
       display: grid;
       grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
@@ -404,6 +438,63 @@
       line-height: 1.6;
     }
 
+    .request-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .request-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: #7b5b43;
+      margin-bottom: 6px;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(151, 84, 21, 0.16);
+      background: rgba(255, 252, 247, 0.88);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .request-result {
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      display: none;
+    }
+
+    .request-result.success {
+      display: block;
+      border: 1px solid rgba(111, 143, 87, 0.28);
+      background: rgba(111, 143, 87, 0.1);
+      color: var(--success);
+    }
+
+    .request-result.error {
+      display: block;
+      border: 1px solid rgba(196, 106, 77, 0.28);
+      background: rgba(196, 106, 77, 0.1);
+      color: var(--danger);
+    }
+
     @media (max-width: 980px) {
       .hero,
       .layout,
@@ -419,7 +510,8 @@
       .container { padding: 22px 14px 38px; }
       .topbar { justify-content: center; }
       .hero-meta,
-      .action-grid {
+      .action-grid,
+      .request-row {
         grid-template-columns: 1fr;
       }
       .week-board {
@@ -483,6 +575,11 @@
         <div class="status-banner">
           <strong data-i18n="statusBannerTitle"></strong>
           <p class="muted" id="statusBannerText"></p>
+        </div>
+        <div class="reminder-card">
+          <strong data-i18n="nextLessonTitle"></strong>
+          <p class="muted" id="nextLessonText"></p>
+          <div class="reminder-meta" id="nextLessonMeta"></div>
         </div>
         <div class="action-row">
           <a class="action-btn" href="course-selection.html" data-i18n="openCourseSelection"></a>
@@ -585,6 +682,41 @@
         <div class="week-board" id="weekBoard"></div>
       </article>
     </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2 data-i18n="requestTitle"></h2>
+        <p class="muted" data-i18n="requestIntro"></p>
+        <form class="request-form" id="requestForm">
+          <div class="request-row">
+            <div>
+              <label for="requestType" data-i18n="requestType"></label>
+              <select id="requestType">
+                <option value="leave" data-i18n="requestLeave"></option>
+                <option value="reschedule" data-i18n="requestReschedule"></option>
+              </select>
+            </div>
+            <div>
+              <label for="requestTarget" data-i18n="requestTarget"></label>
+              <select id="requestTarget"></select>
+            </div>
+          </div>
+          <div>
+            <label for="requestReason" data-i18n="requestReason"></label>
+            <textarea id="requestReason"></textarea>
+          </div>
+          <div class="action-row">
+            <button class="action-btn" type="submit" data-i18n="requestSubmit"></button>
+          </div>
+          <div id="requestResult" class="request-result" role="status" aria-live="polite"></div>
+        </form>
+      </article>
+
+      <article class="panel">
+        <h2 data-i18n="requestHistoryTitle"></h2>
+        <ul class="schedule-list" id="requestHistory"></ul>
+      </article>
+    </section>
   </main>
 
   <script src="assets/minddo-flow.js"></script>
@@ -602,6 +734,7 @@
           heroGoal: "当前目标",
           heroStage: "当前阶段",
           statusBannerTitle: "当前账号状态",
+          nextLessonTitle: "下一节课提醒",
           profileTitle: "Profile Page",
           summaryTitle: "学习概览",
           statusTitle: "流程状态",
@@ -631,6 +764,15 @@
           logoutCopy: "退出后会清除当前登录学生，并返回注册/登录页面。",
           myCourseTitle: "我的课程",
           myScheduleTitle: "我的排课",
+          requestTitle: "请假 / 改期",
+          requestIntro: "如果临时无法上课，可以直接在这里提交请假或改期申请。",
+          requestType: "申请类型",
+          requestLeave: "请假",
+          requestReschedule: "改期",
+          requestTarget: "目标课程",
+          requestReason: "备注说明",
+          requestSubmit: "提交申请",
+          requestHistoryTitle: "最近申请记录",
           profileItems: [
             { label: "学生姓名", fallback: "未知学生" },
             { label: "账号邮箱", fallback: "未绑定" },
@@ -673,7 +815,11 @@
             feedback: "反馈阶段"
           },
           defaultGoal: "AI Learning Growth",
-          loggedOut: "你已退出当前账户，正在返回登录页面。"
+          loggedOut: "你已退出当前账户，正在返回登录页面。",
+          nextLessonEmpty: "当前还没有可提醒的排课，请先完成选课与排课设置。",
+          requestEmpty: "当前还没有请假或改期记录。",
+          requestSuccess: "申请已提交，系统会记录并等待顾问确认。",
+          requestError: "请先选择课程并填写说明。"
         },
         en: {
           backFlow: "Back To Workflow",
@@ -686,6 +832,7 @@
           heroGoal: "Current Goal",
           heroStage: "Current Stage",
           statusBannerTitle: "Current Account Status",
+          nextLessonTitle: "Next Lesson Reminder",
           profileTitle: "Profile Page",
           summaryTitle: "Learning Overview",
           statusTitle: "Flow Status",
@@ -715,6 +862,15 @@
           logoutCopy: "Logging out clears the active student and returns to the sign-up/login page.",
           myCourseTitle: "My Courses",
           myScheduleTitle: "My Schedule",
+          requestTitle: "Leave / Reschedule",
+          requestIntro: "If the student cannot attend a session, submit a leave or reschedule request here.",
+          requestType: "Request Type",
+          requestLeave: "Leave",
+          requestReschedule: "Reschedule",
+          requestTarget: "Target Class",
+          requestReason: "Notes",
+          requestSubmit: "Submit Request",
+          requestHistoryTitle: "Recent Requests",
           profileItems: [
             { label: "Student Name", fallback: "Unknown Student" },
             { label: "Account Email", fallback: "Not linked" },
@@ -757,7 +913,11 @@
             feedback: "Feedback"
           },
           defaultGoal: "AI Learning Growth",
-          loggedOut: "You have logged out. Returning to the login page."
+          loggedOut: "You have logged out. Returning to the login page.",
+          nextLessonEmpty: "No scheduled class is ready for a reminder yet. Complete course selection first.",
+          requestEmpty: "There are no leave or reschedule requests yet.",
+          requestSuccess: "The request has been submitted and saved for advisor review.",
+          requestError: "Please choose a class and add a short note."
         }
       };
 
@@ -769,6 +929,14 @@
       var courseList = document.getElementById("courseList");
       var scheduleList = document.getElementById("scheduleList");
       var weekBoard = document.getElementById("weekBoard");
+      var nextLessonText = document.getElementById("nextLessonText");
+      var nextLessonMeta = document.getElementById("nextLessonMeta");
+      var requestForm = document.getElementById("requestForm");
+      var requestType = document.getElementById("requestType");
+      var requestTarget = document.getElementById("requestTarget");
+      var requestReason = document.getElementById("requestReason");
+      var requestResult = document.getElementById("requestResult");
+      var requestHistory = document.getElementById("requestHistory");
       var heroTitle = document.getElementById("heroTitle");
       var heroStudentIdValue = document.getElementById("heroStudentIdValue");
       var heroGoalValue = document.getElementById("heroGoalValue");
@@ -849,6 +1017,14 @@
         });
       }
 
+      function readRequestHistory(current) {
+        return readJson("minddo_schedule_requests").filter(function (item) {
+          return matchCurrentStudent(item, current);
+        }).sort(function (a, b) {
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        });
+      }
+
       function getWeekDays(lang) {
         if (lang === "en") {
           return [
@@ -926,6 +1102,7 @@
         var memberships = readJson("minddo_membership_orders")
           .filter(function (item) { return matchCurrentStudent(item, current); })
           .sort(function (a, b) { return new Date(b.createdAt || 0) - new Date(a.createdAt || 0); });
+        var requests = readRequestHistory(current);
         var stage = getStage(snapshot);
 
         html.setAttribute("lang", lang);
@@ -949,6 +1126,17 @@
             : latestLead
               ? t.statusItems.hasTrial
               : t.statusItems.noTrial;
+
+        if (memberships.length) {
+          var nextClass = memberships[0];
+          nextLessonText.textContent = (formatPlan(nextClass.plan, lang) || t.courseItems[0].fallback) + " · " + (nextClass.weekday || t.scheduleItems[0].fallback);
+          nextLessonMeta.innerHTML =
+            "<span class='reminder-pill'>" + (nextClass.timeSlot || t.scheduleItems[1].fallback) + "</span>" +
+            "<span class='reminder-pill'>" + (formatClassMode(nextClass.classMode, lang) || t.courseItems[1].fallback) + "</span>";
+        } else {
+          nextLessonText.textContent = t.nextLessonEmpty;
+          nextLessonMeta.innerHTML = "";
+        }
 
         var profileValues = [
           current.studentName || current.name || t.profileItems[0].fallback,
@@ -1018,6 +1206,19 @@
           return "<li><span>" + item.label + "</span><strong>" + scheduleValues[index] + "</strong></li>";
         }).join("");
 
+        requestTarget.innerHTML = memberships.length
+          ? memberships.map(function (item, index) {
+              var label = (formatPlan(item.plan, lang) || t.courseItems[0].fallback) + " · " + (item.weekday || t.scheduleItems[0].fallback) + " · " + (item.timeSlot || t.scheduleItems[1].fallback);
+              return "<option value='" + index + "'>" + label + "</option>";
+            }).join("")
+          : "<option value=''>" + t.nextLessonEmpty + "</option>";
+
+        requestHistory.innerHTML = requests.length
+          ? requests.slice(0, 4).map(function (item) {
+              return "<li><span>" + item.type + " · " + item.targetLabel + "</span><strong>" + item.reason + "</strong></li>";
+            }).join("")
+          : "<li><span>" + t.requestEmpty + "</span><strong>-</strong></li>";
+
         var days = getWeekDays(lang);
         weekBoard.innerHTML = days.map(function (day) {
           var dayMemberships = memberships.filter(function (item) {
@@ -1070,6 +1271,47 @@
         btn.addEventListener("click", function () {
           render(btn.getAttribute("data-set-lang"));
         });
+      });
+
+      requestForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
+        var t = I18N[lang];
+        var snapshot = window.MindDoFlow && window.MindDoFlow.getSnapshot
+          ? window.MindDoFlow.getSnapshot()
+          : null;
+        var current = snapshot && snapshot.currentStudent ? snapshot.currentStudent : {};
+        var memberships = readJson("minddo_membership_orders")
+          .filter(function (item) { return matchCurrentStudent(item, current); })
+          .sort(function (a, b) { return new Date(b.createdAt || 0) - new Date(a.createdAt || 0); });
+
+        var selectedIndex = Number(requestTarget.value);
+        var selectedMembership = memberships[selectedIndex];
+        var reason = String(requestReason.value || "").trim();
+
+        if (!selectedMembership || !reason) {
+          requestResult.className = "request-result error";
+          requestResult.textContent = t.requestError;
+          return;
+        }
+
+        var payload = {
+          type: requestType.value,
+          targetLabel: (formatPlan(selectedMembership.plan, lang) || t.courseItems[0].fallback) + " · " + (selectedMembership.weekday || t.scheduleItems[0].fallback) + " · " + (selectedMembership.timeSlot || t.scheduleItems[1].fallback),
+          reason: reason,
+          email: current.email || "",
+          studentName: current.studentName || current.name || "",
+          createdAt: new Date().toISOString()
+        };
+
+        var list = readJson("minddo_schedule_requests");
+        list.push(payload);
+        localStorage.setItem("minddo_schedule_requests", JSON.stringify(list));
+
+        requestForm.reset();
+        requestResult.className = "request-result success";
+        requestResult.textContent = t.requestSuccess;
+        render(lang);
       });
 
       logoutButtons.forEach(function (btn) {

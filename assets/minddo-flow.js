@@ -358,6 +358,13 @@
     }]);
   }
 
+  function currentLang() {
+    var docLang = document.documentElement && document.documentElement.getAttribute("lang");
+    if (docLang === "en") return "en";
+    var saved = localStorage.getItem("minddo_lang");
+    return saved === "en" ? "en" : "zh-CN";
+  }
+
   function injectPanel() {
     if (!document.body || document.getElementById("minddoFlowPanel")) return;
 
@@ -381,33 +388,74 @@
     var snapshot = getSnapshot();
     var current = snapshot.currentStudent || {};
     var stage = getStage(snapshot);
-    var stageText = {
-      start: "Start",
-      trial: "Trial",
-      assessment: "Assessment",
-      signup: "Signup",
-      payment: "Payment",
-      membership: "Scheduling",
-      feedback: "Feedback"
+    var lang = currentLang();
+    var copy = {
+      "zh-CN": {
+        title: "流程测试面板",
+        desc: "使用 dummy data 测试完整流程，无需后端或数据库配置。",
+        student: "学生",
+        noStudent: "当前没有激活学生",
+        stage: "阶段",
+        next: "下一步",
+        seed: "填充示例数据",
+        payment: "模拟支付",
+        reset: "重置数据",
+        goNext: "前往下一步",
+        studentPage: "学生页",
+        dashboard: "看板",
+        stages: {
+          start: "开始",
+          trial: "试课",
+          assessment: "评估",
+          signup: "注册",
+          payment: "支付",
+          membership: "排课",
+          feedback: "反馈"
+        }
+      },
+      en: {
+        title: "Flow Test Panel",
+        desc: "Use dummy data to test the full flow without backend or database setup.",
+        student: "Student",
+        noStudent: "No active student",
+        stage: "Stage",
+        next: "Next",
+        seed: "Seed Demo",
+        payment: "Mock Payment",
+        reset: "Reset",
+        goNext: "Go Next",
+        studentPage: "Student",
+        dashboard: "Dashboard",
+        stages: {
+          start: "Start",
+          trial: "Trial",
+          assessment: "Assessment",
+          signup: "Signup",
+          payment: "Payment",
+          membership: "Scheduling",
+          feedback: "Feedback"
+        }
+      }
     };
+    var t = copy[lang] || copy["zh-CN"];
 
     panel.innerHTML =
-      "<h3>Flow Test Panel</h3>" +
-      "<p>Use dummy data to test the full flow without backend or database setup.</p>" +
+      "<h3>" + t.title + "</h3>" +
+      "<p>" + t.desc + "</p>" +
       "<div class='minddo-flow-kv'>" +
-      "<strong>Student</strong><span>" + (current.studentName || current.name || "No active student") + "</span>" +
-      "<strong>Stage</strong><span>" + (stageText[stage] || stage) + "</span>" +
-      "<strong>Next</strong><span>" + getNextPage(stage) + "</span>" +
+      "<strong>" + t.student + "</strong><span>" + (current.studentName || current.name || t.noStudent) + "</span>" +
+      "<strong>" + t.stage + "</strong><span>" + ((t.stages && t.stages[stage]) || stage) + "</span>" +
+      "<strong>" + t.next + "</strong><span>" + getNextPage(stage) + "</span>" +
       "</div>" +
       "<div class='minddo-flow-row'>" +
-      "<button type='button' class='minddo-flow-btn primary' data-flow-action='seed'>Seed Demo</button>" +
-      "<button type='button' class='minddo-flow-btn' data-flow-action='payment'>Mock Payment</button>" +
-      "<button type='button' class='minddo-flow-btn' data-flow-action='reset'>Reset</button>" +
+      "<button type='button' class='minddo-flow-btn primary' data-flow-action='seed'>" + t.seed + "</button>" +
+      "<button type='button' class='minddo-flow-btn' data-flow-action='payment'>" + t.payment + "</button>" +
+      "<button type='button' class='minddo-flow-btn' data-flow-action='reset'>" + t.reset + "</button>" +
       "</div>" +
       "<div class='minddo-flow-row'>" +
-      "<a class='minddo-flow-link primary' href='" + getNextPage(stage) + "'>Go Next</a>" +
-      "<a class='minddo-flow-link' href='student-account.html'>Student</a>" +
-      "<a class='minddo-flow-link' href='dashboard.html'>Dashboard</a>" +
+      "<a class='minddo-flow-link primary' href='" + getNextPage(stage) + "'>" + t.goNext + "</a>" +
+      "<a class='minddo-flow-link' href='student-account.html'>" + t.studentPage + "</a>" +
+      "<a class='minddo-flow-link' href='dashboard.html'>" + t.dashboard + "</a>" +
       "</div>";
 
     panel.addEventListener("click", function (e) {

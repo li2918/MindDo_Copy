@@ -163,7 +163,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 18px;
     }
 
@@ -333,13 +333,11 @@
 
     <section class="hero">
       <h1 data-i18n="pageTitle"></h1>
-      <p data-i18n="pageDesc"></p>
     </section>
 
     <section class="grid">
       <article class="card stack">
         <h2 data-i18n="authTitle"></h2>
-        <p class="muted" data-i18n="authDesc"></p>
 
         <div class="oauth-row">
           <button type="button" class="oauth-btn" id="googleBtn">Google</button>
@@ -380,12 +378,6 @@
           <div id="submitResult" class="result" role="status" aria-live="polite"></div>
         </form>
       </article>
-
-      <article class="card stack">
-        <h2 data-i18n="rightTitle"></h2>
-        <p class="muted" data-i18n="rightDesc"></p>
-        <ul class="tips" id="tips"></ul>
-      </article>
     </section>
   </main>
 
@@ -413,9 +405,7 @@
           goDashboard: "前往看板",
           backTrial: "返回 Trial 页面",
           pageTitle: "Sign Up 注册页面",
-          pageDesc: "注册成功后，系统将发送注册成功邮件，并自动跳转到学生 profile 页面。",
           authTitle: "创建学员账户",
-          authDesc: "支持邮箱注册、Google 登录和 Microsoft 登录。",
           or: "或使用邮箱注册",
           studentName: "学生姓名",
           email: "邮箱",
@@ -423,13 +413,6 @@
           confirmPassword: "确认密码",
           consent: "我同意接收注册成功邮件，并用于后续学习评估通知。",
           submit: "完成注册并进入学生档案",
-          rightTitle: "流程说明",
-          rightDesc: "这是业务流程中的通用注册入口，适用于无需试课直接入评估的场景。",
-          tips: [
-            "注册成功后默认跳转至学生 profile 页面。",
-            "可在 CONFIG.emailApiUrl 接入真实邮件服务。",
-            "可在 CONFIG.oauth 中填入 Google/Microsoft OAuth URL。"
-          ],
           invalid: "请填写完整信息，且两次密码保持一致（至少6位）。",
           emailInvalid: "请输入有效的邮箱地址。",
           success: "注册成功，邮件已发送，正在跳转学生 profile 页面...",
@@ -447,9 +430,7 @@
           goDashboard: "Go To Dashboard",
           backTrial: "Back To Trial",
           pageTitle: "Sign Up Page",
-          pageDesc: "After successful sign-up, a confirmation email is sent and users are redirected to the student profile page.",
           authTitle: "Create Student Account",
-          authDesc: "Supports email sign-up, Google login, and Microsoft login.",
           or: "or sign up with email",
           studentName: "Student Name",
           email: "Email",
@@ -457,13 +438,6 @@
           confirmPassword: "Confirm Password",
           consent: "I agree to receive registration confirmation emails and assessment notifications.",
           submit: "Sign Up And Open Profile",
-          rightTitle: "Process Notes",
-          rightDesc: "This is a general registration entry for scenarios where trial classes are optional.",
-          tips: [
-            "Successful sign-up redirects to the student profile page.",
-            "Set CONFIG.emailApiUrl to connect a real email service.",
-            "Set CONFIG.oauth URLs for Google and Microsoft OAuth."
-          ],
           invalid: "Please complete all fields and keep both passwords matched (min 6 chars).",
           emailInvalid: "Please enter a valid email address.",
           success: "Sign-up successful. Confirmation email sent. Redirecting to student profile...",
@@ -476,7 +450,6 @@
       var buttons = document.querySelectorAll("[data-set-lang]");
       var form = document.getElementById("signupForm");
       var result = document.getElementById("submitResult");
-      var tips = document.getElementById("tips");
       var googleBtn = document.getElementById("googleBtn");
       var microsoftBtn = document.getElementById("microsoftBtn");
 
@@ -501,10 +474,6 @@
             el.textContent = data[key];
           }
         });
-
-        tips.innerHTML = data.tips.map(function (item) {
-          return "<li>" + item + "</li>";
-        }).join("");
 
         buttons.forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);

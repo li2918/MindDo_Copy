@@ -171,7 +171,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 18px;
     }
 
@@ -526,21 +526,11 @@
     </div>
     <section class="hero">
       <h1 data-i18n="pageTitle"></h1>
-      <p data-i18n="pageDesc"></p>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2 data-i18n="leftTitle"></h2>
-        <p class="muted" data-i18n="leftDesc"></p>
-        <ul class="highlight-list" id="highlightList"></ul>
-
-        <div class="metrics" id="metrics"></div>
-      </article>
-
-      <article class="card">
         <h2 data-i18n="formTitle"></h2>
-        <p class="muted" data-i18n="formDesc"></p>
 
         <form id="trialForm" novalidate>
           <div class="row">
@@ -662,21 +652,7 @@
           goDashboard: "前往看板",
           goSignup: "前往 Sign Up 注册",
           pageTitle: "Trial 试课报名页面",
-          pageDesc: "作为业务流程起点，该页面用于获客和线索登记，帮助快速完成学生报名并进入试课安排。",
-          leftTitle: "为什么从 Trial 开始",
-          leftDesc: "通过标准化试课报名，我们可以更快完成线索分层、课程匹配和顾问跟进。",
-          highlights: [
-            "统一收集学员基础信息与目标，减少沟通损耗。",
-            "自动沉淀高意向线索，支持后续转化动作。",
-            "连接教务与销售，形成可追踪的首触达闭环。"
-          ],
-          metrics: [
-            { value: "24h", label: "首联跟进时效" },
-            { value: "90%+", label: "表单信息完整率目标" },
-            { value: "T+1", label: "试课安排完成目标" }
-          ],
           formTitle: "学生注册报名",
-          formDesc: "学生可直接选择期望试课日期与时间，提交后进入顾问待确认列表。",
           studentName: "学生姓名",
           grade: "年级/学段",
           birthday: "生日",
@@ -740,21 +716,7 @@
           goDashboard: "Go To Dashboard",
           goSignup: "Go To Sign Up",
           pageTitle: "Trial Registration Page",
-          pageDesc: "As the starting point of the workflow, this page captures leads and student registrations before trial-class scheduling.",
-          leftTitle: "Why Start With Trial",
-          leftDesc: "A standardized registration flow helps us segment leads, match courses, and trigger consultant follow-up faster.",
-          highlights: [
-            "Collect student profile and goals in one entry point.",
-            "Store high-intent leads for conversion actions.",
-            "Connect sales and academic ops with a traceable first-touch loop."
-          ],
-          metrics: [
-            { value: "24h", label: "First Follow-Up SLA" },
-            { value: "90%+", label: "Target Form Completeness" },
-            { value: "T+1", label: "Target Trial Scheduling" }
-          ],
           formTitle: "Student Registration",
-          formDesc: "Students can directly choose a preferred trial date and time before the consultant confirms it.",
           studentName: "Student Name",
           grade: "Grade / Stage",
           birthday: "Birthday",
@@ -812,8 +774,6 @@
       var buttons = document.querySelectorAll("[data-set-lang]");
       var form = document.getElementById("trialForm");
       var result = document.getElementById("submitResult");
-      var highlightList = document.getElementById("highlightList");
-      var metrics = document.getElementById("metrics");
       var subject = document.getElementById("subject");
       var trialDate = document.getElementById("trialDate");
       var trialTime = document.getElementById("trialTime");
@@ -1027,18 +987,6 @@
             el.setAttribute("placeholder", data[key]);
           }
         });
-
-        highlightList.innerHTML = data.highlights
-          .map(function (item) {
-            return "<li>" + item + "</li>";
-          })
-          .join("");
-
-        metrics.innerHTML = data.metrics
-          .map(function (item) {
-            return "<div class=\"metric\"><strong>" + item.value + "</strong><span>" + item.label + "</span></div>";
-          })
-          .join("");
 
         buildOptions(subject, data.subjectOptions);
         buildOptions(trialTime, data.trialTimeOptions);

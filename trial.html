@@ -556,6 +556,17 @@
 
           <div class="row">
             <div>
+              <label for="birthday" class="required-label" data-i18n="birthday"></label>
+              <input id="birthday" name="birthday" type="date" required />
+            </div>
+            <div>
+              <label for="email" class="required-label" data-i18n="email"></label>
+              <input id="email" name="email" type="email" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
               <label for="parentName" data-i18n="parentName"></label>
               <input id="parentName" name="parentName" type="text" required />
             </div>
@@ -668,6 +679,8 @@
           formDesc: "学生可直接选择期望试课日期与时间，提交后进入顾问待确认列表。",
           studentName: "学生姓名",
           grade: "年级/学段",
+          birthday: "生日",
+          email: "邮箱",
           parentName: "家长姓名",
           phone: "联系电话",
           city: "所在城市",
@@ -678,7 +691,7 @@
           scheduleDesc: "先选日期，再点选可预约时间段。今天的过期时段会自动置灰。",
           dateHelper: "未来 12 天",
           timeHelper: "点击即可选中",
-          channel: "获客渠道",
+          channel: "您从哪里了解到我们",
           timeNote: "时间备注（选填）",
           timeNotePlaceholder: "例如：放学后可上课 / 需要避开周三",
           goal: "学习目标（选填）",
@@ -744,6 +757,8 @@
           formDesc: "Students can directly choose a preferred trial date and time before the consultant confirms it.",
           studentName: "Student Name",
           grade: "Grade / Stage",
+          birthday: "Birthday",
+          email: "Email",
           parentName: "Parent Name",
           phone: "Phone Number",
           city: "City",
@@ -754,7 +769,7 @@
           scheduleDesc: "Pick a date first, then tap an available time slot. Expired times for today are disabled automatically.",
           dateHelper: "Next 12 days",
           timeHelper: "Tap to select",
-          channel: "Lead Source",
+          channel: "How did you hear about us?",
           timeNote: "Time Note (Optional)",
           timeNotePlaceholder: "Example: Available after school / Avoid Wednesdays",
           goal: "Learning Goal (Optional)",
@@ -1045,6 +1060,10 @@
         return /^[0-9+\-\s()]{6,20}$/.test(phone);
       }
 
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
       function saveLead(data) {
         if (window.MindDoFlow && window.MindDoFlow.saveLead) {
           window.MindDoFlow.saveLead(data);
@@ -1132,6 +1151,8 @@
         var formData = {
           studentName: form.studentName.value.trim(),
           grade: form.grade.value.trim(),
+          birthday: form.birthday.value,
+          email: form.email.value.trim(),
           parentName: form.parentName.value.trim(),
           phone: form.phone.value.trim(),
           city: form.city.value.trim(),
@@ -1154,6 +1175,8 @@
         var hasRequired =
           formData.studentName &&
           formData.grade &&
+          formData.birthday &&
+          formData.email &&
           formData.parentName &&
           formData.phone &&
           formData.city &&
@@ -1163,7 +1186,7 @@
           formData.channel &&
           formData.consent;
 
-        if (!hasRequired || !isValidPhone(formData.phone) || !isFutureTrial(formData.trialDate, formData.trialTime)) {
+        if (!hasRequired || !isValidPhone(formData.phone) || !isValidEmail(formData.email) || !isFutureTrial(formData.trialDate, formData.trialTime)) {
           result.className = "result error";
           result.textContent = t.error;
           return;

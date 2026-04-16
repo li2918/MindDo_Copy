@@ -133,6 +133,7 @@
       studentName: data.studentName,
       name: data.studentName,
       grade: data.grade,
+      birthday: data.birthday,
       parentName: data.parentName,
       phone: data.phone,
       city: data.city,
@@ -209,6 +210,8 @@
     if (!form || !current) return;
     if (form.studentName && !form.studentName.value) form.studentName.value = current.studentName || current.name || "";
     if (form.grade && !form.grade.value) form.grade.value = current.grade || "";
+    if (form.birthday && !form.birthday.value) form.birthday.value = current.birthday || "";
+    if (form.email && !form.email.value) form.email.value = current.email || "";
     if (form.parentName && !form.parentName.value) form.parentName.value = current.parentName || "";
     if (form.phone && !form.phone.value) form.phone.value = current.phone || "";
     if (form.city && !form.city.value) form.city.value = current.city || "";
@@ -271,6 +274,7 @@
       phone: "317-555-0188",
       city: "Indianapolis",
       grade: "六年级",
+      birthday: "2014-05-18",
       parentName: "李女士",
       provider: "email",
       goal: "AI创造力提升",
@@ -281,6 +285,7 @@
       studentName: student.studentName,
       studentId: student.studentId,
       grade: student.grade,
+      birthday: student.birthday,
       parentName: student.parentName,
       phone: student.phone,
       city: student.city,

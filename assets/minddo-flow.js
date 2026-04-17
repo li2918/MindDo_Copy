@@ -437,6 +437,7 @@
       pages: {
         "index.html": "首页",
         "campuses.html": "校区分布",
+        "login.html": "学员登录",
         "trial.html": "预约试课 · 选时间",
         "trial-register.html": "预约试课 · 填信息",
         "assessment.html": "能力评估",
@@ -484,6 +485,7 @@
       pages: {
         "index.html": "Home",
         "campuses.html": "Campuses",
+        "login.html": "Login",
         "trial.html": "Trial · Time",
         "trial-register.html": "Trial · Info",
         "assessment.html": "Assessment",
@@ -508,7 +510,7 @@
   var PAGE_GROUPS = {
     journey: ["trial.html", "trial-register.html", "assessment.html", "signup.html", "course-selection.html", "course-schedule.html", "course-payment.html", "course-confirm.html", "student-account.html", "feedback.html", "semester-report.html"],
     ops: ["dashboard.html", "student-management.html", "request-center.html", "new-trials.html", "new-students.html"],
-    info: ["index.html", "campuses.html", "course-system.html"]
+    info: ["index.html", "campuses.html", "login.html", "course-system.html"]
   };
 
   var STAGE_ORDER = ["start", "trial", "assessment", "signup", "payment", "membership", "feedback"];

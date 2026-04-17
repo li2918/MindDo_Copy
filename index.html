@@ -59,6 +59,8 @@
       color: var(--clay); font-family: inherit; transition: 0.15s;
     }
     .lang-btn:hover, .lang-btn.active { background: var(--sand); border-color: var(--gold); }
+    .nav-login { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 700; color: var(--clay); font-family: inherit; text-decoration: none; transition: 0.15s; }
+    .nav-login:hover, .nav-login.active { background: var(--sand); border-color: var(--gold); }
     .btn-primary {
       background: linear-gradient(135deg, #ffe5a7, var(--gold));
       color: #4b250f; border: none; border-radius: 999px;
@@ -411,6 +413,7 @@
     <div class="nav-right">
       <button class="lang-btn" type="button" data-set-lang="zh-CN">中文</button>
       <button class="lang-btn" type="button" data-set-lang="en">English</button>
+      <a class="nav-login" href="login.html"><span data-lang="zh">登录</span><span data-lang="en">Log In</span></a>
       <a class="btn-primary" href="trial.html">
         <span data-lang="zh">预约试课</span>
         <span data-lang="en">Book Free Session</span>

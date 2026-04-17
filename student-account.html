@@ -30,6 +30,8 @@
     .nav-right { display: flex; align-items: center; gap: 10px; }
     .lang-btn { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--clay); font-family: inherit; transition: 0.15s; }
     .lang-btn:hover, .lang-btn.active { background: var(--sand); border-color: var(--gold); }
+    .nav-login { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; cursor: pointer; font-size: 13px; font-weight: 700; color: var(--clay); font-family: inherit; text-decoration: none; transition: 0.15s; }
+    .nav-login:hover, .nav-login.active { background: var(--sand); border-color: var(--gold); }
     .logout-btn { background: rgba(255,241,233,0.92); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; font-size: 13px; font-weight: 600; color: #9d4f2f; font-family: inherit; transition: 0.15s; }
     .logout-btn:hover { background: linear-gradient(135deg,#fff6de,#ffd977); border-color: rgba(208,129,36,0.5); color: var(--clay); }
     .btn-primary { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; border: none; border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; box-shadow: 0 4px 14px rgba(215,144,22,0.28); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
@@ -557,6 +559,7 @@
     <div class="nav-right">
       <button class="lang-btn active" type="button" data-set-lang="zh-CN">中文</button>
       <button class="lang-btn" type="button" data-set-lang="en">English</button>
+      <a class="nav-login" href="login.html"><span data-lang="zh">登录</span><span data-lang="en">Log In</span></a>
       <button class="logout-btn" type="button" id="logoutBtn"><span data-lang="zh">退出登录</span><span data-lang="en">Log Out</span></button>
     </div>
   </nav>
@@ -807,6 +810,23 @@
   <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
+      // Guard: require a current student (i.e. logged-in session) to view this page.
+      // Redirect to login.html if nobody is signed in.
+      try {
+        var _current = null;
+        if (window.MindDoFlow && window.MindDoFlow.getCurrentStudent) {
+          _current = window.MindDoFlow.getCurrentStudent();
+        } else {
+          _current = JSON.parse(localStorage.getItem("minddo_current_student") || "null");
+        }
+        if (!_current || !_current.email) {
+          window.location.replace("login.html");
+          return;
+        }
+      } catch (_) {
+        window.location.replace("login.html");
+        return;
+      }
       var I18N = {
         "zh-CN": {
           backFlow: "返回流程总览",
@@ -1351,8 +1371,9 @@
         var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
         var t = I18N[lang];
         localStorage.removeItem("minddo_current_student");
+        try { localStorage.removeItem("minddo_login_at"); } catch (_) {}
         alert(t.loggedOut);
-        window.location.href = "signup.html";
+        window.location.href = "login.html";
       }
 
       var saved = localStorage.getItem("minddo_lang");

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>试课报名 | Trial Registration</title>
+  <title>试课预约 · 选择时间 | Book Trial · Select Time</title>
   <style>
     :root {
       --bg: #fbf7ef; --sand: #f2e4c9; --card: rgba(255,252,246,0.94);
@@ -16,6 +16,7 @@
     html { scroll-behavior: smooth; }
     body { font-family: "Avenir Next","Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif; color: var(--text); background: var(--bg); }
     a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
     [data-lang] { display: none; }
     html[lang="zh-CN"] [data-lang="zh"], html[lang="en"] [data-lang="en"] { display: inline; }
 
@@ -32,30 +33,65 @@
     .lang-btn:hover, .lang-btn.active { background: var(--sand); border-color: var(--gold); }
     .btn-primary { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; border: none; border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; box-shadow: 0 4px 14px rgba(215,144,22,0.28); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
     .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
 
     /* PAGE HERO */
     .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 64px 0; position: relative; overflow: hidden; }
-    .page-hero::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(circle at 18% 55%, rgba(236,171,47,0.18) 0%, transparent 48%),
-        radial-gradient(circle at 82% 22%, rgba(236,171,47,0.1) 0%, transparent 38%);
-    }
-    .page-hero::after {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,220,120,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,220,120,0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
+    .page-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 18% 55%, rgba(236,171,47,0.18) 0%, transparent 48%), radial-gradient(circle at 82% 22%, rgba(236,171,47,0.1) 0%, transparent 38%); }
     .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
     .page-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(236,171,47,0.18); border: 1px solid rgba(236,171,47,0.3); color: #ffd98e; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
-    .page-hero h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 10px; }
-    .page-hero p { font-size: 15px; color: rgba(255,241,220,0.75); line-height: 1.7; }
+    .page-hero h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .page-hero .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 640px; margin-bottom: 20px; }
+
+    /* STEP INDICATOR */
+    .step-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+    .step-pill { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.18); color: rgba(255,241,220,0.78); font-size: 12px; font-weight: 700; }
+    .step-pill.active { background: rgba(236,171,47,0.22); border-color: rgba(236,171,47,0.45); color: #ffe5a7; }
+    .step-pill .num { width: 20px; height: 20px; border-radius: 999px; background: rgba(255,237,215,0.14); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+    .step-pill.active .num { background: var(--gold); color: #4b250f; }
+    .step-divider { width: 32px; height: 1px; background: rgba(255,237,215,0.28); }
 
     /* CONTENT */
-    .page-content { padding: 48px 0 80px; }
-    .content-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .page-content { padding: 56px 0 80px; }
+    .content-inner { max-width: 840px; margin: 0 auto; padding: 0 48px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 24px 56px rgba(123,72,24,0.08); padding: 32px; }
+    .card h2 { font-size: 20px; font-weight: 800; color: var(--clay); margin-bottom: 6px; }
+    .card > p.desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+
+    /* FIELDS */
+    .field-block { margin-bottom: 22px; }
+    .field-label { display: block; font-size: 12px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    select, input { width: 100%; border: 1px solid rgba(126,77,29,0.18); background: rgba(255,252,247,0.92); color: var(--text); border-radius: 12px; padding: 11px 14px; font-size: 14px; font-family: inherit; outline: none; transition: 0.15s; }
+    select:focus, input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(236,171,47,0.15); }
+
+    /* SCHEDULE PICKER */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .picker-helper { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .schedule-scroll { overflow-x: auto; padding-bottom: 6px; margin-bottom: -6px; }
+    .schedule-scroll::-webkit-scrollbar { height: 8px; }
+    .schedule-scroll::-webkit-scrollbar-thumb { background: rgba(151,84,21,0.18); border-radius: 999px; }
+    .calendar-grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(88px,1fr); gap: 10px; }
+    .date-card, .time-slot { border: 1px solid rgba(151,84,21,0.14); background: rgba(255,252,247,0.88); color: var(--text); cursor: pointer; transition: all 0.2s ease; font-family: inherit; }
+    .date-card { min-height: 96px; border-radius: 18px; padding: 12px 10px; display: grid; gap: 6px; text-align: left; align-content: start; appearance: none; }
+    .date-card:hover, .time-slot:hover { transform: translateY(-1px); border-color: rgba(208,129,36,0.46); box-shadow: 0 12px 24px rgba(192,123,39,0.12); }
+    .date-card.active, .time-slot.active { background: linear-gradient(135deg,#fff4d3,#ffd977); border-color: rgba(208,129,36,0.52); box-shadow: 0 14px 28px rgba(192,123,39,0.18); color: var(--clay); }
+    .date-card small { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #ad6d2b; }
+    .date-main { font-size: 21px; font-weight: 800; line-height: 1; color: var(--clay); }
+    .date-sub { font-size: 12px; color: var(--muted); }
+    .time-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
+    .time-slot { border-radius: 14px; padding: 11px 12px; font-size: 14px; font-weight: 700; text-align: center; appearance: none; }
+    .time-slot[disabled] { opacity: 0.45; cursor: not-allowed; box-shadow: none; transform: none; }
+
+    .summary { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; background: rgba(111,143,87,0.08); border: 1px solid rgba(111,143,87,0.2); color: var(--success); font-size: 13px; font-weight: 700; margin-bottom: 18px; display: none; }
+    .summary.active { display: flex; }
+    .summary .icon { width: 24px; height: 24px; border-radius: 999px; background: var(--success); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .hint { font-size: 13px; color: var(--muted); padding: 10px 14px; border-radius: 12px; background: rgba(255,248,238,0.7); border: 1px dashed rgba(151,84,21,0.2); margin-bottom: 18px; }
+
+    .action-row { display: flex; justify-content: flex-end; gap: 12px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
 
     /* FOOTER */
     .footer { background: var(--brown); color: rgba(255,245,230,0.78); padding: 60px 48px 32px; }
@@ -70,434 +106,9 @@
     .footer-col ul a { font-size: 14px; color: rgba(255,245,230,0.72); transition: 0.15s; }
     .footer-col ul a:hover { color: #fff8ef; }
     .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
+
     @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } }
-
-    /* SECTION STRUCTURE */
-    .section-wrap { padding: 88px 0; }
-    .section-wrap.bg-sand { background: var(--sand); }
-    .section-wrap.bg-dark { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 100%); }
-    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
-    .section-head { margin-bottom: 48px; }
-    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
-    .section-title { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px; }
-    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 600px; }
-    /* HERO SPLIT LAYOUT */
-    .hero-split { display: grid; grid-template-columns: 1fr 400px; gap: 52px; align-items: center; }
-    .hero-split-copy { color: #fff8ef; }
-    .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 520px; margin-bottom: 28px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; }
-    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
-    .hero-stat span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.4; }
-    .hero-form-card { background: rgba(255,252,247,0.97); border-radius: 24px; padding: 32px; box-shadow: 0 32px 80px rgba(0,0,0,0.28); border: 1px solid rgba(255,237,200,0.5); }
-    .hero-form-card h2 { font-size: 20px; font-weight: 800; color: var(--clay); margin-bottom: 6px; }
-    .hero-form-card > p { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1px solid rgba(126,77,29,0.18); border-radius: 11px; background: rgba(255,250,244,0.98); color: var(--text); font-size: 14px; font-family: inherit; outline: none; transition: 0.15s; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(236,171,47,0.15); }
-    /* EXTRA BUTTONS */
-    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
-    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
-    /* CTA BAND */
-    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 48px; text-align: center; }
-    .cta-band h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 14px 0; }
-    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
-    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    /* WHY GRID */
-    .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-    .why-card { padding: 26px; border-radius: 20px; background: rgba(255,252,247,0.9); border: 1px solid var(--line); transition: 0.2s; }
-    .why-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(215,144,22,0.28); }
-    .why-icon { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg,#ffe7af,var(--gold)); display: grid; place-items: center; font-size: 22px; margin-bottom: 16px; }
-    .why-card h3 { font-size: 17px; font-weight: 800; color: var(--clay); margin-bottom: 10px; }
-    .why-card p { font-size: 14px; color: var(--muted); line-height: 1.72; }
-    @media (max-width: 1000px) { .hero-split { grid-template-columns: 1fr; } .hero-form-card { max-width: 480px; } }
-    @media (max-width: 760px) { .why-grid { grid-template-columns: 1fr; } .section-inner { padding: 0 24px; } .section-wrap { padding: 60px 0; } .cta-band { padding: 60px 24px; } }
-
-    /* PAGE-SPECIFIC COMPONENTS */
-    .link-btn {
-      border: 1px solid var(--line);
-      background: rgba(255, 247, 236, 0.96);
-      color: var(--clay);
-      padding: 8px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 13px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    .link-btn:hover {
-      background: linear-gradient(135deg, #fff6de, #ffd977);
-      border-color: rgba(208, 129, 36, 0.5);
-      box-shadow: 0 10px 24px rgba(192, 123, 39, 0.18);
-      color: var(--clay);
-    }
-
-    .link-btn.is-locked {
-      opacity: 0.45;
-      filter: saturate(0.7);
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(252, 244, 232, 0.96));
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: 0 24px 56px rgba(123, 72, 24, 0.08);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    .card {
-      padding: 20px;
-    }
-
-    .card h2 {
-      margin: 0 0 10px;
-      color: var(--clay);
-      font-size: 20px;
-    }
-
-    .highlight-list {
-      margin: 14px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 10px;
-    }
-
-    .highlight-list li {
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(151, 84, 21, 0.12);
-      background: rgba(255, 248, 238, 0.72);
-      color: #6a4a35;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .metric {
-      border-radius: 14px;
-      border: 1px solid rgba(151, 84, 21, 0.12);
-      background: rgba(255, 248, 238, 0.84);
-      padding: 10px;
-    }
-
-    .metric strong {
-      display: block;
-      color: var(--clay);
-      margin-bottom: 4px;
-    }
-
-    form { display: grid; gap: 12px; }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      color: #7b5b43;
-      margin-bottom: 6px;
-    }
-
-    .required-label::after {
-      content: " *";
-      color: var(--error);
-      font-weight: 700;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid rgba(151, 84, 21, 0.16);
-      background: rgba(255, 252, 247, 0.88);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: rgba(208, 129, 36, 0.54);
-      box-shadow: 0 0 0 4px rgba(255, 204, 97, 0.2);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 92px;
-    }
-
-    .consent {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .consent input {
-      width: 16px;
-      height: 16px;
-      margin-top: 2px;
-    }
-
-    .submit-btn {
-      justify-self: start;
-      min-width: 180px;
-      border: 1px solid var(--line);
-      background: rgba(255, 247, 236, 0.96);
-      color: var(--clay);
-      padding: 8px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 13px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .submit-btn:hover {
-      background: linear-gradient(135deg, #fff6de, #ffd977);
-      border-color: rgba(208, 129, 36, 0.5);
-      box-shadow: 0 10px 24px rgba(192, 123, 39, 0.18);
-      color: var(--clay);
-    }
-
-    .schedule-picker {
-      display: grid;
-      gap: 14px;
-      padding: 16px;
-      border-radius: 20px;
-      border: 1px solid rgba(151, 84, 21, 0.12);
-      background: linear-gradient(180deg, rgba(255, 249, 239, 0.94), rgba(255, 244, 227, 0.88));
-    }
-
-    .schedule-head {
-      display: grid;
-      gap: 6px;
-    }
-
-    .schedule-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--clay);
-    }
-
-    .schedule-block {
-      display: grid;
-      gap: 8px;
-    }
-
-    .picker-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin: 0;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--clay);
-    }
-
-    .picker-label span:last-child {
-      font-weight: 500;
-      color: var(--muted);
-    }
-
-    .schedule-scroll {
-      overflow-x: auto;
-      padding-bottom: 4px;
-      margin-bottom: -4px;
-    }
-
-    .schedule-scroll::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .schedule-scroll::-webkit-scrollbar-thumb {
-      background: rgba(151, 84, 21, 0.18);
-      border-radius: 999px;
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(88px, 1fr);
-      gap: 10px;
-    }
-
-    .date-card,
-    .time-slot {
-      border: 1px solid rgba(151, 84, 21, 0.14);
-      background: rgba(255, 252, 247, 0.88);
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .date-card {
-      min-height: 96px;
-      border-radius: 18px;
-      padding: 12px 10px;
-      display: grid;
-      gap: 6px;
-      text-align: left;
-      align-content: start;
-      appearance: none;
-    }
-
-    .date-card:hover,
-    .time-slot:hover {
-      transform: translateY(-1px);
-      border-color: rgba(208, 129, 36, 0.46);
-      box-shadow: 0 12px 24px rgba(192, 123, 39, 0.12);
-    }
-
-    .date-card.active,
-    .time-slot.active {
-      background: linear-gradient(135deg, #fff4d3, #ffd977);
-      border-color: rgba(208, 129, 36, 0.52);
-      box-shadow: 0 14px 28px rgba(192, 123, 39, 0.18);
-      color: var(--clay);
-    }
-
-    .date-card small {
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #ad6d2b;
-    }
-
-    .date-main {
-      font-size: 21px;
-      font-weight: 800;
-      line-height: 1;
-      color: var(--clay);
-    }
-
-    .date-sub {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .time-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .time-slot {
-      border-radius: 14px;
-      padding: 11px 12px;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: center;
-      appearance: none;
-    }
-
-    .time-slot[disabled] {
-      opacity: 0.45;
-      cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .schedule-summary {
-      min-height: 22px;
-      font-size: 13px;
-      color: var(--muted);
-      padding-top: 2px;
-    }
-
-    .result {
-      font-size: 13px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      margin-top: 2px;
-      display: none;
-    }
-
-    .result.success {
-      display: block;
-      border: 1px solid rgba(111, 143, 87, 0.28);
-      background: rgba(111, 143, 87, 0.1);
-      color: var(--success);
-    }
-
-    .result.error {
-      display: block;
-      border: 1px solid rgba(196, 106, 77, 0.28);
-      background: rgba(196, 106, 77, 0.1);
-      color: var(--error);
-    }
-
-    .muted {
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    @media (max-width: 900px) {
-      .grid,
-      .metrics {
-        grid-template-columns: 1fr;
-      }
-
-      .time-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .row { grid-template-columns: 1fr; }
-      .schedule-picker {
-        padding: 14px;
-        border-radius: 18px;
-      }
-      .calendar-grid {
-        grid-auto-columns: minmax(82px, 1fr);
-      }
-      .time-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
+    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } .time-grid { grid-template-columns: repeat(3,minmax(0,1fr)); } .calendar-grid { grid-auto-columns: minmax(82px,1fr); } .card { padding: 24px 20px; } .action-row { flex-direction: column-reverse; } .action-row .btn-primary, .action-row .btn-secondary { width: 100%; justify-content: center; } }
   </style>
 </head>
 <body>
@@ -521,180 +132,58 @@
 
   <div class="page-hero">
     <div class="page-hero-inner">
-      <div class="hero-split">
-        <div class="hero-split-copy">
-          <div class="page-tag"><span data-lang="zh">学员旅程</span><span data-lang="en">Student Journey</span></div>
-          <h1><span data-lang="zh">预约体验课</span><span data-lang="en">Book Your Free Trial</span></h1>
-          <p class="hero-sub">
-            <span data-lang="zh">填写下方表单，我们将在 24 小时内与您确认时间。首次体验课完全免费，无需任何承诺。</span>
-            <span data-lang="en">Fill in the form and we'll confirm your time within 24 hours. The first trial is completely free — no commitment required.</span>
-          </p>
-          <div class="hero-actions">
-            <a class="btn-ghost" href="assessment.html"><span data-lang="zh">先做能力评估</span><span data-lang="en">Take Assessment First</span></a>
-            <a class="btn-ghost" href="course-system.html"><span data-lang="zh">查看课程体系</span><span data-lang="en">View Programs</span></a>
-          </div>
-          <div class="hero-stats">
-            <div class="hero-stat"><strong>200+</strong><span><span data-lang="zh">在读学员</span><span data-lang="en">Active students</span></span></div>
-            <div class="hero-stat"><strong>4.9★</strong><span><span data-lang="zh">家长满意度</span><span data-lang="en">Parent rating</span></span></div>
-            <div class="hero-stat"><strong>100%</strong><span><span data-lang="zh">首课免费</span><span data-lang="en">First trial free</span></span></div>
-          </div>
-        </div>
-
-        <div class="hero-form-card">
-          <h2 data-i18n="formTitle"></h2>
-
-          <form id="trialForm" novalidate>
-            <div class="row">
-              <div>
-                <label for="studentName" class="required-label" data-i18n="studentName"></label>
-                <input id="studentName" name="studentName" type="text" required />
-              </div>
-              <div>
-                <label for="grade" class="required-label" data-i18n="grade"></label>
-                <input id="grade" name="grade" type="text" required />
-              </div>
-            </div>
-
-            <div class="row">
-              <div>
-                <label for="birthday" class="required-label" data-i18n="birthday"></label>
-                <input id="birthday" name="birthday" type="date" required />
-              </div>
-              <div>
-                <label for="email" class="required-label" data-i18n="email"></label>
-                <input id="email" name="email" type="email" required />
-              </div>
-            </div>
-
-            <div class="row">
-              <div>
-                <label for="parentName" data-i18n="parentName"></label>
-                <input id="parentName" name="parentName" type="text" required />
-              </div>
-              <div>
-                <label for="phone" class="required-label" data-i18n="phone"></label>
-                <input id="phone" name="phone" type="tel" required />
-              </div>
-            </div>
-
-            <div class="row">
-              <div>
-                <label for="city" class="required-label" data-i18n="city"></label>
-                <input id="city" name="city" type="text" required />
-              </div>
-              <div>
-                <label for="subject" data-i18n="subject"></label>
-                <select id="subject" name="subject" required></select>
-              </div>
-            </div>
-
-            <div class="schedule-picker">
-              <div class="schedule-head">
-                <span class="schedule-title" data-i18n="scheduleTitle"></span>
-                <p class="muted" data-i18n="scheduleDesc"></p>
-              </div>
-
-              <div class="schedule-block">
-                <div class="picker-label">
-                  <span data-i18n="trialDate"></span>
-                  <span data-i18n="dateHelper"></span>
-                </div>
-                <label class="sr-only" for="trialDate" data-i18n="trialDate"></label>
-                <input id="trialDate" name="trialDate" type="date" required class="sr-only" />
-                <div class="schedule-scroll">
-                  <div id="calendarGrid" class="calendar-grid" role="listbox" aria-label="Trial date options"></div>
-                </div>
-              </div>
-
-              <div class="schedule-block">
-                <div class="picker-label">
-                  <span data-i18n="trialTime"></span>
-                  <span data-i18n="timeHelper"></span>
-                </div>
-                <label class="sr-only" for="trialTime" data-i18n="trialTime"></label>
-                <select id="trialTime" name="trialTime" required class="sr-only"></select>
-                <div id="timeGrid" class="time-grid" role="listbox" aria-label="Trial time options"></div>
-              </div>
-
-              <div id="scheduleSummary" class="schedule-summary" aria-live="polite"></div>
-            </div>
-
-            <div class="row">
-              <div>
-                <label for="channel" data-i18n="channel"></label>
-                <select id="channel" name="channel" required></select>
-              </div>
-              <div>
-                <label for="timeNote" data-i18n="timeNote"></label>
-                <input id="timeNote" name="timeNote" type="text" data-i18n-placeholder="timeNotePlaceholder" />
-              </div>
-            </div>
-
-            <div>
-              <label for="goal" data-i18n="goal"></label>
-              <textarea id="goal" name="goal"></textarea>
-            </div>
-
-            <label class="consent" for="consent">
-              <input id="consent" name="consent" type="checkbox" required />
-              <span data-i18n="consent"></span>
-            </label>
-
-            <button class="submit-btn" type="submit" data-i18n="submit"></button>
-            <div id="submitResult" class="result" role="status" aria-live="polite"></div>
-          </form>
-        </div>
+      <div class="page-tag"><span data-lang="zh">免费试课</span><span data-lang="en">Free Trial</span></div>
+      <div class="step-bar">
+        <div class="step-pill active"><span class="num">1</span><span data-lang="zh">选择试课时间</span><span data-lang="en">Select Time</span></div>
+        <div class="step-divider"></div>
+        <div class="step-pill"><span class="num">2</span><span data-lang="zh">填写报名信息</span><span data-lang="en">Fill Info</span></div>
       </div>
+      <h1><span data-lang="zh">选择你想要的试课时间</span><span data-lang="en">Pick Your Trial Time</span></h1>
+      <p class="hero-sub">
+        <span data-lang="zh">先选一个你希望的试课日期与时段，下一步再填写联系方式。首次试课完全免费，无需预付。</span>
+        <span data-lang="en">Choose your preferred trial date and time first. You'll fill in contact info on the next step. The first trial is free — no prepayment.</span>
+      </p>
     </div>
   </div>
 
-  <!-- WHY MINDDO -->
-  <div class="section-wrap bg-sand">
-    <div class="section-inner">
-      <div class="section-head">
-        <div class="section-tag"><span data-lang="zh">为什么选我们</span><span data-lang="en">Why MindDo</span></div>
-        <h2 class="section-title">
-          <span data-lang="zh">让每次课都值得期待</span>
-          <span data-lang="en">Every Class Worth Looking Forward To</span>
-        </h2>
-        <p class="section-sub">
-          <span data-lang="zh">以项目为核心、以成果为导向，首节体验课就能带走属于孩子自己的作品。</span>
-          <span data-lang="en">Project-driven and outcome-focused — students leave even the first trial class with something they made themselves.</span>
-        </p>
-      </div>
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="why-icon">🎯</div>
-          <h3><span data-lang="zh">自主进度学习</span><span data-lang="en">Self-Paced Learning</span></h3>
-          <p><span data-lang="zh">每位学员按照自己的节奏前进，老师提供个性化指导，而不是统一教学。无论快慢，都能找到最适合自己的起点。</span><span data-lang="en">Each student progresses at their own speed with personalized instruction — not one-size-fits-all teaching. Every child starts at the right level.</span></p>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">🏆</div>
-          <h3><span data-lang="zh">看得见的成果</span><span data-lang="en">Real Outcomes</span></h3>
-          <p><span data-lang="zh">学员会真正做出游戏、应用和 AI 项目，而不只是完成练习题。每节课的进步都是有形的、可以分享的。</span><span data-lang="en">Students build real games, apps, and AI projects — not just exercises. Progress is always visible and shareable.</span></p>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">👥</div>
-          <h3><span data-lang="zh">小班制教学</span><span data-lang="en">Small Classes</span></h3>
-          <p><span data-lang="zh">每班最多 8 人，确保每位学员都能得到足够的关注和指导时间。孩子不会在课堂里被忽视。</span><span data-lang="en">Maximum 8 students per class so every learner gets real attention and guided time — no child gets left behind.</span></p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="page-content">
+    <div class="content-inner">
+      <div class="card">
+        <h2 data-i18n="formTitle"></h2>
+        <p class="desc" data-i18n="formDesc"></p>
 
-  <div class="cta-band">
-    <div class="section-tag"><span data-lang="zh">下一步</span><span data-lang="en">Next Step</span></div>
-    <h2>
-      <span data-lang="zh">还没确定？先了解我们的课程</span>
-      <span data-lang="en">Not Sure Yet? Explore Our Programs</span>
-    </h2>
-    <p>
-      <span data-lang="zh">查看完整课程体系，或先完成在线能力评估，帮助我们为孩子推荐最合适的课程。</span>
-      <span data-lang="en">Browse our full curriculum or take the online assessment first — we'll recommend the best program for your child.</span>
-    </p>
-    <div class="cta-btns">
-      <a class="btn-primary" href="course-system.html"><span data-lang="zh">查看课程体系</span><span data-lang="en">View Programs</span></a>
-      <a class="btn-secondary" href="assessment.html"><span data-lang="zh">在线能力评估</span><span data-lang="en">Take Assessment</span></a>
+        <div id="prevSelection" class="summary">
+          <span class="icon">✓</span>
+          <span id="prevSelectionText"></span>
+        </div>
+
+        <div class="field-block">
+          <label class="field-label" for="subject" data-i18n="subject"></label>
+          <select id="subject" name="subject" required></select>
+        </div>
+
+        <div class="field-block">
+          <div class="field-label" data-i18n="trialDate"></div>
+          <input id="trialDate" type="date" class="sr-only" />
+          <div class="schedule-scroll">
+            <div id="calendarGrid" class="calendar-grid" role="listbox" aria-label="Trial date options"></div>
+          </div>
+          <div class="picker-helper" data-i18n="dateHelper"></div>
+        </div>
+
+        <div class="field-block">
+          <div class="field-label" data-i18n="trialTime"></div>
+          <div id="timeGrid" class="time-grid" role="listbox" aria-label="Trial time options"></div>
+          <div class="picker-helper" data-i18n="timeHelper"></div>
+        </div>
+
+        <div id="selectionHint" class="hint" data-i18n="selectionHint"></div>
+
+        <div class="action-row">
+          <a class="btn-secondary" href="index.html"><span data-lang="zh">← 返回首页</span><span data-lang="en">← Back to Home</span></a>
+          <button id="nextBtn" class="btn-primary" type="button" disabled><span data-lang="zh">下一步：填写信息 →</span><span data-lang="en">Next: Fill Info →</span></button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -755,52 +244,31 @@
   <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
+      var SELECTION_KEY = "minddo_trial_selection";
+
       var I18N = {
         "zh-CN": {
-          backFlow: "返回总流程页",
-          backToFlow: "返回总流程页",
-          goCourseSelection: "前往选课",
-          goCourseSystem: "查看课程体系",
-          goSemesterReport: "查看学期报告",
-          goAccount: "学生 Account",
-          goFeedback: "反馈页面",
-          goAssessment: "前往 Assessment",
-          goDashboard: "前往看板",
-          goSignup: "前往 Sign Up 注册",
-          pageTitle: "Trial 试课报名页面",
-          formTitle: "学生注册报名",
-          studentName: "学生姓名",
-          grade: "年级/学段",
-          birthday: "生日",
-          email: "邮箱",
-          parentName: "家长姓名",
-          phone: "联系电话",
-          city: "所在城市",
+          pageTitle: "试课预约 · 选择时间",
+          formTitle: "第 1 步：选择你的试课时间",
+          formDesc: "先选一个意向科目，再选一个合适的日期和时段。下一步你将填写联系方式并完成预约。",
           subject: "意向科目",
           trialDate: "试课日期",
-          trialTime: "试课时间",
-          scheduleTitle: "像日历一样选择试课时间",
-          scheduleDesc: "先选日期，再点选可预约时间段。今天的过期时段会自动置灰。",
-          dateHelper: "未来 12 天",
-          timeHelper: "点击即可选中",
-          channel: "您从哪里了解到我们",
-          timeNote: "时间备注（选填）",
-          timeNotePlaceholder: "例如：放学后可上课 / 需要避开周三",
-          goal: "学习目标（选填）",
-          consent: "我同意用于课程咨询与试课安排的联系与信息记录。",
-          submit: "提交 Trial 报名",
+          trialTime: "试课时段",
+          dateHelper: "未来 12 天内可选，今日过期时段自动置灰",
+          timeHelper: "点击可选中；需先选日期",
           todayLabel: "今天",
           tomorrowLabel: "明天",
-          chooseDateFirst: "请先选择一个试课日期。",
-          chooseTimeHint: "请选择一个可预约时间段。",
-          scheduleSelected: "已选择：{date} {time}",
-          nextStepLocked: "请先完成试课报名并选择试课时间，然后再进入下一个环节。",
+          selectionHint: "请先选择科目、日期和时段，然后点击\"下一步\"。",
+          prevSelectionText: "你之前选择过：{date} {time}（{subject}）。如需修改直接重新选择即可。",
           subjectOptions: [
-            { value: "", label: "请选择" },
-            { value: "ai-course", label: "AI课程" }
+            { value: "", label: "请选择意向科目" },
+            { value: "ai-course", label: "AI 课程" },
+            { value: "scratch", label: "Scratch 编程" },
+            { value: "python", label: "Python 进阶" },
+            { value: "robotics", label: "机器人" },
+            { value: "camp", label: "假期集训营" }
           ],
           trialTimeOptions: [
-            { value: "", label: "请选择" },
             { value: "15:00", label: "15:00" },
             { value: "16:00", label: "16:00" },
             { value: "17:00", label: "17:00" },
@@ -808,63 +276,30 @@
             { value: "19:00", label: "19:00" },
             { value: "20:00", label: "20:00" },
             { value: "21:00", label: "21:00" }
-          ],
-          channelOptions: [
-            { value: "", label: "请选择" },
-            { value: "douyin", label: "抖音" },
-            { value: "xiaohongshu", label: "小红书" },
-            { value: "official-account", label: "公众号" },
-            { value: "referral", label: "朋友推荐" },
-            { value: "offline-event", label: "线下活动" }
-          ],
-          success: "报名已提交，顾问将在24小时内联系并确认试课时间。",
-          error: "请完整填写必填项，并确认联系电话格式正确且试课时间晚于当前时间。"
+          ]
         },
         en: {
-          backFlow: "Back To Workflow",
-          backToFlow: "Back To Workflow",
-          goCourseSelection: "Course Selection",
-          goCourseSystem: "View Curriculum System",
-          goSemesterReport: "View Semester Report",
-          goAccount: "Student Account",
-          goFeedback: "Feedback Page",
-          goAssessment: "Go To Assessment",
-          goDashboard: "Go To Dashboard",
-          goSignup: "Go To Sign Up",
-          pageTitle: "Trial Registration Page",
-          formTitle: "Student Registration",
-          studentName: "Student Name",
-          grade: "Grade / Stage",
-          birthday: "Birthday",
-          email: "Email",
-          parentName: "Parent Name",
-          phone: "Phone Number",
-          city: "City",
+          pageTitle: "Book Trial · Select Time",
+          formTitle: "Step 1: Pick Your Trial Time",
+          formDesc: "Choose a subject, then a date and time that works for you. You'll fill in contact info on the next step.",
           subject: "Interested Subject",
           trialDate: "Trial Date",
           trialTime: "Trial Time",
-          scheduleTitle: "Choose a trial slot like a calendar",
-          scheduleDesc: "Pick a date first, then tap an available time slot. Expired times for today are disabled automatically.",
-          dateHelper: "Next 12 days",
-          timeHelper: "Tap to select",
-          channel: "How did you hear about us?",
-          timeNote: "Time Note (Optional)",
-          timeNotePlaceholder: "Example: Available after school / Avoid Wednesdays",
-          goal: "Learning Goal (Optional)",
-          consent: "I agree to be contacted and have my information recorded for consultation and trial scheduling.",
-          submit: "Submit Trial Registration",
+          dateHelper: "Next 12 days available — expired times are disabled automatically",
+          timeHelper: "Tap to select; pick a date first",
           todayLabel: "Today",
           tomorrowLabel: "Tomorrow",
-          chooseDateFirst: "Please choose a trial date first.",
-          chooseTimeHint: "Please choose an available time slot.",
-          scheduleSelected: "Selected: {date} {time}",
-          nextStepLocked: "Please complete trial registration and choose a trial time before moving to the next step.",
+          selectionHint: "Please select subject, date and time, then click \"Next\".",
+          prevSelectionText: "Previously selected: {date} {time} ({subject}). Re-select to change.",
           subjectOptions: [
-            { value: "", label: "Please select" },
-            { value: "ai-course", label: "AI Course" }
+            { value: "", label: "Please choose a subject" },
+            { value: "ai-course", label: "AI Course" },
+            { value: "scratch", label: "Scratch Coding" },
+            { value: "python", label: "Python Advanced" },
+            { value: "robotics", label: "Robotics" },
+            { value: "camp", label: "Holiday Camp" }
           ],
           trialTimeOptions: [
-            { value: "", label: "Please select" },
             { value: "15:00", label: "15:00" },
             { value: "16:00", label: "16:00" },
             { value: "17:00", label: "17:00" },
@@ -872,396 +307,192 @@
             { value: "19:00", label: "19:00" },
             { value: "20:00", label: "20:00" },
             { value: "21:00", label: "21:00" }
-          ],
-          channelOptions: [
-            { value: "", label: "Please select" },
-            { value: "douyin", label: "Douyin" },
-            { value: "xiaohongshu", label: "Xiaohongshu" },
-            { value: "official-account", label: "Official Account" },
-            { value: "referral", label: "Referral" },
-            { value: "offline-event", label: "Offline Event" }
-          ],
-          success: "Registration submitted. A consultant will contact you within 24 hours to confirm the trial time.",
-          error: "Please complete required fields, provide a valid phone number, and choose a future trial time."
+          ]
         }
       };
 
       var html = document.documentElement;
-      var buttons = document.querySelectorAll("[data-set-lang]");
-      var form = document.getElementById("trialForm");
-      var result = document.getElementById("submitResult");
-      var subject = document.getElementById("subject");
-      var trialDate = document.getElementById("trialDate");
-      var trialTime = document.getElementById("trialTime");
-      var channel = document.getElementById("channel");
+      var langButtons = document.querySelectorAll("[data-set-lang]");
+      var subjectSel = document.getElementById("subject");
+      var trialDateInput = document.getElementById("trialDate");
       var calendarGrid = document.getElementById("calendarGrid");
       var timeGrid = document.getElementById("timeGrid");
-      var scheduleSummary = document.getElementById("scheduleSummary");
-      var navLinks = document.querySelectorAll(".nav-links a");
-      var dateOptionCount = 12;
+      var nextBtn = document.getElementById("nextBtn");
+      var selectionHint = document.getElementById("selectionHint");
+      var prevSelection = document.getElementById("prevSelection");
+      var prevSelectionText = document.getElementById("prevSelectionText");
 
-      function buildOptions(select, options) {
-        select.innerHTML = options
-          .map(function (item, idx) {
-            var value = typeof item === "string" ? item : item.value;
-            var label = typeof item === "string" ? item : item.label;
-            var selected = idx === 0 && !select.value ? " selected" : "";
-            var active = select.value === value ? " selected" : selected;
-            return "<option value=\"" + value + "\"" + active + ">" + label + "</option>";
-          })
-          .join("");
+      var state = { subject: "", subjectLabel: "", trialDate: "", trialTime: "" };
+
+      function pad(n) { return String(n).padStart(2,"0"); }
+      function toDateValue(d) { return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()); }
+      function parseLocalDate(v) { if (!v) return null; var p = v.split("-"); return p.length===3 ? new Date(Number(p[0]), Number(p[1])-1, Number(p[2])) : null; }
+      function isSameDay(a,b) { return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+      function isTimeExpired(dateV, timeV) { if (!dateV || !timeV) return false; var c = new Date(dateV + "T" + timeV + ":00"); return !Number.isNaN(c.getTime()) && c.getTime() <= Date.now(); }
+      function langOf() { return html.getAttribute("lang") === "en" ? "en" : "zh-CN"; }
+
+      function buildSubjects(opts) {
+        subjectSel.innerHTML = opts.map(function (o) {
+          var sel = state.subject === o.value ? " selected" : "";
+          return "<option value=\"" + o.value + "\"" + sel + ">" + o.label + "</option>";
+        }).join("");
       }
 
-      function syncTranslatedFields(data) {
-        var subjectLabel = (data.subjectOptions.find(function (item) { return item.value === subject.value; }) || {}).label || "";
-        var trialTimeLabel = (data.trialTimeOptions.find(function (item) { return item.value === trialTime.value; }) || {}).label || "";
-        var channelLabel = (data.channelOptions.find(function (item) { return item.value === channel.value; }) || {}).label || "";
-
-        form.subject.dataset.label = subjectLabel;
-        form.trialTime.dataset.label = trialTimeLabel;
-        form.channel.dataset.label = channelLabel;
-      }
-
-      function setMinTrialDate() {
+      function getDateTag(date, t) {
         var now = new Date();
-        var minDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().split("T")[0];
-        trialDate.min = minDate;
+        if (isSameDay(date, now)) return t.todayLabel;
+        var tmr = new Date(now); tmr.setDate(now.getDate()+1);
+        if (isSameDay(date, tmr)) return t.tomorrowLabel;
+        return new Intl.DateTimeFormat(langOf()==="en"?"en-US":"zh-CN", { weekday: "short" }).format(date);
       }
+      function getDateMain(date) { return new Intl.DateTimeFormat(langOf()==="en"?"en-US":"zh-CN", { month: "numeric", day: "numeric" }).format(date); }
+      function getDateSub(date) { return new Intl.DateTimeFormat(langOf()==="en"?"en-US":"zh-CN", { weekday: "long" }).format(date); }
+      function formatSelectedDate(v) { var d = parseLocalDate(v); return d ? new Intl.DateTimeFormat(langOf()==="en"?"en-US":"zh-CN", { month: "short", day: "numeric", weekday: "short" }).format(d) : ""; }
 
-      function pad(num) {
-        return String(num).padStart(2, "0");
-      }
-
-      function toDateValue(date) {
-        return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate());
-      }
-
-      function parseLocalDate(dateValue) {
-        if (!dateValue) return null;
-        var parts = dateValue.split("-");
-        if (parts.length !== 3) return null;
-        return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
-      }
-
-      function isSameDay(a, b) {
-        return a.getFullYear() === b.getFullYear() &&
-          a.getMonth() === b.getMonth() &&
-          a.getDate() === b.getDate();
-      }
-
-      function getDateTag(date, data) {
-        var now = new Date();
-        if (isSameDay(date, now)) return data.todayLabel;
-
-        var tomorrow = new Date(now);
-        tomorrow.setDate(now.getDate() + 1);
-        if (isSameDay(date, tomorrow)) return data.tomorrowLabel;
-
-        return new Intl.DateTimeFormat(html.getAttribute("lang") === "en" ? "en-US" : "zh-CN", {
-          weekday: "short"
-        }).format(date);
-      }
-
-      function getDateMain(date) {
-        return new Intl.DateTimeFormat(html.getAttribute("lang") === "en" ? "en-US" : "zh-CN", {
-          month: "numeric",
-          day: "numeric"
-        }).format(date);
-      }
-
-      function getDateSub(date) {
-        return new Intl.DateTimeFormat(html.getAttribute("lang") === "en" ? "en-US" : "zh-CN", {
-          weekday: "long"
-        }).format(date);
-      }
-
-      function formatSelectedDate(dateValue) {
-        var date = parseLocalDate(dateValue);
-        if (!date) return "";
-        return new Intl.DateTimeFormat(html.getAttribute("lang") === "en" ? "en-US" : "zh-CN", {
-          month: "short",
-          day: "numeric",
-          weekday: "short"
-        }).format(date);
-      }
-
-      function isTimeExpired(dateValue, timeValue) {
-        if (!dateValue || !timeValue) return false;
-        var chosen = new Date(dateValue + "T" + timeValue + ":00");
-        return !Number.isNaN(chosen.getTime()) && chosen.getTime() <= Date.now();
-      }
-
-      function renderScheduleSummary(data) {
-        if (!trialDate.value) {
-          scheduleSummary.textContent = data.chooseDateFirst;
-          return;
-        }
-
-        if (!trialTime.value) {
-          scheduleSummary.textContent = data.chooseTimeHint;
-          return;
-        }
-
-        scheduleSummary.textContent = data.scheduleSelected
-          .replace("{date}", formatSelectedDate(trialDate.value))
-          .replace("{time}", form.trialTime.dataset.label || trialTime.value);
-      }
-
-      function renderCalendar(data) {
+      function renderCalendar(t) {
         var items = [];
         var today = new Date();
-
-        for (var i = 0; i < dateOptionCount; i += 1) {
-          var date = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
-          var value = toDateValue(date);
-          var active = trialDate.value === value ? " active" : "";
+        for (var i=0; i<12; i+=1) {
+          var d = new Date(today.getFullYear(), today.getMonth(), today.getDate()+i);
+          var value = toDateValue(d);
+          var active = state.trialDate === value ? " active" : "";
           items.push(
-            "<button type=\"button\" class=\"date-card" + active + "\" data-date=\"" + value + "\" aria-selected=\"" + (trialDate.value === value ? "true" : "false") + "\">" +
-              "<small>" + getDateTag(date, data) + "</small>" +
-              "<span class=\"date-main\">" + getDateMain(date) + "</span>" +
-              "<span class=\"date-sub\">" + getDateSub(date) + "</span>" +
+            "<button type=\"button\" class=\"date-card" + active + "\" data-date=\"" + value + "\">" +
+            "<small>" + getDateTag(d, t) + "</small>" +
+            "<span class=\"date-main\">" + getDateMain(d) + "</span>" +
+            "<span class=\"date-sub\">" + getDateSub(d) + "</span>" +
             "</button>"
           );
         }
-
         calendarGrid.innerHTML = items.join("");
       }
 
-      function renderTimeGrid(data) {
-        var options = data.trialTimeOptions.filter(function (item) { return item.value; });
-        var selectedDate = trialDate.value;
-
-        timeGrid.innerHTML = options.map(function (item) {
-          var disabled = !selectedDate || isTimeExpired(selectedDate, item.value);
-          var active = !disabled && trialTime.value === item.value ? " active" : "";
-          return "<button type=\"button\" class=\"time-slot" + active + "\" data-time=\"" + item.value + "\" " +
-            (disabled ? "disabled aria-disabled=\"true\"" : "") + ">" + item.label + "</button>";
+      function renderTimeGrid(t) {
+        var items = t.trialTimeOptions.map(function (o) {
+          var disabled = !state.trialDate || isTimeExpired(state.trialDate, o.value);
+          var active = !disabled && state.trialTime === o.value ? " active" : "";
+          return "<button type=\"button\" class=\"time-slot" + active + "\" data-time=\"" + o.value + "\"" + (disabled ? " disabled" : "") + ">" + o.label + "</button>";
         }).join("");
-
-        if (trialTime.value && isTimeExpired(selectedDate, trialTime.value)) {
-          trialTime.value = "";
-          form.trialTime.dataset.label = "";
-        }
-
-        renderScheduleSummary(data);
+        timeGrid.innerHTML = items;
+        if (state.trialTime && isTimeExpired(state.trialDate, state.trialTime)) state.trialTime = "";
       }
 
-      function isFutureTrial(dateValue, timeValue) {
-        if (!dateValue || !timeValue) return false;
-        var chosen = new Date(dateValue + "T" + timeValue + ":00");
-        return !Number.isNaN(chosen.getTime()) && chosen.getTime() > Date.now();
+      function updateButtonState() {
+        var valid = !!(state.subject && state.trialDate && state.trialTime && !isTimeExpired(state.trialDate, state.trialTime));
+        nextBtn.disabled = !valid;
+        selectionHint.style.display = valid ? "none" : "block";
       }
 
-      function hasUnlockedNextStep() {
-        if (isFutureTrial(trialDate.value, trialTime.value)) {
-          return true;
-        }
+      function saveToSession() {
+        var payload = {
+          subject: state.subject,
+          subjectLabel: state.subjectLabel,
+          trialDate: state.trialDate,
+          trialTime: state.trialTime,
+          preferredTrialDateTime: state.trialDate && state.trialTime ? new Date(state.trialDate + "T" + state.trialTime + ":00").toISOString() : "",
+          selectedAt: new Date().toISOString()
+        };
+        try { sessionStorage.setItem(SELECTION_KEY, JSON.stringify(payload)); } catch (_) {}
+      }
 
-        if (window.MindDoFlow && window.MindDoFlow.getSnapshot) {
-          var snapshot = window.MindDoFlow.getSnapshot();
-          var lead = snapshot && snapshot.lead;
-          return !!(lead && isFutureTrial(lead.trialDate, lead.trialTime));
-        }
-
+      function loadFromSession() {
         try {
-          var leads = JSON.parse(localStorage.getItem("minddo_trial_leads") || "[]");
-          var latest = leads.slice().sort(function (a, b) {
-            return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-          })[0];
-          return !!(latest && isFutureTrial(latest.trialDate, latest.trialTime));
-        } catch (_) {
-          return false;
-        }
-      }
-
-      function updateNavGate() {
-        var unlocked = hasUnlockedNextStep();
-        navLinks.forEach(function (link) {
-          var href = link.getAttribute("href");
-          var isLockedTarget = href && href !== "index.html";
-          link.classList.toggle("is-locked", isLockedTarget && !unlocked);
-          link.setAttribute("aria-disabled", isLockedTarget && !unlocked ? "true" : "false");
-        });
+          var raw = sessionStorage.getItem(SELECTION_KEY);
+          if (!raw) return null;
+          var data = JSON.parse(raw);
+          if (data && data.trialDate && data.trialTime && !isTimeExpired(data.trialDate, data.trialTime)) {
+            return data;
+          }
+        } catch (_) {}
+        return null;
       }
 
       function setLang(lang) {
-        var data = I18N[lang] || I18N["zh-CN"];
+        var t = I18N[lang] || I18N["zh-CN"];
         html.setAttribute("lang", lang);
         localStorage.setItem("minddo_lang", lang);
-        document.title = data.pageTitle + " | Trial";
+        document.title = t.pageTitle + " | MindDo";
 
         document.querySelectorAll("[data-i18n]").forEach(function (el) {
-          var key = el.getAttribute("data-i18n");
-          if (data[key]) {
-            el.textContent = data[key];
-          }
+          var k = el.getAttribute("data-i18n");
+          if (t[k]) el.textContent = t[k];
         });
 
-        document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
-          var key = el.getAttribute("data-i18n-placeholder");
-          if (data[key]) {
-            el.setAttribute("placeholder", data[key]);
-          }
-        });
+        buildSubjects(t.subjectOptions);
+        var label = (t.subjectOptions.find(function(o){ return o.value === state.subject; }) || {}).label || "";
+        state.subjectLabel = label;
 
-        buildOptions(subject, data.subjectOptions);
-        buildOptions(trialTime, data.trialTimeOptions);
-        buildOptions(channel, data.channelOptions);
-        syncTranslatedFields(data);
-        renderCalendar(data);
-        renderTimeGrid(data);
-        updateNavGate();
+        renderCalendar(t);
+        renderTimeGrid(t);
+        updateButtonState();
+        updatePrevSelection(t);
 
-        buttons.forEach(function (btn) {
+        langButtons.forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
         });
-
-        result.className = "result";
-        result.textContent = "";
       }
 
-      function isValidPhone(phone) {
-        return /^[0-9+\-\s()]{6,20}$/.test(phone);
+      function updatePrevSelection(t) {
+        var prev = loadFromSession();
+        if (!prev || state.trialDate) { prev && (prevSelection.classList.remove("active")); return; }
+        var label = (t.subjectOptions.find(function(o){ return o.value === prev.subject; }) || {}).label || prev.subjectLabel || "—";
+        prevSelectionText.textContent = t.prevSelectionText
+          .replace("{date}", formatSelectedDate(prev.trialDate))
+          .replace("{time}", prev.trialTime)
+          .replace("{subject}", label);
+        prevSelection.classList.add("active");
       }
 
-      function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      // Restore previous selection if exists
+      var prev = loadFromSession();
+      if (prev) {
+        state.subject = prev.subject || "";
+        state.subjectLabel = prev.subjectLabel || "";
+        state.trialDate = prev.trialDate || "";
+        state.trialTime = prev.trialTime || "";
       }
 
-      function saveLead(data) {
-        if (window.MindDoFlow && window.MindDoFlow.saveLead) {
-          window.MindDoFlow.saveLead(data);
-          return;
-        }
-        var key = "minddo_trial_leads";
-        var leads = JSON.parse(localStorage.getItem(key) || "[]");
-        leads.push(data);
-        localStorage.setItem(key, JSON.stringify(leads));
-      }
+      var savedLang = localStorage.getItem("minddo_lang");
+      setLang(savedLang === "en" ? "en" : "zh-CN");
 
-      var saved = localStorage.getItem("minddo_lang");
-      var initialLang = saved === "en" ? "en" : "zh-CN";
-      setMinTrialDate();
-      setLang(initialLang);
-      if (window.MindDoFlow && window.MindDoFlow.prefillTrialForm) {
-        window.MindDoFlow.prefillTrialForm(form);
-      }
-      updateNavGate();
-
-      [subject, trialTime, channel].forEach(function (field) {
-        field.addEventListener("change", function () {
-          var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
-          syncTranslatedFields(I18N[lang]);
-          renderScheduleSummary(I18N[lang]);
-        });
+      subjectSel.addEventListener("change", function () {
+        state.subject = subjectSel.value;
+        var t = I18N[langOf()];
+        var opt = t.subjectOptions.find(function (o) { return o.value === state.subject; });
+        state.subjectLabel = opt ? opt.label : "";
+        updateButtonState();
       });
 
       calendarGrid.addEventListener("click", function (e) {
-        var target = e.target.closest("[data-date]");
-        if (!target) return;
-
-        trialDate.value = target.getAttribute("data-date");
-
-        if (trialTime.value && isTimeExpired(trialDate.value, trialTime.value)) {
-          trialTime.value = "";
-          form.trialTime.dataset.label = "";
-        }
-
-        var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
-        renderCalendar(I18N[lang]);
-        renderTimeGrid(I18N[lang]);
-        updateNavGate();
+        var btn = e.target.closest("[data-date]");
+        if (!btn) return;
+        state.trialDate = btn.getAttribute("data-date");
+        if (state.trialTime && isTimeExpired(state.trialDate, state.trialTime)) state.trialTime = "";
+        var t = I18N[langOf()];
+        renderCalendar(t);
+        renderTimeGrid(t);
+        updateButtonState();
+        updatePrevSelection(t);
       });
 
       timeGrid.addEventListener("click", function (e) {
-        var target = e.target.closest("[data-time]");
-        if (!target || target.disabled) return;
-
-        trialTime.value = target.getAttribute("data-time");
-        var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
-        syncTranslatedFields(I18N[lang]);
-        renderTimeGrid(I18N[lang]);
-        updateNavGate();
+        var btn = e.target.closest("[data-time]");
+        if (!btn || btn.disabled) return;
+        state.trialTime = btn.getAttribute("data-time");
+        renderTimeGrid(I18N[langOf()]);
+        updateButtonState();
       });
 
-      navLinks.forEach(function (link) {
-        link.addEventListener("click", function (e) {
-          var href = link.getAttribute("href");
-          if (!href || href === "index.html" || hasUnlockedNextStep()) {
-            return;
-          }
-
-          e.preventDefault();
-          var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
-          var t = I18N[lang];
-          result.className = "result error";
-          result.textContent = t.nextStepLocked;
-          scheduleSummary.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
-      });
-
-      buttons.forEach(function (btn) {
+      langButtons.forEach(function (btn) {
         btn.addEventListener("click", function () {
           setLang(btn.getAttribute("data-set-lang"));
         });
       });
 
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        var currentLang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
-        var t = I18N[currentLang];
-
-        var formData = {
-          studentName: form.studentName.value.trim(),
-          grade: form.grade.value.trim(),
-          birthday: form.birthday.value,
-          email: form.email.value.trim(),
-          parentName: form.parentName.value.trim(),
-          phone: form.phone.value.trim(),
-          city: form.city.value.trim(),
-          subject: form.subject.value,
-          subjectLabel: form.subject.dataset.label || "",
-          trialDate: form.trialDate.value,
-          trialTime: form.trialTime.value,
-          trialTimeLabel: form.trialTime.dataset.label || form.trialTime.value,
-          preferredTrialDateTime: form.trialDate.value && form.trialTime.value
-            ? new Date(form.trialDate.value + "T" + form.trialTime.value + ":00").toISOString()
-            : "",
-          channel: form.channel.value,
-          channelLabel: form.channel.dataset.label || "",
-          timeNote: form.timeNote.value.trim(),
-          goal: form.goal.value.trim(),
-          consent: form.consent.checked,
-          createdAt: new Date().toISOString()
-        };
-
-        var hasRequired =
-          formData.studentName &&
-          formData.grade &&
-          formData.birthday &&
-          formData.email &&
-          formData.parentName &&
-          formData.phone &&
-          formData.city &&
-          formData.subject &&
-          formData.trialDate &&
-          formData.trialTime &&
-          formData.channel &&
-          formData.consent;
-
-        if (!hasRequired || !isValidPhone(formData.phone) || !isValidEmail(formData.email) || !isFutureTrial(formData.trialDate, formData.trialTime)) {
-          result.className = "result error";
-          result.textContent = t.error;
-          return;
-        }
-
-        saveLead(formData);
-        form.reset();
-        setLang(currentLang);
-        updateNavGate();
-        result.className = "result success";
-        result.textContent = t.success;
+      nextBtn.addEventListener("click", function () {
+        if (nextBtn.disabled) return;
+        saveToSession();
+        window.location.href = "trial-register.html";
       });
     })();
   </script>

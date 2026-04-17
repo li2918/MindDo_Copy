@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>试课预约 · 完善信息 | Book Trial · Registration</title>
+  <style>
+    :root {
+      --bg: #fbf7ef; --sand: #f2e4c9; --card: rgba(255,252,246,0.94);
+      --line: rgba(126,77,29,0.14); --text: #45200d; --muted: #826956;
+      --gold: #ecab2f; --gold-deep: #d79016; --clay: #8f3c16; --brown: #5f2c12;
+      --shadow: 0 24px 60px rgba(100,58,22,0.12);
+      --success: #6f8f57; --error: #c46a4d;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Avenir Next","Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif; color: var(--text); background: var(--bg); }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    [data-lang] { display: none; }
+    html[lang="zh-CN"] [data-lang="zh"], html[lang="en"] [data-lang="en"] { display: inline; }
+
+    /* NAVBAR */
+    .navbar { position: sticky; top: 0; z-index: 100; background: rgba(255,252,246,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand img { width: 44px; height: 44px; object-fit: contain; }
+    .nav-brand-name { font-size: 22px; font-weight: 800; color: var(--clay); }
+    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-menu a { padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--muted); transition: 0.15s; }
+    .nav-menu a:hover { color: var(--clay); background: rgba(143,60,22,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .lang-btn { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--clay); font-family: inherit; transition: 0.15s; }
+    .lang-btn:hover, .lang-btn.active { background: var(--sand); border-color: var(--gold); }
+    .btn-primary { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; border: none; border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; box-shadow: 0 4px 14px rgba(215,144,22,0.28); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-sm { padding: 8px 14px; font-size: 13px; font-weight: 700; border-radius: 999px; cursor: pointer; font-family: inherit; transition: 0.2s; border: 1px solid rgba(126,77,29,0.18); background: rgba(255,248,239,0.98); color: var(--clay); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .btn-sm:hover:not(:disabled) { background: linear-gradient(135deg,#fff6de,#ffd977); border-color: rgba(208,129,36,0.5); }
+    .btn-sm:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 56px 0 40px; position: relative; overflow: hidden; }
+    .page-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 18% 55%, rgba(236,171,47,0.18) 0%, transparent 48%), radial-gradient(circle at 82% 22%, rgba(236,171,47,0.1) 0%, transparent 38%); }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
+    .page-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(236,171,47,0.18); border: 1px solid rgba(236,171,47,0.3); color: #ffd98e; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+    .page-hero h1 { font-size: clamp(26px,3.2vw,40px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .page-hero .hero-sub { font-size: 15px; color: rgba(255,241,220,0.78); line-height: 1.7; max-width: 640px; }
+
+    /* STEP INDICATOR */
+    .step-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+    .step-pill { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px; background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.18); color: rgba(255,241,220,0.78); font-size: 12px; font-weight: 700; }
+    .step-pill.active { background: rgba(236,171,47,0.22); border-color: rgba(236,171,47,0.45); color: #ffe5a7; }
+    .step-pill.done { background: rgba(111,143,87,0.2); border-color: rgba(111,143,87,0.4); color: #c6e2a8; }
+    .step-pill .num { width: 20px; height: 20px; border-radius: 999px; background: rgba(255,237,215,0.14); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+    .step-pill.active .num { background: var(--gold); color: #4b250f; }
+    .step-pill.done .num { background: var(--success); color: #fff; }
+    .step-divider { width: 32px; height: 1px; background: rgba(255,237,215,0.28); }
+
+    /* SELECTED SUMMARY (inside hero) */
+    .selected-summary { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 16px 18px; border-radius: 16px; background: rgba(255,252,247,0.1); border: 1px solid rgba(255,237,215,0.2); margin-top: 18px; }
+    .selected-summary .icon { width: 36px; height: 36px; border-radius: 999px; background: linear-gradient(135deg,#ffe5a7,var(--gold)); display: grid; place-items: center; font-size: 18px; color: #4b250f; }
+    .selected-summary .content { color: #fff8ef; }
+    .selected-summary .label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,237,215,0.6); margin-bottom: 3px; }
+    .selected-summary .value { font-size: 15px; font-weight: 700; }
+    .selected-summary a { color: #ffd98e; font-size: 13px; font-weight: 700; border: 1px solid rgba(255,237,215,0.28); padding: 7px 14px; border-radius: 999px; text-decoration: none; transition: 0.15s; }
+    .selected-summary a:hover { background: rgba(255,237,215,0.14); }
+
+    /* CONTENT */
+    .page-content { padding: 48px 0 80px; }
+    .content-inner { max-width: 840px; margin: 0 auto; padding: 0 48px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 24px 56px rgba(123,72,24,0.08); padding: 32px; margin-bottom: 20px; }
+    .card > .card-head { margin-bottom: 22px; }
+    .card h2 { font-size: 18px; font-weight: 800; color: var(--clay); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+    .card h2 .step-num { width: 26px; height: 26px; border-radius: 999px; background: linear-gradient(135deg,#fff6de,#ffd977); color: var(--clay); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+    .card > .card-head p { font-size: 13px; color: var(--muted); line-height: 1.7; margin-left: 36px; }
+
+    /* FORM FIELDS */
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .field label .required::after { content: " *"; color: var(--error); }
+    .field input, .field select, .field textarea { width: 100%; border: 1px solid rgba(126,77,29,0.18); background: rgba(255,252,247,0.92); color: var(--text); border-radius: 12px; padding: 11px 14px; font-size: 14px; font-family: inherit; outline: none; transition: 0.15s; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(236,171,47,0.15); }
+    .field textarea { min-height: 88px; resize: vertical; }
+    .field-full { margin-bottom: 14px; }
+
+    /* VERIFICATION */
+    .verify-tabs { display: flex; gap: 8px; margin-bottom: 16px; padding: 4px; border-radius: 999px; background: rgba(242,228,201,0.6); border: 1px solid var(--line); width: fit-content; }
+    .verify-tab { border: none; background: transparent; color: var(--muted); padding: 8px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.15s; }
+    .verify-tab.active { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; box-shadow: 0 4px 12px rgba(215,144,22,0.22); }
+    .verify-grid { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
+    .verify-grid .field { gap: 6px; }
+    .code-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; margin-top: 14px; }
+    .verify-status { margin-top: 12px; font-size: 13px; padding: 10px 14px; border-radius: 12px; display: none; }
+    .verify-status.info { display: block; background: rgba(236,171,47,0.1); border: 1px solid rgba(236,171,47,0.25); color: var(--gold-deep); }
+    .verify-status.success { display: block; background: rgba(111,143,87,0.1); border: 1px solid rgba(111,143,87,0.3); color: var(--success); }
+    .verify-status.error { display: block; background: rgba(196,106,77,0.1); border: 1px solid rgba(196,106,77,0.3); color: var(--error); }
+
+    /* BOT CHECK */
+    .bot-check { display: grid; grid-template-columns: 1fr auto; gap: 14px; padding: 16px 18px; background: rgba(255,248,238,0.7); border: 1px solid rgba(151,84,21,0.12); border-radius: 14px; align-items: center; }
+    .bot-challenge { font-size: 14px; color: var(--text); }
+    .bot-challenge strong { color: var(--clay); font-size: 18px; font-weight: 900; letter-spacing: 0.05em; }
+    .bot-answer { width: 100px !important; text-align: center; font-size: 16px !important; font-weight: 700; }
+    .bot-refresh { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 12px; text-decoration: underline; margin-top: 6px; font-family: inherit; }
+    .bot-refresh:hover { color: var(--clay); }
+    .bot-status { margin-top: 10px; font-size: 12px; font-weight: 700; }
+    .bot-status.ok { color: var(--success); }
+    .bot-status.bad { color: var(--error); }
+
+    /* AGREEMENT */
+    .agreement-box { border: 1px solid var(--line); border-radius: 16px; background: rgba(255,250,240,0.7); overflow: hidden; }
+    .agreement-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; user-select: none; }
+    .agreement-head .title { font-size: 14px; font-weight: 800; color: var(--clay); }
+    .agreement-head .toggle { font-size: 12px; color: var(--muted); font-weight: 700; }
+    .agreement-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 18px; font-size: 13px; line-height: 1.7; color: var(--muted); }
+    .agreement-box.open .agreement-body { max-height: 480px; padding: 0 18px 16px; overflow-y: auto; }
+    .agreement-body h4 { font-size: 13px; font-weight: 800; color: var(--clay); margin: 12px 0 6px; }
+    .agreement-body p { margin-bottom: 8px; }
+    .agreement-body ul { padding-left: 20px; margin-bottom: 8px; }
+    .consent-row { display: flex; align-items: flex-start; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--line); background: rgba(255,248,239,0.5); }
+    .consent-row input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+    .consent-row label { font-size: 13px; color: var(--text); line-height: 1.55; cursor: pointer; }
+    .consent-row label .accent { color: var(--clay); font-weight: 700; }
+
+    /* RESULT */
+    .result { font-size: 14px; padding: 14px 16px; border-radius: 14px; margin-top: 18px; display: none; }
+    .result.success { display: block; border: 1px solid rgba(111,143,87,0.3); background: rgba(111,143,87,0.1); color: var(--success); }
+    .result.error { display: block; border: 1px solid rgba(196,106,77,0.3); background: rgba(196,106,77,0.1); color: var(--error); }
+    .action-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+
+    /* MISSING SELECTION STATE */
+    .notice { padding: 24px; border-radius: 18px; background: rgba(196,106,77,0.08); border: 1px solid rgba(196,106,77,0.24); color: var(--error); font-size: 14px; line-height: 1.7; text-align: center; }
+    .notice a { color: var(--clay); font-weight: 700; text-decoration: underline; margin-left: 4px; }
+
+    /* FOOTER */
+    .footer { background: var(--brown); color: rgba(255,245,230,0.78); padding: 60px 48px 32px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-logo-row img { width: 36px; height: 36px; object-fit: contain; filter: brightness(2) saturate(0.2); }
+    .footer-logo-row span { font-size: 18px; font-weight: 800; color: #fff8ef; }
+    .footer-brand p { font-size: 13px; line-height: 1.7; margin-bottom: 16px; }
+    .footer-hours { background: rgba(255,245,230,0.07); border: 1px solid rgba(255,237,215,0.1); border-radius: 12px; padding: 14px 16px; font-size: 12px; line-height: 1.8; }
+    .footer-col h4 { font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,237,215,0.5); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: grid; gap: 10px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255,245,230,0.72); transition: 0.15s; }
+    .footer-col ul a:hover { color: #fff8ef; }
+    .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
+
+    @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } .selected-summary { grid-template-columns: auto 1fr; } .selected-summary a { grid-column: 1 / -1; text-align: center; justify-self: start; } }
+    @media (max-width: 640px) { .row { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } .card { padding: 24px 20px; } .bot-check { grid-template-columns: 1fr; } .bot-answer { width: 100% !important; } .action-row { flex-direction: column-reverse; } .action-row > * { width: 100%; justify-content: center; } }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html" aria-label="MindDo home">
+      <img src="assets/logo.png" alt="MindDo logo" />
+      <span class="nav-brand-name">MindDo</span>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="assessment.html"><span data-lang="zh">入学评估</span><span data-lang="en">Assessment</span></a></li>
+      <li><a href="signup.html"><span data-lang="zh">注册登录</span><span data-lang="en">Sign Up</span></a></li>
+      <li><a href="course-system.html"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></a></li>
+      <li><a href="course-selection.html"><span data-lang="zh">选课</span><span data-lang="en">Enroll</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-btn active" type="button" data-set-lang="zh-CN">中文</button>
+      <button class="lang-btn" type="button" data-set-lang="en">English</button>
+      <a class="btn-primary" href="student-account.html"><span data-lang="zh">学员中心</span><span data-lang="en">My Account</span></a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-tag"><span data-lang="zh">免费试课</span><span data-lang="en">Free Trial</span></div>
+      <div class="step-bar">
+        <div class="step-pill done"><span class="num">✓</span><span data-lang="zh">已选时间</span><span data-lang="en">Time Selected</span></div>
+        <div class="step-divider"></div>
+        <div class="step-pill active"><span class="num">2</span><span data-lang="zh">填写报名信息</span><span data-lang="en">Fill Info</span></div>
+      </div>
+      <h1><span data-lang="zh">完善试课报名信息</span><span data-lang="en">Complete Your Registration</span></h1>
+      <p class="hero-sub">
+        <span data-lang="zh">最后一步：填写联系方式、完成邮箱或手机验证、阅读并同意试课须知。我们会在 24 小时内确认您的试课。</span>
+        <span data-lang="en">Last step: fill in contact info, complete verification, and confirm the trial agreement. We'll confirm within 24 hours.</span>
+      </p>
+      <div id="selectedSummary" class="selected-summary" style="display:none;">
+        <div class="icon">📅</div>
+        <div class="content">
+          <div class="label"><span data-lang="zh">已选时间</span><span data-lang="en">Selected Time</span></div>
+          <div class="value" id="selectedValue">—</div>
+        </div>
+        <a href="trial.html"><span data-lang="zh">修改</span><span data-lang="en">Edit</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="content-inner">
+      <div id="noSelectionNotice" class="notice" style="display:none;">
+        <span data-lang="zh">尚未选择试课时间。请先</span><span data-lang="en">No trial time selected. Please</span>
+        <a href="trial.html"><span data-lang="zh">返回选择试课时间</span><span data-lang="en">go back and select a time</span></a>
+      </div>
+
+      <form id="registerForm" novalidate style="display:none;">
+        <!-- Section 1: Personal Info -->
+        <div class="card">
+          <div class="card-head">
+            <h2><span class="step-num">1</span><span data-lang="zh">学员与家长信息</span><span data-lang="en">Student & Parent Info</span></h2>
+            <p><span data-lang="zh">请如实填写信息，方便我们联系并准备合适的试课内容。</span><span data-lang="en">Please fill in accurately so we can contact you and prepare the right trial content.</span></p>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label><span class="required"><span data-lang="zh">学员姓名</span><span data-lang="en">Student Name</span></span></label>
+              <input id="studentName" name="studentName" type="text" required />
+            </div>
+            <div class="field">
+              <label><span class="required"><span data-lang="zh">年级</span><span data-lang="en">Grade</span></span></label>
+              <input id="grade" name="grade" type="text" required placeholder="e.g. 六年级 / Grade 6" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label><span class="required"><span data-lang="zh">生日</span><span data-lang="en">Birthday</span></span></label>
+              <input id="birthday" name="birthday" type="date" required />
+            </div>
+            <div class="field">
+              <label><span class="required"><span data-lang="zh">所在城市</span><span data-lang="en">City</span></span></label>
+              <input id="city" name="city" type="text" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label><span class="required"><span data-lang="zh">家长姓名</span><span data-lang="en">Parent Name</span></span></label>
+              <input id="parentName" name="parentName" type="text" required />
+            </div>
+            <div class="field">
+              <label><span data-lang="zh">学习目标（选填）</span><span data-lang="en">Learning Goal (Optional)</span></label>
+              <input id="goal" name="goal" type="text" />
+            </div>
+          </div>
+
+          <div class="field field-full">
+            <label><span data-lang="zh">您从哪里了解到我们</span><span data-lang="en">How did you hear about us?</span></label>
+            <select id="channel" name="channel">
+              <option value="">—</option>
+              <option value="douyin" data-lang-zh="抖音" data-lang-en="Douyin">抖音</option>
+              <option value="xiaohongshu" data-lang-zh="小红书" data-lang-en="Xiaohongshu">小红书</option>
+              <option value="official-account" data-lang-zh="公众号" data-lang-en="Official Account">公众号</option>
+              <option value="referral" data-lang-zh="朋友推荐" data-lang-en="Referral">朋友推荐</option>
+              <option value="offline-event" data-lang-zh="线下活动" data-lang-en="Offline Event">线下活动</option>
+            </select>
+          </div>
+
+          <div class="field field-full">
+            <label><span data-lang="zh">时间备注（选填）</span><span data-lang="en">Time Note (Optional)</span></label>
+            <input id="timeNote" name="timeNote" type="text" placeholder="" />
+          </div>
+        </div>
+
+        <!-- Section 2: Contact Verification -->
+        <div class="card">
+          <div class="card-head">
+            <h2><span class="step-num">2</span><span data-lang="zh">联系方式验证</span><span data-lang="en">Contact Verification</span></h2>
+            <p><span data-lang="zh">选择一种联系方式并完成验证，确保我们能第一时间与您联系。</span><span data-lang="en">Choose one contact method and verify it so we can reach you quickly.</span></p>
+          </div>
+
+          <div class="verify-tabs" role="tablist">
+            <button type="button" class="verify-tab active" data-verify-mode="email"><span data-lang="zh">邮箱验证</span><span data-lang="en">Email</span></button>
+            <button type="button" class="verify-tab" data-verify-mode="phone"><span data-lang="zh">手机验证</span><span data-lang="en">Phone</span></button>
+          </div>
+
+          <div id="emailPanel" class="verify-panel">
+            <div class="verify-grid">
+              <div class="field">
+                <label><span class="required"><span data-lang="zh">邮箱地址</span><span data-lang="en">Email Address</span></span></label>
+                <input id="email" name="email" type="email" required placeholder="parent@example.com" />
+              </div>
+              <button type="button" class="btn-sm" id="emailSendBtn"><span data-lang="zh">发送验证码</span><span data-lang="en">Send Code</span></button>
+            </div>
+            <div class="code-row" id="emailCodeRow" style="display:none;">
+              <div class="field">
+                <label><span class="required"><span data-lang="zh">邮箱验证码</span><span data-lang="en">Verification Code</span></span></label>
+                <input id="emailCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 位数字 / 6 digits" />
+              </div>
+              <button type="button" class="btn-sm" id="emailVerifyBtn"><span data-lang="zh">验证</span><span data-lang="en">Verify</span></button>
+            </div>
+            <div class="verify-status" id="emailStatus"></div>
+          </div>
+
+          <div id="phonePanel" class="verify-panel" style="display:none;">
+            <div class="verify-grid">
+              <div class="field">
+                <label><span class="required"><span data-lang="zh">手机号码</span><span data-lang="en">Phone Number</span></span></label>
+                <input id="phone" name="phone" type="tel" placeholder="+86 138-0000-0000 / (317) 555-0100" />
+              </div>
+              <button type="button" class="btn-sm" id="phoneSendBtn"><span data-lang="zh">发送短信</span><span data-lang="en">Send Code</span></button>
+            </div>
+            <div class="code-row" id="phoneCodeRow" style="display:none;">
+              <div class="field">
+                <label><span class="required"><span data-lang="zh">短信验证码</span><span data-lang="en">SMS Code</span></span></label>
+                <input id="phoneCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 位数字 / 6 digits" />
+              </div>
+              <button type="button" class="btn-sm" id="phoneVerifyBtn"><span data-lang="zh">验证</span><span data-lang="en">Verify</span></button>
+            </div>
+            <div class="verify-status" id="phoneStatus"></div>
+          </div>
+        </div>
+
+        <!-- Section 3: Bot Check -->
+        <div class="card">
+          <div class="card-head">
+            <h2><span class="step-num">3</span><span data-lang="zh">安全验证</span><span data-lang="en">Security Check</span></h2>
+            <p><span data-lang="zh">请完成以下简单计算以证明你不是机器人。</span><span data-lang="en">Solve the simple math below to confirm you're not a bot.</span></p>
+          </div>
+
+          <div class="bot-check">
+            <div>
+              <div class="bot-challenge"><span data-lang="zh">请计算：</span><span data-lang="en">Please solve:</span> <strong id="botChallenge">? + ? = ?</strong></div>
+              <button type="button" class="bot-refresh" id="botRefresh"><span data-lang="zh">换一题</span><span data-lang="en">New challenge</span></button>
+              <div id="botStatus" class="bot-status"></div>
+            </div>
+            <input id="botAnswer" class="bot-answer" type="text" inputmode="numeric" autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Section 4: Liability Agreement -->
+        <div class="card">
+          <div class="card-head">
+            <h2><span class="step-num">4</span><span data-lang="zh">试课免责协议</span><span data-lang="en">Trial Class Agreement</span></h2>
+            <p><span data-lang="zh">请点击查看完整协议内容，仔细阅读并勾选同意。</span><span data-lang="en">Click to expand the full agreement, read carefully, then check the box to agree.</span></p>
+          </div>
+
+          <div class="agreement-box" id="agreementBox">
+            <div class="agreement-head" id="agreementToggle">
+              <span class="title"><span data-lang="zh">MindDo 试课须知与免责声明</span><span data-lang="en">MindDo Trial Terms & Liability Disclaimer</span></span>
+              <span class="toggle"><span data-lang="zh">展开 ▼</span><span data-lang="en">Expand ▼</span></span>
+            </div>
+            <div class="agreement-body">
+              <div data-lang-block="zh" style="display:none;">
+                <h4>一、试课安排</h4>
+                <p>1.1 本次试课为免费体验课程，时长约 45–60 分钟。</p>
+                <p>1.2 学员须按约定时间到达线下教室或进入线上会议室，迟到超过 15 分钟视为自动放弃。</p>
+                <p>1.3 如需改期，请至少提前 24 小时联系顾问，否则视为完成一次试课。</p>
+                <h4>二、安全与健康</h4>
+                <p>2.1 线下试课期间，学员须遵守教室规则，家长需确保学员身体状况适合参加课程。</p>
+                <p>2.2 MindDo 对学员在课程外的行为不承担责任；课程中因自身原因造成的意外，机构仅承担合理范围内的协助义务。</p>
+                <p>2.3 家长需签字确认自愿参加试课，了解课程内容与潜在风险。</p>
+                <h4>三、信息与隐私</h4>
+                <ul>
+                  <li>我们仅会将您提交的信息用于试课安排、课程咨询与后续回访。</li>
+                  <li>不会将联系方式出售或披露给第三方。</li>
+                  <li>您可以随时联系顾问要求更新或删除个人资料。</li>
+                </ul>
+                <h4>四、知识产权与录像</h4>
+                <p>4.1 试课过程中教师使用的教学材料、课件版权归 MindDo 所有，未经许可不得复制或传播。</p>
+                <p>4.2 部分课程可能进行视频回放录制，用于教学改进。如您不希望被录制，请在课前告知顾问。</p>
+                <h4>五、争议解决</h4>
+                <p>5.1 本协议适用中华人民共和国法律。如就试课产生争议，双方应友好协商解决；协商不成的，任何一方可向有管辖权的人民法院提起诉讼。</p>
+              </div>
+              <div data-lang-block="en" style="display:none;">
+                <h4>1. Trial Arrangements</h4>
+                <p>1.1 This is a complimentary trial class of approximately 45–60 minutes.</p>
+                <p>1.2 Students must arrive at the scheduled time (on-site or online). Being more than 15 minutes late is considered forfeiture.</p>
+                <p>1.3 To reschedule, please notify your consultant at least 24 hours in advance; otherwise the session counts as completed.</p>
+                <h4>2. Safety & Health</h4>
+                <p>2.1 Students must follow classroom rules during on-site trials. Parents are responsible for ensuring the student is in suitable physical condition to attend.</p>
+                <p>2.2 MindDo assumes no responsibility for student behavior outside of the class session. For incidents during class caused by the student, our obligation is limited to reasonable assistance.</p>
+                <p>2.3 Parents confirm voluntary participation and understanding of class content and potential risks.</p>
+                <h4>3. Information & Privacy</h4>
+                <ul>
+                  <li>Submitted information is used only for scheduling, consultation, and follow-up.</li>
+                  <li>Contact details are never sold or disclosed to third parties.</li>
+                  <li>You may contact your consultant to update or delete your information at any time.</li>
+                </ul>
+                <h4>4. Intellectual Property & Recording</h4>
+                <p>4.1 Teaching materials used by MindDo instructors are proprietary and may not be copied or distributed without permission.</p>
+                <p>4.2 Some sessions may be recorded for instructional improvement. If you prefer not to be recorded, please inform your consultant before class.</p>
+                <h4>5. Dispute Resolution</h4>
+                <p>5.1 This agreement is governed by applicable law. Disputes should first be resolved through friendly negotiation; if unresolved, either party may pursue legal remedies through a competent court.</p>
+              </div>
+            </div>
+            <div class="consent-row">
+              <input id="agreementConsent" type="checkbox" />
+              <label for="agreementConsent">
+                <span data-lang="zh">我已阅读并同意上述 <span class="accent">《MindDo 试课须知与免责声明》</span>，并确认所填信息真实有效。</span>
+                <span data-lang="en">I have read and agree to the <span class="accent">MindDo Trial Terms &amp; Liability Disclaimer</span>, and confirm the information is accurate.</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div id="submitResult" class="result" role="status" aria-live="polite"></div>
+
+        <div class="action-row">
+          <a class="btn-secondary" href="trial.html"><span data-lang="zh">← 返回修改时间</span><span data-lang="en">← Back to Time</span></a>
+          <button id="submitBtn" class="btn-primary" type="submit"><span data-lang="zh">提交报名并进入下一步 →</span><span data-lang="en">Submit & Continue →</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo-row">
+          <img src="assets/logo.png" alt="MindDo" />
+          <span>MindDo</span>
+        </div>
+        <p>
+          <span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span>
+          <span data-lang="en">AI and coding learning center for young learners, helping every child find their place in the AI era.</span>
+        </p>
+        <div class="footer-hours">
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
+          <span data-lang="zh">周一至周五 &nbsp;3:00pm – 7:30pm<br>周六 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9:30am – 5:00pm<br>周日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">休息</span></span>
+          <span data-lang="en">Mon – Fri &nbsp;&nbsp;3:00pm – 7:30pm<br>Saturday &nbsp;&nbsp;9:30am – 5:00pm<br>Sunday &nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">Closed</span></span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></h4>
+        <ul>
+          <li><a href="course-system.html"><span data-lang="zh">AI 基础</span><span data-lang="en">AI Basics</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Scratch 编程</span><span data-lang="en">Scratch Coding</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Python 进阶</span><span data-lang="en">Python Advanced</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">机器人课程</span><span data-lang="en">Robotics</span></a></li>
+          <li><a href="trial.html"><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday Camps</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">快速入口</span><span data-lang="en">Quick Access</span></h4>
+        <ul>
+          <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
+          <li><a href="assessment.html"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></a></li>
+          <li><a href="signup.html"><span data-lang="zh">注册 / 登录</span><span data-lang="en">Sign Up / Login</span></a></li>
+          <li><a href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a></li>
+          <li><a href="course-selection.html"><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></h4>
+        <ul>
+          <li><a href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Student Management</span></a></li>
+          <li><a href="new-trials.html"><span data-lang="zh">新试课列表</span><span data-lang="en">New Trials</span></a></li>
+          <li><a href="new-students.html"><span data-lang="zh">新学员列表</span><span data-lang="en">New Students</span></a></li>
+          <li><a href="request-center.html"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request Center</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 MindDo Learning Center · <span data-lang="zh">保留所有权利</span><span data-lang="en">All rights reserved</span></span>
+      <span><span data-lang="zh">隐私政策 · 服务条款</span><span data-lang="en">Privacy Policy · Terms of Service</span></span>
+    </div>
+  </footer>
+
+  <script src="assets/minddo-flow.js"></script>
+  <script>
+    (function () {
+      var SELECTION_KEY = "minddo_trial_selection";
+
+      var I18N = {
+        "zh-CN": {
+          pageTitle: "试课预约 · 完善信息",
+          selectedPrefix: "{date} · {time} · {subject}",
+          codeSent: "验证码已发送：{code}（演示环境直接显示）",
+          codeSentMasked: "验证码已发送到 {target}",
+          codeExpired: "验证码已过期，请重新获取。",
+          codeIncorrect: "验证码不正确，请重新输入。",
+          verifiedEmail: "邮箱已验证 ✓",
+          verifiedPhone: "手机号已验证 ✓",
+          emailInvalid: "请输入有效的邮箱地址。",
+          phoneInvalid: "请输入有效的手机号（6–20 位）。",
+          botCorrect: "验证通过 ✓",
+          botWrong: "答案不正确，请重试或换一题。",
+          agreementExpand: "展开 ▼",
+          agreementCollapse: "收起 ▲",
+          noSelection: "尚未选择试课时间。",
+          submitOk: "报名提交成功！即将进入下一步（能力评估）……",
+          submitErrorRequired: "请完整填写必填信息。",
+          submitErrorVerify: "请先完成邮箱或手机验证。",
+          submitErrorBot: "请先通过安全验证。",
+          submitErrorAgreement: "请阅读并同意试课须知。",
+          subjectMap: {
+            "ai-course": "AI 课程",
+            "scratch": "Scratch 编程",
+            "python": "Python 进阶",
+            "robotics": "机器人",
+            "camp": "假期集训营"
+          }
+        },
+        en: {
+          pageTitle: "Book Trial · Registration",
+          selectedPrefix: "{date} · {time} · {subject}",
+          codeSent: "Code sent: {code} (shown for demo)",
+          codeSentMasked: "Code sent to {target}",
+          codeExpired: "Code expired, please resend.",
+          codeIncorrect: "Incorrect code, please try again.",
+          verifiedEmail: "Email verified ✓",
+          verifiedPhone: "Phone verified ✓",
+          emailInvalid: "Please enter a valid email.",
+          phoneInvalid: "Please enter a valid phone (6–20 digits).",
+          botCorrect: "Verification passed ✓",
+          botWrong: "Incorrect answer, try again or get a new challenge.",
+          agreementExpand: "Expand ▼",
+          agreementCollapse: "Collapse ▲",
+          noSelection: "No trial time selected.",
+          submitOk: "Registration submitted! Continuing to the next step (Assessment)…",
+          submitErrorRequired: "Please complete all required fields.",
+          submitErrorVerify: "Please complete email or phone verification.",
+          submitErrorBot: "Please pass the security check first.",
+          submitErrorAgreement: "Please read and agree to the Trial Terms.",
+          subjectMap: {
+            "ai-course": "AI Course",
+            "scratch": "Scratch Coding",
+            "python": "Python Advanced",
+            "robotics": "Robotics",
+            "camp": "Holiday Camp"
+          }
+        }
+      };
+
+      var html = document.documentElement;
+      var langButtons = document.querySelectorAll("[data-set-lang]");
+      var selection = null;
+      var form = document.getElementById("registerForm");
+      var noSelectionNotice = document.getElementById("noSelectionNotice");
+      var selectedSummary = document.getElementById("selectedSummary");
+      var selectedValue = document.getElementById("selectedValue");
+      var submitResult = document.getElementById("submitResult");
+      var verifyTabs = document.querySelectorAll("[data-verify-mode]");
+      var emailPanel = document.getElementById("emailPanel");
+      var phonePanel = document.getElementById("phonePanel");
+      var emailInput = document.getElementById("email");
+      var phoneInput = document.getElementById("phone");
+      var emailSendBtn = document.getElementById("emailSendBtn");
+      var emailVerifyBtn = document.getElementById("emailVerifyBtn");
+      var emailCodeRow = document.getElementById("emailCodeRow");
+      var emailCodeInput = document.getElementById("emailCode");
+      var emailStatus = document.getElementById("emailStatus");
+      var phoneSendBtn = document.getElementById("phoneSendBtn");
+      var phoneVerifyBtn = document.getElementById("phoneVerifyBtn");
+      var phoneCodeRow = document.getElementById("phoneCodeRow");
+      var phoneCodeInput = document.getElementById("phoneCode");
+      var phoneStatus = document.getElementById("phoneStatus");
+      var botChallengeEl = document.getElementById("botChallenge");
+      var botAnswerInput = document.getElementById("botAnswer");
+      var botRefreshBtn = document.getElementById("botRefresh");
+      var botStatus = document.getElementById("botStatus");
+      var agreementBox = document.getElementById("agreementBox");
+      var agreementToggle = document.getElementById("agreementToggle");
+      var agreementConsent = document.getElementById("agreementConsent");
+
+      var verifyMode = "email";
+      var emailVerified = false;
+      var phoneVerified = false;
+      var emailCodeExpected = null;
+      var phoneCodeExpected = null;
+      var botAnswer = 0;
+
+      function langOf() { return html.getAttribute("lang") === "en" ? "en" : "zh-CN"; }
+      function formatSelectedDate(v) { if (!v) return ""; var p = v.split("-"); var d = new Date(Number(p[0]), Number(p[1])-1, Number(p[2])); return new Intl.DateTimeFormat(langOf()==="en"?"en-US":"zh-CN", { month: "short", day: "numeric", weekday: "short" }).format(d); }
+
+      function loadSelection() {
+        try {
+          var raw = sessionStorage.getItem(SELECTION_KEY);
+          if (!raw) return null;
+          var data = JSON.parse(raw);
+          if (!data || !data.trialDate || !data.trialTime) return null;
+          var chosen = new Date(data.trialDate + "T" + data.trialTime + ":00");
+          if (Number.isNaN(chosen.getTime()) || chosen.getTime() <= Date.now()) return null;
+          return data;
+        } catch (_) { return null; }
+      }
+
+      function renderSelectedSummary() {
+        if (!selection) return;
+        var t = I18N[langOf()];
+        var subj = (t.subjectMap && t.subjectMap[selection.subject]) || selection.subjectLabel || selection.subject || "—";
+        selectedValue.textContent = t.selectedPrefix
+          .replace("{date}", formatSelectedDate(selection.trialDate))
+          .replace("{time}", selection.trialTime)
+          .replace("{subject}", subj);
+      }
+
+      function switchVerifyMode(mode) {
+        verifyMode = mode;
+        verifyTabs.forEach(function (tab) {
+          tab.classList.toggle("active", tab.getAttribute("data-verify-mode") === mode);
+        });
+        emailPanel.style.display = mode === "email" ? "block" : "none";
+        phonePanel.style.display = mode === "phone" ? "block" : "none";
+      }
+
+      function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+      function isValidPhone(v) { return /^[0-9+\-\s()]{6,20}$/.test(v); }
+
+      function genCode() { return String(Math.floor(100000 + Math.random() * 900000)); }
+      function setStatus(el, cls, text) {
+        el.className = "verify-status " + cls;
+        el.textContent = text;
+      }
+
+      function sendEmailCode() {
+        var t = I18N[langOf()];
+        if (!isValidEmail(emailInput.value.trim())) {
+          setStatus(emailStatus, "error", t.emailInvalid);
+          return;
+        }
+        emailCodeExpected = genCode();
+        emailVerified = false;
+        emailCodeRow.style.display = "grid";
+        setStatus(emailStatus, "info", t.codeSent.replace("{code}", emailCodeExpected));
+      }
+      function verifyEmailCode() {
+        var t = I18N[langOf()];
+        if (!emailCodeExpected) { setStatus(emailStatus, "error", t.codeExpired); return; }
+        if ((emailCodeInput.value || "").trim() === emailCodeExpected) {
+          emailVerified = true;
+          setStatus(emailStatus, "success", t.verifiedEmail);
+        } else {
+          emailVerified = false;
+          setStatus(emailStatus, "error", t.codeIncorrect);
+        }
+      }
+
+      function sendPhoneCode() {
+        var t = I18N[langOf()];
+        if (!isValidPhone(phoneInput.value.trim())) {
+          setStatus(phoneStatus, "error", t.phoneInvalid);
+          return;
+        }
+        phoneCodeExpected = genCode();
+        phoneVerified = false;
+        phoneCodeRow.style.display = "grid";
+        setStatus(phoneStatus, "info", t.codeSent.replace("{code}", phoneCodeExpected));
+      }
+      function verifyPhoneCode() {
+        var t = I18N[langOf()];
+        if (!phoneCodeExpected) { setStatus(phoneStatus, "error", t.codeExpired); return; }
+        if ((phoneCodeInput.value || "").trim() === phoneCodeExpected) {
+          phoneVerified = true;
+          setStatus(phoneStatus, "success", t.verifiedPhone);
+        } else {
+          phoneVerified = false;
+          setStatus(phoneStatus, "error", t.codeIncorrect);
+        }
+      }
+
+      function newBotChallenge() {
+        var a = Math.floor(Math.random() * 9) + 1;
+        var b = Math.floor(Math.random() * 9) + 1;
+        var op = Math.random() > 0.5 ? "+" : "-";
+        if (op === "-" && b > a) { var tmp = a; a = b; b = tmp; }
+        botAnswer = op === "+" ? a + b : a - b;
+        botChallengeEl.textContent = a + " " + op + " " + b + " = ?";
+        botAnswerInput.value = "";
+        botStatus.textContent = "";
+        botStatus.className = "bot-status";
+      }
+
+      function checkBot() {
+        var t = I18N[langOf()];
+        var v = parseInt((botAnswerInput.value || "").trim(), 10);
+        if (v === botAnswer) {
+          botStatus.textContent = t.botCorrect;
+          botStatus.className = "bot-status ok";
+          return true;
+        }
+        if (!Number.isNaN(v)) {
+          botStatus.textContent = t.botWrong;
+          botStatus.className = "bot-status bad";
+        }
+        return false;
+      }
+
+      function setLang(lang) {
+        var t = I18N[lang] || I18N["zh-CN"];
+        html.setAttribute("lang", lang);
+        localStorage.setItem("minddo_lang", lang);
+        document.title = t.pageTitle + " | MindDo";
+
+        document.querySelectorAll("[data-lang-block]").forEach(function (el) {
+          el.style.display = el.getAttribute("data-lang-block") === (lang === "en" ? "en" : "zh") ? "block" : "none";
+        });
+
+        renderSelectedSummary();
+
+        langButtons.forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
+        });
+      }
+
+      // Init
+      selection = loadSelection();
+      if (!selection) {
+        noSelectionNotice.style.display = "block";
+        selectedSummary.style.display = "none";
+        form.style.display = "none";
+      } else {
+        noSelectionNotice.style.display = "none";
+        selectedSummary.style.display = "grid";
+        form.style.display = "block";
+      }
+
+      var savedLang = localStorage.getItem("minddo_lang");
+      setLang(savedLang === "en" ? "en" : "zh-CN");
+      newBotChallenge();
+
+      // Prefill from flow
+      if (window.MindDoFlow && window.MindDoFlow.prefillTrialForm) {
+        window.MindDoFlow.prefillTrialForm(form);
+      }
+
+      // Handlers
+      langButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () { setLang(btn.getAttribute("data-set-lang")); });
+      });
+      verifyTabs.forEach(function (tab) {
+        tab.addEventListener("click", function () { switchVerifyMode(tab.getAttribute("data-verify-mode")); });
+      });
+      emailSendBtn.addEventListener("click", sendEmailCode);
+      emailVerifyBtn.addEventListener("click", verifyEmailCode);
+      phoneSendBtn.addEventListener("click", sendPhoneCode);
+      phoneVerifyBtn.addEventListener("click", verifyPhoneCode);
+      botRefreshBtn.addEventListener("click", newBotChallenge);
+      botAnswerInput.addEventListener("input", checkBot);
+      agreementToggle.addEventListener("click", function () {
+        agreementBox.classList.toggle("open");
+        var open = agreementBox.classList.contains("open");
+        var t = I18N[langOf()];
+        agreementToggle.querySelector(".toggle").textContent = open ? t.agreementCollapse : t.agreementExpand;
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var t = I18N[langOf()];
+        submitResult.className = "result";
+        submitResult.textContent = "";
+
+        var studentName = document.getElementById("studentName").value.trim();
+        var grade = document.getElementById("grade").value.trim();
+        var birthday = document.getElementById("birthday").value;
+        var city = document.getElementById("city").value.trim();
+        var parentName = document.getElementById("parentName").value.trim();
+        var channel = document.getElementById("channel").value;
+        var timeNote = document.getElementById("timeNote").value.trim();
+        var goal = document.getElementById("goal").value.trim();
+
+        if (!studentName || !grade || !birthday || !city || !parentName) {
+          submitResult.className = "result error";
+          submitResult.textContent = t.submitErrorRequired;
+          return;
+        }
+
+        // Require at least one verification method
+        var contactEmail = emailInput.value.trim();
+        var contactPhone = phoneInput.value.trim();
+        var verified = (verifyMode === "email" && emailVerified) || (verifyMode === "phone" && phoneVerified);
+        if (!verified) {
+          submitResult.className = "result error";
+          submitResult.textContent = t.submitErrorVerify;
+          return;
+        }
+
+        if (!checkBot()) {
+          submitResult.className = "result error";
+          submitResult.textContent = t.submitErrorBot;
+          botAnswerInput.focus();
+          return;
+        }
+
+        if (!agreementConsent.checked) {
+          submitResult.className = "result error";
+          submitResult.textContent = t.submitErrorAgreement;
+          if (!agreementBox.classList.contains("open")) agreementToggle.click();
+          return;
+        }
+
+        // Build lead
+        var subjectLabel = (t.subjectMap && t.subjectMap[selection.subject]) || selection.subjectLabel || "";
+        var payload = {
+          studentName: studentName,
+          grade: grade,
+          birthday: birthday,
+          email: contactEmail,
+          parentName: parentName,
+          phone: contactPhone,
+          city: city,
+          subject: selection.subject,
+          subjectLabel: subjectLabel,
+          trialDate: selection.trialDate,
+          trialTime: selection.trialTime,
+          trialTimeLabel: selection.trialTime,
+          preferredTrialDateTime: selection.preferredTrialDateTime || "",
+          channel: channel,
+          channelLabel: channel,
+          timeNote: timeNote,
+          goal: goal,
+          verifiedVia: verifyMode,
+          verifiedAt: new Date().toISOString(),
+          consent: true,
+          agreementAccepted: true,
+          createdAt: new Date().toISOString()
+        };
+
+        if (window.MindDoFlow && window.MindDoFlow.saveLead) {
+          window.MindDoFlow.saveLead(payload);
+        } else {
+          var leads = [];
+          try { leads = JSON.parse(localStorage.getItem("minddo_trial_leads") || "[]"); } catch (_) {}
+          leads.push(payload);
+          try { localStorage.setItem("minddo_trial_leads", JSON.stringify(leads)); } catch (_) {}
+        }
+
+        try { sessionStorage.removeItem(SELECTION_KEY); } catch (_) {}
+
+        submitResult.className = "result success";
+        submitResult.textContent = t.submitOk;
+        setTimeout(function () { window.location.href = "assessment.html"; }, 1200);
+      });
+    })();
+  </script>
+</body>
+</html>

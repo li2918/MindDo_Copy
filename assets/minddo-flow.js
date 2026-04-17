@@ -436,7 +436,8 @@
       },
       pages: {
         "index.html": "首页",
-        "trial.html": "预约试课",
+        "trial.html": "预约试课 · 选时间",
+        "trial-register.html": "预约试课 · 填信息",
         "assessment.html": "能力评估",
         "signup.html": "注册登录",
         "course-selection.html": "选课排课",
@@ -478,7 +479,8 @@
       },
       pages: {
         "index.html": "Home",
-        "trial.html": "Book Trial",
+        "trial.html": "Trial · Time",
+        "trial-register.html": "Trial · Info",
         "assessment.html": "Assessment",
         "signup.html": "Sign Up",
         "course-selection.html": "Course Selection",
@@ -496,7 +498,7 @@
   };
 
   var PAGE_GROUPS = {
-    journey: ["trial.html", "assessment.html", "signup.html", "course-selection.html", "student-account.html", "feedback.html", "semester-report.html"],
+    journey: ["trial.html", "trial-register.html", "assessment.html", "signup.html", "course-selection.html", "student-account.html", "feedback.html", "semester-report.html"],
     ops: ["dashboard.html", "student-management.html", "request-center.html", "new-trials.html", "new-students.html"],
     info: ["index.html", "course-system.html"]
   };

@@ -290,17 +290,6 @@
     .program-body h3 { font-size: 21px; font-weight: 800; color: var(--clay); margin-bottom: 10px; }
     .program-body p { font-size: 14px; color: var(--muted); line-height: 1.72; flex: 1; margin-bottom: 20px; }
 
-    /* EXTRA PROGRAMS */
-    .extra-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-    .extra-card {
-      padding: 22px 14px; border-radius: 18px;
-      background: rgba(255, 252, 247, 0.9); border: 1px solid var(--line);
-      text-align: center; transition: 0.2s;
-    }
-    .extra-card:hover { transform: translateY(-3px); border-color: rgba(215, 144, 22, 0.3); box-shadow: 0 12px 28px rgba(100, 58, 22, 0.1); }
-    .extra-icon { font-size: 30px; display: block; margin-bottom: 10px; }
-    .extra-card h4 { font-size: 13px; font-weight: 700; color: var(--clay); line-height: 1.4; }
-
     /* PLATFORM */
     .platform-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     .platform-features { display: grid; gap: 12px; margin-bottom: 28px; }
@@ -403,7 +392,6 @@
     @media (max-width: 1100px) {
       .hero-inner { grid-template-columns: 1fr 380px; gap: 40px; }
       .why-grid { grid-template-columns: repeat(2, 1fr); }
-      .extra-grid { grid-template-columns: repeat(3, 1fr); }
       .footer-inner { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 900px) {
@@ -421,7 +409,7 @@
       .hero-inner { padding: 48px 24px; }
       .hero-copy h1 { font-size: 38px; }
       .hero-stats { gap: 22px; }
-      .why-grid, .reviews-grid, .extra-grid { grid-template-columns: 1fr; }
+      .why-grid, .reviews-grid { grid-template-columns: 1fr; }
       .footer { padding: 48px 24px 28px; }
       .footer-inner { grid-template-columns: 1fr; gap: 28px; }
       .cta-band { padding: 64px 24px; }
@@ -709,26 +697,6 @@
           <span data-lang="zh">📍 查看校区地图，按邮编推荐</span>
           <span data-lang="en">📍 View Map & Find by ZIP</span>
         </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- EXTRA PROGRAMS -->
-  <div class="section-wrap">
-    <div class="section-inner">
-      <div class="section-head">
-        <div class="section-tag">More Offerings</div>
-        <h2 class="section-title">
-          <span data-lang="zh">更多学习形式</span>
-          <span data-lang="en">More Ways to Learn</span>
-        </h2>
-      </div>
-      <div class="extra-grid">
-        <div class="extra-card"><span class="extra-icon">🏠</span><h4><span data-lang="zh">在家上课</span><span data-lang="en">Homeschool Programs</span></h4></div>
-        <div class="extra-card"><span class="extra-icon">🌙</span><h4><span data-lang="zh">家长之夜</span><span data-lang="en">Parent's Night Out</span></h4></div>
-        <div class="extra-card"><span class="extra-icon">🎂</span><h4><span data-lang="zh">生日派对</span><span data-lang="en">Birthday Parties</span></h4></div>
-        <div class="extra-card"><span class="extra-icon">🏫</span><h4><span data-lang="zh">课后托管</span><span data-lang="en">After-School</span></h4></div>
-        <div class="extra-card"><span class="extra-icon">🔭</span><h4><span data-lang="zh">兴趣社团</span><span data-lang="en">Clubs & Projects</span></h4></div>
       </div>
     </div>
   </div>

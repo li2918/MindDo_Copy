@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Assessment | 学习评估</title>
+  <title>能力评估 · 模拟测试 | Learning Assessment · Mock Test</title>
   <style>
     :root {
       --bg: #fbf7ef; --sand: #f2e4c9; --card: rgba(255,252,246,0.94);
@@ -16,6 +16,7 @@
     html { scroll-behavior: smooth; }
     body { font-family: "Avenir Next","Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif; color: var(--text); background: var(--bg); }
     a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
     [data-lang] { display: none; }
     html[lang="zh-CN"] [data-lang="zh"], html[lang="en"] [data-lang="en"] { display: inline; }
 
@@ -32,16 +33,112 @@
     .lang-btn:hover, .lang-btn.active { background: var(--sand); border-color: var(--gold); }
     .btn-primary { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; border: none; border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; box-shadow: 0 4px 14px rgba(215,144,22,0.28); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
     .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
 
     /* PAGE HERO */
-    .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 64px 0; }
-    .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 56px 0; position: relative; overflow: hidden; }
+    .page-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 18% 55%, rgba(236,171,47,0.18) 0%, transparent 48%), radial-gradient(circle at 82% 22%, rgba(236,171,47,0.1) 0%, transparent 38%); }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
+    .hero-split { display: grid; grid-template-columns: 1fr 380px; gap: 52px; align-items: start; }
+    .hero-split-copy { color: #fff8ef; }
     .page-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(236,171,47,0.18); border: 1px solid rgba(236,171,47,0.3); color: #ffd98e; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
-    .page-hero h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .page-hero h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 520px; margin-bottom: 24px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-info-card { background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.15); border-radius: 20px; padding: 24px; display: grid; gap: 12px; }
+    .hero-info-item { padding: 16px; border-radius: 14px; background: rgba(255,249,241,0.06); border: 1px solid rgba(255,237,215,0.1); }
+    .hero-info-item .icon { font-size: 24px; margin-bottom: 8px; display: block; }
+    .hero-info-item strong { display: block; font-size: 14px; font-weight: 800; color: #fff8ef; margin-bottom: 4px; }
+    .hero-info-item span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.5; }
 
     /* CONTENT */
     .page-content { padding: 48px 0 80px; }
-    .content-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .content-inner { max-width: 880px; margin: 0 auto; padding: 0 48px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 24px 56px rgba(123,72,24,0.08); padding: 32px; margin-bottom: 20px; }
+    .card > .card-head { margin-bottom: 22px; }
+    .card h2 { font-size: 20px; font-weight: 800; color: var(--clay); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+    .card-head p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* INTAKE */
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .field input, .field select { width: 100%; border: 1px solid rgba(126,77,29,0.18); background: rgba(255,252,247,0.92); color: var(--text); border-radius: 12px; padding: 11px 14px; font-size: 14px; font-family: inherit; outline: none; transition: 0.15s; }
+    .field input:focus, .field select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(236,171,47,0.15); }
+
+    /* TEST */
+    .test-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; background: rgba(242,228,201,0.5); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .progress-info { font-size: 13px; color: var(--muted); }
+    .progress-info strong { color: var(--clay); font-weight: 800; }
+    .timer { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: linear-gradient(135deg,#fff6de,#ffd977); color: var(--clay); font-weight: 800; font-size: 14px; }
+    .timer.warn { background: linear-gradient(135deg,#ffdfbf,#ffb380); }
+    .timer.danger { background: linear-gradient(135deg,#ffcccc,#ff8a8a); color: #8a1e1e; }
+
+    .progress-bar { width: 100%; height: 6px; background: rgba(126,77,29,0.12); border-radius: 999px; overflow: hidden; margin-bottom: 24px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg,#ecab2f,#d79016); border-radius: 999px; transition: width 0.3s ease; width: 0%; }
+
+    .question-card { padding: 22px; border: 1px solid rgba(151,84,21,0.12); border-radius: 18px; background: rgba(255,251,245,0.9); margin-bottom: 16px; scroll-margin-top: 90px; }
+    .q-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .q-num { width: 32px; height: 32px; border-radius: 999px; background: linear-gradient(135deg,#fff6de,#ffd977); color: var(--clay); display: grid; place-items: center; font-weight: 800; font-size: 14px; flex-shrink: 0; }
+    .question-card.answered .q-num { background: linear-gradient(135deg,#c6e2a8,#6f8f57); color: #fff; }
+    .q-tag { display: inline-flex; padding: 4px 10px; border-radius: 999px; background: rgba(236,171,47,0.15); border: 1px solid rgba(176,112,39,0.2); color: #9c5a1d; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .q-prompt { font-size: 15px; line-height: 1.7; color: var(--text); margin-bottom: 14px; }
+    .q-code { font-family: 'SF Mono', Monaco, 'Consolas', monospace; font-size: 13px; padding: 10px 14px; background: rgba(143,60,22,0.08); border: 1px solid rgba(143,60,22,0.14); border-radius: 10px; margin: 10px 0; color: var(--clay); white-space: pre-wrap; line-height: 1.6; }
+    .choice-list { display: grid; gap: 10px; }
+    .choice { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border: 1px solid rgba(151,84,21,0.12); border-radius: 14px; background: #fff; cursor: pointer; transition: 0.15s; }
+    .choice:hover { border-color: rgba(208,129,36,0.38); background: rgba(255,248,238,0.9); }
+    .choice input { width: 18px; height: 18px; margin-top: 1px; flex-shrink: 0; cursor: pointer; accent-color: var(--gold-deep); }
+    .choice .chLabel { font-weight: 800; color: var(--clay); min-width: 22px; }
+    .choice .chText { flex: 1; font-size: 14px; color: var(--text); line-height: 1.6; }
+    .choice.selected { border-color: var(--gold); background: linear-gradient(135deg, rgba(255,246,222,0.9), rgba(255,217,119,0.3)); }
+
+    /* Sticky submit */
+    .sticky-submit { position: sticky; bottom: 18px; z-index: 50; display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 14px 18px; background: rgba(255,252,247,0.98); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 14px 40px rgba(100,58,22,0.14); backdrop-filter: blur(12px); margin-top: 10px; flex-wrap: wrap; }
+    .sticky-submit .info { font-size: 13px; color: var(--muted); }
+    .sticky-submit .info strong { color: var(--clay); }
+
+    /* RESULTS */
+    .results { display: none; }
+    .results.active { display: block; }
+    .score-hero { text-align: center; padding: 36px 24px; border-radius: 20px; background: linear-gradient(135deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); color: #fff8ef; margin-bottom: 20px; position: relative; overflow: hidden; }
+    .score-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 30%, rgba(236,171,47,0.22), transparent 60%); pointer-events: none; }
+    .score-hero .score-val { position: relative; font-size: 56px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 10px; }
+    .score-hero .score-label { position: relative; font-size: 14px; color: rgba(255,241,220,0.72); margin-bottom: 16px; }
+    .score-hero .level-badge { position: relative; display: inline-flex; padding: 8px 18px; border-radius: 999px; background: rgba(236,171,47,0.22); border: 1px solid rgba(236,171,47,0.42); color: #ffe5a7; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+    .breakdown-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+    .breakdown-item { padding: 16px; border-radius: 14px; background: rgba(255,251,245,0.9); border: 1px solid var(--line); text-align: center; }
+    .breakdown-item strong { display: block; font-size: 20px; font-weight: 900; color: var(--clay); margin-bottom: 4px; }
+    .breakdown-item span { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .review-list { display: grid; gap: 10px; margin-top: 14px; }
+    .review-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 14px; border-radius: 12px; background: rgba(255,251,245,0.9); border: 1px solid var(--line); }
+    .review-row .ico { width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; color: #fff; font-size: 13px; font-weight: 800; }
+    .review-row.ok .ico { background: var(--success); }
+    .review-row.bad .ico { background: var(--error); }
+    .review-row.skip .ico { background: var(--muted); }
+    .review-row .rtitle { font-size: 13px; color: var(--text); font-weight: 700; }
+    .review-row .rtag { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    .recommendation { padding: 22px; border-radius: 18px; background: linear-gradient(135deg,rgba(255,246,222,0.9),rgba(255,217,119,0.35)); border: 1px solid rgba(208,129,36,0.28); margin-top: 18px; }
+    .recommendation h3 { font-size: 16px; font-weight: 800; color: var(--clay); margin-bottom: 8px; }
+    .recommendation p { font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+    .recommendation .rec-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* STATES */
+    .hidden { display: none !important; }
+    .action-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+    .result-msg { font-size: 14px; padding: 12px 16px; border-radius: 12px; margin-top: 14px; display: none; }
+    .result-msg.error { display: block; background: rgba(196,106,77,0.1); border: 1px solid rgba(196,106,77,0.3); color: var(--error); }
+
+    /* CTA BAND */
+    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 48px; text-align: center; }
+    .cta-band h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 14px 0; }
+    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
 
     /* FOOTER */
     .footer { background: var(--brown); color: rgba(255,245,230,0.78); padding: 60px 48px 32px; }
@@ -56,222 +153,10 @@
     .footer-col ul a { font-size: 14px; color: rgba(255,245,230,0.72); transition: 0.15s; }
     .footer-col ul a:hover { color: #fff8ef; }
     .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
-    @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } }
 
-    /* SECTION STRUCTURE */
-    .section-wrap { padding: 88px 0; }
-    .section-wrap.bg-sand { background: var(--sand); }
-    .section-wrap.bg-dark { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 100%); }
-    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
-    .section-head { margin-bottom: 48px; }
-    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
-    .section-title { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px; }
-    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 600px; }
-    /* HERO SPLIT LAYOUT */
-    .hero-split { display: grid; grid-template-columns: 1fr 380px; gap: 52px; align-items: start; padding-top: 4px; }
-    .hero-split-copy { color: #fff8ef; }
-    .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 520px; margin-bottom: 28px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; }
-    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
-    .hero-stat span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.4; }
-    .hero-info-card { background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.15); border-radius: 20px; padding: 24px; display: grid; gap: 12px; }
-    .hero-info-item { padding: 16px; border-radius: 14px; background: rgba(255,249,241,0.06); border: 1px solid rgba(255,237,215,0.1); }
-    .hero-info-item .icon { font-size: 24px; margin-bottom: 8px; display: block; }
-    .hero-info-item strong { display: block; font-size: 14px; font-weight: 800; color: #fff8ef; margin-bottom: 4px; }
-    .hero-info-item span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.5; }
-    /* EXTRA BUTTONS */
-    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
-    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
-    /* CTA BAND */
-    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 48px; text-align: center; }
-    .cta-band h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 14px 0; }
-    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
-    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     @media (max-width: 1000px) { .hero-split { grid-template-columns: 1fr; } .hero-info-card { display: none; } }
-    @media (max-width: 760px) { .section-inner { padding: 0 24px; } .section-wrap { padding: 60px 0; } .cta-band { padding: 60px 24px; } }
-
-    /* PAGE-SPECIFIC COMPONENT STYLES */
-    .hero, .card {
-      background: linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(252, 244, 232, 0.96));
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 22px;
-    }
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-    .hero-copy h1 {
-      margin: 0 0 10px;
-      font-size: clamp(28px, 4vw, 38px);
-      color: var(--clay);
-      line-height: 1.08;
-    }
-    .hero-copy p, .section-head p, .mini-card span, .summary-card span, .quiz-card p, .choice span, .helper, .rubric-item span, .recommendation span {
-      color: var(--muted);
-      line-height: 1.65;
-    }
-    .hero-points, .main-stack, .side-stack, form, .quiz-list, .summary-grid, .rubric { display: grid; gap: 16px; }
-    .hero-point, .mini-card, .summary-card, .quiz-card {
-      padding: 16px;
-      border-radius: 20px;
-      border: 1px solid rgba(151, 84, 21, 0.1);
-      background: rgba(255, 251, 245, 0.9);
-    }
-    .hero-point strong, .mini-card strong, .summary-card strong, .recommendation strong {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--clay);
-      font-size: 14px;
-    }
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 320px;
-      gap: 16px;
-      align-items: start;
-    }
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 12px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-    .section-head h2, .quiz-card h3 { margin: 0; color: var(--clay); }
-    .section-head h2 { font-size: 21px; }
-    .intro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    label, .field-title {
-      display: block;
-      font-size: 13px;
-      color: #7b5b43;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid rgba(151, 84, 21, 0.16);
-      background: rgba(255, 252, 247, 0.88);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-size: 14px;
-      outline: none;
-    }
-    textarea { min-height: 104px; resize: vertical; }
-    input:focus, select:focus, textarea:focus {
-      border-color: rgba(208, 129, 36, 0.54);
-      box-shadow: 0 0 0 4px rgba(255, 204, 97, 0.2);
-    }
-    .choice-group { display: grid; gap: 10px; }
-    .choice {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 12px 14px;
-      border: 1px solid rgba(151, 84, 21, 0.12);
-      border-radius: 16px;
-      background: rgba(255, 251, 245, 0.88);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .choice:hover {
-      transform: translateY(-1px);
-      border-color: rgba(208, 129, 36, 0.34);
-      box-shadow: 0 12px 24px rgba(123, 72, 24, 0.08);
-    }
-    .choice input { width: 16px; margin-top: 3px; flex: 0 0 auto; }
-    .choice strong { display: block; margin-bottom: 4px; font-size: 14px; color: var(--text); }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-    .submit-btn, .ghost-btn {
-      border: 1px solid var(--line);
-      background: rgba(255, 247, 236, 0.96);
-      color: var(--clay);
-      padding: 8px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 13px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .submit-btn:hover, .ghost-btn:hover {
-      background: linear-gradient(135deg, #fff6de, #ffd977);
-      border-color: rgba(208, 129, 36, 0.5);
-      box-shadow: 0 10px 24px rgba(192, 123, 39, 0.18);
-      color: var(--clay);
-    }
-    .submit-btn { background: linear-gradient(135deg, #fff4cf, var(--gold)); font-weight: 700; }
-    .result {
-      font-size: 13px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      display: none;
-      line-height: 1.6;
-    }
-    .result.success {
-      display: block;
-      border: 1px solid rgba(111, 143, 87, 0.28);
-      background: rgba(111, 143, 87, 0.1);
-      color: var(--success);
-    }
-    .result.error {
-      display: block;
-      border: 1px solid rgba(196, 106, 77, 0.28);
-      background: rgba(196, 106, 77, 0.1);
-      color: var(--error);
-    }
-    .score-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 92px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(208, 129, 36, 0.24);
-      background: linear-gradient(135deg, #fff5d9, #ffd978);
-      color: var(--clay);
-      font-weight: 700;
-      font-size: 13px;
-    }
-    .rubric-item {
-      display: grid;
-      grid-template-columns: 52px 1fr;
-      gap: 10px;
-      align-items: start;
-    }
-    .rubric-item b {
-      display: inline-flex;
-      justify-content: center;
-      padding: 8px 10px;
-      border-radius: 14px;
-      background: rgba(255, 236, 189, 0.8);
-      color: var(--clay);
-      font-size: 12px;
-    }
-    .recommendation {
-      padding: 14px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255, 246, 225, 0.92), rgba(255, 251, 243, 0.92));
-      border: 1px solid rgba(208, 129, 36, 0.18);
-    }
-    @media (max-width: 980px) {
-      .hero, .layout { grid-template-columns: 1fr; }
-      .intro-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 640px) {
-      .row, .intro-grid { grid-template-columns: 1fr; }
-      .hero, .card { border-radius: 20px; padding: 18px; }
-      .actions { flex-direction: column; align-items: stretch; }
-      .submit-btn, .ghost-btn { width: 100%; }
-    }
+    @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } .breakdown-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 640px) { .field-grid { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } .card { padding: 24px 20px; } .cta-band { padding: 60px 24px; } .breakdown-grid { grid-template-columns: 1fr 1fr; } .sticky-submit { flex-direction: column; align-items: stretch; } .sticky-submit .btn-primary { justify-content: center; } }
   </style>
 </head>
 <body>
@@ -297,31 +182,32 @@
     <div class="page-hero-inner">
       <div class="hero-split">
         <div class="hero-split-copy">
-          <div class="page-tag"><span data-lang="zh">学习评估</span><span data-lang="en">Assessment</span></div>
-          <h1 class="page-hero" style="font-size:clamp(28px,3.5vw,44px);font-weight:900;color:#fff8ef;letter-spacing:-0.02em;margin-bottom:10px;background:none;padding:0;">
-            <span data-lang="zh">学习评估</span><span data-lang="en">Learning Assessment</span>
-          </h1>
-          <p class="hero-sub"><span data-lang="zh">通过简短的问卷和能力测试，了解孩子的编程基础与学习目标，为后续课程提供个性化建议。</span><span data-lang="en">A brief questionnaire and skills check to understand coding background and learning goals for a personalized course recommendation.</span></p>
+          <div class="page-tag"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></div>
+          <h1><span data-lang="zh">学习能力模拟测试</span><span data-lang="en">Learning Ability Mock Test</span></h1>
+          <p class="hero-sub">
+            <span data-lang="zh">10 道题，约 8 分钟，涵盖逻辑推理、编程基础、算法思维与 AI 常识。完成后系统即刻给出能力评级和课程建议。</span>
+            <span data-lang="en">10 questions, ~8 minutes, covering logic, coding fundamentals, algorithmic thinking and AI basics. Get an instant level rating and course recommendation.</span>
+          </p>
           <div class="hero-actions">
             <a class="btn-ghost" href="trial.html"><span data-lang="zh">预约免费试课</span><span data-lang="en">Book Free Trial</span></a>
-            <a class="btn-ghost" href="signup.html"><span data-lang="zh">注册学员账户</span><span data-lang="en">Create Account</span></a>
+            <a class="btn-ghost" href="course-system.html"><span data-lang="zh">查看课程体系</span><span data-lang="en">View Curriculum</span></a>
           </div>
         </div>
         <div class="hero-info-card">
           <div class="hero-info-item">
             <span class="icon">🧠</span>
-            <strong><span data-lang="zh">个性化推荐</span><span data-lang="en">Personalized Fit</span></strong>
-            <span><span data-lang="zh">根据评估结果推荐最适合的课程方案</span><span data-lang="en">Course matched to your child's level</span></span>
+            <strong><span data-lang="zh">10 道精选题</span><span data-lang="en">10 Questions</span></strong>
+            <span><span data-lang="zh">逻辑 · 编程 · 算法 · AI</span><span data-lang="en">Logic · Coding · Algorithms · AI</span></span>
           </div>
           <div class="hero-info-item">
             <span class="icon">⏱️</span>
-            <strong><span data-lang="zh">仅需 5 分钟</span><span data-lang="en">Just 5 Minutes</span></strong>
-            <span><span data-lang="zh">轻松完成，无需准备</span><span data-lang="en">Easy quiz, no prep required</span></span>
+            <strong><span data-lang="zh">8 分钟限时</span><span data-lang="en">8-Minute Timer</span></strong>
+            <span><span data-lang="zh">模拟真实测试节奏</span><span data-lang="en">Simulates a real test</span></span>
           </div>
           <div class="hero-info-item">
             <span class="icon">🎯</span>
-            <strong><span data-lang="zh">立即查看结果</span><span data-lang="en">Instant Results</span></strong>
-            <span><span data-lang="zh">完成后即刻获得学习建议</span><span data-lang="en">Get recommendations right after</span></span>
+            <strong><span data-lang="zh">即时评级</span><span data-lang="en">Instant Rating</span></strong>
+            <span><span data-lang="zh">初阶 / 中阶 / 进阶</span><span data-lang="en">Beginner / Intermediate / Advanced</span></span>
           </div>
         </div>
       </div>
@@ -331,113 +217,119 @@
   <div class="page-content">
     <div class="content-inner">
 
-    <section class="hero">
-      <div class="hero-copy">
-        <h1 data-i18n="title"></h1>
-        <p id="welcomeText"></p>
-      </div>
-      <div class="hero-points">
-        <div class="hero-point"><strong data-i18n="heroPointOneTitle"></strong><span data-i18n="heroPointOneText"></span></div>
-        <div class="hero-point"><strong data-i18n="heroPointTwoTitle"></strong><span data-i18n="heroPointTwoText"></span></div>
-        <div class="hero-point"><strong data-i18n="heroPointThreeTitle"></strong><span data-i18n="heroPointThreeText"></span></div>
-      </div>
-    </section>
+      <!-- INTAKE SCREEN -->
+      <div id="intakeScreen">
+        <div class="card">
+          <div class="card-head">
+            <h2><span data-lang="zh">开始测试前</span><span data-lang="en">Before You Start</span></h2>
+            <p><span data-lang="zh">请填写基本信息，帮助我们为你给出更贴合的课程建议。</span><span data-lang="en">Fill in some basic info so we can tailor the recommendation to you.</span></p>
+          </div>
 
-    <div class="layout">
-      <div class="main-stack">
-        <section class="card">
-          <div class="section-head">
-            <div>
-              <h2 data-i18n="overviewTitle"></h2>
-              <p data-i18n="overviewIntro"></p>
+          <div class="field-grid">
+            <div class="field">
+              <label><span data-lang="zh">学员姓名</span><span data-lang="en">Student Name</span></label>
+              <input id="intakeName" type="text" />
+            </div>
+            <div class="field">
+              <label><span data-lang="zh">年龄段</span><span data-lang="en">Age Group</span></label>
+              <select id="intakeAge">
+                <option value="5-7"><span data-lang="zh">5 – 7 岁</span>5–7</option>
+                <option value="8-10" selected>8 – 10</option>
+                <option value="11-14">11 – 14</option>
+                <option value="15-18">15 – 18</option>
+              </select>
             </div>
           </div>
-          <div class="intro-grid">
-            <article class="mini-card"><strong data-i18n="dimensionOneTitle"></strong><span data-i18n="dimensionOneText"></span></article>
-            <article class="mini-card"><strong data-i18n="dimensionTwoTitle"></strong><span data-i18n="dimensionTwoText"></span></article>
-            <article class="mini-card"><strong data-i18n="dimensionThreeTitle"></strong><span data-i18n="dimensionThreeText"></span></article>
-          </div>
-        </section>
 
-        <section class="card">
-          <div class="section-head">
-            <div>
-              <h2 data-i18n="formTitle"></h2>
-              <p data-i18n="formIntro"></p>
+          <div class="field-grid">
+            <div class="field">
+              <label><span data-lang="zh">编程基础</span><span data-lang="en">Coding Background</span></label>
+              <select id="intakeBg">
+                <option value="none"><span data-lang="zh">零基础</span>None</option>
+                <option value="scratch">Scratch</option>
+                <option value="python">Python</option>
+                <option value="other"><span data-lang="zh">其他语言</span>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label><span data-lang="zh">学习目标</span><span data-lang="en">Learning Goal</span></label>
+              <select id="intakeGoal">
+                <option value="interest"><span data-lang="zh">兴趣培养</span>Interest</option>
+                <option value="competition"><span data-lang="zh">竞赛方向</span>Competition</option>
+                <option value="admission"><span data-lang="zh">升学备考</span>Admission</option>
+                <option value="career"><span data-lang="zh">未来职业</span>Career</option>
+              </select>
             </div>
           </div>
-          <form id="assessmentForm" novalidate>
-            <div class="row">
-              <div><label for="level" data-i18n="level"></label><select id="level" name="level" required></select></div>
-              <div><label for="goal" data-i18n="goal"></label><select id="goal" name="goal" required></select></div>
-            </div>
-            <div class="row">
-              <div>
-                <label for="confidence" data-i18n="confidence"></label>
-                <select id="confidence" name="confidence" required></select>
-                <div class="helper" data-i18n="confidenceHint"></div>
-              </div>
-              <div><label for="learningStyle" data-i18n="learningStyle"></label><select id="learningStyle" name="learningStyle" required></select></div>
-            </div>
-            <div>
-              <label for="notes" data-i18n="notes"></label>
-              <textarea id="notes" name="notes"></textarea>
-              <div class="helper" data-i18n="notesHint"></div>
-            </div>
-            <div class="section-head">
-              <div>
-                <h2 data-i18n="quizTitle"></h2>
-                <p data-i18n="quizIntro"></p>
-              </div>
-              <div class="score-badge" id="scoreBadge">0 / 3</div>
-            </div>
-            <div class="quiz-list" id="quizList"></div>
-            <div class="actions">
-              <button class="submit-btn" type="submit" data-i18n="submit"></button>
-              <button class="ghost-btn" type="button" id="fillSampleBtn" data-i18n="fillSample"></button>
-            </div>
-            <div id="result" class="result" role="status" aria-live="polite"></div>
-          </form>
-        </section>
+
+          <div class="action-row">
+            <a class="btn-secondary" href="trial.html"><span data-lang="zh">← 返回试课</span><span data-lang="en">← Back to Trial</span></a>
+            <button id="startBtn" class="btn-primary" type="button"><span data-lang="zh">开始测试 →</span><span data-lang="en">Start Test →</span></button>
+          </div>
+        </div>
       </div>
 
-      <aside class="side-stack">
-        <section class="card">
-          <div class="section-head">
-            <div>
-              <h2 data-i18n="summaryTitle"></h2>
-              <p data-i18n="summaryIntro"></p>
-            </div>
+      <!-- TEST SCREEN -->
+      <div id="testScreen" class="hidden">
+        <div class="test-bar">
+          <div class="progress-info">
+            <span data-lang="zh">已答</span><span data-lang="en">Answered</span>:
+            <strong id="answeredCount">0</strong> / <strong id="totalCount">10</strong>
           </div>
-          <div class="summary-grid">
-            <article class="summary-card"><strong data-i18n="summaryTimeTitle"></strong><span data-i18n="summaryTimeText"></span></article>
-            <article class="summary-card"><strong data-i18n="summaryScoringTitle"></strong><span data-i18n="summaryScoringText"></span></article>
-            <article class="summary-card"><strong data-i18n="summaryNextTitle"></strong><span data-i18n="summaryNextText"></span></article>
-          </div>
-        </section>
+          <div class="timer" id="timer">08:00</div>
+        </div>
 
-        <section class="card">
-          <div class="section-head">
-            <div>
-              <h2 data-i18n="rubricTitle"></h2>
-              <p data-i18n="rubricIntro"></p>
-            </div>
-          </div>
-          <div class="rubric">
-            <div class="rubric-item"><b>01</b><span data-i18n="rubricOne"></span></div>
-            <div class="rubric-item"><b>02</b><span data-i18n="rubricTwo"></span></div>
-            <div class="rubric-item"><b>03</b><span data-i18n="rubricThree"></span></div>
-          </div>
-        </section>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-        <section class="card">
+        <div id="questionsContainer"></div>
+
+        <div class="result-msg" id="submitError"></div>
+
+        <div class="sticky-submit">
+          <div class="info">
+            <span data-lang="zh">全部答完后点击提交</span><span data-lang="en">Complete all questions then submit</span> — <strong id="remainingCount">10</strong>
+            <span data-lang="zh">题待答</span><span data-lang="en">remaining</span>
+          </div>
+          <button id="submitBtn" class="btn-primary" type="button" disabled><span data-lang="zh">提交测试 →</span><span data-lang="en">Submit Test →</span></button>
+        </div>
+      </div>
+
+      <!-- RESULTS SCREEN -->
+      <div id="resultsScreen" class="results">
+        <div class="card" style="padding: 28px;">
+          <div class="score-hero">
+            <div class="score-val" id="finalScore">0 / 10</div>
+            <div class="score-label"><span data-lang="zh">你的测试得分</span><span data-lang="en">Your Test Score</span></div>
+            <div class="level-badge" id="levelBadge">—</div>
+          </div>
+
+          <div class="breakdown-grid">
+            <div class="breakdown-item"><strong id="scoreLogic">0</strong><span><span data-lang="zh">逻辑推理</span><span data-lang="en">Logic</span></span></div>
+            <div class="breakdown-item"><strong id="scoreCoding">0</strong><span><span data-lang="zh">编程基础</span><span data-lang="en">Coding</span></span></div>
+            <div class="breakdown-item"><strong id="scoreAlgo">0</strong><span><span data-lang="zh">算法思维</span><span data-lang="en">Algorithms</span></span></div>
+            <div class="breakdown-item"><strong id="scoreAI">0</strong><span><span data-lang="zh">AI 常识</span><span data-lang="en">AI Basics</span></span></div>
+          </div>
+
+          <div class="card-head">
+            <h2><span data-lang="zh">答题回顾</span><span data-lang="en">Review</span></h2>
+          </div>
+          <div class="review-list" id="reviewList"></div>
+
           <div class="recommendation">
-            <strong data-i18n="recommendTitle"></strong>
-            <span id="recommendationText"></span>
+            <h3 id="recTitle">—</h3>
+            <p id="recText">—</p>
+            <div class="rec-btns">
+              <a class="btn-primary" href="signup.html"><span data-lang="zh">创建学员账户</span><span data-lang="en">Create Account</span></a>
+              <a class="btn-secondary" href="course-system.html"><span data-lang="zh">查看课程体系</span><span data-lang="en">View Curriculum</span></a>
+            </div>
           </div>
-        </section>
-      </aside>
-    </div>
+
+          <div class="action-row">
+            <button id="retakeBtn" class="btn-secondary" type="button"><span data-lang="zh">重新测试</span><span data-lang="en">Retake Test</span></button>
+            <a class="btn-primary" href="signup.html"><span data-lang="zh">下一步：注册账户 →</span><span data-lang="en">Next: Sign Up →</span></a>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -515,376 +407,401 @@
   <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
-      var I18N = {
-        "zh-CN": {
-          backFlow: "返回流程总览",
-          goTrial: "前往 Trial",
-          goAccount: "学生 Account",
-          goFeedback: "反馈页面",
-          goCourseSelection: "前往选课",
-          goCourseSystem: "查看课程体系",
-          goSemesterReport: "查看学期报告",
-          goDashboard: "前往看板",
-          backSignup: "返回 Sign Up",
-          title: "学习评估与模拟测评",
-          welcome: "欢迎你，{name}（{email}）。下面这份评估会帮助我们判断当前基础、题型反应和适合的课程节奏。",
-          welcomeNoUser: "欢迎来到评估环节。我们先用一组简化信息和模拟题，快速判断学生当前的学习基础与推荐路径。",
-          heroPointOneTitle: "评估目标",
-          heroPointOneText: "不是只看对错，而是同步观察信息提取、表达清晰度和解题路径。",
-          heroPointTwoTitle: "模拟题结构",
-          heroPointTwoText: "本页包含 3 道演示题，适合在试听后快速补充判断，不依赖老师手工整理。",
-          heroPointThreeTitle: "输出结果",
-          heroPointThreeText: "系统会保存基础档位、答题得分和建议结论，方便后续接报名与报告页。",
-          overviewTitle: "评估重点",
-          overviewIntro: "这不是一张单纯的登记表，而是一张带有判断逻辑的轻量评估页。",
-          dimensionOneTitle: "基础认知",
-          dimensionOneText: "判断学生对题意、条件和关键词的抓取是否稳定。",
-          dimensionTwoTitle: "策略表达",
-          dimensionTwoText: "观察学生是否能解释原因，而不是只给出答案。",
-          dimensionThreeTitle: "课程匹配",
-          dimensionThreeText: "结合目标和答题表现，给出适合的课程难度与跟进节奏。",
-          formTitle: "基础评估信息",
-          formIntro: "先记录学生定位，再完成下方模拟题。",
-          level: "当前水平",
-          goal: "短期目标",
-          confidence: "学习自信度",
-          confidenceHint: "用于区分学生是"不会"还是"会但不敢答"。",
-          learningStyle: "偏好学习方式",
-          notes: "补充说明（选填）",
-          notesHint: "可填写试听表现、家长反馈、专注度或表达情况。",
-          quizTitle: "模拟题目",
-          quizIntro: "每题 1 分，主要演示页面结构与基础评分逻辑。",
-          submit: "提交评估",
-          fillSample: "一键填充示例",
-          summaryTitle: "评估摘要",
-          summaryIntro: "右侧可直接对家长或顾问说明这次评估在看什么。",
-          summaryTimeTitle: "建议时长",
-          summaryTimeText: "5 到 8 分钟，适合试听课结束后的即时补录和二次确认。",
-          summaryScoringTitle: "评分方式",
-          summaryScoringText: "模拟题总分 3 分，同时结合基础档位、自信度和学习目标做建议。",
-          summaryNextTitle: "下一步动作",
-          summaryNextText: "提交后可继续跳转报名、选课或报告页面，形成完整转化链路。",
-          rubricTitle: "观察维度",
-          rubricIntro: "如果后面要继续细化，这几个维度可以直接扩成正式题库。",
-          rubricOne: "信息提取：能否抓住题目条件，避免被干扰信息带偏。",
-          rubricTwo: "逻辑推理：面对简单规则时，是否能按步骤判断而不是凭感觉作答。",
-          rubricThree: "语言表达：能否用简洁语言复述结论，后续可扩成口语或写作任务。",
-          recommendTitle: "当前建议",
-          recommendationLow: "建议先从基础启发式课程切入，重点补足理解题意和稳定答题节奏。",
-          recommendationMid: "建议进入标准进阶路径，用更多结构化练习巩固正确率与表达完整度。",
-          recommendationHigh: "建议安排更有挑战的项目或竞赛型内容，保持学生成就感与输出密度。",
-          levels: ["请选择", "初阶", "中阶", "进阶"],
-          goals: ["请选择", "提分", "竞赛", "兴趣学习", "升学准备"],
-          confidences: ["请选择", "需要很多鼓励", "基本敢回答", "回答积极且稳定"],
-          learningStyles: ["请选择", "喜欢老师带着做", "喜欢步骤拆解", "喜欢项目式探索"],
-          invalid: "请先完成必填项，并为每道模拟题选择答案。",
-          scoreLabel: "模拟题得分：{score}/{total}",
-          resultWithAdvice: "评估已提交。得分 {score}/{total}。建议：{recommendation}",
-          questions: [
-            {
-              title: "题目 1：信息提取",
-              prompt: "阅读句子：\"小明周一和周三上机器人课，周五上编程课。\" 如果本周只能选一天复习机器人，最合适的是哪一天？",
-              options: [
-                { label: "A", text: "周一或周三", value: "correct" },
-                { label: "B", text: "只有周五", value: "wrong" },
-                { label: "C", text: "任何一天都不行", value: "wrong" }
-              ]
-            },
-            {
-              title: "题目 2：逻辑判断",
-              prompt: "如果所有完成试听评估的学生都能收到课程建议，小雨已经收到课程建议。以下哪项最合理？",
-              options: [
-                { label: "A", text: "可以确定小雨一定完成了试听评估", value: "wrong" },
-                { label: "B", text: "至少说明小雨进入了课程建议流程", value: "correct" },
-                { label: "C", text: "说明小雨已经正式报名", value: "wrong" }
-              ]
-            },
-            {
-              title: "题目 3：表达选择",
-              prompt: "家长问：\"孩子试听表现怎么样？\" 哪种反馈最适合作为评估页里的简短结论？",
-              options: [
-                { label: "A", text: "还行吧。", value: "wrong" },
-                { label: "B", text: "孩子整体配合不错，理解快，但表达时还需要一些提示。", value: "correct" },
-                { label: "C", text: "以后再说。", value: "wrong" }
-              ]
-            }
-          ]
+      var QUESTIONS = [
+        {
+          category: "logic",
+          prompt: { zh: "观察数列：2, 4, 8, 16, ? 下一个数字是？", en: "Number sequence: 2, 4, 8, 16, ? What comes next?" },
+          options: [
+            { label: "A", text: { zh: "18", en: "18" } },
+            { label: "B", text: { zh: "24", en: "24" } },
+            { label: "C", text: { zh: "32", en: "32" } },
+            { label: "D", text: { zh: "64", en: "64" } }
+          ],
+          answer: 2
         },
-        en: {
-          backFlow: "Back To Workflow",
-          goTrial: "Go To Trial",
-          goAccount: "Student Account",
-          goFeedback: "Feedback Page",
-          goCourseSelection: "Course Selection",
-          goCourseSystem: "View Curriculum System",
-          goSemesterReport: "View Semester Report",
-          goDashboard: "Go To Dashboard",
-          backSignup: "Back To Sign Up",
-          title: "Assessment With Sample Quiz",
-          welcome: "Welcome, {name} ({email}). This quick assessment helps us judge current foundation, response pattern, and a suitable course pace.",
-          welcomeNoUser: "Welcome to the assessment stage. This page uses a lightweight profile plus sample questions to estimate current readiness and course fit.",
-          heroPointOneTitle: "Assessment Goal",
-          heroPointOneText: "We are not only checking correctness. We also observe information extraction, clarity, and problem-solving path.",
-          heroPointTwoTitle: "Quiz Structure",
-          heroPointTwoText: "This page contains 3 demo questions for quick post-trial evaluation.",
-          heroPointThreeTitle: "Output",
-          heroPointThreeText: "The system stores level, quiz score, and a recommendation so the next pages can continue the flow.",
-          overviewTitle: "What This Page Evaluates",
-          overviewIntro: "This is no longer a plain form. It is a lightweight assessment surface with visible judgment logic.",
-          dimensionOneTitle: "Foundational Reading",
-          dimensionOneText: "Check whether the student can capture conditions, intent, and keywords reliably.",
-          dimensionTwoTitle: "Strategy Expression",
-          dimensionTwoText: "Observe whether the student can explain reasoning instead of only giving an answer.",
-          dimensionThreeTitle: "Course Fit",
-          dimensionThreeText: "Combine goal and quiz performance to recommend difficulty and follow-up pace.",
-          formTitle: "Assessment Intake",
-          formIntro: "Record the student profile first, then complete the sample quiz below.",
-          level: "Current Level",
-          goal: "Short-Term Goal",
-          confidence: "Learning Confidence",
-          confidenceHint: "Useful for separating 'doesn't know yet' from 'knows but hesitates to answer'.",
-          learningStyle: "Preferred Learning Style",
-          notes: "Additional Notes (Optional)",
-          notesHint: "Use this for trial observations, parent feedback, focus level, or expression notes.",
-          quizTitle: "Sample Questions",
-          quizIntro: "Each question is worth 1 point and demonstrates the page structure plus basic scoring logic.",
-          submit: "Submit Assessment",
-          fillSample: "Auto Fill Sample",
-          summaryTitle: "Assessment Summary",
-          summaryIntro: "Use this sidebar to explain to parents or consultants what the evaluation is measuring.",
-          summaryTimeTitle: "Suggested Time",
-          summaryTimeText: "About 5 to 8 minutes, ideal for immediate post-trial input and confirmation.",
-          summaryScoringTitle: "Scoring Logic",
-          summaryScoringText: "The quiz totals 3 points, then combines with level, confidence, and goal to form a recommendation.",
-          summaryNextTitle: "Next Step",
-          summaryNextText: "After submission, the flow can continue to signup, course selection, or reporting.",
-          rubricTitle: "Observation Rubric",
-          rubricIntro: "If expanded later, these dimensions can turn directly into a fuller question bank.",
-          rubricOne: "Information extraction: can the student identify the real conditions and avoid distractions?",
-          rubricTwo: "Logical reasoning: can the student follow simple rules step by step instead of guessing?",
-          rubricThree: "Language output: can the student summarize a conclusion clearly?",
-          recommendTitle: "Current Recommendation",
-          recommendationLow: "Start with a foundational guided course path and focus on understanding prompts plus steadier response rhythm.",
-          recommendationMid: "Move into a standard growth path with structured practice to stabilize accuracy and complete explanations.",
-          recommendationHigh: "Offer more challenging project or competition-style content to maintain momentum and output intensity.",
-          levels: ["Please select", "Beginner", "Intermediate", "Advanced"],
-          goals: ["Please select", "Score Improvement", "Competition", "Interest Learning", "Admission Prep"],
-          confidences: ["Please select", "Needs a lot of encouragement", "Usually willing to answer", "Actively answers with stability"],
-          learningStyles: ["Please select", "Prefers guided instruction", "Prefers step-by-step breakdown", "Prefers project exploration"],
-          invalid: "Please complete the required fields and choose one answer for each sample question.",
-          scoreLabel: "Quiz Score: {score}/{total}",
-          resultWithAdvice: "Assessment submitted. Score {score}/{total}. Recommendation: {recommendation}",
-          questions: [
-            {
-              title: "Question 1: Information Extraction",
-              prompt: "Read: \"Ming attends robotics on Monday and Wednesday, and programming on Friday.\" If only one day can be chosen to review robotics, which choice fits best?",
-              options: [
-                { label: "A", text: "Monday or Wednesday", value: "correct" },
-                { label: "B", text: "Friday only", value: "wrong" },
-                { label: "C", text: "No day works", value: "wrong" }
-              ]
-            },
-            {
-              title: "Question 2: Logic",
-              prompt: "If every student who completes the trial assessment receives a course recommendation, and Xiaoyu has received a recommendation, which statement is most reasonable?",
-              options: [
-                { label: "A", text: "We can be certain Xiaoyu completed the trial assessment", value: "wrong" },
-                { label: "B", text: "At least Xiaoyu has entered the recommendation process", value: "correct" },
-                { label: "C", text: "This means Xiaoyu has already enrolled", value: "wrong" }
-              ]
-            },
-            {
-              title: "Question 3: Expression",
-              prompt: "A parent asks, \"How did my child do in the trial?\" Which response works best as a short written assessment conclusion?",
-              options: [
-                { label: "A", text: "It was okay.", value: "wrong" },
-                { label: "B", text: "The student followed well and understood quickly, but still needs prompts when explaining ideas.", value: "correct" },
-                { label: "C", text: "Let's talk later.", value: "wrong" }
-              ]
-            }
-          ]
+        {
+          category: "logic",
+          prompt: { zh: "图形规律：▲ ◼ ▲ ◼ ▲ ? 下一个图形最可能是？", en: "Pattern: ▲ ◼ ▲ ◼ ▲ ? What comes next?" },
+          options: [
+            { label: "A", text: { zh: "▲", en: "▲" } },
+            { label: "B", text: { zh: "◼", en: "◼" } },
+            { label: "C", text: { zh: "●", en: "●" } },
+            { label: "D", text: { zh: "◯", en: "◯" } }
+          ],
+          answer: 1
+        },
+        {
+          category: "logic",
+          prompt: { zh: "若所有 A 都是 B，并且 C 是 A，那么：", en: "If all A are B, and C is A, then:" },
+          options: [
+            { label: "A", text: { zh: "C 一定是 B", en: "C must be B" } },
+            { label: "B", text: { zh: "C 不一定是 B", en: "C may or may not be B" } },
+            { label: "C", text: { zh: "C 一定不是 B", en: "C cannot be B" } },
+            { label: "D", text: { zh: "无法判断", en: "Cannot determine" } }
+          ],
+          answer: 0
+        },
+        {
+          category: "coding",
+          prompt: { zh: "变量（variable）在程序中的作用是？", en: "What does a variable do in a program?" },
+          options: [
+            { label: "A", text: { zh: "存储一个可以变化的数据值", en: "Store a value that can change" } },
+            { label: "B", text: { zh: "显示图像到屏幕", en: "Display images on screen" } },
+            { label: "C", text: { zh: "连接互联网", en: "Connect to the internet" } },
+            { label: "D", text: { zh: "播放声音", en: "Play audio" } }
+          ],
+          answer: 0
+        },
+        {
+          category: "coding",
+          prompt: { zh: "下面的 Python 代码会输出什么？", en: "What does the Python code below print?" },
+          code: "for i in range(3):\n    print(\"Hi\")",
+          options: [
+            { label: "A", text: { zh: "一次 Hi", en: "Hi once" } },
+            { label: "B", text: { zh: "三次 Hi", en: "Hi three times" } },
+            { label: "C", text: { zh: "四次 Hi", en: "Hi four times" } },
+            { label: "D", text: { zh: "报错", en: "Error" } }
+          ],
+          answer: 1
+        },
+        {
+          category: "coding",
+          prompt: { zh: "当 x = 5 时，以下条件哪一个结果为 True？", en: "When x = 5, which condition is True?" },
+          options: [
+            { label: "A", text: { zh: "x > 10", en: "x > 10" } },
+            { label: "B", text: { zh: "x == 5", en: "x == 5" } },
+            { label: "C", text: { zh: "x < 3", en: "x < 3" } },
+            { label: "D", text: { zh: "x != 5", en: "x != 5" } }
+          ],
+          answer: 1
+        },
+        {
+          category: "algo",
+          prompt: { zh: "要从 100 个数字里找到最大的数字，最合理的方式是？", en: "To find the largest number in 100 numbers, the most reasonable approach is?" },
+          options: [
+            { label: "A", text: { zh: "逐个扫描，记住目前见过的最大值", en: "Scan one by one, track the max so far" } },
+            { label: "B", text: { zh: "随机抽一个当作答案", en: "Pick a random one as the answer" } },
+            { label: "C", text: { zh: "把它们全部加起来", en: "Add them all up" } },
+            { label: "D", text: { zh: "只看第一个和最后一个", en: "Only look at the first and last" } }
+          ],
+          answer: 0
+        },
+        {
+          category: "algo",
+          prompt: { zh: "代码 print(\"Hello Wolrd\") 有什么问题？", en: "What's wrong with print(\"Hello Wolrd\")?" },
+          options: [
+            { label: "A", text: { zh: "拼写错误，Wolrd 应为 World", en: "Typo — Wolrd should be World" } },
+            { label: "B", text: { zh: "缺少分号 ;", en: "Missing semicolon" } },
+            { label: "C", text: { zh: "引号不对", en: "Wrong quotes" } },
+            { label: "D", text: { zh: "代码完全没问题", en: "Nothing is wrong" } }
+          ],
+          answer: 0
+        },
+        {
+          category: "ai",
+          prompt: { zh: "以下哪项最能代表\"机器学习\"的核心思想？", en: "Which best describes the core idea of machine learning?" },
+          options: [
+            { label: "A", text: { zh: "人类写死所有规则让程序执行", en: "Humans hard-code all rules" } },
+            { label: "B", text: { zh: "让程序从大量示例中自己找规律", en: "Let programs learn patterns from many examples" } },
+            { label: "C", text: { zh: "程序只能回答是或否", en: "Programs can only answer yes/no" } },
+            { label: "D", text: { zh: "必须连接互联网才能工作", en: "Must be connected to the internet to work" } }
+          ],
+          answer: 1
+        },
+        {
+          category: "ai",
+          prompt: { zh: "以下哪个是 AI 的典型应用？", en: "Which is a typical AI application?" },
+          options: [
+            { label: "A", text: { zh: "手机人脸识别解锁", en: "Phone face unlock" } },
+            { label: "B", text: { zh: "视频推荐系统", en: "Video recommendations" } },
+            { label: "C", text: { zh: "智能音箱语音对话", en: "Smart speaker voice chat" } },
+            { label: "D", text: { zh: "以上都是", en: "All of the above" } }
+          ],
+          answer: 3
+        }
+      ];
+
+      var CATEGORY_LABELS = {
+        logic: { zh: "逻辑推理", en: "Logic" },
+        coding: { zh: "编程基础", en: "Coding" },
+        algo: { zh: "算法思维", en: "Algorithms" },
+        ai: { zh: "AI 常识", en: "AI" }
+      };
+
+      var LEVELS = {
+        beginner: {
+          zh: { badge: "初阶 · Beginner", title: "从零开始的好时机！", text: "你对编程和 AI 的基础已有感觉，但还需要系统的学习框架。推荐从 Scratch 启蒙 或 AI 入门体验课开始，在老师引导下建立信心和解题节奏。" },
+          en: { badge: "Beginner", title: "A great time to start!", text: "You have a basic feel for coding and AI but need a structured foundation. We recommend starting with Scratch Basics or an AI intro trial class — guided instruction will help you build confidence and rhythm." }
+        },
+        intermediate: {
+          zh: { badge: "中阶 · Intermediate", title: "基础扎实，可以进阶了！", text: "你已经具备良好的逻辑和编程基础，是进入 Python 进阶或机器人课程的好时机。建议安排项目驱动的课程，把现有能力转化成真正可展示的作品。" },
+          en: { badge: "Intermediate", title: "Solid foundation — ready to advance!", text: "You've got a strong grasp of logic and basics. This is a great time to move into Python Advanced or Robotics. We recommend project-based classes to turn your skills into visible, shareable work." }
+        },
+        advanced: {
+          zh: { badge: "进阶 · Advanced", title: "已经非常出色！", text: "你的逻辑、编程和 AI 常识都很扎实。推荐加入我们的 AI 项目营或竞赛强化班，挑战更复杂的真实项目，或为信息学竞赛做准备。" },
+          en: { badge: "Advanced", title: "Already excellent!", text: "Your logic, coding and AI fundamentals are strong. We recommend joining our AI Project Camp or Competition Track for more challenging real-world projects or informatics competition prep." }
         }
       };
 
+      var TEST_DURATION_SEC = 8 * 60;
+
+      var state = {
+        started: false,
+        submitted: false,
+        startedAt: null,
+        endsAt: null,
+        timerId: null,
+        answers: QUESTIONS.map(function () { return null; })
+      };
+
       var html = document.documentElement;
-      var buttons = document.querySelectorAll("[data-set-lang]");
-      var levelSelect = document.getElementById("level");
-      var goalSelect = document.getElementById("goal");
-      var confidenceSelect = document.getElementById("confidence");
-      var learningStyleSelect = document.getElementById("learningStyle");
-      var form = document.getElementById("assessmentForm");
-      var result = document.getElementById("result");
-      var welcomeText = document.getElementById("welcomeText");
-      var quizList = document.getElementById("quizList");
-      var scoreBadge = document.getElementById("scoreBadge");
-      var fillSampleBtn = document.getElementById("fillSampleBtn");
-      var recommendationText = document.getElementById("recommendationText");
-      var params = new URLSearchParams(window.location.search);
-      var currentStudent = window.MindDoFlow && window.MindDoFlow.getCurrentStudent ? window.MindDoFlow.getCurrentStudent() : null;
-      var name = params.get("name") || (currentStudent && (currentStudent.studentName || currentStudent.name)) || "";
-      var email = params.get("email") || (currentStudent && currentStudent.email) || "";
+      var langButtons = document.querySelectorAll("[data-set-lang]");
+      var intakeScreen = document.getElementById("intakeScreen");
+      var testScreen = document.getElementById("testScreen");
+      var resultsScreen = document.getElementById("resultsScreen");
+      var startBtn = document.getElementById("startBtn");
+      var submitBtn = document.getElementById("submitBtn");
+      var retakeBtn = document.getElementById("retakeBtn");
+      var questionsContainer = document.getElementById("questionsContainer");
+      var timerEl = document.getElementById("timer");
+      var progressFill = document.getElementById("progressFill");
+      var answeredCountEl = document.getElementById("answeredCount");
+      var totalCountEl = document.getElementById("totalCount");
+      var remainingCountEl = document.getElementById("remainingCount");
+      var submitError = document.getElementById("submitError");
+      var intakeName = document.getElementById("intakeName");
+      var intakeAge = document.getElementById("intakeAge");
+      var intakeBg = document.getElementById("intakeBg");
+      var intakeGoal = document.getElementById("intakeGoal");
 
-      function getLang() {
-        return html.getAttribute("lang") === "en" ? "en" : "zh-CN";
-      }
+      function langOf() { return html.getAttribute("lang") === "en" ? "en" : "zh-CN"; }
+      function langKey() { return langOf() === "en" ? "en" : "zh"; }
 
-      function buildOptions(select, options) {
-        select.innerHTML = options.map(function (item, idx) {
-          return "<option value=\"" + item + "\"" + (idx === 0 ? " selected" : "") + ">" + item + "</option>";
-        }).join("");
-      }
+      function pad2(n) { return String(n).padStart(2, "0"); }
+      function formatTime(sec) { sec = Math.max(0, sec); return pad2(Math.floor(sec / 60)) + ":" + pad2(sec % 60); }
 
-      function renderQuiz(lang) {
-        var t = I18N[lang];
-        quizList.innerHTML = t.questions.map(function (question, questionIndex) {
-          var choices = question.options.map(function (option, optionIndex) {
-            var inputId = "q" + questionIndex + "_" + optionIndex;
-            return "<label class=\"choice\" for=\"" + inputId + "\"><input id=\"" + inputId + "\" type=\"radio\" name=\"question_" + questionIndex + "\" value=\"" + option.value + "\" /><span><strong>" + option.label + "</strong><span>" + option.text + "</span></span></label>";
+      function renderQuestions() {
+        var k = langKey();
+        var items = QUESTIONS.map(function (q, i) {
+          var catLabel = CATEGORY_LABELS[q.category][k];
+          var answered = state.answers[i] !== null;
+          var opts = q.options.map(function (o, oi) {
+            var checked = state.answers[i] === oi;
+            return (
+              "<label class=\"choice" + (checked ? " selected" : "") + "\">" +
+              "<input type=\"radio\" name=\"q" + i + "\" value=\"" + oi + "\"" + (checked ? " checked" : "") + " data-qi=\"" + i + "\" data-oi=\"" + oi + "\" />" +
+              "<span class=\"chLabel\">" + o.label + "</span>" +
+              "<span class=\"chText\">" + o.text[k] + "</span>" +
+              "</label>"
+            );
           }).join("");
-          return "<article class=\"quiz-card\"><h3>" + question.title + "</h3><p>" + question.prompt + "</p><div class=\"choice-group\">" + choices + "</div></article>";
+          var codeBlock = q.code ? "<pre class=\"q-code\">" + q.code.replace(/</g, "&lt;") + "</pre>" : "";
+          return (
+            "<div class=\"question-card" + (answered ? " answered" : "") + "\" id=\"qcard" + i + "\">" +
+            "<div class=\"q-head\">" +
+            "<div class=\"q-num\">" + (i + 1) + "</div>" +
+            "<span class=\"q-tag\">" + catLabel + "</span>" +
+            "</div>" +
+            "<div class=\"q-prompt\">" + q.prompt[k] + "</div>" +
+            codeBlock +
+            "<div class=\"choice-list\">" + opts + "</div>" +
+            "</div>"
+          );
         }).join("");
-        quizList.querySelectorAll("input[type='radio']").forEach(function (input) {
-          input.addEventListener("change", updateScorePreview);
-        });
+        questionsContainer.innerHTML = items;
       }
 
-      function getSelectedAnswers() {
-        var t = I18N[getLang()];
-        var answers = [];
-        for (var i = 0; i < t.questions.length; i += 1) {
-          var checked = form.querySelector("input[name='question_" + i + "']:checked");
-          answers.push(checked ? checked.value : "");
+      function updateProgress() {
+        var answered = state.answers.filter(function (a) { return a !== null; }).length;
+        var total = QUESTIONS.length;
+        answeredCountEl.textContent = answered;
+        totalCountEl.textContent = total;
+        remainingCountEl.textContent = total - answered;
+        progressFill.style.width = (answered / total * 100) + "%";
+        submitBtn.disabled = answered < total;
+      }
+
+      function updateTimerDisplay() {
+        var remaining = Math.max(0, Math.round((state.endsAt - Date.now()) / 1000));
+        timerEl.textContent = formatTime(remaining);
+        timerEl.classList.remove("warn", "danger");
+        if (remaining <= 60) timerEl.classList.add("danger");
+        else if (remaining <= 180) timerEl.classList.add("warn");
+        if (remaining <= 0 && !state.submitted) {
+          finishTest(true);
         }
-        return answers;
       }
 
-      function getQuizScore() {
-        return getSelectedAnswers().reduce(function (sum, value) {
-          return sum + (value === "correct" ? 1 : 0);
-        }, 0);
+      function startTimer() {
+        state.startedAt = Date.now();
+        state.endsAt = state.startedAt + TEST_DURATION_SEC * 1000;
+        updateTimerDisplay();
+        state.timerId = setInterval(updateTimerDisplay, 1000);
       }
 
-      function getRecommendation(score, total, lang) {
-        var t = I18N[lang];
-        if (score <= 1) return t.recommendationLow;
-        if (score < total) return t.recommendationMid;
-        return t.recommendationHigh;
+      function startTest() {
+        state.started = true;
+        state.submitted = false;
+        state.answers = QUESTIONS.map(function () { return null; });
+        intakeScreen.classList.add("hidden");
+        testScreen.classList.remove("hidden");
+        resultsScreen.classList.remove("active");
+        renderQuestions();
+        updateProgress();
+        startTimer();
+        submitError.className = "result-msg";
+        submitError.textContent = "";
       }
 
-      function updateScorePreview() {
-        var lang = getLang();
-        var t = I18N[lang];
-        var total = t.questions.length;
-        var score = getQuizScore();
-        scoreBadge.textContent = t.scoreLabel.replace("{score}", score).replace("{total}", total);
-        recommendationText.textContent = getRecommendation(score, total, lang);
-      }
-
-      function setLang(lang) {
-        var t = I18N[lang] || I18N["zh-CN"];
-        html.setAttribute("lang", lang);
-        localStorage.setItem("minddo_lang", lang);
-        document.title = t.title + " | Assessment";
-        document.querySelectorAll("[data-i18n]").forEach(function (el) {
-          var key = el.getAttribute("data-i18n");
-          if (t[key]) el.textContent = t[key];
+      function computeResults() {
+        var byCat = { logic: { correct: 0, total: 0 }, coding: { correct: 0, total: 0 }, algo: { correct: 0, total: 0 }, ai: { correct: 0, total: 0 } };
+        var total = QUESTIONS.length;
+        var correct = 0;
+        var review = QUESTIONS.map(function (q, i) {
+          var a = state.answers[i];
+          var ok = a !== null && a === q.answer;
+          byCat[q.category].total += 1;
+          if (ok) { byCat[q.category].correct += 1; correct += 1; }
+          return { i: i, q: q, a: a, ok: ok };
         });
-        welcomeText.textContent = name || email
-          ? t.welcome.replace("{name}", name || "Student").replace("{email}", email || "-")
-          : t.welcomeNoUser;
-        buildOptions(levelSelect, t.levels);
-        buildOptions(goalSelect, t.goals);
-        buildOptions(confidenceSelect, t.confidences);
-        buildOptions(learningStyleSelect, t.learningStyles);
-        renderQuiz(lang);
-        updateScorePreview();
-        buttons.forEach(function (btn) {
-          btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
-        });
-        result.className = "result";
-        result.textContent = "";
+        var level = correct <= 3 ? "beginner" : (correct <= 6 ? "intermediate" : "advanced");
+        return { correct: correct, total: total, byCat: byCat, review: review, level: level };
       }
 
-      var saved = localStorage.getItem("minddo_lang");
-      setLang(saved === "en" ? "en" : "zh-CN");
+      function renderResults(r) {
+        var k = langKey();
+        document.getElementById("finalScore").textContent = r.correct + " / " + r.total;
+        document.getElementById("scoreLogic").textContent = r.byCat.logic.correct + " / " + r.byCat.logic.total;
+        document.getElementById("scoreCoding").textContent = r.byCat.coding.correct + " / " + r.byCat.coding.total;
+        document.getElementById("scoreAlgo").textContent = r.byCat.algo.correct + " / " + r.byCat.algo.total;
+        document.getElementById("scoreAI").textContent = r.byCat.ai.correct + " / " + r.byCat.ai.total;
 
-      buttons.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          setLang(btn.getAttribute("data-set-lang"));
-        });
-      });
+        var level = LEVELS[r.level][k === "zh" ? "zh" : "en"];
+        document.getElementById("levelBadge").textContent = level.badge;
+        document.getElementById("recTitle").textContent = level.title;
+        document.getElementById("recText").textContent = level.text;
 
-      fillSampleBtn.addEventListener("click", function () {
-        var lang = getLang();
-        var t = I18N[lang];
-        levelSelect.value = t.levels[2];
-        goalSelect.value = t.goals[1];
-        confidenceSelect.value = t.confidences[2];
-        learningStyleSelect.value = t.learningStyles[2];
-        form.notes.value = lang === "en"
-          ? "The student responds quickly, but sometimes needs help turning thoughts into complete explanations."
-          : "学生反应较快，但在把想法说完整时还需要一些引导。";
-        ["correct", "correct", "correct"].forEach(function (value, index) {
-          var input = form.querySelector("input[name='question_" + index + "'][value='" + value + "']");
-          if (input) input.checked = true;
-        });
-        updateScorePreview();
-      });
+        var reviewHtml = r.review.map(function (row) {
+          var cat = CATEGORY_LABELS[row.q.category][k];
+          var cls = row.a === null ? "skip" : (row.ok ? "ok" : "bad");
+          var icon = row.a === null ? "–" : (row.ok ? "✓" : "✕");
+          var prompt = row.q.prompt[k];
+          if (prompt.length > 52) prompt = prompt.slice(0, 52) + "…";
+          return (
+            "<div class=\"review-row " + cls + "\">" +
+            "<span class=\"ico\">" + icon + "</span>" +
+            "<span class=\"rtitle\">Q" + (row.i + 1) + ". " + prompt + "</span>" +
+            "<span class=\"rtag\">" + cat + "</span>" +
+            "</div>"
+          );
+        }).join("");
+        document.getElementById("reviewList").innerHTML = reviewHtml;
+      }
 
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var lang = getLang();
-        var t = I18N[lang];
-        var answers = getSelectedAnswers();
-        var total = t.questions.length;
-        var score = getQuizScore();
+      function finishTest(autoSubmitted) {
+        if (state.submitted) return;
+        state.submitted = true;
+        if (state.timerId) { clearInterval(state.timerId); state.timerId = null; }
+
+        if (!autoSubmitted) {
+          var unanswered = state.answers.filter(function (a) { return a === null; }).length;
+          if (unanswered > 0) {
+            state.submitted = false;
+            submitError.className = "result-msg error";
+            submitError.textContent = langOf() === "en"
+              ? "Please answer all questions before submitting. " + unanswered + " remaining."
+              : "请先完成全部题目再提交，还有 " + unanswered + " 题未答。";
+            return;
+          }
+        }
+
+        var r = computeResults();
         var payload = {
-          name: name,
-          email: email,
-          level: levelSelect.value,
-          goal: goalSelect.value,
-          confidence: confidenceSelect.value,
-          learningStyle: learningStyleSelect.value,
-          notes: form.notes.value.trim(),
-          quizAnswers: answers,
-          quizScore: score,
-          quizTotal: total,
-          recommendation: getRecommendation(score, total, lang),
+          studentName: (intakeName.value || "").trim(),
+          ageGroup: intakeAge.value,
+          background: intakeBg.value,
+          goalCategory: intakeGoal.value,
+          quizScore: r.correct,
+          quizTotal: r.total,
+          breakdown: r.byCat,
+          level: r.level,
+          answers: state.answers,
+          autoSubmitted: !!autoSubmitted,
+          durationSec: Math.min(TEST_DURATION_SEC, Math.round((Date.now() - state.startedAt) / 1000)),
           createdAt: new Date().toISOString()
         };
 
-        if (
-          payload.level === t.levels[0] ||
-          payload.goal === t.goals[0] ||
-          payload.confidence === t.confidences[0] ||
-          payload.learningStyle === t.learningStyles[0] ||
-          answers.some(function (item) { return !item; })
-        ) {
-          result.className = "result error";
-          result.textContent = t.invalid;
-          return;
-        }
-
         if (window.MindDoFlow && window.MindDoFlow.saveAssessment) {
-          window.MindDoFlow.saveAssessment(payload);
+          var current = window.MindDoFlow.getCurrentStudent && window.MindDoFlow.getCurrentStudent();
+          var name = payload.studentName || (current && (current.studentName || current.name)) || "";
+          var email = current && current.email;
+          window.MindDoFlow.saveAssessment(Object.assign({ name: name, email: email }, payload));
         } else {
-          var key = "minddo_assessments";
-          var list = JSON.parse(localStorage.getItem(key) || "[]");
-          list.push(payload);
-          localStorage.setItem(key, JSON.stringify(list));
+          try {
+            var key = "minddo_assessments";
+            var list = JSON.parse(localStorage.getItem(key) || "[]");
+            list.push(payload);
+            localStorage.setItem(key, JSON.stringify(list));
+          } catch (_) {}
         }
 
-        var resultText = t.resultWithAdvice
-          .replace("{score}", payload.quizScore)
-          .replace("{total}", payload.quizTotal)
-          .replace("{recommendation}", payload.recommendation);
+        testScreen.classList.add("hidden");
+        resultsScreen.classList.add("active");
+        renderResults(r);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
 
-        form.reset();
-        setLang(lang);
-        recommendationText.textContent = payload.recommendation;
-        scoreBadge.textContent = t.scoreLabel.replace("{score}", payload.quizScore).replace("{total}", payload.quizTotal);
-        result.className = "result success";
-        result.textContent = resultText;
+      function retake() {
+        state.started = false;
+        state.submitted = false;
+        resultsScreen.classList.remove("active");
+        intakeScreen.classList.remove("hidden");
+        if (state.timerId) { clearInterval(state.timerId); state.timerId = null; }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function setLang(lang) {
+        html.setAttribute("lang", lang);
+        localStorage.setItem("minddo_lang", lang);
+        document.title = (lang === "en" ? "Learning Assessment · Mock Test" : "能力评估 · 模拟测试") + " | MindDo";
+        langButtons.forEach(function (btn) {
+          btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
+        });
+        if (state.started && !state.submitted) renderQuestions();
+        else if (state.submitted) renderResults(computeResults());
+      }
+
+      // Prefill from flow if available
+      if (window.MindDoFlow && window.MindDoFlow.getCurrentStudent) {
+        var cs = window.MindDoFlow.getCurrentStudent();
+        if (cs) {
+          intakeName.value = cs.studentName || cs.name || "";
+        }
+      }
+
+      var savedLang = localStorage.getItem("minddo_lang");
+      setLang(savedLang === "en" ? "en" : "zh-CN");
+
+      startBtn.addEventListener("click", startTest);
+      submitBtn.addEventListener("click", function () { finishTest(false); });
+      retakeBtn.addEventListener("click", retake);
+
+      questionsContainer.addEventListener("change", function (e) {
+        var input = e.target;
+        if (!input || input.type !== "radio") return;
+        var qi = parseInt(input.getAttribute("data-qi"), 10);
+        var oi = parseInt(input.getAttribute("data-oi"), 10);
+        if (Number.isNaN(qi) || Number.isNaN(oi)) return;
+        state.answers[qi] = oi;
+        var card = document.getElementById("qcard" + qi);
+        if (card) card.classList.add("answered");
+        card.querySelectorAll(".choice").forEach(function (c) { c.classList.remove("selected"); });
+        input.closest(".choice").classList.add("selected");
+        updateProgress();
+      });
+
+      langButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () { setLang(btn.getAttribute("data-set-lang")); });
       });
     })();
   </script>

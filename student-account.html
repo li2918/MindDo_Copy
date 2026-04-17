@@ -40,6 +40,7 @@
     .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
     .page-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(236,171,47,0.18); border: 1px solid rgba(236,171,47,0.3); color: #ffd98e; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
     .page-hero h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .hero-action-links { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
     .student-meta { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
     .meta { background: rgba(255,245,230,0.1); border: 1px solid rgba(255,237,215,0.15); border-radius: 14px; padding: 12px 14px; }
     .meta .k { display: block; font-size: 11px; color: rgba(255,241,220,0.6); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
@@ -64,6 +65,26 @@
     .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
     @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .student-meta { grid-template-columns: repeat(2,1fr); } .footer-inner { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 640px) { .student-meta { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } }
+
+    /* SECTION STRUCTURE */
+    .section-wrap { padding: 72px 0; }
+    .section-wrap.bg-sand { background: var(--sand); }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .section-head { margin-bottom: 36px; }
+    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-size: clamp(22px,2.5vw,32px); font-weight: 900; color: var(--clay); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .section-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 600px; }
+    /* EXTRA BUTTONS */
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
+    /* CTA BAND */
+    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 64px 48px; text-align: center; }
+    .cta-band h2 { font-size: clamp(24px,3vw,36px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 12px 0; }
+    .cta-band p { font-size: 15px; color: var(--muted); line-height: 1.72; max-width: 480px; margin: 0 auto 28px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    @media (max-width: 760px) { .section-inner { padding: 0 24px; } .section-wrap { padding: 48px 0; } .cta-band { padding: 48px 24px; } }
 
     /* PAGE-SPECIFIC COMPONENTS */
     .hero,
@@ -542,6 +563,10 @@
     <div class="page-hero-inner">
       <div class="page-tag"><span data-lang="zh">学员中心</span><span data-lang="en">Student Hub</span></div>
       <h1 id="heroTitle"></h1>
+      <div class="hero-action-links">
+        <a class="btn-ghost" href="feedback.html"><span data-lang="zh">查看课堂反馈</span><span data-lang="en">View Class Feedback</span></a>
+        <a class="btn-ghost" href="semester-report.html"><span data-lang="zh">查看学期报告</span><span data-lang="en">Semester Report</span></a>
+      </div>
       <div class="student-meta">
         <div class="meta"><span class="k" data-i18n="heroStudentId"></span><strong class="v" id="heroStudentIdValue"></strong></div>
         <div class="meta"><span class="k" data-i18n="heroGoal"></span><strong class="v" id="heroGoalValue"></strong></div>
@@ -707,50 +732,73 @@
     </div>
   </div>
 
+  <div class="cta-band">
+    <div class="section-tag"><span data-lang="zh">需要帮助？</span><span data-lang="en">Need Help?</span></div>
+    <h2>
+      <span data-lang="zh">查看课堂反馈与学期报告</span>
+      <span data-lang="en">Check Your Feedback & Reports</span>
+    </h2>
+    <p>
+      <span data-lang="zh">每节课后老师都会留下反馈，学期报告汇总你的整体进步与成就。</span>
+      <span data-lang="en">Your instructor leaves feedback after every class. Semester reports summarize your overall growth.</span>
+    </p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="feedback.html"><span data-lang="zh">查看课堂反馈</span><span data-lang="en">View Class Feedback</span></a>
+      <a class="btn-secondary" href="semester-report.html"><span data-lang="zh">查看学期报告</span><span data-lang="en">Semester Report</span></a>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand footer-col">
+      <div class="footer-brand">
         <div class="footer-logo-row">
-          <img src="assets/logo.png" alt="MindDo logo" />
+          <img src="assets/logo.png" alt="MindDo" />
           <span>MindDo</span>
         </div>
-        <p><span data-lang="zh">专注 5–18 岁 AI 与编程教育，帮助每个孩子在智能时代找到自己的路。</span><span data-lang="en">AI &amp; coding education for ages 5–18, helping every child thrive in the intelligent era.</span></p>
+        <p>
+          <span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span>
+          <span data-lang="en">AI and coding learning center for young learners, helping every child find their place in the AI era.</span>
+        </p>
         <div class="footer-hours">
-          <span data-lang="zh">📅 周一至周五 15:00–20:00<br>📅 周末 9:00–18:00</span>
-          <span data-lang="en">📅 Mon–Fri 3:00 PM–8:00 PM<br>📅 Weekends 9:00 AM–6:00 PM</span>
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
+          <span data-lang="zh">周一至周五 &nbsp;3:00pm – 7:30pm<br>周六 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9:30am – 5:00pm<br>周日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">休息</span></span>
+          <span data-lang="en">Mon – Fri &nbsp;&nbsp;3:00pm – 7:30pm<br>Saturday &nbsp;&nbsp;9:30am – 5:00pm<br>Sunday &nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">Closed</span></span>
         </div>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">课程</span><span data-lang="en">Programs</span></h4>
+        <h4><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></h4>
         <ul>
-          <li><a href="course-system.html"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></a></li>
-          <li><a href="course-selection.html"><span data-lang="zh">选课</span><span data-lang="en">Course Selection</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">AI 基础</span><span data-lang="en">AI Basics</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Scratch 编程</span><span data-lang="en">Scratch Coding</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Python 进阶</span><span data-lang="en">Python Advanced</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">机器人课程</span><span data-lang="en">Robotics</span></a></li>
+          <li><a href="trial.html"><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday Camps</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">快速入口</span><span data-lang="en">Quick Access</span></h4>
+        <ul>
           <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
-          <li><a href="semester-report.html"><span data-lang="zh">学期报告</span><span data-lang="en">Semester Report</span></a></li>
+          <li><a href="assessment.html"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></a></li>
+          <li><a href="signup.html"><span data-lang="zh">注册 / 登录</span><span data-lang="en">Sign Up / Login</span></a></li>
+          <li><a href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a></li>
+          <li><a href="course-selection.html"><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">学员</span><span data-lang="en">Students</span></h4>
+        <h4><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></h4>
         <ul>
-          <li><a href="student-account.html"><span data-lang="zh">学员中心</span><span data-lang="en">Student Hub</span></a></li>
-          <li><a href="assessment.html"><span data-lang="zh">入学评估</span><span data-lang="en">Assessment</span></a></li>
-          <li><a href="feedback.html"><span data-lang="zh">课堂反馈</span><span data-lang="en">Feedback</span></a></li>
-          <li><a href="signup.html"><span data-lang="zh">注册登录</span><span data-lang="en">Sign Up</span></a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4><span data-lang="zh">运营</span><span data-lang="en">Operations</span></h4>
-        <ul>
-          <li><a href="dashboard.html"><span data-lang="zh">运营后台</span><span data-lang="en">Dashboard</span></a></li>
-          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Students</span></a></li>
+          <li><a href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Student Management</span></a></li>
           <li><a href="new-trials.html"><span data-lang="zh">新试课列表</span><span data-lang="en">New Trials</span></a></li>
-          <li><a href="request-center.html"><span data-lang="zh">请假管理</span><span data-lang="en">Requests</span></a></li>
+          <li><a href="new-students.html"><span data-lang="zh">新学员列表</span><span data-lang="en">New Students</span></a></li>
+          <li><a href="request-center.html"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request Center</span></a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 MindDo AI Learning Center</span>
-      <span><span data-lang="zh">让每个孩子都能驾驭 AI</span><span data-lang="en">Empowering every child with AI</span></span>
+      <span>© 2025 MindDo Learning Center · <span data-lang="zh">保留所有权利</span><span data-lang="en">All rights reserved</span></span>
+      <span><span data-lang="zh">隐私政策 · 服务条款</span><span data-lang="en">Privacy Policy · Terms of Service</span></span>
     </div>
   </footer>
 

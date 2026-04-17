@@ -81,6 +81,41 @@
     .warn { color: #9a6b1f; background: rgba(216,156,54,0.12); border-color: rgba(216,156,54,0.3); }
     .footer-note { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 16px; }
 
+    /* SECTION STRUCTURE */
+    .section-wrap { padding: 88px 0; }
+    .section-wrap.bg-sand { background: var(--sand); }
+    .section-wrap.bg-dark { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 100%); }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .section-head { margin-bottom: 48px; }
+    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 600px; }
+    /* HERO SPLIT LAYOUT */
+    .hero-split { display: grid; grid-template-columns: 1fr 340px; gap: 52px; align-items: start; }
+    .hero-split-copy { color: #fff8ef; }
+    .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 520px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; }
+    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .hero-stat span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.4; }
+    .hero-info-card { background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.15); border-radius: 20px; padding: 24px; display: grid; gap: 10px; }
+    .hero-info-item { padding: 14px; border-radius: 12px; background: rgba(255,249,241,0.06); border: 1px solid rgba(255,237,215,0.1); }
+    .hero-info-item .icon { font-size: 22px; margin-bottom: 6px; display: block; }
+    .hero-info-item strong { display: block; font-size: 13px; font-weight: 800; color: #fff8ef; margin-bottom: 3px; }
+    .hero-info-item span { font-size: 12px; color: rgba(255,241,220,0.62); line-height: 1.45; }
+    /* EXTRA BUTTONS */
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
+    /* CTA BAND */
+    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 48px; text-align: center; }
+    .cta-band h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 14px 0; }
+    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    @media (max-width: 1000px) { .hero-split { grid-template-columns: 1fr; } .hero-info-card { display: none; } }
+    @media (max-width: 760px) { .section-inner { padding: 0 24px; } .section-wrap { padding: 60px 0; } .cta-band { padding: 60px 24px; } }
+
     /* FOOTER */
     .footer { background: var(--brown); color: rgba(255,245,230,0.78); padding: 60px 48px 32px; }
     .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
@@ -122,170 +157,232 @@
 
   <div class="page-hero">
     <div class="page-hero-inner">
-      <div class="page-tag"><span data-lang="zh">学期报告</span><span data-lang="en">Semester Report</span></div>
-      <h1>
-        <span data-lang="zh">2026春季学期学习报告（模拟）</span>
-        <span data-lang="en">Spring 2026 Learning Report (Mock)</span>
-      </h1>
-      <div class="student-meta">
-        <div class="meta"><span class="k" data-i18n="studentName"></span><span class="v" data-i18n="studentNameV"></span></div>
-        <div class="meta"><span class="k" data-i18n="studentId"></span><span class="v">MD2026-0417</span></div>
-        <div class="meta"><span class="k" data-i18n="grade"></span><span class="v" data-i18n="gradeV"></span></div>
-        <div class="meta"><span class="k" data-i18n="semester"></span><span class="v">2026 Spring</span></div>
+      <div class="hero-split">
+        <div class="hero-split-copy">
+          <div class="page-tag"><span data-lang="zh">学员进度 / Student Progress</span><span data-lang="en" style="display:none;">学员进度 / Student Progress</span></div>
+          <h1>
+            <span data-lang="zh">2026春季学期学习报告（模拟）</span>
+            <span data-lang="en">Spring 2026 Learning Report (Mock)</span>
+          </h1>
+          <p class="hero-sub">
+            <span data-lang="zh">查看本学期的完整学习情况，包括出勤、能力成长、项目成果和教师评语，帮助学员与家长共同规划下一步学习方向。</span>
+            <span data-lang="en">View the full semester learning summary including attendance, skill growth, project highlights, and teacher notes to plan the next steps together.</span>
+          </p>
+          <div class="hero-actions">
+            <a class="btn-ghost" href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a>
+            <a class="btn-ghost" href="feedback.html"><span data-lang="zh">课堂反馈</span><span data-lang="en">Class Feedback</span></a>
+          </div>
+          <div class="student-meta" style="margin-top:28px;">
+            <div class="meta"><span class="k" data-i18n="studentName"></span><span class="v" data-i18n="studentNameV"></span></div>
+            <div class="meta"><span class="k" data-i18n="studentId"></span><span class="v">MD2026-0417</span></div>
+            <div class="meta"><span class="k" data-i18n="grade"></span><span class="v" data-i18n="gradeV"></span></div>
+            <div class="meta"><span class="k" data-i18n="semester"></span><span class="v">2026 Spring</span></div>
+          </div>
+        </div>
+        <div class="hero-info-card">
+          <div class="hero-info-item">
+            <span class="icon">📊</span>
+            <strong><span data-lang="zh">完整报告 / Full Report</span><span data-lang="en" style="display:none;">完整报告 / Full Report</span></strong>
+            <span><span data-lang="zh">课堂表现、进度与评语全记录</span><span data-lang="en">Attendance, progress &amp; teacher notes</span></span>
+          </div>
+          <div class="hero-info-item">
+            <span class="icon">🎯</span>
+            <strong><span data-lang="zh">目标跟踪 / Goal Tracking</span><span data-lang="en" style="display:none;">目标跟踪 / Goal Tracking</span></strong>
+            <span><span data-lang="zh">阶段目标完成情况一目了然</span><span data-lang="en">Stage goals visualized clearly</span></span>
+          </div>
+          <div class="hero-info-item">
+            <span class="icon">📅</span>
+            <strong><span data-lang="zh">按学期归档 / By Semester</span><span data-lang="en" style="display:none;">按学期归档 / By Semester</span></strong>
+            <span><span data-lang="zh">历史报告随时查看</span><span data-lang="en">All past reports accessible anytime</span></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="page-content">
-    <div class="content-inner">
+  <div class="section-wrap">
+    <div class="section-inner">
+      <div class="content-inner" style="padding:0;max-width:100%;">
 
-      <div class="panel">
-        <h2><span data-lang="zh">学期表现总览</span><span data-lang="en">Semester Performance Overview</span></h2>
-        <div class="kpi-row">
-          <div class="kpi">
-            <span class="label" data-i18n="attend"></span>
-            <div class="value">95%</div>
-            <div class="sub"><span data-lang="zh">38 / 40 课时</span><span data-lang="en">38 / 40 classes</span></div>
-          </div>
-          <div class="kpi">
-            <span class="label" data-i18n="homework"></span>
-            <div class="value">92%</div>
-            <div class="sub"><span data-lang="zh">及时提交 23 / 25 次</span><span data-lang="en">On-time 23 / 25</span></div>
-          </div>
-          <div class="kpi">
-            <span class="label" data-i18n="project"></span>
-            <div class="value">4</div>
-            <div class="sub"><span data-lang="zh">其中 2 个优秀项目</span><span data-lang="en">2 outstanding projects</span></div>
-          </div>
-          <div class="kpi">
-            <span class="label" data-i18n="growth"></span>
-            <div class="value">+27%</div>
-            <div class="sub"><span data-lang="zh">综合能力提升指数</span><span data-lang="en">Overall capability growth</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="two-col">
         <div class="panel">
-          <h2><span data-lang="zh">核心能力成长</span><span data-lang="en">Core Competency Growth</span></h2>
-          <div class="skills">
-            <div class="skill"><div class="skill-head"><span data-i18n="skill1"></span><span>86/100</span></div><div class="bar"><div class="fill" style="width:86%"></div></div></div>
-            <div class="skill"><div class="skill-head"><span data-i18n="skill2"></span><span>81/100</span></div><div class="bar"><div class="fill" style="width:81%"></div></div></div>
-            <div class="skill"><div class="skill-head"><span data-i18n="skill3"></span><span>84/100</span></div><div class="bar"><div class="fill" style="width:84%"></div></div></div>
-            <div class="skill"><div class="skill-head"><span data-i18n="skill4"></span><span>78/100</span></div><div class="bar"><div class="fill" style="width:78%"></div></div></div>
-            <div class="skill"><div class="skill-head"><span data-i18n="skill5"></span><span>83/100</span></div><div class="bar"><div class="fill" style="width:83%"></div></div></div>
+          <h2><span data-lang="zh">学期表现总览</span><span data-lang="en">Semester Performance Overview</span></h2>
+          <div class="kpi-row">
+            <div class="kpi">
+              <span class="label" data-i18n="attend"></span>
+              <div class="value">95%</div>
+              <div class="sub"><span data-lang="zh">38 / 40 课时</span><span data-lang="en">38 / 40 classes</span></div>
+            </div>
+            <div class="kpi">
+              <span class="label" data-i18n="homework"></span>
+              <div class="value">92%</div>
+              <div class="sub"><span data-lang="zh">及时提交 23 / 25 次</span><span data-lang="en">On-time 23 / 25</span></div>
+            </div>
+            <div class="kpi">
+              <span class="label" data-i18n="project"></span>
+              <div class="value">4</div>
+              <div class="sub"><span data-lang="zh">其中 2 个优秀项目</span><span data-lang="en">2 outstanding projects</span></div>
+            </div>
+            <div class="kpi">
+              <span class="label" data-i18n="growth"></span>
+              <div class="value">+27%</div>
+              <div class="sub"><span data-lang="zh">综合能力提升指数</span><span data-lang="en">Overall capability growth</span></div>
+            </div>
           </div>
         </div>
-        <div class="panel">
-          <h2><span data-lang="zh">教师观察与家长关注点</span><span data-lang="en">Teacher Observations & Parent Focus</span></h2>
-          <ul class="obs-list">
-            <li data-i18n="obs1"></li>
-            <li data-i18n="obs2"></li>
-            <li data-i18n="obs3"></li>
-            <li data-i18n="obs4"></li>
-            <li data-i18n="obs5"></li>
-          </ul>
-        </div>
-      </div>
 
-      <div class="panel">
-        <h2><span data-lang="zh">项目展示</span><span data-lang="en">Project Showcase</span></h2>
-        <div class="project-grid">
-          <div class="project-card">
-            <div class="project-tag"><span data-lang="zh">优秀项目 A</span><span data-lang="en">Outstanding Project A</span></div>
-            <h3><span data-lang="zh">校园垃圾分类智能助手</span><span data-lang="en">Smart Campus Sorting Assistant</span></h3>
-            <ul>
-              <li data-i18n="pa1"></li>
-              <li data-i18n="pa2"></li>
-              <li data-i18n="pa3"></li>
-              <li data-i18n="pa4"></li>
-            </ul>
+        <div class="two-col">
+          <div class="panel">
+            <h2><span data-lang="zh">核心能力成长</span><span data-lang="en">Core Competency Growth</span></h2>
+            <div class="skills">
+              <div class="skill"><div class="skill-head"><span data-i18n="skill1"></span><span>86/100</span></div><div class="bar"><div class="fill" style="width:86%"></div></div></div>
+              <div class="skill"><div class="skill-head"><span data-i18n="skill2"></span><span>81/100</span></div><div class="bar"><div class="fill" style="width:81%"></div></div></div>
+              <div class="skill"><div class="skill-head"><span data-i18n="skill3"></span><span>84/100</span></div><div class="bar"><div class="fill" style="width:84%"></div></div></div>
+              <div class="skill"><div class="skill-head"><span data-i18n="skill4"></span><span>78/100</span></div><div class="bar"><div class="fill" style="width:78%"></div></div></div>
+              <div class="skill"><div class="skill-head"><span data-i18n="skill5"></span><span>83/100</span></div><div class="bar"><div class="fill" style="width:83%"></div></div></div>
+            </div>
           </div>
-          <div class="project-card">
-            <div class="project-tag"><span data-lang="zh">优秀项目 B</span><span data-lang="en">Outstanding Project B</span></div>
-            <h3><span data-lang="zh">历史人物多模态数字展板</span><span data-lang="en">Multimodal History Exhibit Board</span></h3>
-            <ul>
-              <li data-i18n="pb1"></li>
-              <li data-i18n="pb2"></li>
-              <li data-i18n="pb3"></li>
-              <li data-i18n="pb4"></li>
+          <div class="panel">
+            <h2><span data-lang="zh">教师观察与家长关注点</span><span data-lang="en">Teacher Observations & Parent Focus</span></h2>
+            <ul class="obs-list">
+              <li data-i18n="obs1"></li>
+              <li data-i18n="obs2"></li>
+              <li data-i18n="obs3"></li>
+              <li data-i18n="obs4"></li>
+              <li data-i18n="obs5"></li>
             </ul>
           </div>
         </div>
-      </div>
 
-      <div class="panel">
-        <h2><span data-lang="zh">阶段评估记录与下学期建议</span><span data-lang="en">Milestone Records & Next-Term Plan</span></h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th data-i18n="thWeek"></th>
-                <th data-i18n="thTask"></th>
-                <th data-i18n="thResult"></th>
-                <th data-i18n="thTeacher"></th>
-                <th data-i18n="thParent"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Week 4</td><td data-i18n="w4t"></td><td><span class="badge ok" data-i18n="good"></span></td><td data-i18n="w4c"></td><td data-i18n="w4p"></td></tr>
-              <tr><td>Week 8</td><td data-i18n="w8t"></td><td><span class="badge ok" data-i18n="good"></span></td><td data-i18n="w8c"></td><td data-i18n="w8p"></td></tr>
-              <tr><td>Week 12</td><td data-i18n="w12t"></td><td><span class="badge warn" data-i18n="improve"></span></td><td data-i18n="w12c"></td><td data-i18n="w12p"></td></tr>
-              <tr><td>Week 16</td><td data-i18n="w16t"></td><td><span class="badge ok" data-i18n="good"></span></td><td data-i18n="w16c"></td><td data-i18n="w16p"></td></tr>
-            </tbody>
-          </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-wrap bg-sand">
+    <div class="section-inner">
+      <div class="content-inner" style="padding:0;max-width:100%;">
+
+        <div class="panel">
+          <h2><span data-lang="zh">项目展示</span><span data-lang="en">Project Showcase</span></h2>
+          <div class="project-grid">
+            <div class="project-card">
+              <div class="project-tag"><span data-lang="zh">优秀项目 A</span><span data-lang="en">Outstanding Project A</span></div>
+              <h3><span data-lang="zh">校园垃圾分类智能助手</span><span data-lang="en">Smart Campus Sorting Assistant</span></h3>
+              <ul>
+                <li data-i18n="pa1"></li>
+                <li data-i18n="pa2"></li>
+                <li data-i18n="pa3"></li>
+                <li data-i18n="pa4"></li>
+              </ul>
+            </div>
+            <div class="project-card">
+              <div class="project-tag"><span data-lang="zh">优秀项目 B</span><span data-lang="en">Outstanding Project B</span></div>
+              <h3><span data-lang="zh">历史人物多模态数字展板</span><span data-lang="en">Multimodal History Exhibit Board</span></h3>
+              <ul>
+                <li data-i18n="pb1"></li>
+                <li data-i18n="pb2"></li>
+                <li data-i18n="pb3"></li>
+                <li data-i18n="pb4"></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <p class="footer-note" data-i18n="nextPlan"></p>
-        <p class="footer-note" data-i18n="homeAdvice"></p>
-      </div>
 
+        <div class="panel">
+          <h2><span data-lang="zh">阶段评估记录与下学期建议</span><span data-lang="en">Milestone Records & Next-Term Plan</span></h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="thWeek"></th>
+                  <th data-i18n="thTask"></th>
+                  <th data-i18n="thResult"></th>
+                  <th data-i18n="thTeacher"></th>
+                  <th data-i18n="thParent"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Week 4</td><td data-i18n="w4t"></td><td><span class="badge ok" data-i18n="good"></span></td><td data-i18n="w4c"></td><td data-i18n="w4p"></td></tr>
+                <tr><td>Week 8</td><td data-i18n="w8t"></td><td><span class="badge ok" data-i18n="good"></span></td><td data-i18n="w8c"></td><td data-i18n="w8p"></td></tr>
+                <tr><td>Week 12</td><td data-i18n="w12t"></td><td><span class="badge warn" data-i18n="improve"></span></td><td data-i18n="w12c"></td><td data-i18n="w12p"></td></tr>
+                <tr><td>Week 16</td><td data-i18n="w16t"></td><td><span class="badge ok" data-i18n="good"></span></td><td data-i18n="w16c"></td><td data-i18n="w16p"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="footer-note" data-i18n="nextPlan"></p>
+          <p class="footer-note" data-i18n="homeAdvice"></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-band">
+    <div class="section-tag"><span data-lang="zh">下一步</span><span data-lang="en">Next Steps</span></div>
+    <h2>
+      <span data-lang="zh">查看课堂详细反馈</span>
+      <span data-lang="en">View Detailed Class Feedback</span>
+    </h2>
+    <p>
+      <span data-lang="zh">学期报告提供阶段概览，课堂反馈记录每节课的细节表现和老师建议。</span>
+      <span data-lang="en">Semester reports give an overview; class feedback records per-session details and teacher suggestions.</span>
+    </p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="feedback.html"><span data-lang="zh">查看课堂反馈</span><span data-lang="en">View Class Feedback</span></a>
+      <a class="btn-secondary" href="student-account.html"><span data-lang="zh">回到学员主页</span><span data-lang="en">Back to Student Home</span></a>
     </div>
   </div>
 
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand footer-col">
+      <div class="footer-brand">
         <div class="footer-logo-row">
-          <img src="assets/logo.png" alt="MindDo logo" />
+          <img src="assets/logo.png" alt="MindDo" />
           <span>MindDo</span>
         </div>
-        <p><span data-lang="zh">专注 5–18 岁 AI 与编程教育，帮助每个孩子在智能时代找到自己的路。</span><span data-lang="en">AI & coding education for ages 5–18, helping every child thrive in the intelligent era.</span></p>
+        <p>
+          <span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span>
+          <span data-lang="en">AI and coding learning center for young learners, helping every child find their place in the AI era.</span>
+        </p>
         <div class="footer-hours">
-          <span data-lang="zh">📅 周一至周五 15:00–20:00<br>📅 周末 9:00–18:00</span>
-          <span data-lang="en">📅 Mon–Fri 3:00 PM–8:00 PM<br>📅 Weekends 9:00 AM–6:00 PM</span>
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
+          <span data-lang="zh">周一至周五 &nbsp;3:00pm – 7:30pm<br>周六 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9:30am – 5:00pm<br>周日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">休息</span></span>
+          <span data-lang="en">Mon – Fri &nbsp;&nbsp;3:00pm – 7:30pm<br>Saturday &nbsp;&nbsp;9:30am – 5:00pm<br>Sunday &nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">Closed</span></span>
         </div>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">课程</span><span data-lang="en">Programs</span></h4>
+        <h4><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></h4>
         <ul>
-          <li><a href="course-system.html"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></a></li>
-          <li><a href="course-selection.html"><span data-lang="zh">选课</span><span data-lang="en">Course Selection</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">AI 基础</span><span data-lang="en">AI Basics</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Scratch 编程</span><span data-lang="en">Scratch Coding</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Python 进阶</span><span data-lang="en">Python Advanced</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">机器人课程</span><span data-lang="en">Robotics</span></a></li>
+          <li><a href="trial.html"><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday Camps</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">快速入口</span><span data-lang="en">Quick Access</span></h4>
+        <ul>
           <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
-          <li><a href="semester-report.html"><span data-lang="zh">学期报告</span><span data-lang="en">Semester Report</span></a></li>
+          <li><a href="assessment.html"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></a></li>
+          <li><a href="signup.html"><span data-lang="zh">注册 / 登录</span><span data-lang="en">Sign Up / Login</span></a></li>
+          <li><a href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a></li>
+          <li><a href="course-selection.html"><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">学员</span><span data-lang="en">Students</span></h4>
+        <h4><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></h4>
         <ul>
-          <li><a href="student-account.html"><span data-lang="zh">学员中心</span><span data-lang="en">Student Hub</span></a></li>
-          <li><a href="assessment.html"><span data-lang="zh">入学评估</span><span data-lang="en">Assessment</span></a></li>
-          <li><a href="feedback.html"><span data-lang="zh">课堂反馈</span><span data-lang="en">Feedback</span></a></li>
-          <li><a href="signup.html"><span data-lang="zh">注册登录</span><span data-lang="en">Sign Up</span></a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4><span data-lang="zh">运营</span><span data-lang="en">Operations</span></h4>
-        <ul>
-          <li><a href="dashboard.html"><span data-lang="zh">运营后台</span><span data-lang="en">Dashboard</span></a></li>
-          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Students</span></a></li>
+          <li><a href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Student Management</span></a></li>
           <li><a href="new-trials.html"><span data-lang="zh">新试课列表</span><span data-lang="en">New Trials</span></a></li>
-          <li><a href="request-center.html"><span data-lang="zh">请假管理</span><span data-lang="en">Requests</span></a></li>
+          <li><a href="new-students.html"><span data-lang="zh">新学员列表</span><span data-lang="en">New Students</span></a></li>
+          <li><a href="request-center.html"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request Center</span></a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 MindDo AI Learning Center</span>
-      <span><span data-lang="zh">让每个孩子都能驾驭 AI</span><span data-lang="en">Empowering every child with AI</span></span>
+      <span>© 2025 MindDo Learning Center · <span data-lang="zh">保留所有权利</span><span data-lang="en">All rights reserved</span></span>
+      <span><span data-lang="zh">隐私政策 · 服务条款</span><span data-lang="en">Privacy Policy · Terms of Service</span></span>
     </div>
   </footer>
 

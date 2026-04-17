@@ -64,6 +64,31 @@
     .footer-col ul a:hover { color: #fff8ef; }
     .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
 
+    /* SECTION STRUCTURE */
+    .section-wrap { padding: 56px 0; }
+    .section-wrap.bg-sand { background: var(--sand); }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .section-head { margin-bottom: 32px; }
+    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-size: clamp(22px,2.5vw,32px); font-weight: 900; color: var(--clay); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .section-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 600px; }
+    /* HERO ENHANCEMENTS */
+    .hero-split { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    .hero-split-copy { color: #fff8ef; }
+    .hero-sub { font-size: 15px; color: rgba(255,241,220,0.75); line-height: 1.7; margin-bottom: 20px; }
+    .hero-quick-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-quick-link { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 600; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; cursor: pointer; }
+    .hero-quick-link:hover { background: rgba(255,248,239,0.18); }
+    .hero-ops-card { background: rgba(255,252,247,0.07); border: 1px solid rgba(255,237,215,0.14); border-radius: 18px; padding: 20px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-width: 260px; }
+    .ops-stat { text-align: center; }
+    .ops-stat strong { display: block; font-size: 26px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .ops-stat span { font-size: 11px; color: rgba(255,241,220,0.62); }
+    /* EXTRA BUTTONS */
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    @media (max-width: 900px) { .hero-split { grid-template-columns: 1fr; } .hero-ops-card { display: none; } }
+    @media (max-width: 760px) { .section-inner { padding: 0 24px; } .section-wrap { padding: 40px 0; } }
+
     @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } }
   </style>
@@ -93,9 +118,37 @@
 
   <div class="page-hero">
     <div class="page-hero-inner">
-      <div class="page-tag"><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></div>
-      <h1><span data-lang="zh">新注册试课列表</span><span data-lang="en">New Trial Registrations</span></h1>
-      <p><span data-lang="zh">展示今天新增的试课预约线索，方便运营快速确认时间、来源和跟进对象。</span><span data-lang="en">Today's new trial registrations for quick time confirmation, source review, and follow-up prioritization.</span></p>
+      <div class="hero-split">
+        <div class="hero-split-copy">
+          <div class="page-tag"><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></div>
+          <h1><span data-lang="zh">新注册试课列表</span><span data-lang="en">New Trial Registrations</span></h1>
+          <p class="hero-sub"><span data-lang="zh">展示今天新增的试课预约线索，方便运营快速确认时间、来源和跟进对象。</span><span data-lang="en">Today's new trial registrations for quick time confirmation, source review, and follow-up prioritization.</span></p>
+          <div class="hero-quick-links">
+            <a class="hero-quick-link" href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a>
+            <a class="hero-quick-link" href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Students</span></a>
+            <a class="hero-quick-link" href="request-center.html"><span data-lang="zh">申请处理</span><span data-lang="en">Requests</span></a>
+            <a class="hero-quick-link" href="new-students.html"><span data-lang="zh">新学员</span><span data-lang="en">New Students</span></a>
+          </div>
+        </div>
+        <div class="hero-ops-card">
+          <div class="ops-stat">
+            <strong>–</strong>
+            <span><span data-lang="zh">今日试课</span><span data-lang="en">Today</span></span>
+          </div>
+          <div class="ops-stat">
+            <strong>–</strong>
+            <span><span data-lang="zh">本周</span><span data-lang="en">Week</span></span>
+          </div>
+          <div class="ops-stat">
+            <strong>–</strong>
+            <span><span data-lang="zh">待确认</span><span data-lang="en">Pending</span></span>
+          </div>
+          <div class="ops-stat">
+            <strong>–</strong>
+            <span><span data-lang="zh">已完成</span><span data-lang="en">Done</span></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -125,8 +178,14 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="footer-logo-row"><img src="assets/logo.png" alt="MindDo" /><span>MindDo</span></div>
-        <p><span data-lang="zh">AI、编程与未来技能青少年学习中心。</span><span data-lang="en">AI and coding learning center for young learners.</span></p>
+        <div class="footer-logo-row">
+          <img src="assets/logo.png" alt="MindDo" />
+          <span>MindDo</span>
+        </div>
+        <p>
+          <span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span>
+          <span data-lang="en">AI and coding learning center for young learners, helping every child find their place in the AI era.</span>
+        </p>
         <div class="footer-hours">
           <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
           <span data-lang="zh">周一至周五 &nbsp;3:00pm – 7:30pm<br>周六 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9:30am – 5:00pm<br>周日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">休息</span></span>

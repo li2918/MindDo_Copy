@@ -34,8 +34,21 @@
     .btn-primary:hover { transform: translateY(-2px); }
 
     /* PAGE HERO */
-    .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 52px 0; }
-    .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 64px 0; position: relative; overflow: hidden; }
+    .page-hero::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 55%, rgba(236,171,47,0.18) 0%, transparent 48%),
+        radial-gradient(circle at 82% 22%, rgba(236,171,47,0.1) 0%, transparent 38%);
+    }
+    .page-hero::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,220,120,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,220,120,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
     .page-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(236,171,47,0.18); border: 1px solid rgba(236,171,47,0.3); color: #ffd98e; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
     .page-hero h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 10px; }
     .page-hero p { font-size: 15px; color: rgba(255,241,220,0.75); line-height: 1.7; }
@@ -59,6 +72,50 @@
     .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
     @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } }
+
+    /* SECTION STRUCTURE */
+    .section-wrap { padding: 88px 0; }
+    .section-wrap.bg-sand { background: var(--sand); }
+    .section-wrap.bg-dark { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 100%); }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .section-head { margin-bottom: 48px; }
+    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 600px; }
+    /* HERO SPLIT LAYOUT */
+    .hero-split { display: grid; grid-template-columns: 1fr 400px; gap: 52px; align-items: center; }
+    .hero-split-copy { color: #fff8ef; }
+    .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 520px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; }
+    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .hero-stat span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.4; }
+    .hero-form-card { background: rgba(255,252,247,0.97); border-radius: 24px; padding: 32px; box-shadow: 0 32px 80px rgba(0,0,0,0.28); border: 1px solid rgba(255,237,200,0.5); }
+    .hero-form-card h2 { font-size: 20px; font-weight: 800; color: var(--clay); margin-bottom: 6px; }
+    .hero-form-card > p { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1px solid rgba(126,77,29,0.18); border-radius: 11px; background: rgba(255,250,244,0.98); color: var(--text); font-size: 14px; font-family: inherit; outline: none; transition: 0.15s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(236,171,47,0.15); }
+    /* EXTRA BUTTONS */
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
+    /* CTA BAND */
+    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 48px; text-align: center; }
+    .cta-band h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 14px 0; }
+    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    /* WHY GRID */
+    .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .why-card { padding: 26px; border-radius: 20px; background: rgba(255,252,247,0.9); border: 1px solid var(--line); transition: 0.2s; }
+    .why-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(215,144,22,0.28); }
+    .why-icon { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg,#ffe7af,var(--gold)); display: grid; place-items: center; font-size: 22px; margin-bottom: 16px; }
+    .why-card h3 { font-size: 17px; font-weight: 800; color: var(--clay); margin-bottom: 10px; }
+    .why-card p { font-size: 14px; color: var(--muted); line-height: 1.72; }
+    @media (max-width: 1000px) { .hero-split { grid-template-columns: 1fr; } .hero-form-card { max-width: 480px; } }
+    @media (max-width: 760px) { .why-grid { grid-template-columns: 1fr; } .section-inner { padding: 0 24px; } .section-wrap { padding: 60px 0; } .cta-band { padding: 60px 24px; } }
 
     /* PAGE-SPECIFIC COMPONENTS */
     .link-btn {
@@ -464,169 +521,234 @@
 
   <div class="page-hero">
     <div class="page-hero-inner">
-      <div class="page-tag"><span data-lang="zh">试课报名</span><span data-lang="en">Book a Trial</span></div>
-      <h1><span data-lang="zh">预约体验课</span><span data-lang="en">Book Your Trial Class</span></h1>
-      <p><span data-lang="zh">填写信息，让我们为孩子安排一节免费体验课，了解编程与 AI 的乐趣。</span><span data-lang="en">Fill in the details and we'll schedule a free trial class to explore coding and AI together.</span></p>
+      <div class="hero-split">
+        <div class="hero-split-copy">
+          <div class="page-tag"><span data-lang="zh">学员旅程</span><span data-lang="en">Student Journey</span></div>
+          <h1><span data-lang="zh">预约体验课</span><span data-lang="en">Book Your Free Trial</span></h1>
+          <p class="hero-sub">
+            <span data-lang="zh">填写下方表单，我们将在 24 小时内与您确认时间。首次体验课完全免费，无需任何承诺。</span>
+            <span data-lang="en">Fill in the form and we'll confirm your time within 24 hours. The first trial is completely free — no commitment required.</span>
+          </p>
+          <div class="hero-actions">
+            <a class="btn-ghost" href="assessment.html"><span data-lang="zh">先做能力评估</span><span data-lang="en">Take Assessment First</span></a>
+            <a class="btn-ghost" href="course-system.html"><span data-lang="zh">查看课程体系</span><span data-lang="en">View Programs</span></a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong>200+</strong><span><span data-lang="zh">在读学员</span><span data-lang="en">Active students</span></span></div>
+            <div class="hero-stat"><strong>4.9★</strong><span><span data-lang="zh">家长满意度</span><span data-lang="en">Parent rating</span></span></div>
+            <div class="hero-stat"><strong>100%</strong><span><span data-lang="zh">首课免费</span><span data-lang="en">First trial free</span></span></div>
+          </div>
+        </div>
+
+        <div class="hero-form-card">
+          <h2 data-i18n="formTitle"></h2>
+
+          <form id="trialForm" novalidate>
+            <div class="row">
+              <div>
+                <label for="studentName" class="required-label" data-i18n="studentName"></label>
+                <input id="studentName" name="studentName" type="text" required />
+              </div>
+              <div>
+                <label for="grade" class="required-label" data-i18n="grade"></label>
+                <input id="grade" name="grade" type="text" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="birthday" class="required-label" data-i18n="birthday"></label>
+                <input id="birthday" name="birthday" type="date" required />
+              </div>
+              <div>
+                <label for="email" class="required-label" data-i18n="email"></label>
+                <input id="email" name="email" type="email" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="parentName" data-i18n="parentName"></label>
+                <input id="parentName" name="parentName" type="text" required />
+              </div>
+              <div>
+                <label for="phone" class="required-label" data-i18n="phone"></label>
+                <input id="phone" name="phone" type="tel" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="city" class="required-label" data-i18n="city"></label>
+                <input id="city" name="city" type="text" required />
+              </div>
+              <div>
+                <label for="subject" data-i18n="subject"></label>
+                <select id="subject" name="subject" required></select>
+              </div>
+            </div>
+
+            <div class="schedule-picker">
+              <div class="schedule-head">
+                <span class="schedule-title" data-i18n="scheduleTitle"></span>
+                <p class="muted" data-i18n="scheduleDesc"></p>
+              </div>
+
+              <div class="schedule-block">
+                <div class="picker-label">
+                  <span data-i18n="trialDate"></span>
+                  <span data-i18n="dateHelper"></span>
+                </div>
+                <label class="sr-only" for="trialDate" data-i18n="trialDate"></label>
+                <input id="trialDate" name="trialDate" type="date" required class="sr-only" />
+                <div class="schedule-scroll">
+                  <div id="calendarGrid" class="calendar-grid" role="listbox" aria-label="Trial date options"></div>
+                </div>
+              </div>
+
+              <div class="schedule-block">
+                <div class="picker-label">
+                  <span data-i18n="trialTime"></span>
+                  <span data-i18n="timeHelper"></span>
+                </div>
+                <label class="sr-only" for="trialTime" data-i18n="trialTime"></label>
+                <select id="trialTime" name="trialTime" required class="sr-only"></select>
+                <div id="timeGrid" class="time-grid" role="listbox" aria-label="Trial time options"></div>
+              </div>
+
+              <div id="scheduleSummary" class="schedule-summary" aria-live="polite"></div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label for="channel" data-i18n="channel"></label>
+                <select id="channel" name="channel" required></select>
+              </div>
+              <div>
+                <label for="timeNote" data-i18n="timeNote"></label>
+                <input id="timeNote" name="timeNote" type="text" data-i18n-placeholder="timeNotePlaceholder" />
+              </div>
+            </div>
+
+            <div>
+              <label for="goal" data-i18n="goal"></label>
+              <textarea id="goal" name="goal"></textarea>
+            </div>
+
+            <label class="consent" for="consent">
+              <input id="consent" name="consent" type="checkbox" required />
+              <span data-i18n="consent"></span>
+            </label>
+
+            <button class="submit-btn" type="submit" data-i18n="submit"></button>
+            <div id="submitResult" class="result" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="page-content">
-    <div class="content-inner">
+  <!-- WHY MINDDO -->
+  <div class="section-wrap bg-sand">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-tag"><span data-lang="zh">为什么选我们</span><span data-lang="en">Why MindDo</span></div>
+        <h2 class="section-title">
+          <span data-lang="zh">让每次课都值得期待</span>
+          <span data-lang="en">Every Class Worth Looking Forward To</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="zh">以项目为核心、以成果为导向，首节体验课就能带走属于孩子自己的作品。</span>
+          <span data-lang="en">Project-driven and outcome-focused — students leave even the first trial class with something they made themselves.</span>
+        </p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🎯</div>
+          <h3><span data-lang="zh">自主进度学习</span><span data-lang="en">Self-Paced Learning</span></h3>
+          <p><span data-lang="zh">每位学员按照自己的节奏前进，老师提供个性化指导，而不是统一教学。无论快慢，都能找到最适合自己的起点。</span><span data-lang="en">Each student progresses at their own speed with personalized instruction — not one-size-fits-all teaching. Every child starts at the right level.</span></p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🏆</div>
+          <h3><span data-lang="zh">看得见的成果</span><span data-lang="en">Real Outcomes</span></h3>
+          <p><span data-lang="zh">学员会真正做出游戏、应用和 AI 项目，而不只是完成练习题。每节课的进步都是有形的、可以分享的。</span><span data-lang="en">Students build real games, apps, and AI projects — not just exercises. Progress is always visible and shareable.</span></p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">👥</div>
+          <h3><span data-lang="zh">小班制教学</span><span data-lang="en">Small Classes</span></h3>
+          <p><span data-lang="zh">每班最多 8 人，确保每位学员都能得到足够的关注和指导时间。孩子不会在课堂里被忽视。</span><span data-lang="en">Maximum 8 students per class so every learner gets real attention and guided time — no child gets left behind.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <section class="grid">
-      <article class="card">
-        <h2 data-i18n="formTitle"></h2>
-
-        <form id="trialForm" novalidate>
-          <div class="row">
-            <div>
-              <label for="studentName" class="required-label" data-i18n="studentName"></label>
-              <input id="studentName" name="studentName" type="text" required />
-            </div>
-            <div>
-              <label for="grade" class="required-label" data-i18n="grade"></label>
-              <input id="grade" name="grade" type="text" required />
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="birthday" class="required-label" data-i18n="birthday"></label>
-              <input id="birthday" name="birthday" type="date" required />
-            </div>
-            <div>
-              <label for="email" class="required-label" data-i18n="email"></label>
-              <input id="email" name="email" type="email" required />
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="parentName" data-i18n="parentName"></label>
-              <input id="parentName" name="parentName" type="text" required />
-            </div>
-            <div>
-              <label for="phone" class="required-label" data-i18n="phone"></label>
-              <input id="phone" name="phone" type="tel" required />
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="city" class="required-label" data-i18n="city"></label>
-              <input id="city" name="city" type="text" required />
-            </div>
-            <div>
-              <label for="subject" data-i18n="subject"></label>
-              <select id="subject" name="subject" required></select>
-            </div>
-          </div>
-
-          <div class="schedule-picker">
-            <div class="schedule-head">
-              <span class="schedule-title" data-i18n="scheduleTitle"></span>
-              <p class="muted" data-i18n="scheduleDesc"></p>
-            </div>
-
-            <div class="schedule-block">
-              <div class="picker-label">
-                <span data-i18n="trialDate"></span>
-                <span data-i18n="dateHelper"></span>
-              </div>
-              <label class="sr-only" for="trialDate" data-i18n="trialDate"></label>
-              <input id="trialDate" name="trialDate" type="date" required class="sr-only" />
-              <div class="schedule-scroll">
-                <div id="calendarGrid" class="calendar-grid" role="listbox" aria-label="Trial date options"></div>
-              </div>
-            </div>
-
-            <div class="schedule-block">
-              <div class="picker-label">
-                <span data-i18n="trialTime"></span>
-                <span data-i18n="timeHelper"></span>
-              </div>
-              <label class="sr-only" for="trialTime" data-i18n="trialTime"></label>
-              <select id="trialTime" name="trialTime" required class="sr-only"></select>
-              <div id="timeGrid" class="time-grid" role="listbox" aria-label="Trial time options"></div>
-            </div>
-
-            <div id="scheduleSummary" class="schedule-summary" aria-live="polite"></div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="channel" data-i18n="channel"></label>
-              <select id="channel" name="channel" required></select>
-            </div>
-            <div>
-              <label for="timeNote" data-i18n="timeNote"></label>
-              <input id="timeNote" name="timeNote" type="text" data-i18n-placeholder="timeNotePlaceholder" />
-            </div>
-          </div>
-
-          <div>
-            <label for="goal" data-i18n="goal"></label>
-            <textarea id="goal" name="goal"></textarea>
-          </div>
-
-          <label class="consent" for="consent">
-            <input id="consent" name="consent" type="checkbox" required />
-            <span data-i18n="consent"></span>
-          </label>
-
-          <button class="submit-btn" type="submit" data-i18n="submit"></button>
-          <div id="submitResult" class="result" role="status" aria-live="polite"></div>
-        </form>
-      </article>
-    </section>
-
+  <div class="cta-band">
+    <div class="section-tag"><span data-lang="zh">下一步</span><span data-lang="en">Next Step</span></div>
+    <h2>
+      <span data-lang="zh">还没确定？先了解我们的课程</span>
+      <span data-lang="en">Not Sure Yet? Explore Our Programs</span>
+    </h2>
+    <p>
+      <span data-lang="zh">查看完整课程体系，或先完成在线能力评估，帮助我们为孩子推荐最合适的课程。</span>
+      <span data-lang="en">Browse our full curriculum or take the online assessment first — we'll recommend the best program for your child.</span>
+    </p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="course-system.html"><span data-lang="zh">查看课程体系</span><span data-lang="en">View Programs</span></a>
+      <a class="btn-secondary" href="assessment.html"><span data-lang="zh">在线能力评估</span><span data-lang="en">Take Assessment</span></a>
     </div>
   </div>
 
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand footer-col">
+      <div class="footer-brand">
         <div class="footer-logo-row">
-          <img src="assets/logo.png" alt="MindDo logo" />
+          <img src="assets/logo.png" alt="MindDo" />
           <span>MindDo</span>
         </div>
-        <p><span data-lang="zh">专注 5–18 岁 AI 与编程教育，帮助每个孩子在智能时代找到自己的路。</span><span data-lang="en">AI &amp; coding education for ages 5–18, helping every child thrive in the intelligent era.</span></p>
+        <p>
+          <span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span>
+          <span data-lang="en">AI and coding learning center for young learners, helping every child find their place in the AI era.</span>
+        </p>
         <div class="footer-hours">
-          <span data-lang="zh">📅 周一至周五 15:00–20:00<br>📅 周末 9:00–18:00</span>
-          <span data-lang="en">📅 Mon–Fri 3:00 PM–8:00 PM<br>📅 Weekends 9:00 AM–6:00 PM</span>
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
+          <span data-lang="zh">周一至周五 &nbsp;3:00pm – 7:30pm<br>周六 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9:30am – 5:00pm<br>周日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">休息</span></span>
+          <span data-lang="en">Mon – Fri &nbsp;&nbsp;3:00pm – 7:30pm<br>Saturday &nbsp;&nbsp;9:30am – 5:00pm<br>Sunday &nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">Closed</span></span>
         </div>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">课程</span><span data-lang="en">Programs</span></h4>
+        <h4><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></h4>
         <ul>
-          <li><a href="course-system.html"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></a></li>
-          <li><a href="course-selection.html"><span data-lang="zh">选课</span><span data-lang="en">Course Selection</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">AI 基础</span><span data-lang="en">AI Basics</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Scratch 编程</span><span data-lang="en">Scratch Coding</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Python 进阶</span><span data-lang="en">Python Advanced</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">机器人课程</span><span data-lang="en">Robotics</span></a></li>
+          <li><a href="trial.html"><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday Camps</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">快速入口</span><span data-lang="en">Quick Access</span></h4>
+        <ul>
           <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
-          <li><a href="semester-report.html"><span data-lang="zh">学期报告</span><span data-lang="en">Semester Report</span></a></li>
+          <li><a href="assessment.html"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></a></li>
+          <li><a href="signup.html"><span data-lang="zh">注册 / 登录</span><span data-lang="en">Sign Up / Login</span></a></li>
+          <li><a href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a></li>
+          <li><a href="course-selection.html"><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">学员</span><span data-lang="en">Students</span></h4>
+        <h4><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></h4>
         <ul>
-          <li><a href="student-account.html"><span data-lang="zh">学员中心</span><span data-lang="en">Student Hub</span></a></li>
-          <li><a href="assessment.html"><span data-lang="zh">入学评估</span><span data-lang="en">Assessment</span></a></li>
-          <li><a href="feedback.html"><span data-lang="zh">课堂反馈</span><span data-lang="en">Feedback</span></a></li>
-          <li><a href="signup.html"><span data-lang="zh">注册登录</span><span data-lang="en">Sign Up</span></a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4><span data-lang="zh">运营</span><span data-lang="en">Operations</span></h4>
-        <ul>
-          <li><a href="dashboard.html"><span data-lang="zh">运营后台</span><span data-lang="en">Dashboard</span></a></li>
-          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Students</span></a></li>
+          <li><a href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Student Management</span></a></li>
           <li><a href="new-trials.html"><span data-lang="zh">新试课列表</span><span data-lang="en">New Trials</span></a></li>
-          <li><a href="request-center.html"><span data-lang="zh">请假管理</span><span data-lang="en">Requests</span></a></li>
+          <li><a href="new-students.html"><span data-lang="zh">新学员列表</span><span data-lang="en">New Students</span></a></li>
+          <li><a href="request-center.html"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request Center</span></a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 MindDo AI Learning Center</span>
-      <span><span data-lang="zh">让每个孩子都能驾驭 AI</span><span data-lang="en">Empowering every child with AI</span></span>
+      <span>© 2025 MindDo Learning Center · <span data-lang="zh">保留所有权利</span><span data-lang="en">All rights reserved</span></span>
+      <span><span data-lang="zh">隐私政策 · 服务条款</span><span data-lang="en">Privacy Policy · Terms of Service</span></span>
     </div>
   </footer>
 

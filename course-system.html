@@ -44,7 +44,7 @@
     .hero-chip { background: rgba(255,245,230,0.08); border: 1px solid rgba(255,237,215,0.15); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: rgba(255,241,220,0.82); line-height: 1.5; }
 
     /* CONTENT */
-    .page-content { padding: 48px 0 80px; }
+    .page-content { padding: 0; }
     .content-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; display: grid; gap: 20px; }
     .panel { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 28px; }
     .panel h2 { font-size: 22px; font-weight: 800; color: var(--clay); margin-bottom: 20px; }
@@ -77,6 +77,41 @@
     .footer-col ul a:hover { color: #fff8ef; }
     .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
 
+    /* SECTION STRUCTURE */
+    .section-wrap { padding: 88px 0; }
+    .section-wrap.bg-sand { background: var(--sand); }
+    .section-wrap.bg-dark { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 100%); }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .section-head { margin-bottom: 48px; }
+    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 600px; }
+    /* HERO SPLIT LAYOUT */
+    .hero-split { display: grid; grid-template-columns: 1fr 340px; gap: 52px; align-items: start; }
+    .hero-split-copy { color: #fff8ef; }
+    .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 520px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; }
+    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .hero-stat span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.4; }
+    .hero-info-card { background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.15); border-radius: 20px; padding: 24px; display: grid; gap: 10px; }
+    .hero-info-item { padding: 14px; border-radius: 12px; background: rgba(255,249,241,0.06); border: 1px solid rgba(255,237,215,0.1); }
+    .hero-info-item .icon { font-size: 22px; margin-bottom: 6px; display: block; }
+    .hero-info-item strong { display: block; font-size: 13px; font-weight: 800; color: #fff8ef; margin-bottom: 3px; }
+    .hero-info-item span { font-size: 12px; color: rgba(255,241,220,0.62); line-height: 1.45; }
+    /* EXTRA BUTTONS */
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
+    /* CTA BAND */
+    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 48px; text-align: center; }
+    .cta-band h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 14px 0; }
+    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    @media (max-width: 1000px) { .hero-split { grid-template-columns: 1fr; } .hero-info-card { display: none; } }
+    @media (max-width: 760px) { .section-inner { padding: 0 24px; } .section-wrap { padding: 60px 0; } .cta-band { padding: 60px 24px; } }
+
     @media (max-width: 1000px) { .path-grid, .hero-chips { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .module-grid { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 640px) { .path-grid, .hero-chips { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } }
@@ -104,172 +139,228 @@
 
   <div class="page-hero">
     <div class="page-hero-inner">
-      <div class="page-tag"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></div>
-      <h1>
-        <span data-lang="zh">AI时代孩子成长路径课程体系</span>
-        <span data-lang="en">Child Growth Curriculum in the AI Era</span>
-      </h1>
-      <p>
-        <span data-lang="zh">以"会用、会思考、会创造、会负责"为主线，围绕认知力、工具力、实践力与社会责任，形成从启蒙到创新的连续课程路径。</span>
-        <span data-lang="en">Built on using, thinking, creating, and taking responsibility — developing cognition, tool mastery, practice, and social ethics from foundation to innovation.</span>
-      </p>
-      <div class="hero-chips">
-        <div class="hero-chip"><span data-lang="zh">课程主轴：AI素养 + 学科融合 + 项目实战</span><span data-lang="en">Core: AI literacy + interdisciplinary learning + project practice</span></div>
-        <div class="hero-chip"><span data-lang="zh">培养目标：技术理解、问题解决、表达协作</span><span data-lang="en">Goals: technical understanding, problem-solving, communication</span></div>
-        <div class="hero-chip"><span data-lang="zh">学习方式：探究任务、作品驱动、反思复盘</span><span data-lang="en">Learning mode: inquiry tasks, product-driven work, reflection</span></div>
-        <div class="hero-chip"><span data-lang="zh">成果形式：数字作品、研究报告、成长档案</span><span data-lang="en">Outcomes: digital products, reports, growth portfolios</span></div>
+      <div class="hero-split">
+        <div class="hero-split-copy">
+          <div class="page-tag"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></div>
+          <h1>
+            <span data-lang="zh">AI时代孩子成长路径课程体系</span>
+            <span data-lang="en">Child Growth Curriculum in the AI Era</span>
+          </h1>
+          <p>
+            <span data-lang="zh">以"会用、会思考、会创造、会负责"为主线，围绕认知力、工具力、实践力与社会责任，形成从启蒙到创新的连续课程路径。</span>
+            <span data-lang="en">Built on using, thinking, creating, and taking responsibility — developing cognition, tool mastery, practice, and social ethics from foundation to innovation.</span>
+          </p>
+          <div class="hero-chips">
+            <div class="hero-chip"><span data-lang="zh">课程主轴：AI素养 + 学科融合 + 项目实战</span><span data-lang="en">Core: AI literacy + interdisciplinary learning + project practice</span></div>
+            <div class="hero-chip"><span data-lang="zh">培养目标：技术理解、问题解决、表达协作</span><span data-lang="en">Goals: technical understanding, problem-solving, communication</span></div>
+            <div class="hero-chip"><span data-lang="zh">学习方式：探究任务、作品驱动、反思复盘</span><span data-lang="en">Learning mode: inquiry tasks, product-driven work, reflection</span></div>
+            <div class="hero-chip"><span data-lang="zh">成果形式：数字作品、研究报告、成长档案</span><span data-lang="en">Outcomes: digital products, reports, growth portfolios</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="hero-info-card">
+            <div class="hero-info-item">
+              <span class="icon">🎓</span>
+              <strong><span data-lang="zh">12+ 课程模块</span><span data-lang="en">12+ Modules</span></strong>
+              <span><span data-lang="zh">覆盖 AI、编程、机器人的完整路径</span><span data-lang="en">Full path from AI to robotics</span></span>
+            </div>
+            <div class="hero-info-item">
+              <span class="icon">👦</span>
+              <strong><span data-lang="zh">5–18 岁</span><span data-lang="en">Ages 5–18</span></strong>
+              <span><span data-lang="zh">从启蒙到竞赛，阶段分明</span><span data-lang="en">From intro to competition level</span></span>
+            </div>
+            <div class="hero-info-item">
+              <span class="icon">🏆</span>
+              <strong><span data-lang="zh">自主进度</span><span data-lang="en">Self-Paced</span></strong>
+              <span><span data-lang="zh">每位学员按自己节奏前进</span><span data-lang="en">Each student advances at their own pace</span></span>
+            </div>
+          </div>
+          <div class="hero-actions" style="margin-top: 16px;">
+            <a class="btn-ghost" href="trial.html"><span data-lang="zh">预约免费试课</span><span data-lang="en">Book Free Trial</span></a>
+            <a class="btn-ghost" href="assessment.html"><span data-lang="zh">在线评估</span><span data-lang="en">Take Assessment</span></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="page-content">
-    <div class="content-inner">
 
-      <div class="panel">
-        <h2><span data-lang="zh">四阶段成长路径</span><span data-lang="en">Four-Stage Growth Path</span></h2>
-        <div class="path-grid">
-          <div class="stage">
-            <strong><span data-lang="zh">阶段一：AI启蒙（6-8岁）</span><span data-lang="en">Stage 1: AI Foundation (Ages 6-8)</span></strong>
-            <p><span data-lang="zh">感知"智能"如何帮助生活，建立规则意识与信息辨识的初步能力。</span><span data-lang="en">Understand how AI supports daily life and build early awareness of rules and information quality.</span></p>
+    <div class="section-wrap">
+      <div class="section-inner content-inner">
+        <div class="panel">
+          <h2><span data-lang="zh">四阶段成长路径</span><span data-lang="en">Four-Stage Growth Path</span></h2>
+          <div class="path-grid">
+            <div class="stage">
+              <strong><span data-lang="zh">阶段一：AI启蒙（6-8岁）</span><span data-lang="en">Stage 1: AI Foundation (Ages 6-8)</span></strong>
+              <p><span data-lang="zh">感知"智能"如何帮助生活，建立规则意识与信息辨识的初步能力。</span><span data-lang="en">Understand how AI supports daily life and build early awareness of rules and information quality.</span></p>
+            </div>
+            <div class="stage">
+              <strong><span data-lang="zh">阶段二：AI应用（9-11岁）</span><span data-lang="en">Stage 2: AI Application (Ages 9-11)</span></strong>
+              <p><span data-lang="zh">学会使用基础AI工具完成学习任务，强化提问、检索和表达能力。</span><span data-lang="en">Use AI tools for school tasks and strengthen questioning, research, and expression skills.</span></p>
+            </div>
+            <div class="stage">
+              <strong><span data-lang="zh">阶段三：AI创造（12-14岁）</span><span data-lang="en">Stage 3: AI Creation (Ages 12-14)</span></strong>
+              <p><span data-lang="zh">通过跨学科项目完成从"使用工具"到"设计方案"的跃迁。</span><span data-lang="en">Transition from tool users to solution designers through interdisciplinary projects.</span></p>
+            </div>
+            <div class="stage">
+              <strong><span data-lang="zh">阶段四：AI创新（15-18岁）</span><span data-lang="en">Stage 4: AI Innovation (Ages 15-18)</span></strong>
+              <p><span data-lang="zh">在真实议题中构建项目，形成责任意识、批判思维与领导力。</span><span data-lang="en">Build projects around real-world issues and develop ethics, critical thinking, and leadership.</span></p>
+            </div>
           </div>
-          <div class="stage">
-            <strong><span data-lang="zh">阶段二：AI应用（9-11岁）</span><span data-lang="en">Stage 2: AI Application (Ages 9-11)</span></strong>
-            <p><span data-lang="zh">学会使用基础AI工具完成学习任务，强化提问、检索和表达能力。</span><span data-lang="en">Use AI tools for school tasks and strengthen questioning, research, and expression skills.</span></p>
-          </div>
-          <div class="stage">
-            <strong><span data-lang="zh">阶段三：AI创造（12-14岁）</span><span data-lang="en">Stage 3: AI Creation (Ages 12-14)</span></strong>
-            <p><span data-lang="zh">通过跨学科项目完成从"使用工具"到"设计方案"的跃迁。</span><span data-lang="en">Transition from tool users to solution designers through interdisciplinary projects.</span></p>
-          </div>
-          <div class="stage">
-            <strong><span data-lang="zh">阶段四：AI创新（15-18岁）</span><span data-lang="en">Stage 4: AI Innovation (Ages 15-18)</span></strong>
-            <p><span data-lang="zh">在真实议题中构建项目，形成责任意识、批判思维与领导力。</span><span data-lang="en">Build projects around real-world issues and develop ethics, critical thinking, and leadership.</span></p>
+        </div>
+
+        <div class="panel">
+          <h2><span data-lang="zh">课程模块设计</span><span data-lang="en">Curriculum Modules</span></h2>
+          <div class="module-grid">
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">模块A</span><span data-lang="en">Module A</span></div>
+              <h3><span data-lang="zh">AI认知与数字素养</span><span data-lang="en">AI Cognition and Digital Literacy</span></h3>
+              <ul>
+                <li><span data-lang="zh">AI基础概念与发展脉络</span><span data-lang="en">AI fundamentals and development context</span></li>
+                <li><span data-lang="zh">信息判断、事实核验与风险识别</span><span data-lang="en">Information verification and risk awareness</span></li>
+                <li><span data-lang="zh">数字公民意识与网络行为规范</span><span data-lang="en">Digital citizenship and online behavior norms</span></li>
+              </ul>
+            </div>
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">模块B</span><span data-lang="en">Module B</span></div>
+              <h3><span data-lang="zh">AI工具与学习效率</span><span data-lang="en">AI Tools and Learning Efficiency</span></h3>
+              <ul>
+                <li><span data-lang="zh">提示词结构与高质量提问</span><span data-lang="en">Prompt structure and high-quality questioning</span></li>
+                <li><span data-lang="zh">文图音视频协同创作</span><span data-lang="en">Multimodal creation with text, image, audio, and video</span></li>
+                <li><span data-lang="zh">任务拆解、学习计划与复盘</span><span data-lang="en">Task breakdown, planning, and review</span></li>
+              </ul>
+            </div>
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">模块C</span><span data-lang="en">Module C</span></div>
+              <h3><span data-lang="zh">项目式学习与问题解决</span><span data-lang="en">Project-Based Learning and Problem Solving</span></h3>
+              <ul>
+                <li><span data-lang="zh">真实问题定义与需求分析</span><span data-lang="en">Problem definition and requirement analysis</span></li>
+                <li><span data-lang="zh">数据收集、方案设计、原型迭代</span><span data-lang="en">Data collection, solution design, and prototype iteration</span></li>
+                <li><span data-lang="zh">协作展示与反馈优化</span><span data-lang="en">Collaboration, presentation, and feedback optimization</span></li>
+              </ul>
+            </div>
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">模块D</span><span data-lang="en">Module D</span></div>
+              <h3><span data-lang="zh">AI伦理与未来能力</span><span data-lang="en">AI Ethics and Future Skills</span></h3>
+              <ul>
+                <li><span data-lang="zh">隐私保护、算法偏见与公平讨论</span><span data-lang="en">Privacy, algorithm bias, and fairness</span></li>
+                <li><span data-lang="zh">批判性思维与创造性表达</span><span data-lang="en">Critical thinking and creative expression</span></li>
+                <li><span data-lang="zh">职业认知、社会参与与责任担当</span><span data-lang="en">Career awareness, social participation, and responsibility</span></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="panel">
-        <h2><span data-lang="zh">课程模块设计</span><span data-lang="en">Curriculum Modules</span></h2>
-        <div class="module-grid">
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">模块A</span><span data-lang="en">Module A</span></div>
-            <h3><span data-lang="zh">AI认知与数字素养</span><span data-lang="en">AI Cognition and Digital Literacy</span></h3>
+    <div class="section-wrap bg-sand">
+      <div class="section-inner content-inner">
+        <div class="panel">
+          <h2><span data-lang="zh">教学实施节奏（每学期）</span><span data-lang="en">Semester Delivery Rhythm</span></h2>
+          <div class="timeline-list">
             <ul>
-              <li><span data-lang="zh">AI基础概念与发展脉络</span><span data-lang="en">AI fundamentals and development context</span></li>
-              <li><span data-lang="zh">信息判断、事实核验与风险识别</span><span data-lang="en">Information verification and risk awareness</span></li>
-              <li><span data-lang="zh">数字公民意识与网络行为规范</span><span data-lang="en">Digital citizenship and online behavior norms</span></li>
-            </ul>
-          </div>
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">模块B</span><span data-lang="en">Module B</span></div>
-            <h3><span data-lang="zh">AI工具与学习效率</span><span data-lang="en">AI Tools and Learning Efficiency</span></h3>
-            <ul>
-              <li><span data-lang="zh">提示词结构与高质量提问</span><span data-lang="en">Prompt structure and high-quality questioning</span></li>
-              <li><span data-lang="zh">文图音视频协同创作</span><span data-lang="en">Multimodal creation with text, image, audio, and video</span></li>
-              <li><span data-lang="zh">任务拆解、学习计划与复盘</span><span data-lang="en">Task breakdown, planning, and review</span></li>
-            </ul>
-          </div>
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">模块C</span><span data-lang="en">Module C</span></div>
-            <h3><span data-lang="zh">项目式学习与问题解决</span><span data-lang="en">Project-Based Learning and Problem Solving</span></h3>
-            <ul>
-              <li><span data-lang="zh">真实问题定义与需求分析</span><span data-lang="en">Problem definition and requirement analysis</span></li>
-              <li><span data-lang="zh">数据收集、方案设计、原型迭代</span><span data-lang="en">Data collection, solution design, and prototype iteration</span></li>
-              <li><span data-lang="zh">协作展示与反馈优化</span><span data-lang="en">Collaboration, presentation, and feedback optimization</span></li>
-            </ul>
-          </div>
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">模块D</span><span data-lang="en">Module D</span></div>
-            <h3><span data-lang="zh">AI伦理与未来能力</span><span data-lang="en">AI Ethics and Future Skills</span></h3>
-            <ul>
-              <li><span data-lang="zh">隐私保护、算法偏见与公平讨论</span><span data-lang="en">Privacy, algorithm bias, and fairness</span></li>
-              <li><span data-lang="zh">批判性思维与创造性表达</span><span data-lang="en">Critical thinking and creative expression</span></li>
-              <li><span data-lang="zh">职业认知、社会参与与责任担当</span><span data-lang="en">Career awareness, social participation, and responsibility</span></li>
+              <li><span data-lang="zh">第1-3周：主题导入 + 关键能力训练</span><span data-lang="en">Weeks 1-3: theme kickoff and core skill training</span></li>
+              <li><span data-lang="zh">第4-8周：分层任务学习 + 作品小迭代</span><span data-lang="en">Weeks 4-8: leveled tasks and product iterations</span></li>
+              <li><span data-lang="zh">第9-14周：跨学科项目实践</span><span data-lang="en">Weeks 9-14: interdisciplinary project practice</span></li>
+              <li><span data-lang="zh">第15-16周：成果发布 + 成长评估</span><span data-lang="en">Weeks 15-16: showcase and growth assessment</span></li>
             </ul>
           </div>
         </div>
-      </div>
 
-      <div class="panel">
-        <h2><span data-lang="zh">教学实施节奏（每学期）</span><span data-lang="en">Semester Delivery Rhythm</span></h2>
-        <div class="timeline-list">
-          <ul>
-            <li><span data-lang="zh">第1-3周：主题导入 + 关键能力训练</span><span data-lang="en">Weeks 1-3: theme kickoff and core skill training</span></li>
-            <li><span data-lang="zh">第4-8周：分层任务学习 + 作品小迭代</span><span data-lang="en">Weeks 4-8: leveled tasks and product iterations</span></li>
-            <li><span data-lang="zh">第9-14周：跨学科项目实践</span><span data-lang="en">Weeks 9-14: interdisciplinary project practice</span></li>
-            <li><span data-lang="zh">第15-16周：成果发布 + 成长评估</span><span data-lang="en">Weeks 15-16: showcase and growth assessment</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2><span data-lang="zh">评估体系</span><span data-lang="en">Assessment System</span></h2>
-        <div class="module-grid">
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">形成性评价</span><span data-lang="en">Formative</span></div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">课堂参与、任务完成度、合作质量、阶段反思日志。</span><span data-lang="en">Class participation, task completion, collaboration quality, and reflection logs.</span></p>
-          </div>
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">总结性评价</span><span data-lang="en">Summative</span></div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">项目成果展示、问题解决过程、表达与答辩能力。</span><span data-lang="en">Project outcomes, problem-solving process, communication, and defense performance.</span></p>
-          </div>
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">成长性档案</span><span data-lang="en">Portfolio</span></div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">作品集、能力雷达图、导师评语与下一阶段目标。</span><span data-lang="en">Portfolio, skill radar, mentor feedback, and next-stage goals.</span></p>
-          </div>
-          <div class="module-card">
-            <div class="module-tag"><span data-lang="zh">多元主体反馈</span><span data-lang="en">Multi-Source</span></div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">学生自评、同伴互评、教师评价、家长观察报告。</span><span data-lang="en">Self-evaluation, peer review, teacher assessment, and parent observations.</span></p>
+        <div class="panel">
+          <h2><span data-lang="zh">评估体系</span><span data-lang="en">Assessment System</span></h2>
+          <div class="module-grid">
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">形成性评价</span><span data-lang="en">Formative</span></div>
+              <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">课堂参与、任务完成度、合作质量、阶段反思日志。</span><span data-lang="en">Class participation, task completion, collaboration quality, and reflection logs.</span></p>
+            </div>
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">总结性评价</span><span data-lang="en">Summative</span></div>
+              <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">项目成果展示、问题解决过程、表达与答辩能力。</span><span data-lang="en">Project outcomes, problem-solving process, communication, and defense performance.</span></p>
+            </div>
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">成长性档案</span><span data-lang="en">Portfolio</span></div>
+              <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">作品集、能力雷达图、导师评语与下一阶段目标。</span><span data-lang="en">Portfolio, skill radar, mentor feedback, and next-stage goals.</span></p>
+            </div>
+            <div class="module-card">
+              <div class="module-tag"><span data-lang="zh">多元主体反馈</span><span data-lang="en">Multi-Source</span></div>
+              <p style="font-size:13px;color:var(--muted);line-height:1.7"><span data-lang="zh">学生自评、同伴互评、教师评价、家长观察报告。</span><span data-lang="en">Self-evaluation, peer review, teacher assessment, and parent observations.</span></p>
+            </div>
           </div>
         </div>
       </div>
+    </div>
 
+  </div>
+
+  <div class="cta-band">
+    <div class="section-tag"><span data-lang="zh">开始学习</span><span data-lang="en">Get Started</span></div>
+    <h2>
+      <span data-lang="zh">找到适合孩子的那条学习路径</span>
+      <span data-lang="en">Find the Right Learning Path for Your Child</span>
+    </h2>
+    <p>
+      <span data-lang="zh">预约一节免费体验课，或先完成在线评估，我们帮您和孩子找到最合适的起点。</span>
+      <span data-lang="en">Book a free trial or take the online assessment first — we'll help find the perfect starting point.</span>
+    </p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="trial.html"><span data-lang="zh">预约免费试课</span><span data-lang="en">Book Free Trial</span></a>
+      <a class="btn-secondary" href="assessment.html"><span data-lang="zh">在线能力评估</span><span data-lang="en">Take Assessment</span></a>
     </div>
   </div>
 
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand footer-col">
+      <div class="footer-brand">
         <div class="footer-logo-row">
-          <img src="assets/logo.png" alt="MindDo logo" />
+          <img src="assets/logo.png" alt="MindDo" />
           <span>MindDo</span>
         </div>
-        <p><span data-lang="zh">专注 5–18 岁 AI 与编程教育，帮助每个孩子在智能时代找到自己的路。</span><span data-lang="en">AI & coding education for ages 5–18, helping every child thrive in the intelligent era.</span></p>
+        <p>
+          <span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span>
+          <span data-lang="en">AI and coding learning center for young learners, helping every child find their place in the AI era.</span>
+        </p>
         <div class="footer-hours">
-          <span data-lang="zh">📅 周一至周五 15:00–20:00<br>📅 周末 9:00–18:00</span>
-          <span data-lang="en">📅 Mon–Fri 3:00 PM–8:00 PM<br>📅 Weekends 9:00 AM–6:00 PM</span>
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
+          <span data-lang="zh">周一至周五 &nbsp;3:00pm – 7:30pm<br>周六 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9:30am – 5:00pm<br>周日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">休息</span></span>
+          <span data-lang="en">Mon – Fri &nbsp;&nbsp;3:00pm – 7:30pm<br>Saturday &nbsp;&nbsp;9:30am – 5:00pm<br>Sunday &nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">Closed</span></span>
         </div>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">课程</span><span data-lang="en">Programs</span></h4>
+        <h4><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></h4>
         <ul>
-          <li><a href="course-system.html"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></a></li>
-          <li><a href="course-selection.html"><span data-lang="zh">选课</span><span data-lang="en">Course Selection</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">AI 基础</span><span data-lang="en">AI Basics</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Scratch 编程</span><span data-lang="en">Scratch Coding</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Python 进阶</span><span data-lang="en">Python Advanced</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">机器人课程</span><span data-lang="en">Robotics</span></a></li>
+          <li><a href="trial.html"><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday Camps</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">快速入口</span><span data-lang="en">Quick Access</span></h4>
+        <ul>
           <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
-          <li><a href="semester-report.html"><span data-lang="zh">学期报告</span><span data-lang="en">Semester Report</span></a></li>
+          <li><a href="assessment.html"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></a></li>
+          <li><a href="signup.html"><span data-lang="zh">注册 / 登录</span><span data-lang="en">Sign Up / Login</span></a></li>
+          <li><a href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a></li>
+          <li><a href="course-selection.html"><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4><span data-lang="zh">学员</span><span data-lang="en">Students</span></h4>
+        <h4><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></h4>
         <ul>
-          <li><a href="student-account.html"><span data-lang="zh">学员中心</span><span data-lang="en">Student Hub</span></a></li>
-          <li><a href="assessment.html"><span data-lang="zh">入学评估</span><span data-lang="en">Assessment</span></a></li>
-          <li><a href="feedback.html"><span data-lang="zh">课堂反馈</span><span data-lang="en">Feedback</span></a></li>
-          <li><a href="signup.html"><span data-lang="zh">注册登录</span><span data-lang="en">Sign Up</span></a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4><span data-lang="zh">了解更多</span><span data-lang="en">Learn More</span></h4>
-        <ul>
-          <li><a href="dashboard.html"><span data-lang="zh">运营后台</span><span data-lang="en">Dashboard</span></a></li>
-          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Students</span></a></li>
+          <li><a href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Student Management</span></a></li>
           <li><a href="new-trials.html"><span data-lang="zh">新试课列表</span><span data-lang="en">New Trials</span></a></li>
-          <li><a href="request-center.html"><span data-lang="zh">请假管理</span><span data-lang="en">Requests</span></a></li>
+          <li><a href="new-students.html"><span data-lang="zh">新学员列表</span><span data-lang="en">New Students</span></a></li>
+          <li><a href="request-center.html"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request Center</span></a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 MindDo AI Learning Center</span>
-      <span><span data-lang="zh">让每个孩子都能驾驭 AI</span><span data-lang="en">Empowering every child with AI</span></span>
+      <span>© 2025 MindDo Learning Center · <span data-lang="zh">保留所有权利</span><span data-lang="en">All rights reserved</span></span>
+      <span><span data-lang="zh">隐私政策 · 服务条款</span><span data-lang="en">Privacy Policy · Terms of Service</span></span>
     </div>
   </footer>
 

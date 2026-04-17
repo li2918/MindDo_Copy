@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>选课页面 | Course Selection</title>
+  <title>选课排课 | Course Enrollment</title>
   <style>
     :root {
       --bg: #fbf7ef; --sand: #f2e4c9; --card: rgba(255,252,246,0.94);
@@ -16,6 +16,7 @@
     html { scroll-behavior: smooth; }
     body { font-family: "Avenir Next","Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif; color: var(--text); background: var(--bg); }
     a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
     [data-lang] { display: none; }
     html[lang="zh-CN"] [data-lang="zh"], html[lang="en"] [data-lang="en"] { display: inline; }
 
@@ -30,15 +31,149 @@
     .nav-right { display: flex; align-items: center; gap: 10px; }
     .lang-btn { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--clay); font-family: inherit; transition: 0.15s; }
     .lang-btn:hover, .lang-btn.active { background: var(--sand); border-color: var(--gold); }
-    .btn-primary { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; border: none; border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; box-shadow: 0 4px 14px rgba(215,144,22,0.28); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-primary { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; border: none; border-radius: 999px; padding: 11px 24px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; box-shadow: 0 4px 14px rgba(215,144,22,0.28); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
     .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 11px 24px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
+    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
 
     /* PAGE HERO */
-    .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 52px 0; }
-    .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .page-hero { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding: 56px 0 44px; position: relative; overflow: hidden; }
+    .page-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 18% 55%, rgba(236,171,47,0.18) 0%, transparent 48%), radial-gradient(circle at 82% 22%, rgba(236,171,47,0.1) 0%, transparent 38%); }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; color: #fff8ef; }
     .page-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(236,171,47,0.18); border: 1px solid rgba(236,171,47,0.3); color: #ffd98e; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
-    .page-hero h1 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 10px; }
-    .page-hero p { font-size: 15px; color: rgba(255,241,220,0.75); line-height: 1.7; }
+    .page-hero h1 { font-size: clamp(26px,3.2vw,40px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .page-hero .sub { font-size: 15px; color: rgba(255,241,220,0.78); line-height: 1.7; max-width: 640px; margin-bottom: 24px; }
+
+    /* STEP BAR */
+    .step-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .step-item { display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px; border-radius: 999px; background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.18); color: rgba(255,241,220,0.7); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .step-item.active { background: rgba(236,171,47,0.22); border-color: rgba(236,171,47,0.45); color: #ffe5a7; }
+    .step-item.done { background: rgba(111,143,87,0.22); border-color: rgba(111,143,87,0.42); color: #c6e2a8; }
+    .step-num { width: 22px; height: 22px; border-radius: 999px; background: rgba(255,237,215,0.14); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+    .step-item.active .step-num { background: var(--gold); color: #4b250f; }
+    .step-item.done .step-num { background: var(--success); color: #fff; }
+    .step-sep { width: 20px; height: 1px; background: rgba(255,237,215,0.28); }
+
+    /* CONTENT */
+    .page-content { padding: 40px 0 80px; }
+    .content-inner { max-width: 1180px; margin: 0 auto; padding: 0 48px; }
+    .step-view { display: none; }
+    .step-view.active { display: block; }
+
+    .meta { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; margin-bottom: 24px; }
+    .meta-item { border-radius: 14px; border: 1px solid var(--line); background: rgba(255,248,238,0.78); padding: 12px 14px; }
+    .meta-item .k { display: block; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+    .meta-item .v { color: var(--clay); font-size: 14px; font-weight: 700; }
+
+    .layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; align-items: start; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 18px 44px rgba(123,72,24,0.08); padding: 24px; }
+    .panel h2 { margin: 0 0 14px; font-size: 19px; color: var(--clay); font-weight: 800; }
+    .panel h3 { font-size: 15px; color: var(--clay); font-weight: 800; margin: 18px 0 10px; }
+    .panel .desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+
+    /* MEMBERSHIP CARDS */
+    .membership-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+    .membership { position: relative; padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,251,245,0.9); cursor: pointer; transition: 0.2s; display: block; }
+    .membership:hover { transform: translateY(-2px); border-color: rgba(208,129,36,0.45); }
+    .membership input { position: absolute; opacity: 0; pointer-events: none; }
+    .membership.selected { border-color: var(--gold); background: linear-gradient(180deg, rgba(255,246,222,0.92), rgba(255,251,243,0.94)); box-shadow: 0 14px 32px rgba(208,129,36,0.18); }
+    .membership .badge { display: inline-flex; padding: 4px 10px; border-radius: 999px; background: rgba(236,171,47,0.2); border: 1px solid rgba(208,129,36,0.28); color: var(--clay); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .membership.selected .badge { background: linear-gradient(135deg,#fff6de,#ffd977); }
+    .membership h3 { margin: 0 0 8px !important; font-size: 16px; color: var(--clay); font-weight: 800; }
+    .membership .price { font-size: 26px; font-weight: 900; color: var(--clay); line-height: 1; margin-bottom: 4px; }
+    .membership .sub { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .membership .features { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .membership .features li::before { content: "✓"; color: var(--success); font-weight: 800; margin-right: 6px; }
+    .membership .check-mark { position: absolute; top: 14px; right: 14px; width: 22px; height: 22px; border-radius: 999px; background: var(--gold); color: #4b250f; display: none; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+    .membership.selected .check-mark { display: inline-flex; }
+
+    /* FORM GRID */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .field input, .field select { width: 100%; border: 1px solid rgba(126,77,29,0.18); background: rgba(255,252,247,0.92); color: var(--text); border-radius: 12px; padding: 11px 14px; font-size: 14px; font-family: inherit; outline: none; transition: 0.15s; }
+    .field input:focus, .field select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(236,171,47,0.15); }
+
+    /* SCHEDULE PICKER */
+    .day-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; margin-top: 4px; }
+    .day-chip { border: 1px solid var(--line); background: rgba(255,251,245,0.9); border-radius: 14px; padding: 14px 6px; text-align: center; cursor: pointer; transition: 0.15s; font-family: inherit; }
+    .day-chip:hover { border-color: rgba(208,129,36,0.46); transform: translateY(-1px); }
+    .day-chip.active { background: linear-gradient(135deg,#fff6de,#ffd977); border-color: rgba(208,129,36,0.5); box-shadow: 0 10px 22px rgba(192,123,39,0.18); }
+    .day-chip .dname { display: block; font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.06em; }
+    .day-chip.active .dname { color: var(--clay); }
+    .day-chip .dnum { display: block; font-size: 18px; font-weight: 800; color: var(--clay); }
+    .slot-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 4px; }
+    .slot-chip { border: 1px solid var(--line); background: rgba(255,251,245,0.9); border-radius: 14px; padding: 14px 10px; text-align: center; cursor: pointer; transition: 0.15s; font-family: inherit; font-size: 14px; font-weight: 700; color: var(--text); }
+    .slot-chip:hover { border-color: rgba(208,129,36,0.46); transform: translateY(-1px); }
+    .slot-chip.active { background: linear-gradient(135deg,#fff6de,#ffd977); border-color: rgba(208,129,36,0.5); color: var(--clay); box-shadow: 0 10px 22px rgba(192,123,39,0.18); }
+    .slot-chip .stime { font-size: 15px; font-weight: 800; color: var(--clay); display: block; margin-bottom: 2px; }
+    .slot-chip .slabel { font-size: 11px; font-weight: 600; color: var(--muted); }
+
+    /* ADDONS */
+    .addon-list { display: grid; gap: 10px; margin-top: 4px; }
+    .addon { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); background: rgba(255,251,245,0.9); border-radius: 14px; cursor: pointer; transition: 0.15s; }
+    .addon:hover { border-color: rgba(208,129,36,0.38); }
+    .addon input { width: 18px; height: 18px; accent-color: var(--gold-deep); cursor: pointer; }
+    .addon.checked { border-color: var(--gold); background: linear-gradient(180deg, rgba(255,246,222,0.92), rgba(255,251,243,0.94)); }
+    .addon-info strong { display: block; font-size: 14px; font-weight: 800; color: var(--clay); margin-bottom: 2px; }
+    .addon-info span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .addon-price { font-size: 15px; font-weight: 800; color: var(--clay); white-space: nowrap; }
+
+    /* SUMMARY SIDEBAR */
+    .summary-panel { position: sticky; top: 88px; }
+    .summary-kv { display: grid; gap: 6px; margin-bottom: 14px; font-size: 13px; }
+    .summary-kv > div { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed rgba(151,84,21,0.12); color: var(--muted); }
+    .summary-kv > div strong { color: var(--text); font-weight: 700; }
+    .total { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0 6px; border-top: 2px solid rgba(151,84,21,0.18); font-weight: 800; }
+    .total span:first-child { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .total span:last-child { color: var(--clay); font-size: 26px; font-weight: 900; }
+
+    .action-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+    .action-row.end { justify-content: flex-end; }
+
+    /* PAYMENT */
+    .pay-tabs { display: flex; gap: 8px; padding: 4px; border-radius: 14px; background: rgba(242,228,201,0.6); border: 1px solid var(--line); margin-bottom: 18px; }
+    .pay-tab { flex: 1; border: none; background: transparent; color: var(--muted); padding: 12px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .pay-tab.active { background: linear-gradient(135deg,#ffe5a7,var(--gold)); color: #4b250f; box-shadow: 0 4px 12px rgba(215,144,22,0.22); }
+    .pay-tab .pico { font-size: 18px; }
+    .pay-panel { display: none; }
+    .pay-panel.active { display: block; }
+    .qr-box { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 28px; border: 1px dashed rgba(151,84,21,0.28); border-radius: 14px; background: rgba(255,251,245,0.8); }
+    .qr-box .qr-placeholder { width: 180px; height: 180px; border-radius: 14px; background: repeating-linear-gradient(45deg, rgba(143,60,22,0.12) 0 8px, rgba(143,60,22,0.05) 8px 16px); display: grid; place-items: center; color: var(--clay); font-size: 12px; font-weight: 700; text-align: center; padding: 20px; }
+    .qr-box .qr-note { font-size: 13px; color: var(--muted); text-align: center; max-width: 300px; line-height: 1.6; }
+    .card-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
+    .processing { display: none; text-align: center; padding: 18px; color: var(--muted); font-size: 14px; }
+    .processing.on { display: block; }
+    .processing .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(143,60,22,0.18); border-top-color: var(--gold); border-radius: 999px; animation: spin 0.8s linear infinite; vertical-align: middle; margin-right: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* CONFIRMATION */
+    .confirm-hero { text-align: center; padding: 48px 24px; border-radius: 22px; background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); color: #fff8ef; margin-bottom: 22px; position: relative; overflow: hidden; }
+    .confirm-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(111,143,87,0.28), transparent 60%); pointer-events: none; }
+    .confirm-check { position: relative; width: 88px; height: 88px; border-radius: 999px; background: linear-gradient(135deg,#8fba6a,var(--success)); margin: 0 auto 18px; display: grid; place-items: center; font-size: 44px; color: #fff; box-shadow: 0 16px 40px rgba(111,143,87,0.5); animation: pop 0.5s ease-out; }
+    @keyframes pop { 0% { transform: scale(0.2); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+    .confirm-hero h2 { position: relative; font-size: 28px; font-weight: 900; color: #fff8ef; margin-bottom: 10px; }
+    .confirm-hero p { position: relative; font-size: 15px; color: rgba(255,241,220,0.8); line-height: 1.7; max-width: 500px; margin: 0 auto; }
+    .confirm-hero .order-id { position: relative; display: inline-flex; padding: 8px 18px; border-radius: 999px; background: rgba(236,171,47,0.22); border: 1px solid rgba(236,171,47,0.45); color: #ffe5a7; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; margin-top: 18px; font-family: 'SF Mono', Monaco, Consolas, monospace; }
+
+    .confirm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .confirm-card { padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,251,245,0.9); }
+    .confirm-card h3 { font-size: 14px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .confirm-row { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed rgba(151,84,21,0.1); font-size: 14px; }
+    .confirm-row:last-child { border-bottom: none; }
+    .confirm-row span:first-child { color: var(--muted); }
+    .confirm-row span:last-child { color: var(--clay); font-weight: 700; text-align: right; }
+    .next-steps { display: grid; gap: 12px; margin-top: 22px; }
+    .next-step { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,251,245,0.9); }
+    .next-step .ns-num { width: 32px; height: 32px; border-radius: 999px; background: linear-gradient(135deg,#fff6de,#ffd977); color: var(--clay); display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+    .next-step .ns-txt strong { display: block; font-size: 14px; color: var(--clay); margin-bottom: 2px; }
+    .next-step .ns-txt span { font-size: 12px; color: var(--muted); }
+
+    .error-msg, .success-msg { font-size: 14px; padding: 12px 16px; border-radius: 12px; margin-top: 14px; display: none; }
+    .error-msg.on { display: block; background: rgba(196,106,77,0.1); border: 1px solid rgba(196,106,77,0.3); color: var(--error); }
 
     /* FOOTER */
     .footer { background: var(--brown); color: rgba(255,245,230,0.78); padding: 60px 48px 32px; }
@@ -54,285 +189,14 @@
     .footer-col ul a:hover { color: #fff8ef; }
     .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 24px; border-top: 1px solid rgba(255,237,215,0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,245,230,0.45); }
 
-    /* SECTION STRUCTURE */
-    .section-wrap { padding: 88px 0; }
-    .section-wrap.bg-sand { background: var(--sand); }
-    .section-wrap.bg-dark { background: linear-gradient(145deg,#3a1a08 0%,#5f2c12 100%); }
-    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
-    .section-head { margin-bottom: 48px; }
-    .section-tag { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: rgba(255,214,138,0.2); border: 1px solid rgba(176,112,39,0.22); color: #9c5a1d; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
-    .section-title { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px; }
-    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 600px; }
-    /* HERO SPLIT LAYOUT */
-    .hero-split { display: grid; grid-template-columns: 1fr 340px; gap: 52px; align-items: start; }
-    .hero-split-copy { color: #fff8ef; }
-    .hero-sub { font-size: 16px; color: rgba(255,241,220,0.78); line-height: 1.75; max-width: 520px; margin-bottom: 28px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; }
-    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
-    .hero-stat span { font-size: 12px; color: rgba(255,241,220,0.65); line-height: 1.4; }
-    .hero-info-card { background: rgba(255,252,247,0.08); border: 1px solid rgba(255,237,215,0.15); border-radius: 20px; padding: 24px; display: grid; gap: 10px; }
-    .hero-info-item { padding: 14px; border-radius: 12px; background: rgba(255,249,241,0.06); border: 1px solid rgba(255,237,215,0.1); }
-    .hero-info-item .icon { font-size: 22px; margin-bottom: 6px; display: block; }
-    .hero-info-item strong { display: block; font-size: 13px; font-weight: 800; color: #fff8ef; margin-bottom: 3px; }
-    .hero-info-item span { font-size: 12px; color: rgba(255,241,220,0.62); line-height: 1.45; }
-    /* EXTRA BUTTONS */
-    .btn-secondary { background: rgba(255,248,239,0.98); color: var(--clay); border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215,144,22,0.38); }
-    .btn-ghost { background: rgba(255,248,239,0.1); color: #fff8ef; border: 1px solid rgba(255,237,215,0.24); border-radius: 999px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-ghost:hover { background: rgba(255,248,239,0.18); transform: translateY(-2px); }
-    /* CTA BAND */
-    .cta-band { background: linear-gradient(135deg,rgba(255,248,234,0.98),rgba(249,236,205,0.96)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 80px 48px; text-align: center; }
-    .cta-band h2 { font-size: clamp(28px,3.5vw,44px); font-weight: 900; color: var(--clay); letter-spacing: -0.02em; margin: 14px 0; }
-    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
-    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    @media (max-width: 1000px) { .hero-split { grid-template-columns: 1fr; } .hero-info-card { display: none; } }
-    @media (max-width: 760px) { .section-inner { padding: 0 24px; } .section-wrap { padding: 60px 0; } .cta-band { padding: 60px 24px; } }
-
-    @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } }
-
-    /* PAGE-SPECIFIC COMPONENTS */
-
-    .meta {
-      margin-top: 0;
-      margin-bottom: 24px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .meta-item {
-      border-radius: 14px;
-      border: 1px solid rgba(126,77,29,0.12);
-      background: rgba(255, 248, 238, 0.78);
-      padding: 10px;
-    }
-
-    .meta-item .k { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
-    .meta-item .v { color: var(--clay); font-size: 14px; font-weight: 700; }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1.35fr 1fr;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .panel, .membership {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      box-shadow: 0 18px 44px rgba(123, 72, 24, 0.08);
-    }
-
-    .panel { padding: 16px; }
-    .panel h2 { margin: 0 0 10px; font-size: 18px; color: var(--clay); }
-
-    .membership-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .membership {
-      padding: 14px;
-      position: relative;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .membership:hover {
-      transform: translateY(-2px);
-      border-color: rgba(208, 129, 36, 0.45);
-    }
-
-    .membership input { position: absolute; opacity: 0; pointer-events: none; }
-    .membership.selected {
-      border-color: rgba(208, 129, 36, 0.55);
-      box-shadow: 0 14px 28px rgba(192, 123, 39, 0.18);
-      background: linear-gradient(180deg, rgba(255, 252, 247, 0.96), rgba(255, 244, 220, 0.9));
-    }
-
-    .badge {
-      display: inline-block;
-      border-radius: 999px;
-      border: 1px solid rgba(208, 129, 36, 0.24);
-      background: rgba(255, 204, 97, 0.2);
-      color: #9d5a18;
-      padding: 2px 8px;
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-
-    .membership h3 { margin: 0 0 8px; font-size: 17px; color: var(--clay); }
-    .price { font-size: 28px; font-weight: 700; color: var(--clay); line-height: 1; }
-    .sub { color: #9a785d; font-size: 12px; margin-top: 4px; }
-    .features { margin: 10px 0 0; padding-left: 18px; color: #6a4a35; font-size: 13px; line-height: 1.65; }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    label { display: block; font-size: 13px; color: #7b5b43; margin-bottom: 6px; }
-
-    input[type="text"],
-    select {
-      width: 100%;
-      border: 1px solid rgba(126, 77, 29, 0.16);
-      background: rgba(255, 252, 247, 0.88);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-size: 14px;
-      outline: none;
-    }
-
-    input[type="text"]:focus,
-    select:focus {
-      border-color: rgba(208, 129, 36, 0.54);
-      box-shadow: 0 0 0 4px rgba(255, 204, 97, 0.2);
-    }
-
-    .addon-list {
-      display: grid;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .addon {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      border: 1px solid rgba(126, 77, 29, 0.12);
-      background: rgba(255, 248, 238, 0.72);
-      border-radius: 12px;
-      padding: 8px 10px;
-      font-size: 13px;
-      color: #6a4a35;
-    }
-
-    .addon input { margin-top: 2px; }
-
-    .summary-kv {
-      display: grid;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .summary-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      border: 1px solid rgba(126, 77, 29, 0.12);
-      border-radius: 12px;
-      padding: 8px 10px;
-      background: rgba(255, 248, 238, 0.72);
-      font-size: 13px;
-      color: #6a4a35;
-    }
-
-    .total {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(208, 129, 36, 0.28);
-      background: rgba(255, 226, 170, 0.35);
-      color: var(--clay);
-      font-weight: 700;
-      display: flex;
-      justify-content: space-between;
-      font-size: 15px;
-    }
-
-    .btn {
-      border: 1px solid var(--line);
-      background: rgba(255, 247, 236, 0.96);
-      color: var(--clay);
-      padding: 8px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 13px;
-      text-decoration: none;
-      transition: 0.2s ease;
-      font-family: inherit;
-    }
-
-    .btn:hover, .btn.active {
-      background: linear-gradient(135deg, #fff6de, #ffd977);
-      border-color: rgba(208, 129, 36, 0.5);
-      color: var(--clay);
-      box-shadow: 0 10px 24px rgba(192, 123, 39, 0.18);
-    }
-
-    .actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
-
-    .result {
-      font-size: 13px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      display: none;
-      margin-top: 10px;
-    }
-
-    .result.success {
-      display: block;
-      border: 1px solid rgba(111, 143, 87, 0.28);
-      background: rgba(111, 143, 87, 0.1);
-      color: var(--success);
-    }
-
-    .result.error {
-      display: block;
-      border: 1px solid rgba(196, 106, 77, 0.28);
-      background: rgba(196, 106, 77, 0.1);
-      color: var(--error);
-    }
-
-    .extra-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .list { margin: 0; padding-left: 18px; color: #6a4a35; line-height: 1.7; }
-
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid rgba(126, 77, 29, 0.12);
-      border-radius: 14px;
-      background: rgba(255, 248, 238, 0.7);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 540px;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 9px;
-      border-bottom: 1px solid rgba(126, 77, 29, 0.12);
-      font-size: 13px;
-      vertical-align: top;
-    }
-
-    th { color: var(--clay); background: rgba(255, 208, 118, 0.14); }
-
-    @media (max-width: 1020px) {
+    @media (max-width: 1000px) {
       .layout { grid-template-columns: 1fr; }
+      .summary-panel { position: static; }
       .membership-grid { grid-template-columns: 1fr; }
-      .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .extra-grid { grid-template-columns: 1fr; }
+      .confirm-grid { grid-template-columns: 1fr; }
     }
-
-    @media (max-width: 680px) {
-      .form-grid { grid-template-columns: 1fr; }
-      .meta { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 900px) { .navbar { padding: 0 24px; } .nav-menu { display: none; } .page-hero-inner, .content-inner { padding: 0 24px; } .footer-inner { grid-template-columns: repeat(2,1fr); } .meta { grid-template-columns: repeat(2,1fr); } .card-row { grid-template-columns: 1fr; } .slot-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr; } .footer { padding: 48px 24px 28px; } .form-grid { grid-template-columns: 1fr; } .day-grid { grid-template-columns: repeat(4,1fr); } .panel { padding: 20px 18px; } .action-row { flex-direction: column-reverse; } .action-row > * { width: 100%; justify-content: center; } }
   </style>
 </head>
 <body>
@@ -343,7 +207,7 @@
     </a>
     <ul class="nav-menu">
       <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
-      <li><a href="assessment.html"><span data-lang="zh">入学评估</span><span data-lang="en">Assessment</span></a></li>
+      <li><a href="assessment.html"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></a></li>
       <li><a href="signup.html"><span data-lang="zh">注册登录</span><span data-lang="en">Sign Up</span></a></li>
       <li><a href="course-system.html"><span data-lang="zh">课程体系</span><span data-lang="en">Curriculum</span></a></li>
     </ul>
@@ -356,211 +220,290 @@
 
   <div class="page-hero">
     <div class="page-hero-inner">
-      <div class="hero-split">
-        <div class="hero-split-copy">
-          <div class="page-tag"><span data-lang="zh">选课报名</span><span data-lang="en">Enrollment</span></div>
-          <h1><span data-lang="zh">选择你的学习方案</span><span data-lang="en">Choose Your Learning Plan</span></h1>
-          <p class="hero-sub"><span data-lang="zh">根据评估结果和学习目标，选择最适合的课程套餐、班型和排课时间。</span><span data-lang="en">Based on your assessment results and goals, choose the right course package, class format, and schedule.</span></p>
-          <div class="hero-stats">
-            <div class="hero-stat"><strong>3</strong><span><span data-lang="zh">方案可选</span><span data-lang="en">Plans available</span></span></div>
-            <div class="hero-stat"><strong>24h</strong><span><span data-lang="zh">顾问响应</span><span data-lang="en">Advisor response</span></span></div>
-            <div class="hero-stat"><strong>100%</strong><span><span data-lang="zh">灵活排课</span><span data-lang="en">Flexible scheduling</span></span></div>
-          </div>
-        </div>
-        <div>
-          <div class="hero-info-card">
-            <div class="hero-info-item">
-              <span class="icon">📋</span>
-              <strong><span data-lang="zh">个性化方案</span><span data-lang="en">Personalized Plan</span></strong>
-              <span><span data-lang="zh">基于评估结果，匹配最适合的课程路径</span><span data-lang="en">Matched to your assessment results and learning goals</span></span>
-            </div>
-            <div class="hero-info-item">
-              <span class="icon">🗓️</span>
-              <strong><span data-lang="zh">灵活排课</span><span data-lang="en">Flexible Scheduling</span></strong>
-              <span><span data-lang="zh">工作日放学后或周末均可选择</span><span data-lang="en">Weekday after-school or weekend slots available</span></span>
-            </div>
-            <div class="hero-info-item">
-              <span class="icon">🔄</span>
-              <strong><span data-lang="zh">随时升级</span><span data-lang="en">Upgrade Anytime</span></strong>
-              <span><span data-lang="zh">可随时升级方案，差价按比例补收</span><span data-lang="en">Upgrade your plan anytime with prorated pricing</span></span>
-            </div>
-          </div>
-        </div>
+      <div class="page-tag"><span data-lang="zh">课程报名</span><span data-lang="en">Course Enrollment</span></div>
+      <h1><span data-lang="zh">选课排课 · 四步完成报名</span><span data-lang="en">Course Enrollment · 4 Steps</span></h1>
+      <p class="sub">
+        <span data-lang="zh">选择方案 → 选课时段 → 在线支付 → 报名成功。全程可随时返回上一步修改。</span>
+        <span data-lang="en">Pick a plan → choose schedule → pay online → confirmation. Go back any time.</span>
+      </p>
+      <div class="step-bar" id="stepBar">
+        <div class="step-item active" data-step="1"><span class="step-num">1</span><span data-lang="zh">选择方案</span><span data-lang="en">Plan</span></div>
+        <div class="step-sep"></div>
+        <div class="step-item" data-step="2"><span class="step-num">2</span><span data-lang="zh">课程时段</span><span data-lang="en">Schedule</span></div>
+        <div class="step-sep"></div>
+        <div class="step-item" data-step="3"><span class="step-num">3</span><span data-lang="zh">在线支付</span><span data-lang="en">Payment</span></div>
+        <div class="step-sep"></div>
+        <div class="step-item" data-step="4"><span class="step-num">4</span><span data-lang="zh">报名成功</span><span data-lang="en">Done</span></div>
       </div>
     </div>
   </div>
 
-  <div class="section-wrap">
-    <div class="section-inner">
+  <div class="page-content">
+    <div class="content-inner">
 
       <div class="meta">
-        <div class="meta-item"><span class="k" data-i18n="studentName"></span><span class="v" id="metaName">李若安</span></div>
-        <div class="meta-item"><span class="k" data-i18n="studentId"></span><span class="v" id="metaId">MD2026-0417</span></div>
-        <div class="meta-item"><span class="k" data-i18n="grade"></span><span class="v" id="metaGrade">六年级</span></div>
-        <div class="meta-item"><span class="k" data-i18n="goal"></span><span class="v" id="metaGoal">AI创造力提升</span></div>
+        <div class="meta-item"><span class="k" data-lang="zh">学员姓名</span><span class="k" data-lang="en">Student</span><span class="v" id="metaName">—</span></div>
+        <div class="meta-item"><span class="k" data-lang="zh">学员 ID</span><span class="k" data-lang="en">Student ID</span><span class="v" id="metaId">—</span></div>
+        <div class="meta-item"><span class="k" data-lang="zh">年级</span><span class="k" data-lang="en">Grade</span><span class="v" id="metaGrade">—</span></div>
+        <div class="meta-item"><span class="k" data-lang="zh">学习目标</span><span class="k" data-lang="en">Goal</span><span class="v" id="metaGoal">—</span></div>
       </div>
 
-      <section class="layout">
-        <article class="panel">
-          <h2><span data-lang="zh">选择 Membership</span><span data-lang="en">Choose Membership</span></h2>
+      <!-- STEP 1: MEMBERSHIP -->
+      <div class="step-view active" id="step1">
+        <div class="layout">
+          <article class="panel">
+            <h2><span data-lang="zh">第 1 步：选择 Membership</span><span data-lang="en">Step 1: Choose Membership</span></h2>
+            <p class="desc"><span data-lang="zh">根据学员学习节奏和目标选择合适的课时方案。可随时升级。</span><span data-lang="en">Pick the plan that fits your learning pace and goals. You can upgrade later.</span></p>
 
-          <div class="membership-grid">
-            <label class="membership selected" data-plan="weekly1">
-              <input type="radio" name="membership" value="weekly1" checked />
-              <span class="badge"><span data-lang="zh">基础方案</span><span data-lang="en">Foundation</span></span>
-              <h3><span data-lang="zh">每周一节课</span><span data-lang="en">1 Class / Week</span></h3>
-              <div class="price">$199</div>
-              <div class="sub"><span data-lang="zh">每月（4课时）</span><span data-lang="en">Monthly (4 classes)</span></div>
-              <ul class="features">
-                <li><span data-lang="zh">适合建立学习习惯与稳态进步</span><span data-lang="en">Ideal for stable routines</span></li>
-                <li><span data-lang="zh">每周学习反馈 1 次</span><span data-lang="en">Weekly feedback report</span></li>
-              </ul>
-            </label>
+            <div class="membership-grid" id="membershipGrid">
+              <label class="membership selected" data-plan="weekly1">
+                <input type="radio" name="membership" value="weekly1" checked />
+                <span class="check-mark">✓</span>
+                <span class="badge"><span data-lang="zh">基础方案</span><span data-lang="en">Foundation</span></span>
+                <h3><span data-lang="zh">每周一节课</span><span data-lang="en">1 Class / Week</span></h3>
+                <div class="price">$199</div>
+                <div class="sub"><span data-lang="zh">每月（4 课时）</span><span data-lang="en">Monthly (4 classes)</span></div>
+                <ul class="features">
+                  <li><span data-lang="zh">建立稳定学习节奏</span><span data-lang="en">Build steady learning routine</span></li>
+                  <li><span data-lang="zh">每周课堂反馈</span><span data-lang="en">Weekly feedback report</span></li>
+                </ul>
+              </label>
 
-            <label class="membership" data-plan="weekly2">
-              <input type="radio" name="membership" value="weekly2" />
-              <span class="badge"><span data-lang="zh">推荐方案</span><span data-lang="en">Recommended</span></span>
-              <h3><span data-lang="zh">每周两节课</span><span data-lang="en">2 Classes / Week</span></h3>
-              <div class="price">$369</div>
-              <div class="sub"><span data-lang="zh">每月（8课时）</span><span data-lang="en">Monthly (8 classes)</span></div>
-              <ul class="features">
-                <li><span data-lang="zh">知识输入 + 项目训练并行</span><span data-lang="en">Balanced learning + projects</span></li>
-                <li><span data-lang="zh">双周能力成长评估</span><span data-lang="en">Bi-weekly growth review</span></li>
-              </ul>
-            </label>
+              <label class="membership" data-plan="weekly2">
+                <input type="radio" name="membership" value="weekly2" />
+                <span class="check-mark">✓</span>
+                <span class="badge"><span data-lang="zh">推荐方案</span><span data-lang="en">Recommended</span></span>
+                <h3><span data-lang="zh">每周两节课</span><span data-lang="en">2 Classes / Week</span></h3>
+                <div class="price">$369</div>
+                <div class="sub"><span data-lang="zh">每月（8 课时）</span><span data-lang="en">Monthly (8 classes)</span></div>
+                <ul class="features">
+                  <li><span data-lang="zh">知识输入 + 项目训练并行</span><span data-lang="en">Balanced learning + projects</span></li>
+                  <li><span data-lang="zh">双周能力成长评估</span><span data-lang="en">Bi-weekly growth review</span></li>
+                </ul>
+              </label>
 
-            <label class="membership" data-plan="weekly3">
-              <input type="radio" name="membership" value="weekly3" />
-              <span class="badge"><span data-lang="zh">进阶方案</span><span data-lang="en">Advanced</span></span>
-              <h3><span data-lang="zh">每周三节课</span><span data-lang="en">3 Classes / Week</span></h3>
-              <div class="price">$519</div>
-              <div class="sub"><span data-lang="zh">每月（12课时）</span><span data-lang="en">Monthly (12 classes)</span></div>
-              <ul class="features">
-                <li><span data-lang="zh">强化冲刺，适合竞赛/作品集目标</span><span data-lang="en">For competitions and portfolio goals</span></li>
-                <li><span data-lang="zh">每周导师复盘 + 个性化任务</span><span data-lang="en">Weekly mentor review</span></li>
-              </ul>
-            </label>
-          </div>
-
-          <div class="form-grid">
-            <div>
-              <label for="classMode" data-i18n="classMode"></label>
-              <select id="classMode">
-                <option value="1v1">1v1</option>
-                <option value="small">Small Group 1v4</option>
-              </select>
+              <label class="membership" data-plan="weekly3">
+                <input type="radio" name="membership" value="weekly3" />
+                <span class="check-mark">✓</span>
+                <span class="badge"><span data-lang="zh">进阶方案</span><span data-lang="en">Advanced</span></span>
+                <h3><span data-lang="zh">每周三节课</span><span data-lang="en">3 Classes / Week</span></h3>
+                <div class="price">$519</div>
+                <div class="sub"><span data-lang="zh">每月（12 课时）</span><span data-lang="en">Monthly (12 classes)</span></div>
+                <ul class="features">
+                  <li><span data-lang="zh">强化冲刺，适合竞赛/作品集</span><span data-lang="en">Intensive — for competitions/portfolios</span></li>
+                  <li><span data-lang="zh">每周导师复盘</span><span data-lang="en">Weekly mentor review</span></li>
+                </ul>
+              </label>
             </div>
-            <div>
-              <label for="billingCycle" data-i18n="billingCycle"></label>
-              <select id="billingCycle">
-                <option value="monthly" data-i18n="monthly"></option>
-                <option value="term" data-i18n="term"></option>
-              </select>
+
+            <h3><span data-lang="zh">课程形式 & 结算周期</span><span data-lang="en">Class Mode & Billing Cycle</span></h3>
+            <div class="form-grid">
+              <div class="field">
+                <label><span data-lang="zh">上课形式</span><span data-lang="en">Class Mode</span></label>
+                <select id="classMode">
+                  <option value="1v1">1v1 ($0)</option>
+                  <option value="small"><span data-lang="zh">小班 4 人 (-10%)</span>Small Group 1v4 (-10%)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label><span data-lang="zh">结算周期</span><span data-lang="en">Billing Cycle</span></label>
+                <select id="billingCycle">
+                  <option value="monthly"><span data-lang="zh">按月</span>Monthly</option>
+                  <option value="term"><span data-lang="zh">按学期 (3 个月，-8%)</span>Per Term (3 mo, -8%)</option>
+                </select>
+              </div>
             </div>
-            <div>
-              <label for="weekday" data-i18n="preferredDay"></label>
-              <select id="weekday">
-                <option data-i18n="dayMon"></option>
-                <option data-i18n="dayTue"></option>
-                <option data-i18n="dayWed"></option>
-                <option data-i18n="dayThu"></option>
-                <option data-i18n="dayFri"></option>
-                <option data-i18n="daySat"></option>
-                <option data-i18n="daySun"></option>
-              </select>
+
+            <div class="action-row end">
+              <button class="btn-primary" id="toStep2"><span data-lang="zh">下一步：选课时段 →</span><span data-lang="en">Next: Schedule →</span></button>
             </div>
-            <div>
-              <label for="timeSlot" data-i18n="preferredTime"></label>
-              <select id="timeSlot">
-                <option data-i18n="timeAfterSchool"></option>
-                <option data-i18n="timeEvening"></option>
-                <option data-i18n="timeWeekendAm"></option>
-                <option data-i18n="timeWeekendPm"></option>
-              </select>
+          </article>
+
+          <aside class="panel summary-panel">
+            <h2><span data-lang="zh">实时报价</span><span data-lang="en">Live Quote</span></h2>
+            <div class="summary-kv" id="summary1"></div>
+            <div class="total">
+              <span><span data-lang="zh">本期总价</span><span data-lang="en">Period Total</span></span>
+              <span id="total1">$0</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- STEP 2: SCHEDULE -->
+      <div class="step-view" id="step2">
+        <div class="layout">
+          <article class="panel">
+            <h2><span data-lang="zh">第 2 步：选择上课时段</span><span data-lang="en">Step 2: Pick Class Schedule</span></h2>
+            <p class="desc"><span data-lang="zh">选择你希望的固定上课日和时段。开课后可每周灵活调整，请假系统自动处理。</span><span data-lang="en">Pick a recurring day and time slot. You can reschedule weekly after enrollment.</span></p>
+
+            <h3><span data-lang="zh">首选上课日</span><span data-lang="en">Preferred Day</span></h3>
+            <div class="day-grid" id="dayGrid"></div>
+
+            <h3><span data-lang="zh">首选上课时段</span><span data-lang="en">Preferred Time Slot</span></h3>
+            <div class="slot-grid" id="slotGrid"></div>
+
+            <h3><span data-lang="zh">增值服务（可选）</span><span data-lang="en">Add-ons (Optional)</span></h3>
+            <div class="addon-list" id="addonList"></div>
+
+            <div class="action-row">
+              <button class="btn-secondary" id="back2to1"><span data-lang="zh">← 上一步</span><span data-lang="en">← Back</span></button>
+              <button class="btn-primary" id="toStep3"><span data-lang="zh">下一步：在线支付 →</span><span data-lang="en">Next: Payment →</span></button>
+            </div>
+            <div class="error-msg" id="step2Error"></div>
+          </article>
+
+          <aside class="panel summary-panel">
+            <h2><span data-lang="zh">订单摘要</span><span data-lang="en">Order Summary</span></h2>
+            <div class="summary-kv" id="summary2"></div>
+            <div class="total">
+              <span><span data-lang="zh">本期总价</span><span data-lang="en">Period Total</span></span>
+              <span id="total2">$0</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- STEP 3: PAYMENT -->
+      <div class="step-view" id="step3">
+        <div class="layout">
+          <article class="panel">
+            <h2><span data-lang="zh">第 3 步：在线支付</span><span data-lang="en">Step 3: Online Payment</span></h2>
+            <p class="desc"><span data-lang="zh">选择支付方式并完成付款。演示环境下不会真的扣款。</span><span data-lang="en">Choose a payment method and complete the payment. No real charge in demo mode.</span></p>
+
+            <div class="pay-tabs">
+              <button type="button" class="pay-tab active" data-pay="card"><span class="pico">💳</span><span data-lang="zh">信用卡</span><span data-lang="en">Credit Card</span></button>
+              <button type="button" class="pay-tab" data-pay="alipay"><span class="pico">🟦</span><span data-lang="zh">支付宝</span><span data-lang="en">Alipay</span></button>
+              <button type="button" class="pay-tab" data-pay="wechat"><span class="pico">🟩</span><span data-lang="zh">微信支付</span><span data-lang="en">WeChat Pay</span></button>
+            </div>
+
+            <div class="pay-panel active" id="payCard">
+              <div class="field" style="margin-bottom:14px;">
+                <label><span data-lang="zh">持卡人姓名</span><span data-lang="en">Cardholder Name</span></label>
+                <input id="cardholder" type="text" placeholder="JOHN DOE" />
+              </div>
+              <div class="field" style="margin-bottom:14px;">
+                <label><span data-lang="zh">卡号</span><span data-lang="en">Card Number</span></label>
+                <input id="cardNumber" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" maxlength="23" />
+              </div>
+              <div class="card-row">
+                <div class="field">
+                  <label><span data-lang="zh">有效期</span><span data-lang="en">Expiry</span></label>
+                  <input id="cardExpiry" type="text" placeholder="MM / YY" maxlength="7" />
+                </div>
+                <div class="field">
+                  <label>CVV</label>
+                  <input id="cardCvv" type="text" inputmode="numeric" placeholder="123" maxlength="4" />
+                </div>
+                <div class="field">
+                  <label><span data-lang="zh">邮编</span><span data-lang="en">ZIP</span></label>
+                  <input id="cardZip" type="text" placeholder="10001" maxlength="10" />
+                </div>
+              </div>
+            </div>
+
+            <div class="pay-panel" id="payAlipay">
+              <div class="qr-box">
+                <div class="qr-placeholder"><span data-lang="zh">扫码支付<br>（演示二维码）</span><span data-lang="en">Scan to Pay<br>(demo QR)</span></div>
+                <div class="qr-note"><span data-lang="zh">打开支付宝扫码，确认金额后支付。支付完成后点击下方按钮确认。</span><span data-lang="en">Open Alipay and scan the QR code. Click the button below after you complete the payment.</span></div>
+              </div>
+            </div>
+
+            <div class="pay-panel" id="payWechat">
+              <div class="qr-box">
+                <div class="qr-placeholder"><span data-lang="zh">微信扫一扫<br>（演示二维码）</span><span data-lang="en">Scan with WeChat<br>(demo QR)</span></div>
+                <div class="qr-note"><span data-lang="zh">在微信中打开扫一扫并完成支付。支付完成后点击下方按钮确认。</span><span data-lang="en">Scan with WeChat and complete the payment. Click below to confirm after paying.</span></div>
+              </div>
+            </div>
+
+            <div class="processing" id="processing"><span class="spinner"></span><span data-lang="zh">正在处理支付…</span><span data-lang="en">Processing payment…</span></div>
+
+            <div class="action-row">
+              <button class="btn-secondary" id="back3to2"><span data-lang="zh">← 上一步</span><span data-lang="en">← Back</span></button>
+              <button class="btn-primary" id="payBtn"><span data-lang="zh">确认并支付</span> <span id="payAmount">$0</span><span data-lang="en"> →</span></button>
+            </div>
+            <div class="error-msg" id="step3Error"></div>
+          </article>
+
+          <aside class="panel summary-panel">
+            <h2><span data-lang="zh">确认订单</span><span data-lang="en">Review Order</span></h2>
+            <div class="summary-kv" id="summary3"></div>
+            <div class="total">
+              <span><span data-lang="zh">应付金额</span><span data-lang="en">Amount Due</span></span>
+              <span id="total3">$0</span>
+            </div>
+            <p class="desc" style="margin-top:14px; font-size:12px;">
+              <span data-lang="zh">🔒 支付由 Stripe 与支付宝 / 微信官方安全网关处理。</span>
+              <span data-lang="en">🔒 Payments are processed via Stripe and official Alipay / WeChat gateways.</span>
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <!-- STEP 4: CONFIRMATION -->
+      <div class="step-view" id="step4">
+        <div class="confirm-hero">
+          <div class="confirm-check">✓</div>
+          <h2><span data-lang="zh">报名成功！</span><span data-lang="en">Enrollment Confirmed!</span></h2>
+          <p><span data-lang="zh">你的课程已经排好，我们已经发送确认邮件到你的邮箱。开课当天老师会通过微信或邮件联系你。</span><span data-lang="en">Your schedule is set. We've sent a confirmation email. Your instructor will reach out on the first day by email or WeChat.</span></p>
+          <div class="order-id" id="orderIdBadge">#MD-ORDER</div>
+        </div>
+
+        <div class="confirm-grid">
+          <div class="confirm-card">
+            <h3><span data-lang="zh">课程信息</span><span data-lang="en">Course Details</span></h3>
+            <div class="confirm-row"><span><span data-lang="zh">会员方案</span><span data-lang="en">Membership</span></span><span id="cfMembership">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">上课形式</span><span data-lang="en">Class Mode</span></span><span id="cfMode">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">上课日</span><span data-lang="en">Class Day</span></span><span id="cfDay">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">时段</span><span data-lang="en">Time Slot</span></span><span id="cfTime">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">首课日期</span><span data-lang="en">First Class</span></span><span id="cfFirstClass">—</span></div>
+          </div>
+          <div class="confirm-card">
+            <h3><span data-lang="zh">支付信息</span><span data-lang="en">Payment Info</span></h3>
+            <div class="confirm-row"><span><span data-lang="zh">订单编号</span><span data-lang="en">Order ID</span></span><span id="cfOrderId">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">支付方式</span><span data-lang="en">Method</span></span><span id="cfPayMethod">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">结算周期</span><span data-lang="en">Billing</span></span><span id="cfBilling">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">支付金额</span><span data-lang="en">Amount Paid</span></span><span id="cfAmount">—</span></div>
+            <div class="confirm-row"><span><span data-lang="zh">支付时间</span><span data-lang="en">Paid At</span></span><span id="cfPaidAt">—</span></div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:16px;">
+          <h2><span data-lang="zh">接下来该做什么</span><span data-lang="en">What's Next</span></h2>
+          <div class="next-steps">
+            <div class="next-step">
+              <div class="ns-num">1</div>
+              <div class="ns-txt">
+                <strong><span data-lang="zh">查收邮件确认</span><span data-lang="en">Check your email</span></strong>
+                <span><span data-lang="zh">报名确认邮件已发送</span><span data-lang="en">Confirmation email sent</span></span>
+              </div>
+              <a class="btn-ghost" style="color:var(--clay);border-color:var(--line);background:rgba(255,251,245,0.9);" href="#" onclick="return false;"><span data-lang="zh">重新发送</span><span data-lang="en">Resend</span></a>
+            </div>
+            <div class="next-step">
+              <div class="ns-num">2</div>
+              <div class="ns-txt">
+                <strong><span data-lang="zh">进入学员中心</span><span data-lang="en">Go to Student Hub</span></strong>
+                <span><span data-lang="zh">查看课表、申请请假</span><span data-lang="en">View schedule & request changes</span></span>
+              </div>
+              <a class="btn-primary" href="student-account.html"><span data-lang="zh">前往</span><span data-lang="en">Open</span></a>
+            </div>
+            <div class="next-step">
+              <div class="ns-num">3</div>
+              <div class="ns-txt">
+                <strong><span data-lang="zh">加入家长群</span><span data-lang="en">Join parent group</span></strong>
+                <span><span data-lang="zh">与老师和其他家长保持沟通</span><span data-lang="en">Stay connected with instructors</span></span>
+              </div>
+              <a class="btn-secondary" href="#" onclick="return false;"><span data-lang="zh">扫码加入</span><span data-lang="en">Join</span></a>
             </div>
           </div>
 
-          <h2 style="margin-top:14px;"><span data-lang="zh">增值服务（可选）</span><span data-lang="en">Add-ons (Optional)</span></h2>
-          <div class="addon-list">
-            <label class="addon"><input type="checkbox" class="addon-check" value="mentor" /><span data-i18n="addonMentor"></span></label>
-            <label class="addon"><input type="checkbox" class="addon-check" value="project" /><span data-i18n="addonProject"></span></label>
-            <label class="addon"><input type="checkbox" class="addon-check" value="report" /><span data-i18n="addonReport"></span></label>
+          <div class="action-row">
+            <button class="btn-secondary" id="newOrderBtn"><span data-lang="zh">新建另一个订单</span><span data-lang="en">Start Another Order</span></button>
+            <a class="btn-primary" href="student-account.html"><span data-lang="zh">前往学员中心 →</span><span data-lang="en">Go to Student Hub →</span></a>
           </div>
-        </article>
+        </div>
+      </div>
 
-        <article class="panel">
-          <h2><span data-lang="zh">费用汇总</span><span data-lang="en">Price Summary</span></h2>
-          <div class="summary-kv" id="summaryList"></div>
-          <div class="total"><span data-i18n="totalLabel"></span><span id="totalPrice">$0</span></div>
-
-          <div class="actions">
-            <button class="btn" id="submitBtn" type="button"><span data-lang="zh">提交选课</span><span data-lang="en">Submit Selection</span></button>
-            <button class="btn" id="resetBtn" type="button"><span data-lang="zh">重置</span><span data-lang="en">Reset</span></button>
-          </div>
-          <div id="result" class="result"></div>
-        </article>
-      </section>
-
-      <section class="extra-grid">
-        <article class="panel">
-          <h2><span data-lang="zh">页面附加信息（家长常问）</span><span data-lang="en">Additional Parent-Focused Info</span></h2>
-          <ul class="list">
-            <li><span data-lang="zh">每位学员将匹配固定主讲老师与学习顾问，保证沟通连续性。</span><span data-lang="en">Each student is assigned a fixed teacher and learning advisor.</span></li>
-            <li><span data-lang="zh">每 4 周生成阶段学习小结，每学期提供完整学期报告。</span><span data-lang="en">A milestone report is provided every 4 weeks, plus a full semester report.</span></li>
-            <li><span data-lang="zh">支持因病请假补课，需提前 24 小时申请。</span><span data-lang="en">Class make-up support is available with 24-hour notice.</span></li>
-            <li><span data-lang="zh">可随时升级 membership，系统按差价补收。</span><span data-lang="en">Membership can be upgraded anytime with prorated pricing.</span></li>
-          </ul>
-        </article>
-
-        <article class="panel">
-          <h2><span data-lang="zh">方案对比</span><span data-lang="en">Plan Comparison</span></h2>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th><span data-lang="zh">方案</span><span data-lang="en">Plan</span></th>
-                  <th><span data-lang="zh">建议人群</span><span data-lang="en">Best For</span></th>
-                  <th><span data-lang="zh">目标周期</span><span data-lang="en">Target Cycle</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span data-lang="zh">每周一节</span><span data-lang="en">1/week</span></td>
-                  <td><span data-lang="zh">刚起步、强调习惯建立</span><span data-lang="en">Beginners building routine</span></td>
-                  <td><span data-lang="zh">12-16 周</span><span data-lang="en">12-16 weeks</span></td>
-                </tr>
-                <tr>
-                  <td><span data-lang="zh">每周两节</span><span data-lang="en">2/week</span></td>
-                  <td><span data-lang="zh">希望稳步提分和项目并进</span><span data-lang="en">Balanced growth + project work</span></td>
-                  <td><span data-lang="zh">8-12 周</span><span data-lang="en">8-12 weeks</span></td>
-                </tr>
-                <tr>
-                  <td><span data-lang="zh">每周三节</span><span data-lang="en">3/week</span></td>
-                  <td><span data-lang="zh">冲刺目标、竞赛、作品集</span><span data-lang="en">Intensive goals/competitions</span></td>
-                  <td><span data-lang="zh">6-10 周</span><span data-lang="en">6-10 weeks</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </section>
-
-    </div>
-  </div>
-
-  <div class="cta-band">
-    <div class="section-tag"><span data-lang="zh">还在犹豫？</span><span data-lang="en">Still Deciding?</span></div>
-    <h2>
-      <span data-lang="zh">先预约一节免费体验课</span>
-      <span data-lang="en">Try a Free Class First</span>
-    </h2>
-    <p>
-      <span data-lang="zh">不确定选哪个方案？先来一节免费体验课，我们会根据孩子的实际情况给出建议。</span>
-      <span data-lang="en">Not sure which plan to pick? Come for a free trial — we'll recommend based on your child's actual level.</span>
-    </p>
-    <div class="cta-btns">
-      <a class="btn-primary" href="trial.html"><span data-lang="zh">预约免费试课</span><span data-lang="en">Book Free Trial</span></a>
-      <a class="btn-secondary" href="assessment.html"><span data-lang="zh">先做能力评估</span><span data-lang="en">Take Assessment</span></a>
     </div>
   </div>
 
@@ -621,264 +564,430 @@
   <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
-      var I18N = {
-        "zh-CN": {
-          studentName: "学生姓名",
-          studentId: "学号",
-          grade: "年级",
-          goal: "学习目标",
-          classMode: "班型",
-          billingCycle: "计费周期",
-          monthly: "按月（4周）",
-          term: "按学期（12周，95折）",
-          preferredDay: "偏好上课日",
-          preferredTime: "偏好时间段",
-          dayMon: "周一",
-          dayTue: "周二",
-          dayWed: "周三",
-          dayThu: "周四",
-          dayFri: "周五",
-          daySat: "周六",
-          daySun: "周日",
-          timeAfterSchool: "放学后 16:00-18:00",
-          timeEvening: "晚间 19:00-21:00",
-          timeWeekendAm: "周末上午",
-          timeWeekendPm: "周末下午",
-          addonMentor: "学业导师加餐（每月 +$39）：每周 1 次 20 分钟 1v1 学习策略指导",
-          addonProject: "项目工坊（每月 +$49）：每月 2 次项目打磨课",
-          addonReport: "家长深度报告（每月 +$29）：含学情趋势图与家庭建议",
-          totalLabel: "预计总价（每月）",
-          basePlan: "基础方案",
-          addOn: "增值服务",
-          cycle: "计费方式",
-          mode: "班型",
-          discount: "学期折扣",
-          submitSuccess: "选课提交成功，顾问将在24小时内确认排课。",
-          submitError: "请先选择 membership 方案。"
-        },
-        en: {
-          studentName: "Student Name",
-          studentId: "Student ID",
-          grade: "Grade",
-          goal: "Learning Goal",
-          classMode: "Class Type",
-          billingCycle: "Billing Cycle",
-          monthly: "Monthly (4 weeks)",
-          term: "Term (12 weeks, 5% off)",
-          preferredDay: "Preferred Day",
-          preferredTime: "Preferred Time Slot",
-          dayMon: "Monday",
-          dayTue: "Tuesday",
-          dayWed: "Wednesday",
-          dayThu: "Thursday",
-          dayFri: "Friday",
-          daySat: "Saturday",
-          daySun: "Sunday",
-          timeAfterSchool: "After school 16:00-18:00",
-          timeEvening: "Evening 19:00-21:00",
-          timeWeekendAm: "Weekend Morning",
-          timeWeekendPm: "Weekend Afternoon",
-          addonMentor: "Mentor Coaching (+$39/mo): 20-min 1v1 weekly strategy session",
-          addonProject: "Project Studio (+$49/mo): two project polishing sessions per month",
-          addonReport: "Parent Deep Report (+$29/mo): growth charts and home recommendations",
-          totalLabel: "Estimated Total (Monthly)",
-          basePlan: "Base Plan",
-          addOn: "Add-ons",
-          cycle: "Billing",
-          mode: "Class Type",
-          discount: "Term Discount",
-          submitSuccess: "Selection submitted. An advisor will confirm scheduling within 24 hours.",
-          submitError: "Please select a membership plan first."
-        }
+      var PLANS = {
+        weekly1: { price: 199, classes: 4, labelZh: "每周一节课", labelEn: "1 Class / Week" },
+        weekly2: { price: 369, classes: 8, labelZh: "每周两节课", labelEn: "2 Classes / Week" },
+        weekly3: { price: 519, classes: 12, labelZh: "每周三节课", labelEn: "3 Classes / Week" }
+      };
+      var ADDONS = [
+        { id: "mentor", price: 79, zh: { title: "专属导师辅导", desc: "固定导师每月 1 次 1v1 深度辅导" }, en: { title: "Dedicated Mentor", desc: "Monthly 1-on-1 mentor session" } },
+        { id: "project", price: 49, zh: { title: "项目制作加餐", desc: "每月一个可展示的完整作品" }, en: { title: "Extra Project Workshop", desc: "One showcase project per month" } },
+        { id: "report", price: 29, zh: { title: "月度详细学习报告", desc: "家长端可查看的深度评估" }, en: { title: "Monthly Detailed Report", desc: "In-depth progress report for parents" } }
+      ];
+      var DAYS = [
+        { k: "mon", zh: "周一", en: "Mon", num: "01" },
+        { k: "tue", zh: "周二", en: "Tue", num: "02" },
+        { k: "wed", zh: "周三", en: "Wed", num: "03" },
+        { k: "thu", zh: "周四", en: "Thu", num: "04" },
+        { k: "fri", zh: "周五", en: "Fri", num: "05" },
+        { k: "sat", zh: "周六", en: "Sat", num: "06" },
+        { k: "sun", zh: "周日", en: "Sun", num: "07" }
+      ];
+      var SLOTS = [
+        { k: "afterschool", time: "16:00 – 17:30", zh: "放学后", en: "After School" },
+        { k: "evening", time: "19:00 – 20:30", zh: "晚间", en: "Evening" },
+        { k: "weekendAm", time: "09:30 – 11:00", zh: "周末上午", en: "Weekend AM" },
+        { k: "weekendPm", time: "14:00 – 15:30", zh: "周末下午", en: "Weekend PM" }
+      ];
+      var PAY_METHODS = {
+        card: { zh: "信用卡", en: "Credit Card" },
+        alipay: { zh: "支付宝", en: "Alipay" },
+        wechat: { zh: "微信支付", en: "WeChat Pay" }
       };
 
-      var PLAN_PRICES = {
-        weekly1: 199,
-        weekly2: 369,
-        weekly3: 519
-      };
-
-      var ADDON_PRICES = {
-        mentor: 39,
-        project: 49,
-        report: 29
+      var state = {
+        step: 1,
+        plan: "weekly1",
+        classMode: "1v1",
+        billing: "monthly",
+        day: "wed",
+        slot: "evening",
+        addons: [],
+        payMethod: "card",
+        orderId: "",
+        paidAt: ""
       };
 
       var html = document.documentElement;
       var langButtons = document.querySelectorAll("[data-set-lang]");
-      var planCards = document.querySelectorAll(".membership");
-      var addonChecks = document.querySelectorAll(".addon-check");
-      var billingCycle = document.getElementById("billingCycle");
-      var classMode = document.getElementById("classMode");
-      var summaryList = document.getElementById("summaryList");
-      var totalPrice = document.getElementById("totalPrice");
-      var submitBtn = document.getElementById("submitBtn");
-      var resetBtn = document.getElementById("resetBtn");
-      var result = document.getElementById("result");
 
-      function currentLang() {
-        return html.getAttribute("lang") === "en" ? "en" : "zh-CN";
-      }
+      function langOf() { return html.getAttribute("lang") === "en" ? "en" : "zh-CN"; }
+      function k() { return langOf() === "en" ? "en" : "zh"; }
 
-      function selectedPlan() {
-        var checked = document.querySelector("input[name='membership']:checked");
-        return checked ? checked.value : "";
-      }
+      function money(n) { return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 2 }); }
 
-      function selectedAddons() {
-        var values = [];
-        addonChecks.forEach(function (c) {
-          if (c.checked) values.push(c.value);
+      function computeTotals() {
+        var plan = PLANS[state.plan];
+        var base = plan.price;
+        var modeDisc = state.classMode === "small" ? 0.9 : 1;
+        var afterMode = base * modeDisc;
+        var billingMul = state.billing === "term" ? 3 * 0.92 : 1;
+        var afterBilling = afterMode * billingMul;
+        var addonSum = 0;
+        state.addons.forEach(function (id) {
+          var a = ADDONS.find(function (x) { return x.id === id; });
+          if (a) addonSum += a.price * (state.billing === "term" ? 3 : 1);
         });
-        return values;
+        var total = afterBilling + addonSum;
+        return {
+          base: base,
+          afterMode: Math.round(afterMode * 100) / 100,
+          afterBilling: Math.round(afterBilling * 100) / 100,
+          addonSum: addonSum,
+          total: Math.round(total * 100) / 100
+        };
       }
 
-      function formatMoney(n) {
-        return "$" + Number(n).toFixed(2);
-      }
+      function labelFor(src) { return src[k() === "zh" ? "zh" : "en"] || src.zh; }
 
-      function updateMembershipUI() {
-        planCards.forEach(function (card) {
-          var input = card.querySelector("input[type='radio']");
-          card.classList.toggle("selected", !!input.checked);
+      function renderMembershipSelection() {
+        document.querySelectorAll(".membership").forEach(function (el) {
+          el.classList.toggle("selected", el.getAttribute("data-plan") === state.plan);
         });
       }
 
-      function updateSummary() {
-        var t = I18N[currentLang()];
-        var plan = selectedPlan();
-        if (!plan) {
-          summaryList.innerHTML = "";
-          totalPrice.textContent = "$0";
-          return;
+      function renderDayGrid() {
+        var el = document.getElementById("dayGrid");
+        el.innerHTML = DAYS.map(function (d) {
+          var active = state.day === d.k ? " active" : "";
+          return "<button type=\"button\" class=\"day-chip" + active + "\" data-day=\"" + d.k + "\">" +
+            "<span class=\"dname\">" + (k() === "zh" ? d.zh : d.en) + "</span>" +
+            "<span class=\"dnum\">" + d.num + "</span>" +
+            "</button>";
+        }).join("");
+      }
+      function renderSlotGrid() {
+        var el = document.getElementById("slotGrid");
+        el.innerHTML = SLOTS.map(function (s) {
+          var active = state.slot === s.k ? " active" : "";
+          return "<button type=\"button\" class=\"slot-chip" + active + "\" data-slot=\"" + s.k + "\">" +
+            "<span class=\"stime\">" + s.time + "</span>" +
+            "<span class=\"slabel\">" + (k() === "zh" ? s.zh : s.en) + "</span>" +
+            "</button>";
+        }).join("");
+      }
+      function renderAddonList() {
+        var el = document.getElementById("addonList");
+        el.innerHTML = ADDONS.map(function (a) {
+          var checked = state.addons.indexOf(a.id) >= 0;
+          var info = k() === "zh" ? a.zh : a.en;
+          return "<label class=\"addon" + (checked ? " checked" : "") + "\" data-addon=\"" + a.id + "\">" +
+            "<input type=\"checkbox\" " + (checked ? "checked" : "") + " data-addon-check=\"" + a.id + "\" />" +
+            "<div class=\"addon-info\"><strong>" + info.title + "</strong><span>" + info.desc + "</span></div>" +
+            "<div class=\"addon-price\">+" + money(a.price) + "/" + (k() === "zh" ? "月" : "mo") + "</div>" +
+            "</label>";
+        }).join("");
+      }
+
+      function summaryRows() {
+        var plan = PLANS[state.plan];
+        var t = computeTotals();
+        var modeLabel = state.classMode === "small" ? (k() === "zh" ? "小班 4 人" : "Small Group 1v4") : "1v1";
+        var billLabel = state.billing === "term" ? (k() === "zh" ? "学期 (3 月)" : "Per Term (3 mo)") : (k() === "zh" ? "按月" : "Monthly");
+        var planLabel = k() === "zh" ? plan.labelZh : plan.labelEn;
+        var rows = [
+          { l: k() === "zh" ? "Membership 方案" : "Membership", v: planLabel + " · " + money(plan.price) + "/mo" },
+          { l: k() === "zh" ? "上课形式" : "Class Mode", v: modeLabel + (state.classMode === "small" ? " (-10%)" : "") },
+          { l: k() === "zh" ? "结算周期" : "Billing", v: billLabel + (state.billing === "term" ? " (-8%)" : "") }
+        ];
+        if (state.step >= 2) {
+          var day = DAYS.find(function (x) { return x.k === state.day; });
+          var slot = SLOTS.find(function (x) { return x.k === state.slot; });
+          rows.push({ l: k() === "zh" ? "上课日" : "Class Day", v: day ? (k() === "zh" ? day.zh : day.en) : "—" });
+          rows.push({ l: k() === "zh" ? "时段" : "Time Slot", v: slot ? slot.time : "—" });
+          state.addons.forEach(function (id) {
+            var a = ADDONS.find(function (x) { return x.id === id; });
+            if (a) rows.push({ l: "+ " + (k() === "zh" ? a.zh.title : a.en.title), v: money(a.price) + "/mo" });
+          });
+        }
+        return { rows: rows, total: t.total };
+      }
+
+      function renderSummaries() {
+        var s = summaryRows();
+        ["summary1", "summary2", "summary3"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.innerHTML = s.rows.map(function (r) {
+            return "<div><span>" + r.l + "</span><strong>" + r.v + "</strong></div>";
+          }).join("");
+        });
+        ["total1", "total2", "total3"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = money(s.total);
+        });
+        var pa = document.getElementById("payAmount");
+        if (pa) pa.textContent = " " + money(s.total);
+      }
+
+      function setStep(n) {
+        state.step = n;
+        for (var i = 1; i <= 4; i += 1) {
+          var sv = document.getElementById("step" + i);
+          if (sv) sv.classList.toggle("active", i === n);
+        }
+        document.querySelectorAll("[data-step]").forEach(function (el) {
+          var s = parseInt(el.getAttribute("data-step"), 10);
+          el.classList.remove("active", "done");
+          if (s < n) el.classList.add("done");
+          if (s === n) el.classList.add("active");
+        });
+        renderSummaries();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function validateCard() {
+        var num = (document.getElementById("cardNumber").value || "").replace(/\s+/g, "");
+        var exp = (document.getElementById("cardExpiry").value || "").trim();
+        var cvv = (document.getElementById("cardCvv").value || "").trim();
+        var name = (document.getElementById("cardholder").value || "").trim();
+        var zip = (document.getElementById("cardZip").value || "").trim();
+        if (!name) return { ok: false, msg: { zh: "请填写持卡人姓名", en: "Please enter the cardholder name" } };
+        if (!/^\d{13,19}$/.test(num)) return { ok: false, msg: { zh: "卡号格式不正确", en: "Invalid card number" } };
+        if (!/^\d{2}\s*\/\s*\d{2}$/.test(exp)) return { ok: false, msg: { zh: "有效期格式应为 MM/YY", en: "Expiry format should be MM/YY" } };
+        if (!/^\d{3,4}$/.test(cvv)) return { ok: false, msg: { zh: "CVV 应为 3 或 4 位数字", en: "CVV should be 3 or 4 digits" } };
+        if (!zip) return { ok: false, msg: { zh: "请填写邮编", en: "Please enter the ZIP code" } };
+        return { ok: true };
+      }
+
+      function genOrderId() {
+        var d = new Date();
+        var pad = function (n) { return String(n).padStart(2, "0"); };
+        var rand = Math.floor(Math.random() * 10000).toString().padStart(4, "0");
+        return "MD" + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "-" + rand;
+      }
+
+      function firstClassDate(dayKey) {
+        var idx = DAYS.findIndex(function (d) { return d.k === dayKey; });
+        if (idx < 0) return "";
+        var now = new Date();
+        var target = (idx + 1) % 7;
+        var diff = (target - now.getDay() + 7) % 7 || 7;
+        var first = new Date(now);
+        first.setDate(now.getDate() + diff);
+        return first.toLocaleDateString(k() === "en" ? "en-US" : "zh-CN", { month: "short", day: "numeric", weekday: "short" });
+      }
+
+      function populateConfirmation(totals) {
+        var plan = PLANS[state.plan];
+        var day = DAYS.find(function (x) { return x.k === state.day; });
+        var slot = SLOTS.find(function (x) { return x.k === state.slot; });
+        document.getElementById("cfMembership").textContent = (k() === "zh" ? plan.labelZh : plan.labelEn);
+        document.getElementById("cfMode").textContent = state.classMode === "small" ? (k() === "zh" ? "小班 4 人" : "Small Group 1v4") : "1v1";
+        document.getElementById("cfDay").textContent = day ? (k() === "zh" ? day.zh : day.en) : "—";
+        document.getElementById("cfTime").textContent = slot ? slot.time + " (" + (k() === "zh" ? slot.zh : slot.en) + ")" : "—";
+        document.getElementById("cfFirstClass").textContent = firstClassDate(state.day);
+        document.getElementById("cfOrderId").textContent = state.orderId;
+        document.getElementById("cfPayMethod").textContent = k() === "zh" ? PAY_METHODS[state.payMethod].zh : PAY_METHODS[state.payMethod].en;
+        document.getElementById("cfBilling").textContent = state.billing === "term" ? (k() === "zh" ? "按学期 (3 月)" : "Per Term (3 mo)") : (k() === "zh" ? "按月" : "Monthly");
+        document.getElementById("cfAmount").textContent = money(totals.total);
+        document.getElementById("cfPaidAt").textContent = new Date(state.paidAt).toLocaleString(k() === "en" ? "en-US" : "zh-CN");
+        document.getElementById("orderIdBadge").textContent = "#" + state.orderId;
+      }
+
+      function processPayment() {
+        var err = document.getElementById("step3Error");
+        err.className = "error-msg";
+        err.textContent = "";
+
+        if (state.payMethod === "card") {
+          var v = validateCard();
+          if (!v.ok) { err.className = "error-msg on"; err.textContent = v.msg[k()] || v.msg.zh; return; }
         }
 
-        var base = PLAN_PRICES[plan] || 0;
-        var addons = selectedAddons();
-        var addonTotal = addons.reduce(function (acc, item) {
-          return acc + (ADDON_PRICES[item] || 0);
-        }, 0);
+        var processing = document.getElementById("processing");
+        processing.classList.add("on");
+        document.getElementById("payBtn").disabled = true;
 
-        var monthly = base + addonTotal;
-        var discount = 0;
-        if (billingCycle.value === "term") {
-          discount = monthly * 0.05;
-        }
-        var total = monthly - discount;
+        setTimeout(function () {
+          processing.classList.remove("on");
+          state.orderId = genOrderId();
+          state.paidAt = new Date().toISOString();
 
-        var modeLabel = classMode.options[classMode.selectedIndex].textContent;
-        var cycleLabel = billingCycle.options[billingCycle.selectedIndex].textContent;
-        var addonLabel = addons.length ? addons.map(function (key) {
-          return key + " (" + formatMoney(ADDON_PRICES[key]) + ")";
-        }).join(", ") : "-";
+          var totals = computeTotals();
+          var plan = PLANS[state.plan];
+          var day = DAYS.find(function (x) { return x.k === state.day; });
+          var slot = SLOTS.find(function (x) { return x.k === state.slot; });
 
-        summaryList.innerHTML =
-          "<div class='summary-item'><span>" + t.basePlan + "</span><strong>" + formatMoney(base) + "</strong></div>" +
-          "<div class='summary-item'><span>" + t.addOn + "</span><strong>" + (addons.length ? formatMoney(addonTotal) : "$0.00") + "</strong></div>" +
-          "<div class='summary-item'><span>" + t.mode + "</span><strong>" + modeLabel + "</strong></div>" +
-          "<div class='summary-item'><span>" + t.cycle + "</span><strong>" + cycleLabel + "</strong></div>" +
-          "<div class='summary-item'><span>" + t.discount + "</span><strong>-" + formatMoney(discount) + "</strong></div>" +
-          "<div class='summary-item'><span>Add-on detail</span><strong>" + addonLabel + "</strong></div>";
+          var orderPayload = {
+            orderId: state.orderId,
+            plan: state.plan,
+            planLabel: k() === "zh" ? plan.labelZh : plan.labelEn,
+            classMode: state.classMode,
+            billingCycle: state.billing,
+            weekday: day ? (k() === "zh" ? day.zh : day.en) : state.day,
+            timeSlot: slot ? slot.time : state.slot,
+            addons: state.addons.slice(),
+            totalAmount: totals.total,
+            totalMonthly: money(totals.total),
+            createdAt: state.paidAt
+          };
+          var paymentPayload = {
+            orderId: state.orderId,
+            amount: totals.total,
+            source: state.payMethod,
+            method: state.payMethod,
+            createdAt: state.paidAt
+          };
 
-        totalPrice.textContent = formatMoney(total);
+          if (window.MindDoFlow) {
+            if (window.MindDoFlow.saveMembershipOrder) window.MindDoFlow.saveMembershipOrder(orderPayload);
+            if (window.MindDoFlow.savePayment) window.MindDoFlow.savePayment(paymentPayload);
+          } else {
+            try {
+              var orders = JSON.parse(localStorage.getItem("minddo_membership_orders") || "[]");
+              orders.push(orderPayload);
+              localStorage.setItem("minddo_membership_orders", JSON.stringify(orders));
+              var pays = JSON.parse(localStorage.getItem("minddo_payments") || "[]");
+              pays.push(paymentPayload);
+              localStorage.setItem("minddo_payments", JSON.stringify(pays));
+            } catch (_) {}
+          }
+
+          populateConfirmation(totals);
+          document.getElementById("payBtn").disabled = false;
+          setStep(4);
+        }, 1400);
       }
 
       function setLang(lang) {
-        var t = I18N[lang] || I18N["zh-CN"];
         html.setAttribute("lang", lang);
         localStorage.setItem("minddo_lang", lang);
-
-        document.querySelectorAll("[data-i18n]").forEach(function (el) {
-          var key = el.getAttribute("data-i18n");
-          if (t[key]) el.textContent = t[key];
-        });
-
-        document.querySelectorAll("[data-lang='zh']").forEach(function (el) {
-          el.style.display = lang === "zh-CN" ? "inline" : "none";
-        });
-        document.querySelectorAll("[data-lang='en']").forEach(function (el) {
-          el.style.display = lang === "en" ? "inline" : "none";
-        });
-
+        document.title = (lang === "en" ? "Course Enrollment" : "选课排课") + " | MindDo";
         langButtons.forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
         });
-
-        updateSummary();
+        renderDayGrid();
+        renderSlotGrid();
+        renderAddonList();
+        renderSummaries();
+        if (state.step === 4) {
+          populateConfirmation(computeTotals());
+        }
       }
 
-      function submitSelection() {
-        var t = I18N[currentLang()];
-        var plan = selectedPlan();
-        if (!plan) {
-          result.className = "result error";
-          result.textContent = t.submitError;
+      // Populate meta from flow
+      function populateMeta() {
+        var current = window.MindDoFlow && window.MindDoFlow.getCurrentStudent && window.MindDoFlow.getCurrentStudent();
+        var snap = window.MindDoFlow && window.MindDoFlow.getSnapshot && window.MindDoFlow.getSnapshot();
+        if (current) {
+          document.getElementById("metaName").textContent = current.studentName || current.name || "—";
+          document.getElementById("metaId").textContent = current.studentId || "—";
+          document.getElementById("metaGrade").textContent = current.grade || "—";
+        }
+        var goal = (snap && snap.assessment && (snap.assessment.goal || snap.assessment.goalCategory)) || (current && current.goal) || "—";
+        document.getElementById("metaGoal").textContent = goal;
+      }
+
+      // Init
+      populateMeta();
+      var savedLang = localStorage.getItem("minddo_lang");
+      setLang(savedLang === "en" ? "en" : "zh-CN");
+
+      // Handlers
+      langButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () { setLang(btn.getAttribute("data-set-lang")); });
+      });
+
+      document.getElementById("membershipGrid").addEventListener("click", function (e) {
+        var label = e.target.closest(".membership");
+        if (!label) return;
+        state.plan = label.getAttribute("data-plan");
+        renderMembershipSelection();
+        renderSummaries();
+      });
+      document.getElementById("classMode").addEventListener("change", function (e) { state.classMode = e.target.value; renderSummaries(); });
+      document.getElementById("billingCycle").addEventListener("change", function (e) { state.billing = e.target.value; renderSummaries(); });
+
+      document.getElementById("dayGrid").addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-day]");
+        if (!btn) return;
+        state.day = btn.getAttribute("data-day");
+        renderDayGrid();
+        renderSummaries();
+      });
+      document.getElementById("slotGrid").addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-slot]");
+        if (!btn) return;
+        state.slot = btn.getAttribute("data-slot");
+        renderSlotGrid();
+        renderSummaries();
+      });
+      document.getElementById("addonList").addEventListener("change", function (e) {
+        if (e.target.type !== "checkbox") return;
+        var id = e.target.getAttribute("data-addon-check");
+        if (!id) return;
+        var idx = state.addons.indexOf(id);
+        if (e.target.checked && idx < 0) state.addons.push(id);
+        else if (!e.target.checked && idx >= 0) state.addons.splice(idx, 1);
+        renderAddonList();
+        renderSummaries();
+      });
+
+      document.getElementById("toStep2").addEventListener("click", function () { setStep(2); });
+      document.getElementById("back2to1").addEventListener("click", function () { setStep(1); });
+      document.getElementById("toStep3").addEventListener("click", function () {
+        var err = document.getElementById("step2Error");
+        if (!state.day || !state.slot) {
+          err.className = "error-msg on";
+          err.textContent = k() === "zh" ? "请选择上课日和时段。" : "Please choose a day and a time slot.";
           return;
         }
+        err.className = "error-msg";
+        err.textContent = "";
+        setStep(3);
+      });
+      document.getElementById("back3to2").addEventListener("click", function () { setStep(2); });
 
-        var payload = {
-          plan: plan,
-          addons: selectedAddons(),
-          classMode: classMode.value,
-          billingCycle: billingCycle.value,
-          weekday: document.getElementById("weekday").value,
-          timeSlot: document.getElementById("timeSlot").value,
-          totalMonthly: totalPrice.textContent,
-          createdAt: new Date().toISOString()
-        };
-
-        if (window.MindDoFlow && window.MindDoFlow.saveMembershipOrder) {
-          window.MindDoFlow.saveMembershipOrder(payload);
-        } else {
-          var key = "minddo_membership_orders";
-          var list = JSON.parse(localStorage.getItem(key) || "[]");
-          list.push(payload);
-          localStorage.setItem(key, JSON.stringify(list));
-        }
-
-        result.className = "result success";
-        result.textContent = t.submitSuccess;
-      }
-
-      planCards.forEach(function (card) {
-        card.addEventListener("click", function () {
-          var input = card.querySelector("input[type='radio']");
-          input.checked = true;
-          updateMembershipUI();
-          updateSummary();
+      document.querySelectorAll("[data-pay]").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          state.payMethod = tab.getAttribute("data-pay");
+          document.querySelectorAll("[data-pay]").forEach(function (t) { t.classList.toggle("active", t === tab); });
+          document.getElementById("payCard").classList.toggle("active", state.payMethod === "card");
+          document.getElementById("payAlipay").classList.toggle("active", state.payMethod === "alipay");
+          document.getElementById("payWechat").classList.toggle("active", state.payMethod === "wechat");
         });
       });
 
-      addonChecks.forEach(function (c) {
-        c.addEventListener("change", updateSummary);
-      });
-      billingCycle.addEventListener("change", updateSummary);
-      classMode.addEventListener("change", updateSummary);
-      submitBtn.addEventListener("click", submitSelection);
-      resetBtn.addEventListener("click", function () {
-        document.querySelector("input[name='membership'][value='weekly1']").checked = true;
-        addonChecks.forEach(function (c) { c.checked = false; });
-        billingCycle.value = "monthly";
-        classMode.value = "1v1";
-        updateMembershipUI();
-        updateSummary();
-        result.className = "result";
-        result.textContent = "";
-      });
-
-      langButtons.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          setLang(btn.getAttribute("data-set-lang"));
-        });
+      document.getElementById("payBtn").addEventListener("click", processPayment);
+      document.getElementById("newOrderBtn").addEventListener("click", function () {
+        state = { step: 1, plan: "weekly1", classMode: "1v1", billing: "monthly", day: "wed", slot: "evening", addons: [], payMethod: "card", orderId: "", paidAt: "" };
+        document.querySelectorAll("[data-pay]").forEach(function (t) { t.classList.toggle("active", t.getAttribute("data-pay") === "card"); });
+        document.getElementById("payCard").classList.add("active");
+        document.getElementById("payAlipay").classList.remove("active");
+        document.getElementById("payWechat").classList.remove("active");
+        document.getElementById("cardholder").value = "";
+        document.getElementById("cardNumber").value = "";
+        document.getElementById("cardExpiry").value = "";
+        document.getElementById("cardCvv").value = "";
+        document.getElementById("cardZip").value = "";
+        renderMembershipSelection();
+        renderDayGrid();
+        renderSlotGrid();
+        renderAddonList();
+        document.getElementById("classMode").value = "1v1";
+        document.getElementById("billingCycle").value = "monthly";
+        setStep(1);
       });
 
-      var saved = localStorage.getItem("minddo_lang");
-      setLang(saved === "en" ? "en" : "zh-CN");
-      if (window.MindDoFlow && window.MindDoFlow.populateCourseMeta) {
-        window.MindDoFlow.populateCourseMeta();
-      }
-      updateMembershipUI();
-      updateSummary();
+      // Card number formatting
+      document.getElementById("cardNumber").addEventListener("input", function (e) {
+        var v = e.target.value.replace(/\D/g, "").slice(0, 19);
+        e.target.value = v.replace(/(.{4})/g, "$1 ").trim();
+      });
+      document.getElementById("cardExpiry").addEventListener("input", function (e) {
+        var v = e.target.value.replace(/\D/g, "").slice(0, 4);
+        if (v.length >= 3) v = v.slice(0, 2) + " / " + v.slice(2);
+        e.target.value = v;
+      });
+      document.getElementById("cardCvv").addEventListener("input", function (e) {
+        e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4);
+      });
+
+      renderDayGrid();
+      renderSlotGrid();
+      renderAddonList();
+      renderSummaries();
     })();
   </script>
 </body>

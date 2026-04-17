@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindDo | AI Learning Center</title>
+  <title>MindDo | AI & Coding Learning Center</title>
   <style>
     :root {
       --bg: #fbf7ef;
@@ -16,904 +16,820 @@
       --gold-deep: #d79016;
       --clay: #8f3c16;
       --brown: #5f2c12;
-      --green: #6e8b58;
       --shadow: 0 24px 60px rgba(100, 58, 22, 0.12);
     }
 
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      margin: 0;
       font-family: "Avenir Next", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(255, 211, 120, 0.24), transparent 24%),
-        radial-gradient(circle at 88% 12%, rgba(224, 145, 40, 0.12), transparent 22%),
-        linear-gradient(180deg, #fffdfa, var(--bg) 58%, #f2e9d7);
-      min-height: 100vh;
+      background: var(--bg);
       overflow-x: hidden;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(143, 60, 22, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(143, 60, 22, 0.03) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: radial-gradient(circle at center, black 34%, transparent 84%);
-      opacity: 0.35;
-    }
-
     a { color: inherit; text-decoration: none; }
+
     [data-lang], [data-lang-block] { display: none; }
     html[lang="zh-CN"] [data-lang="zh"], html[lang="en"] [data-lang="en"] { display: inline; }
     html[lang="zh-CN"] [data-lang-block="zh"], html[lang="en"] [data-lang-block="en"] { display: block; }
 
-    .container {
-      width: min(1240px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 24px 0 72px;
-      position: relative;
-      z-index: 1;
+    /* NAVBAR */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 252, 246, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
     }
-
-    .glass {
-      border: 1px solid var(--line);
-      background: var(--card);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand img { width: 44px; height: 44px; object-fit: contain; }
+    .nav-brand-name { font-size: 22px; font-weight: 800; color: var(--clay); }
+    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-menu a {
+      padding: 8px 14px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; color: var(--muted); transition: 0.15s;
     }
-
-    .topbar,
-    .nav-links,
-    .lang-switch,
-    .hero-actions,
-    .bullet-list,
-    .card-actions,
-    .cta-row,
-    .stats,
-    .section-head {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .topbar {
-      justify-content: space-between;
-      padding: 14px 18px;
-      border-radius: 24px;
-      margin-bottom: 18px;
-    }
-
-    .brand {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      min-width: 0;
-    }
-
-    .brand img {
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .brand-copy { display: grid; gap: 4px; }
-    .brand-kicker {
-      font-size: 12px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #aa6a2b;
-    }
-    .brand-title {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--clay);
-    }
-    .brand-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .pill,
-    .lang-btn,
-    .primary-btn,
-    .secondary-btn,
-    .mini-link {
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      transition: 0.2s ease;
-      font-weight: 700;
-    }
-
-    .pill,
-    .primary-btn,
-    .secondary-btn,
-    .mini-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 16px;
-    }
-
-    .pill,
-    .secondary-btn,
-    .mini-link {
-      background: rgba(255, 248, 239, 0.98);
-      color: var(--clay);
-    }
-
-    .primary-btn {
-      background: linear-gradient(135deg, #ffe5a7, var(--gold));
-      color: #4b250f;
-      box-shadow: 0 18px 36px rgba(215, 144, 22, 0.22);
-    }
-
-    .pill:hover,
-    .secondary-btn:hover,
-    .mini-link:hover,
-    .lang-btn:hover,
-    .lang-btn.active,
-    .primary-btn:hover {
-      transform: translateY(-2px);
-      border-color: rgba(215, 144, 22, 0.38);
-      box-shadow: 0 14px 28px rgba(176, 112, 39, 0.18);
-    }
-
+    .nav-menu a:hover { color: var(--clay); background: rgba(143, 60, 22, 0.06); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
     .lang-btn {
-      background: rgba(255, 247, 236, 0.96);
-      color: var(--clay);
-      padding: 8px 14px;
-      cursor: pointer;
-      font-size: 13px;
+      background: none; border: 1px solid var(--line); border-radius: 999px;
+      padding: 7px 14px; cursor: pointer; font-size: 13px; font-weight: 600;
+      color: var(--clay); font-family: inherit; transition: 0.15s;
     }
+    .lang-btn:hover, .lang-btn.active { background: var(--sand); border-color: var(--gold); }
+    .btn-primary {
+      background: linear-gradient(135deg, #ffe5a7, var(--gold));
+      color: #4b250f; border: none; border-radius: 999px;
+      padding: 10px 22px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: 0.2s;
+      box-shadow: 0 4px 14px rgba(215, 144, 22, 0.28);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(215, 144, 22, 0.38); }
+    .btn-secondary {
+      background: rgba(255, 248, 239, 0.98); color: var(--clay);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 10px 22px; font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: 0.2s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-secondary:hover { transform: translateY(-2px); border-color: rgba(215, 144, 22, 0.38); }
 
+    /* HERO */
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
-      gap: 18px;
-      margin-bottom: 18px;
+      position: relative; min-height: 92vh;
+      display: flex; align-items: stretch; overflow: hidden;
+      background: linear-gradient(145deg, #3a1a08 0%, #5f2c12 45%, #8f3c16 80%, #b05020 100%);
     }
-
-    .hero-copy,
-    .hero-panel,
-    .section-card,
-    .portal-card,
-    .review-card,
-    .cta-band {
-      border-radius: 30px;
-      padding: 28px;
-    }
-
-    .hero-copy {
+    .hero::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
       background:
-        radial-gradient(circle at top left, rgba(255, 217, 141, 0.3), transparent 26%),
-        linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(249, 239, 221, 0.96));
+        radial-gradient(circle at 18% 55%, rgba(236, 171, 47, 0.18) 0%, transparent 48%),
+        radial-gradient(circle at 82% 22%, rgba(236, 171, 47, 0.1) 0%, transparent 38%);
     }
-
-    .eyebrow,
-    .section-tag,
-    .portal-tag {
-      display: inline-flex;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255, 214, 138, 0.16);
-      border: 1px solid rgba(176, 112, 39, 0.18);
-      color: #9c5a1d;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .hero::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 220, 120, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 220, 120, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
     }
-
+    .hero-inner {
+      position: relative; z-index: 1; width: 100%; max-width: 1280px;
+      margin: 0 auto; padding: 80px 48px;
+      display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
+    }
+    .hero-copy { color: #fff8ef; }
+    .hero-kicker {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(236, 171, 47, 0.2); border: 1px solid rgba(236, 171, 47, 0.4);
+      color: #ffd98e; border-radius: 999px; padding: 6px 16px;
+      font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 22px;
+    }
     .hero-copy h1 {
-      margin: 16px 0 0;
-      font-size: clamp(38px, 5vw, 64px);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-      color: var(--clay);
-      max-width: 740px;
+      font-size: clamp(40px, 5.5vw, 70px); line-height: 1.02;
+      letter-spacing: -0.03em; font-weight: 900; color: #fff8ef; margin-bottom: 20px;
     }
-
-    .hero-copy p {
-      margin: 16px 0 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.78;
-      max-width: 680px;
+    .hero-copy h1 em { font-style: normal; color: var(--gold); }
+    .hero-copy .subtitle {
+      font-size: 17px; line-height: 1.75;
+      color: rgba(255, 241, 220, 0.82); max-width: 540px; margin-bottom: 32px;
     }
-
-    .hero-actions {
-      margin-top: 24px;
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-ghost {
+      background: rgba(255, 248, 239, 0.1); color: #fff8ef;
+      border: 1px solid rgba(255, 237, 215, 0.24); border-radius: 999px;
+      padding: 10px 22px; font-size: 14px; font-weight: 700;
+      font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
     }
-
-    .bullet-list {
-      margin-top: 24px;
-      gap: 12px;
+    .btn-ghost:hover { background: rgba(255, 248, 239, 0.18); transform: translateY(-2px); }
+    .hero-stats { display: flex; gap: 36px; flex-wrap: wrap; }
+    .hero-stat strong {
+      display: block; font-size: 32px; font-weight: 900;
+      color: var(--gold); line-height: 1; margin-bottom: 4px;
     }
+    .hero-stat span { font-size: 13px; color: rgba(255, 241, 220, 0.68); line-height: 1.4; }
 
-    .bullet {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      width: calc(50% - 6px);
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(255, 250, 244, 0.9);
-      border: 1px solid rgba(126, 77, 29, 0.1);
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.65;
+    /* Hero form */
+    .hero-form-card {
+      background: rgba(255, 252, 247, 0.97); border-radius: 24px;
+      padding: 32px; box-shadow: 0 32px 80px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 237, 200, 0.5);
     }
+    .hero-form-card h2 { font-size: 21px; font-weight: 800; color: var(--clay); margin-bottom: 6px; }
+    .hero-form-card > p { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 22px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block; font-size: 11px; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px;
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid rgba(126, 77, 29, 0.18); border-radius: 11px;
+      background: rgba(255, 250, 244, 0.98); color: var(--text);
+      font-size: 14px; font-family: inherit; outline: none; transition: 0.15s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--gold); box-shadow: 0 0 0 3px rgba(236, 171, 47, 0.15);
+    }
+    .form-submit {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #ffe5a7, var(--gold));
+      color: #4b250f; border: none; border-radius: 11px;
+      font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit;
+      transition: 0.2s; margin-top: 6px; box-shadow: 0 8px 24px rgba(215, 144, 22, 0.3);
+    }
+    .form-submit:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(215, 144, 22, 0.4); }
+    .form-note { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; opacity: 0.8; }
 
-    .bullet strong {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
+    /* TRUST BAR */
+    .trust-bar {
+      background: var(--sand); border-bottom: 1px solid var(--line);
+      padding: 18px 48px; display: flex; align-items: center;
+      justify-content: center; gap: 36px; flex-wrap: wrap;
+    }
+    .trust-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); white-space: nowrap;
+    }
+    .trust-logos { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+    .trust-logo { font-size: 13px; font-weight: 700; color: #9c6d3a; opacity: 0.7; letter-spacing: 0.04em; }
+
+    /* SHARED SECTION LAYOUT */
+    .section-wrap { padding: 88px 0; }
+    .section-wrap.bg-sand { background: var(--sand); }
+    .section-wrap.bg-dark {
+      background: linear-gradient(145deg, #3a1a08 0%, #5f2c12 100%);
+    }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+    .section-head { margin-bottom: 48px; }
+    .section-tag {
+      display: inline-flex; padding: 6px 12px; border-radius: 999px;
+      background: rgba(255, 214, 138, 0.2); border: 1px solid rgba(176, 112, 39, 0.22);
+      color: #9c5a1d; font-size: 11px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-tag.light {
+      background: rgba(236, 171, 47, 0.18); border-color: rgba(236, 171, 47, 0.3); color: #ffd98e;
+    }
+    .section-title {
+      font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: var(--clay);
+      line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 14px;
+    }
+    .section-title.light { color: #fff8ef; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 600px; }
+    .section-sub.light { color: rgba(255, 241, 220, 0.78); }
+
+    /* WHY GRID */
+    .why-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .why-card {
+      padding: 26px; border-radius: 20px;
+      background: rgba(255, 252, 247, 0.9); border: 1px solid var(--line); transition: 0.2s;
+    }
+    .why-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(215, 144, 22, 0.28); }
+    .why-icon {
+      width: 50px; height: 50px; border-radius: 14px;
       background: linear-gradient(135deg, #ffe7af, var(--gold));
-      color: var(--clay);
-      flex-shrink: 0;
-      font-size: 13px;
+      display: grid; place-items: center; font-size: 22px; margin-bottom: 16px;
     }
+    .why-card h3 { font-size: 17px; font-weight: 800; color: var(--clay); margin-bottom: 10px; }
+    .why-card p { font-size: 14px; color: var(--muted); line-height: 1.72; }
 
-    .hero-panel {
-      color: #fff7ee;
-      background:
-        radial-gradient(circle at top right, rgba(255, 223, 171, 0.14), transparent 28%),
-        linear-gradient(180deg, rgba(87, 46, 19, 0.98), rgba(110, 59, 27, 0.96));
-      box-shadow: 0 28px 60px rgba(88, 48, 19, 0.24);
+    /* PROGRAMS */
+    .programs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .program-card {
+      border-radius: 22px; overflow: hidden;
+      background: rgba(255, 252, 247, 0.96); border: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(100, 58, 22, 0.06);
+      transition: 0.22s; display: flex; flex-direction: column;
     }
-
-    .hero-panel h2 {
-      margin: 0 0 12px;
-      font-size: 24px;
-      line-height: 1.2;
+    .program-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(100, 58, 22, 0.14); border-color: rgba(215, 144, 22, 0.3); }
+    .program-banner {
+      height: 170px; position: relative;
+      display: flex; align-items: flex-end; padding: 18px;
     }
-
-    .hero-panel p {
-      margin: 0;
-      color: rgba(255, 241, 225, 0.82);
-      line-height: 1.72;
-      font-size: 14px;
+    .prog-ai     { background: linear-gradient(135deg, #8f3c16, #c05a28); }
+    .prog-code   { background: linear-gradient(135deg, #5f2c12, #8f3c16); }
+    .prog-robot  { background: linear-gradient(135deg, #4a7c59, #6e8b58); }
+    .prog-camp   { background: linear-gradient(135deg, #d79016, #ecab2f); }
+    .program-banner-tag {
+      background: rgba(255, 252, 247, 0.95); color: var(--clay);
+      border-radius: 999px; padding: 5px 12px;
+      font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
     }
-
-    .stats {
-      margin-top: 18px;
-      gap: 12px;
+    .program-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+    .program-age {
+      font-size: 11px; font-weight: 700; color: var(--gold-deep);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
     }
+    .program-body h3 { font-size: 21px; font-weight: 800; color: var(--clay); margin-bottom: 10px; }
+    .program-body p { font-size: 14px; color: var(--muted); line-height: 1.72; flex: 1; margin-bottom: 20px; }
 
-    .stat {
-      flex: 1 1 140px;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255, 249, 241, 0.08);
+    /* EXTRA PROGRAMS */
+    .extra-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .extra-card {
+      padding: 22px 14px; border-radius: 18px;
+      background: rgba(255, 252, 247, 0.9); border: 1px solid var(--line);
+      text-align: center; transition: 0.2s;
+    }
+    .extra-card:hover { transform: translateY(-3px); border-color: rgba(215, 144, 22, 0.3); box-shadow: 0 12px 28px rgba(100, 58, 22, 0.1); }
+    .extra-icon { font-size: 30px; display: block; margin-bottom: 10px; }
+    .extra-card h4 { font-size: 13px; font-weight: 700; color: var(--clay); line-height: 1.4; }
+
+    /* PLATFORM */
+    .platform-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .platform-features { display: grid; gap: 12px; margin-bottom: 28px; }
+    .platform-feature {
+      display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+      border-radius: 14px; background: rgba(255, 249, 241, 0.06);
       border: 1px solid rgba(255, 237, 215, 0.1);
     }
-
-    .stat strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 28px;
-      color: #fff4e7;
+    .platform-feature-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(236, 171, 47, 0.2); display: grid; place-items: center;
+      font-size: 16px; flex-shrink: 0;
     }
-
-    .stat span {
-      color: rgba(255, 241, 225, 0.78);
-      font-size: 13px;
-      line-height: 1.5;
+    .platform-feature h4 { font-size: 14px; font-weight: 700; color: #fff8ef; margin-bottom: 3px; }
+    .platform-feature p { font-size: 13px; color: rgba(255, 241, 220, 0.65); margin: 0; line-height: 1.6; }
+    .platform-visual {
+      border-radius: 20px; background: rgba(255, 249, 241, 0.06);
+      border: 1px solid rgba(255, 237, 215, 0.12); padding: 28px; display: grid; gap: 12px;
     }
-
-    .section {
-      margin-top: 18px;
+    .plat-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .plat-stat {
+      padding: 20px; border-radius: 14px;
+      background: rgba(255, 249, 241, 0.06); border: 1px solid rgba(255, 237, 215, 0.08); text-align: center;
     }
-
-    .section-head {
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 14px;
+    .plat-stat strong { display: block; font-size: 28px; font-weight: 900; color: var(--gold); margin-bottom: 6px; }
+    .plat-stat span { font-size: 12px; color: rgba(255, 241, 220, 0.65); line-height: 1.4; }
+    .plat-links { display: grid; gap: 8px; }
+    .plat-link {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+      border-radius: 10px; background: rgba(255, 249, 241, 0.06);
+      color: rgba(255, 241, 220, 0.82); font-size: 13px; font-weight: 600; transition: 0.15s;
     }
+    .plat-link:hover { background: rgba(255, 249, 241, 0.12); }
 
-    .section-head h2 {
-      margin: 10px 0 0;
-      font-size: clamp(26px, 3vw, 36px);
-      color: var(--clay);
-      line-height: 1.08;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 680px;
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .portal-grid,
-    .review-grid {
-      display: grid;
-      gap: 16px;
-    }
-
-    .portal-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .portal-card {
-      position: relative;
-      overflow: hidden;
-      transition: 0.2s ease;
-    }
-
-    .portal-card::after {
-      content: "";
-      position: absolute;
-      right: -32px;
-      bottom: -40px;
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(236, 171, 47, 0.14), transparent 72%);
-    }
-
-    .portal-card:hover,
-    .review-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(215, 144, 22, 0.32);
-      box-shadow: 0 20px 36px rgba(101, 58, 22, 0.12);
-    }
-
-    .portal-card h3 {
-      margin: 14px 0 8px;
-      font-size: 24px;
-      color: var(--clay);
-    }
-
-    .portal-card p {
-      margin: 0 0 16px;
-      color: var(--muted);
-      line-height: 1.72;
-      font-size: 14px;
-    }
-
-    .portal-points {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-
-    .portal-point {
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(126, 77, 29, 0.1);
-      background: rgba(255, 250, 244, 0.9);
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .section-card {
-      margin-top: 18px;
-    }
-
-    .entry-groups {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 16px;
-    }
-
-    .entry-group {
-      padding: 18px;
-      border-radius: 22px;
-      border: 1px solid rgba(126, 77, 29, 0.1);
-      background: rgba(255, 250, 244, 0.9);
-    }
-
-    .entry-group h3 {
-      margin: 12px 0 10px;
-      font-size: 18px;
-      color: var(--clay);
-    }
-
-    .entry-group p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    .entry-links {
-      display: grid;
-      gap: 10px;
-    }
-
-    .mini-link {
-      justify-content: flex-start;
-      background: rgba(255, 247, 236, 0.98);
-      color: var(--clay);
-      font-size: 13px;
-    }
-
-    .review-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
+    /* TESTIMONIALS */
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .review-card {
-      transition: 0.2s ease;
+      padding: 26px; border-radius: 20px;
+      background: rgba(255, 252, 247, 0.95); border: 1px solid var(--line); transition: 0.2s;
     }
+    .review-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .stars { color: var(--gold); font-size: 15px; margin-bottom: 14px; letter-spacing: 2px; }
+    .review-card p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+    .reviewer { font-size: 13px; font-weight: 700; color: var(--brown); }
+    .reviewer span { font-weight: 400; color: var(--muted); font-size: 12px; }
 
-    .review-card h3 {
-      margin: 0 0 12px;
-      font-size: 20px;
-      color: var(--clay);
-    }
-
-    .review-card p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      line-height: 1.75;
-      font-size: 14px;
-    }
-
-    .review-card strong {
-      color: var(--brown);
-      font-size: 13px;
-    }
-
+    /* CTA BAND */
     .cta-band {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 16px;
-      align-items: center;
-      background:
-        radial-gradient(circle at right center, rgba(255, 219, 148, 0.24), transparent 28%),
-        linear-gradient(135deg, rgba(255, 248, 234, 0.98), rgba(249, 236, 205, 0.96));
+      background: linear-gradient(135deg, rgba(255, 248, 234, 0.98), rgba(249, 236, 205, 0.96));
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      padding: 80px 48px; text-align: center;
     }
-
     .cta-band h2 {
-      margin: 0 0 8px;
-      color: var(--clay);
-      font-size: clamp(26px, 3vw, 36px);
+      font-size: clamp(28px, 3.5vw, 44px); font-weight: 900; color: var(--clay);
+      letter-spacing: -0.02em; margin: 14px 0 14px;
+    }
+    .cta-band p { font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 540px; margin: 0 auto 32px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    .footer { background: var(--brown); color: rgba(255, 245, 230, 0.78); padding: 60px 48px 32px; }
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px;
+    }
+    .footer-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-logo-row img { width: 36px; height: 36px; object-fit: contain; filter: brightness(2) saturate(0.2); }
+    .footer-logo-row span { font-size: 18px; font-weight: 800; color: #fff8ef; }
+    .footer-brand p { font-size: 13px; line-height: 1.7; margin-bottom: 16px; }
+    .footer-hours {
+      background: rgba(255, 245, 230, 0.07); border: 1px solid rgba(255, 237, 215, 0.1);
+      border-radius: 12px; padding: 14px 16px; font-size: 12px; line-height: 1.8;
+    }
+    .footer-col h4 {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255, 237, 215, 0.5); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: grid; gap: 10px; }
+    .footer-col ul a { font-size: 14px; color: rgba(255, 245, 230, 0.72); transition: 0.15s; }
+    .footer-col ul a:hover { color: #fff8ef; }
+    .footer-bottom {
+      max-width: 1280px; margin: 0 auto; padding-top: 24px;
+      border-top: 1px solid rgba(255, 237, 215, 0.1);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: rgba(255, 245, 230, 0.45);
     }
 
-    .cta-band p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.72;
-      font-size: 14px;
-    }
-
-    .footer-note {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 22px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
+    /* RESPONSIVE */
     @media (max-width: 1100px) {
-      .hero,
-      .portal-grid,
-      .review-grid,
-      .entry-groups {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-      }
+      .hero-inner { grid-template-columns: 1fr 380px; gap: 40px; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .extra-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-inner { grid-template-columns: repeat(2, 1fr); }
     }
-
-    @media (max-width: 820px) {
-      .container {
-        width: min(100% - 24px, 1240px);
-      }
-
-      .hero-copy,
-      .hero-panel,
-      .section-card,
-      .portal-card,
-      .review-card,
-      .cta-band {
-        padding: 22px;
-      }
-
-      .bullet {
-        width: 100%;
-      }
-
-      .cta-band {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; padding: 60px 32px; }
+      .hero-form-card { max-width: 480px; }
+      .programs-grid, .platform-layout, .reviews-grid { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+      .navbar { padding: 0 24px; }
+      .nav-menu { display: none; }
     }
-
-    @media (max-width: 760px) {
-      .container {
-        width: min(100% - 20px, 1240px);
-        padding: 18px 0 42px;
-      }
-
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav-links,
-      .lang-switch {
-        width: 100%;
-      }
-
-      .lang-btn {
-        flex: 1 1 0;
-        min-height: 42px;
-      }
-
-      .portal-grid,
-      .review-grid,
-      .entry-groups {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-actions .primary-btn,
-      .hero-actions .secondary-btn,
-      .card-actions .primary-btn,
-      .card-actions .secondary-btn,
-      .cta-row .primary-btn,
-      .cta-row .secondary-btn {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .container {
-        width: min(100% - 16px, 1240px);
-        padding: 14px 0 34px;
-      }
-
-      .topbar,
-      .hero-copy,
-      .hero-panel,
-      .section-card,
-      .portal-card,
-      .review-card,
-      .cta-band,
-      .footer-note {
-        padding: 16px;
-        border-radius: 18px;
-      }
-
-      .brand {
-        gap: 10px;
-      }
-
-      .brand img {
-        width: 56px;
-        height: 56px;
-      }
+    @media (max-width: 640px) {
+      .section-wrap { padding: 60px 0; }
+      .section-inner { padding: 0 24px; }
+      .trust-bar { padding: 16px 24px; gap: 20px; }
+      .hero-inner { padding: 48px 24px; }
+      .hero-copy h1 { font-size: 38px; }
+      .hero-stats { gap: 22px; }
+      .why-grid, .reviews-grid, .extra-grid { grid-template-columns: 1fr; }
+      .footer { padding: 48px 24px 28px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+      .cta-band { padding: 64px 24px; }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <div class="topbar glass">
-      <a class="brand" href="index.html" aria-label="MindDo home">
-        <img src="assets/logo.png" alt="MindDo logo" />
-        <div class="brand-copy">
-          <span class="brand-kicker">MindDo Learning Center</span>
-          <span class="brand-title">MindDo</span>
-          <span class="brand-subtitle">
-            <span data-lang="zh">AI、编程与未来技能学习中心</span>
-            <span data-lang="en">AI, coding, and future-ready learning center</span>
-          </span>
-        </div>
-      </a>
-      <div class="nav-links">
-        <a class="pill" href="#programs">
-          <span data-lang="zh">核心入口</span>
-          <span data-lang="en">Programs</span>
-        </a>
-        <a class="pill" href="#reviews">
-          <span data-lang="zh">家长评价</span>
-          <span data-lang="en">Reviews</span>
-        </a>
-        <a class="pill" href="#all-pages">
-          <span data-lang="zh">全部页面</span>
-          <span data-lang="en">All Pages</span>
-        </a>
-        <div class="lang-switch">
-          <button class="lang-btn" type="button" data-set-lang="zh-CN">中文</button>
-          <button class="lang-btn" type="button" data-set-lang="en">English</button>
-        </div>
-      </div>
-    </div>
 
-    <section class="hero">
-      <article class="hero-copy glass">
-        <div class="eyebrow">
-          <span data-lang="zh">Enroll Now</span>
-          <span data-lang="en">Enroll Now</span>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html" aria-label="MindDo home">
+      <img src="assets/logo.png" alt="MindDo logo" />
+      <span class="nav-brand-name">MindDo</span>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#programs"><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></a></li>
+      <li><a href="#why"><span data-lang="zh">为什么选我们</span><span data-lang="en">Why Us</span></a></li>
+      <li><a href="#reviews"><span data-lang="zh">家长评价</span><span data-lang="en">Reviews</span></a></li>
+      <li><a href="dashboard.html"><span data-lang="zh">运营后台</span><span data-lang="en">Dashboard</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-btn" type="button" data-set-lang="zh-CN">中文</button>
+      <button class="lang-btn" type="button" data-set-lang="en">English</button>
+      <a class="btn-primary" href="trial.html">
+        <span data-lang="zh">预约试课</span>
+        <span data-lang="en">Book Free Session</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-kicker">
+          <span data-lang="zh">AI · 编程 · 机器人 · 未来技能</span>
+          <span data-lang="en">AI · Coding · Robotics · Future Skills</span>
         </div>
         <h1>
-          <span data-lang="zh">让孩子从兴趣进入 AI 与编程学习</span>
-          <span data-lang="en">Turn curiosity into AI and coding learning</span>
+          <span data-lang="zh">让屏幕时间<br><em>变成</em>技能时间</span>
+          <span data-lang="en">Turn Screen Time<br><em>Into</em> Skill Time</span>
         </h1>
-        <p>
-          <span data-lang="zh">从试课、评估、注册，到学员主页、选课排课与运营后台，所有高频入口都集中在这里。首页现在更像一个真正的校区 landing page，而不是项目说明页。</span>
-          <span data-lang="en">From trial and assessment to sign-up, student home, scheduling, and operations pages, every high-traffic route starts here in a true center-style landing page.</span>
+        <p class="subtitle">
+          <span data-lang="zh">MindDo 是面向5–18岁青少年的AI与编程学习中心，以兴趣为入口，打造真实可见的学习成果。</span>
+          <span data-lang="en">MindDo is an AI and coding center for ages 5–18, turning curiosity into real, visible skills and projects.</span>
         </p>
-        <div class="hero-actions">
-          <a class="primary-btn" href="trial.html">
-            <span data-lang="zh">预约试课</span>
-            <span data-lang="en">Book Trial</span>
+        <div class="hero-btns">
+          <a class="btn-primary" href="trial.html">
+            <span data-lang="zh">预约免费试课</span>
+            <span data-lang="en">Book Free Trial</span>
           </a>
-          <a class="secondary-btn" href="signup.html">
-            <span data-lang="zh">注册 / 登录</span>
-            <span data-lang="en">Sign Up / Login</span>
-          </a>
-          <a class="secondary-btn" href="assessment.html">
-            <span data-lang="zh">开始评估</span>
-            <span data-lang="en">Start Assessment</span>
+          <a class="btn-ghost" href="#programs">
+            <span data-lang="zh">查看课程</span>
+            <span data-lang="en">View Programs</span>
           </a>
         </div>
-        <div class="bullet-list">
-          <div class="bullet"><strong>01</strong><span><span data-lang="zh">通过试课、评估和注册入口，快速开始完整体验流程。</span><span data-lang="en">Start the full experience quickly through trial, assessment, and sign-up.</span></span></div>
-          <div class="bullet"><strong>02</strong><span><span data-lang="zh">学员登录后可直接进入 profile、选课、课程和请假改期页面。</span><span data-lang="en">Students can jump straight into profile, courses, scheduling, and leave requests.</span></span></div>
-          <div class="bullet"><strong>03</strong><span><span data-lang="zh">运营可查看新试课、新学员、申请处理和学员管理。</span><span data-lang="en">Operations can review new leads, new students, requests, and student management.</span></span></div>
-          <div class="bullet"><strong>04</strong><span><span data-lang="zh">整套前端页面通过统一入口组织，更接近真实校区官网体验。</span><span data-lang="en">The full frontend is organized like a real learning center website.</span></span></div>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>200+</strong><span><span data-lang="zh">在读学员</span><span data-lang="en">Active students</span></span></div>
+          <div class="hero-stat"><strong>5–18</strong><span><span data-lang="zh">适合年龄</span><span data-lang="en">Age range</span></span></div>
+          <div class="hero-stat"><strong>4.9★</strong><span><span data-lang="zh">家长满意度</span><span data-lang="en">Parent rating</span></span></div>
         </div>
-      </article>
+      </div>
 
-      <aside class="hero-panel glass">
+      <div class="hero-form-card">
         <h2>
-          <span data-lang="zh">高频访问入口</span>
-          <span data-lang="en">Most-used entrances</span>
+          <span data-lang="zh">预约免费体验课</span>
+          <span data-lang="en">Book a Free Session</span>
         </h2>
         <p>
-          <span data-lang="zh">适合家长、学员和运营三种使用场景，直接进入最常访问的页面。</span>
-          <span data-lang="en">Built for parents, students, and operators to jump into the most-used pages.</span>
+          <span data-lang="zh">填写信息，我们将在24小时内联系您安排时间。</span>
+          <span data-lang="en">Fill in the info and we'll reach out within 24 hours.</span>
         </p>
-        <div class="stats">
-          <div class="stat"><strong>03</strong><span><span data-lang="zh">试听、评估、注册入口</span><span data-lang="en">Trial, assessment, and sign-up routes</span></span></div>
-          <div class="stat"><strong>05</strong><span><span data-lang="zh">学员端核心页面</span><span data-lang="en">Core student pages</span></span></div>
-          <div class="stat"><strong>04</strong><span><span data-lang="zh">运营管理与处理页面</span><span data-lang="en">Operations and management pages</span></span></div>
-        </div>
-        <div class="cta-row" style="margin-top:18px;">
-          <a class="secondary-btn" href="student-account.html">
-            <span data-lang="zh">学员主页</span>
-            <span data-lang="en">Student Home</span>
-          </a>
-          <a class="secondary-btn" href="dashboard.html">
-            <span data-lang="zh">运营看板</span>
-            <span data-lang="en">Dashboard</span>
-          </a>
-          <a class="secondary-btn" href="request-center.html">
-            <span data-lang="zh">申请处理</span>
-            <span data-lang="en">Requests</span>
-          </a>
-        </div>
-      </aside>
-    </section>
-
-    <section id="programs" class="section">
-      <div class="section-head">
-        <div>
-          <div class="section-tag">What We Offer</div>
-          <h2>
-            <span data-lang="zh">选择你要进入的功能入口</span>
-            <span data-lang="en">Choose the entrance you want</span>
-          </h2>
-          <p>
-            <span data-lang="zh">参考校区官网 landing page 的布局方式，把入口分成访客、学员和运营三个主要区块。</span>
-            <span data-lang="en">Using a center-style landing structure, the main entrances are organized into visitor, student, and operations zones.</span>
-          </p>
-        </div>
-      </div>
-
-      <div class="portal-grid">
-        <a class="portal-card glass" href="trial.html">
-          <div class="portal-tag">
-            <span data-lang="zh">Visitor / Parent</span>
-            <span data-lang="en">Visitor / Parent</span>
+        <form action="trial.html" method="get">
+          <div class="form-group">
+            <label><span data-lang="zh">家长姓名</span><span data-lang="en">Parent Name</span></label>
+            <input type="text" />
           </div>
-          <h3>
-            <span data-lang="zh">家长与访客入口</span>
-            <span data-lang="en">Parent and visitor portal</span>
-          </h3>
-          <p>
-            <span data-lang="zh">从试课、评估、注册开始进入完整报名路径。</span>
-            <span data-lang="en">Start the enrollment flow from trial, assessment, and sign-up.</span>
-          </p>
-          <div class="portal-points">
-            <div class="portal-point"><span data-lang="zh">预约试课</span><span data-lang="en">Trial booking</span></div>
-            <div class="portal-point"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></div>
-            <div class="portal-point"><span data-lang="zh">注册登录</span><span data-lang="en">Sign-up and login</span></div>
+          <div class="form-group">
+            <label><span data-lang="zh">联系电话</span><span data-lang="en">Phone Number</span></label>
+            <input type="tel" />
           </div>
-          <div class="card-actions">
-            <span class="primary-btn"><span data-lang="zh">立即进入</span><span data-lang="en">Enter Now</span></span>
+          <div class="form-group">
+            <label><span data-lang="zh">孩子年龄</span><span data-lang="en">Child's Age</span></label>
+            <select>
+              <option value="">—</option>
+              <option>5–7</option>
+              <option>8–10</option>
+              <option>11–14</option>
+              <option>15–18</option>
+            </select>
           </div>
-        </a>
-
-        <a class="portal-card glass" href="student-account.html">
-          <div class="portal-tag">
-            <span data-lang="zh">Student</span>
-            <span data-lang="en">Student</span>
+          <div class="form-group">
+            <label><span data-lang="zh">感兴趣的课程</span><span data-lang="en">Interested Program</span></label>
+            <select>
+              <option value="">—</option>
+              <option><span data-lang="zh">AI 基础</span><span data-lang="en">AI Basics</span></option>
+              <option><span data-lang="zh">Scratch 编程</span><span data-lang="en">Scratch Coding</span></option>
+              <option><span data-lang="zh">Python 进阶</span><span data-lang="en">Python Advanced</span></option>
+              <option><span data-lang="zh">机器人</span><span data-lang="en">Robotics</span></option>
+              <option><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday Camp</span></option>
+            </select>
           </div>
-          <h3>
-            <span data-lang="zh">学员入口</span>
-            <span data-lang="en">Student portal</span>
-          </h3>
-          <p>
-            <span data-lang="zh">进入完整学员主页，查看 profile、课程、排课、反馈和请假改期。</span>
-            <span data-lang="en">Open the complete student page for profile, courses, scheduling, feedback, and requests.</span>
-          </p>
-          <div class="portal-points">
-            <div class="portal-point"><span data-lang="zh">Profile Page</span><span data-lang="en">Profile page</span></div>
-            <div class="portal-point"><span data-lang="zh">选课与课表</span><span data-lang="en">Course and schedule</span></div>
-            <div class="portal-point"><span data-lang="zh">请假 / 改期</span><span data-lang="en">Leave / reschedule</span></div>
-          </div>
-          <div class="card-actions">
-            <span class="primary-btn"><span data-lang="zh">进入学员页</span><span data-lang="en">Open Student Page</span></span>
-          </div>
-        </a>
-
-        <a class="portal-card glass" href="dashboard.html">
-          <div class="portal-tag">
-            <span data-lang="zh">Operations</span>
-            <span data-lang="en">Operations</span>
-          </div>
-          <h3>
-            <span data-lang="zh">运营入口</span>
-            <span data-lang="en">Operations portal</span>
-          </h3>
-          <p>
-            <span data-lang="zh">从看板进入新试课、新学员、学员管理和申请处理中心。</span>
-            <span data-lang="en">Start from the dashboard and continue into alerts, student management, and request processing.</span>
-          </p>
-          <div class="portal-points">
-            <div class="portal-point"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></div>
-            <div class="portal-point"><span data-lang="zh">学员管理</span><span data-lang="en">Student management</span></div>
-            <div class="portal-point"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request center</span></div>
-          </div>
-          <div class="card-actions">
-            <span class="primary-btn"><span data-lang="zh">进入后台</span><span data-lang="en">Open Operations</span></span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-card glass" id="all-pages">
-        <div class="section-head">
-          <div>
-            <div class="section-tag">Page Library</div>
-            <h2>
-              <span data-lang="zh">全部页面入口</span>
-              <span data-lang="en">All page entry points</span>
-            </h2>
-            <p>
-              <span data-lang="zh">如果需要直接进入某一个具体页面，可以从下面的分组跳转。</span>
-              <span data-lang="en">If you want to jump directly into a specific page, use the grouped links below.</span>
-            </p>
-          </div>
-        </div>
-
-        <div class="entry-groups">
-          <article class="entry-group">
-            <div class="portal-tag">01</div>
-            <h3><span data-lang="zh">获客入口</span><span data-lang="en">Intake</span></h3>
-            <p><span data-lang="zh">适合家长、访客和首次体验。</span><span data-lang="en">For parents, visitors, and first-touch flows.</span></p>
-            <div class="entry-links">
-              <a class="mini-link" href="trial.html"><span data-lang="zh">试课报名</span><span data-lang="en">Trial Registration</span></a>
-              <a class="mini-link" href="assessment.html"><span data-lang="zh">评估页面</span><span data-lang="en">Assessment</span></a>
-              <a class="mini-link" href="signup.html"><span data-lang="zh">注册 / 登录</span><span data-lang="en">Sign Up / Login</span></a>
-            </div>
-          </article>
-
-          <article class="entry-group">
-            <div class="portal-tag">02</div>
-            <h3><span data-lang="zh">学员端</span><span data-lang="en">Student</span></h3>
-            <p><span data-lang="zh">学员注册后使用的核心页面。</span><span data-lang="en">Core student pages after registration.</span></p>
-            <div class="entry-links">
-              <a class="mini-link" href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a>
-              <a class="mini-link" href="course-selection.html"><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a>
-              <a class="mini-link" href="feedback.html"><span data-lang="zh">学习反馈</span><span data-lang="en">Feedback</span></a>
-              <a class="mini-link" href="semester-report.html"><span data-lang="zh">学期报告</span><span data-lang="en">Semester Report</span></a>
-            </div>
-          </article>
-
-          <article class="entry-group">
-            <div class="portal-tag">03</div>
-            <h3><span data-lang="zh">课程展示</span><span data-lang="en">Delivery</span></h3>
-            <p><span data-lang="zh">课程体系与正式选课页面。</span><span data-lang="en">Curriculum and course selection pages.</span></p>
-            <div class="entry-links">
-              <a class="mini-link" href="course-system.html"><span data-lang="zh">课程体系</span><span data-lang="en">Course System</span></a>
-              <a class="mini-link" href="course-selection.html"><span data-lang="zh">正式选课</span><span data-lang="en">Course Selection</span></a>
-            </div>
-          </article>
-
-          <article class="entry-group">
-            <div class="portal-tag">04</div>
-            <h3><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></h3>
-            <p><span data-lang="zh">运营、教务和处理动作入口。</span><span data-lang="en">Operations, management, and processing tools.</span></p>
-            <div class="entry-links">
-              <a class="mini-link" href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a>
-              <a class="mini-link" href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Student Management</span></a>
-              <a class="mini-link" href="new-trials.html"><span data-lang="zh">新试课列表</span><span data-lang="en">New Trials</span></a>
-              <a class="mini-link" href="new-students.html"><span data-lang="zh">新学员列表</span><span data-lang="en">New Students</span></a>
-              <a class="mini-link" href="request-center.html"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request Center</span></a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="reviews" class="section">
-      <div class="section-head">
-        <div>
-          <div class="section-tag">Hear From Parents</div>
-          <h2>
-            <span data-lang="zh">家长与学员反馈</span>
-            <span data-lang="en">What parents and students say</span>
-          </h2>
-          <p>
-            <span data-lang="zh">这一部分参考你给的网页风格，保留 landing page 常见的信任感区块。</span>
-            <span data-lang="en">This section keeps the trust-building style common on the reference landing page.</span>
-          </p>
-        </div>
-      </div>
-
-      <div class="review-grid">
-        <article class="review-card glass">
-          <h3><span data-lang="zh">第一次试课就很投入</span><span data-lang="en">Engaged from the first session</span></h3>
-          <p><span data-lang="zh">孩子第一次上完试听课回家就主动分享作品，这比单纯“上课”更像一次真的创造体验。</span><span data-lang="en">After the first trial, the student came home excited to show what they built, which felt more like real creation than just another class.</span></p>
-          <strong><span data-lang="zh">家长反馈</span><span data-lang="en">Parent Feedback</span></strong>
-        </article>
-        <article class="review-card glass">
-          <h3><span data-lang="zh">学员主页很完整</span><span data-lang="en">The student page feels complete</span></h3>
-          <p><span data-lang="zh">登录后能看到 profile、课程、排课和请假改期，让学员端看起来更像一个真实可用的系统。</span><span data-lang="en">After login, seeing profile, course, schedule, and leave tools makes the student side feel much more like a real product.</span></p>
-          <strong><span data-lang="zh">产品体验反馈</span><span data-lang="en">Product Experience</span></strong>
-        </article>
-        <article class="review-card glass">
-          <h3><span data-lang="zh">运营入口更清楚了</span><span data-lang="en">Operations access is clearer now</span></h3>
-          <p><span data-lang="zh">从首页直接能找到看板、学员管理和申请处理，不需要先理解项目说明再找页面。</span><span data-lang="en">From the homepage, operators can reach the dashboard, student management, and request handling without reading project explanation first.</span></p>
-          <strong><span data-lang="zh">内部使用反馈</span><span data-lang="en">Internal Usage</span></strong>
-        </article>
-      </div>
-    </section>
-
-    <section class="cta-band glass">
-      <div>
-        <h2>
-          <span data-lang="zh">准备开始体验整个系统了吗？</span>
-          <span data-lang="en">Ready to explore the full system?</span>
-        </h2>
-        <p>
-          <span data-lang="zh">你可以从试课、注册、学员端或运营后台任意一个入口开始。</span>
-          <span data-lang="en">You can start from trial, sign-up, the student side, or the operations workspace.</span>
+          <button type="submit" class="form-submit">
+            <span data-lang="zh">立即预约 →</span>
+            <span data-lang="en">Reserve My Spot →</span>
+          </button>
+        </form>
+        <p class="form-note">
+          <span data-lang="zh">无需承诺 · 首次试课完全免费</span>
+          <span data-lang="en">No commitment · First trial is completely free</span>
         </p>
       </div>
-      <div class="cta-row">
-        <a class="primary-btn" href="trial.html"><span data-lang="zh">开始试课</span><span data-lang="en">Start Trial</span></a>
-        <a class="secondary-btn" href="dashboard.html"><span data-lang="zh">查看看板</span><span data-lang="en">Open Dashboard</span></a>
-      </div>
-    </section>
-
-    <div class="footer-note glass">
-      <span data-lang="zh">这个首页现在是参考校区官网 landing page 结构重做的主入口页面，重点是营销感、导航感和强入口，不再承担项目说明职责。</span>
-      <span data-lang="en">This homepage has been rebuilt as a center-style landing page focused on marketing feel, navigation, and strong entrances rather than project explanation.</span>
     </div>
-  </main>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <span class="trust-label">
+      <span data-lang="zh">合作认可机构</span>
+      <span data-lang="en">As Featured In</span>
+    </span>
+    <div class="trust-logos">
+      <span class="trust-logo">ISTE Certified</span>
+      <span class="trust-logo">CCTV</span>
+      <span class="trust-logo">新华网</span>
+      <span class="trust-logo">腾讯教育</span>
+      <span class="trust-logo">南方周末</span>
+    </div>
+  </div>
+
+  <!-- WHY SECTION -->
+  <div id="why" class="section-wrap bg-sand">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-tag">Why MindDo</div>
+        <h2 class="section-title">
+          <span data-lang="zh">我们让 AI 学习变有趣</span>
+          <span data-lang="en">We Make AI Learning Fun</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="zh">以项目为核心、以成果为导向，每节课都能带走看得见的作品。</span>
+          <span data-lang="en">Project-driven and outcome-focused — every session produces something visible to keep and share.</span>
+        </p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🤖</div>
+          <h3><span data-lang="zh">自主进度学习</span><span data-lang="en">Self-Paced Learning</span></h3>
+          <p><span data-lang="zh">每位学员按照自己的节奏前进，老师提供个性化指导而不是统一教学。</span><span data-lang="en">Each student progresses at their own speed with personalized guidance rather than one-size-fits-all teaching.</span></p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🏆</div>
+          <h3><span data-lang="zh">看得见的成果</span><span data-lang="en">Real, Visible Outcomes</span></h3>
+          <p><span data-lang="zh">学员会真正做出游戏、应用和 AI 项目，而不只是完成练习题。</span><span data-lang="en">Students build real games, apps, and AI projects — not just exercises — so progress is always visible.</span></p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💡</div>
+          <h3><span data-lang="zh">批判性思维训练</span><span data-lang="en">Critical Thinking Focus</span></h3>
+          <p><span data-lang="zh">通过解决真实问题，培养调试、逻辑和工程思维，这是 AI 时代最核心的能力。</span><span data-lang="en">Through real problem-solving, students develop debugging, logical reasoning, and engineering thinking.</span></p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">👥</div>
+          <h3><span data-lang="zh">小班制教学</span><span data-lang="en">Small Class Sizes</span></h3>
+          <p><span data-lang="zh">每班最多8人，确保每位学员都能得到足够的关注和指导时间。</span><span data-lang="en">Maximum 8 students per class so every learner gets real attention and guided time.</span></p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📊</div>
+          <h3><span data-lang="zh">学期报告与反馈</span><span data-lang="en">Progress Reports & Feedback</span></h3>
+          <p><span data-lang="zh">家长可以随时查看学员的学习进度、课堂表现和阶段性学期报告。</span><span data-lang="en">Parents can view learning progress, class feedback, and semester reports at any time.</span></p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🌐</div>
+          <h3><span data-lang="zh">中英双语环境</span><span data-lang="en">Bilingual Environment</span></h3>
+          <p><span data-lang="zh">教学材料和指导语言支持中英文切换，帮助学员在真实语境中学习技术词汇。</span><span data-lang="en">All materials and instruction available in Chinese and English, building technical vocabulary in context.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRAMS -->
+  <div id="programs" class="section-wrap">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-tag">Our Programs</div>
+        <h2 class="section-title">
+          <span data-lang="zh">适合每个年龄段的课程</span>
+          <span data-lang="en">Programs for Every Age & Level</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="zh">从5岁启蒙到18岁竞赛备赛，覆盖 AI、编程、机器人和创意技术的完整路径。</span>
+          <span data-lang="en">From age 5 through 18, with a full learning path covering AI, coding, robotics, and creative technology.</span>
+        </p>
+      </div>
+      <div class="programs-grid">
+        <a class="program-card" href="course-system.html">
+          <div class="program-banner prog-ai">
+            <span class="program-banner-tag">AI Basics</span>
+          </div>
+          <div class="program-body">
+            <div class="program-age"><span data-lang="zh">适合年龄 8–14岁</span><span data-lang="en">Ages 8–14</span></div>
+            <h3><span data-lang="zh">AI 基础与应用</span><span data-lang="en">AI Foundations & Applications</span></h3>
+            <p><span data-lang="zh">认识人工智能与机器学习基本原理，动手训练简单的 AI 模型，完成可展示的 AI 项目。</span><span data-lang="en">Understand AI and machine learning fundamentals, train simple models hands-on, and complete displayable AI projects.</span></p>
+            <span class="btn-primary" style="align-self:flex-start;">
+              <span data-lang="zh">了解课程 →</span>
+              <span data-lang="en">Learn More →</span>
+            </span>
+          </div>
+        </a>
+        <a class="program-card" href="course-system.html">
+          <div class="program-banner prog-code">
+            <span class="program-banner-tag">Coding</span>
+          </div>
+          <div class="program-body">
+            <div class="program-age"><span data-lang="zh">适合年龄 5–18岁</span><span data-lang="en">Ages 5–18</span></div>
+            <h3><span data-lang="zh">Scratch · Python · 游戏开发</span><span data-lang="en">Scratch · Python · Game Dev</span></h3>
+            <p><span data-lang="zh">从图形化 Scratch 积木编程开始，进阶到 Python 文字代码，最终完成真实的游戏和应用开发项目。</span><span data-lang="en">Start with visual Scratch blocks, advance to Python code, and graduate to building real games and applications.</span></p>
+            <span class="btn-primary" style="align-self:flex-start;">
+              <span data-lang="zh">了解课程 →</span>
+              <span data-lang="en">Learn More →</span>
+            </span>
+          </div>
+        </a>
+        <a class="program-card" href="course-system.html">
+          <div class="program-banner prog-robot">
+            <span class="program-banner-tag">Robotics</span>
+          </div>
+          <div class="program-body">
+            <div class="program-age"><span data-lang="zh">适合年龄 6–14岁</span><span data-lang="en">Ages 6–14</span></div>
+            <h3><span data-lang="zh">机器人与物理计算</span><span data-lang="en">Robotics & Physical Computing</span></h3>
+            <p><span data-lang="zh">动手搭建机器人套件，编写控制程序，参加校内外机器人挑战赛，培养工程思维。</span><span data-lang="en">Build robotics kits hands-on, write control code, join competitions, and develop engineering thinking.</span></p>
+            <span class="btn-primary" style="align-self:flex-start;">
+              <span data-lang="zh">了解课程 →</span>
+              <span data-lang="en">Learn More →</span>
+            </span>
+          </div>
+        </a>
+        <a class="program-card" href="trial.html">
+          <div class="program-banner prog-camp">
+            <span class="program-banner-tag">Holiday &amp; Summer Camps</span>
+          </div>
+          <div class="program-body">
+            <div class="program-age"><span data-lang="zh">适合年龄 5–14岁</span><span data-lang="en">Ages 5–14</span></div>
+            <h3><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday & Summer Camps</span></h3>
+            <p><span data-lang="zh">寒暑假集中强化课程，在一到两周内完成完整项目，快速提升技能并结识志同道合的伙伴。</span><span data-lang="en">Intensive programs during school breaks — complete a full project in one to two weeks and make new tech-minded friends.</span></p>
+            <span class="btn-primary" style="align-self:flex-start;">
+              <span data-lang="zh">查看营期 →</span>
+              <span data-lang="en">View Camps →</span>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXTRA PROGRAMS -->
+  <div class="section-wrap bg-sand">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-tag">More Offerings</div>
+        <h2 class="section-title">
+          <span data-lang="zh">更多学习形式</span>
+          <span data-lang="en">More Ways to Learn</span>
+        </h2>
+      </div>
+      <div class="extra-grid">
+        <div class="extra-card"><span class="extra-icon">🏠</span><h4><span data-lang="zh">在家上课</span><span data-lang="en">Homeschool Programs</span></h4></div>
+        <div class="extra-card"><span class="extra-icon">🌙</span><h4><span data-lang="zh">家长之夜</span><span data-lang="en">Parent's Night Out</span></h4></div>
+        <div class="extra-card"><span class="extra-icon">🎂</span><h4><span data-lang="zh">生日派对</span><span data-lang="en">Birthday Parties</span></h4></div>
+        <div class="extra-card"><span class="extra-icon">🏫</span><h4><span data-lang="zh">课后托管</span><span data-lang="en">After-School</span></h4></div>
+        <div class="extra-card"><span class="extra-icon">🔭</span><h4><span data-lang="zh">兴趣社团</span><span data-lang="en">Clubs & Projects</span></h4></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATFORM SECTION -->
+  <div class="section-wrap bg-dark">
+    <div class="section-inner">
+      <div class="platform-layout">
+        <div>
+          <div class="section-tag light">MindDo Platform</div>
+          <h2 class="section-title light" style="margin-top:12px;">
+            <span data-lang="zh">专为青少年设计的学习平台</span>
+            <span data-lang="en">A Learning Platform Built for Young Learners</span>
+          </h2>
+          <p class="section-sub light" style="margin-bottom:28px;">
+            <span data-lang="zh">帮助家长实时跟踪进度，帮助学员管理课表与申请，帮助运营高效处理日常事务。</span>
+            <span data-lang="en">Helps parents track progress in real time, students manage schedule and requests, and operations run efficiently.</span>
+          </p>
+          <div class="platform-features">
+            <div class="platform-feature">
+              <div class="platform-feature-icon">📱</div>
+              <div>
+                <h4><span data-lang="zh">学员端仪表盘</span><span data-lang="en">Student Dashboard</span></h4>
+                <p><span data-lang="zh">Profile、课表、请假改期，一站式管理。</span><span data-lang="en">Profile, schedule, leave requests — all in one place.</span></p>
+              </div>
+            </div>
+            <div class="platform-feature">
+              <div class="platform-feature-icon">📊</div>
+              <div>
+                <h4><span data-lang="zh">家长实时报告</span><span data-lang="en">Real-Time Parent Reports</span></h4>
+                <p><span data-lang="zh">每节课后的课堂反馈和学期总结报告。</span><span data-lang="en">Post-session feedback and semester summary reports.</span></p>
+              </div>
+            </div>
+            <div class="platform-feature">
+              <div class="platform-feature-icon">⚙️</div>
+              <div>
+                <h4><span data-lang="zh">运营管理后台</span><span data-lang="en">Operations Management</span></h4>
+                <p><span data-lang="zh">新试课、学员管理、申请处理，高效运转。</span><span data-lang="en">New trials, student management, request processing — streamlined.</span></p>
+              </div>
+            </div>
+          </div>
+          <a class="btn-primary" href="student-account.html">
+            <span data-lang="zh">进入学员中心</span>
+            <span data-lang="en">Go to Student Portal</span>
+          </a>
+        </div>
+        <div class="platform-visual">
+          <div class="plat-stat-row">
+            <div class="plat-stat"><strong>98%</strong><span><span data-lang="zh">家长续课率</span><span data-lang="en">Parent renewal rate</span></span></div>
+            <div class="plat-stat"><strong>3×</strong><span><span data-lang="zh">学习效率提升</span><span data-lang="en">Learning efficiency</span></span></div>
+          </div>
+          <div class="plat-stat-row">
+            <div class="plat-stat"><strong>12+</strong><span><span data-lang="zh">核心课程模块</span><span data-lang="en">Course modules</span></span></div>
+            <div class="plat-stat"><strong>24h</strong><span><span data-lang="zh">申请响应时间</span><span data-lang="en">Request response</span></span></div>
+          </div>
+          <div style="background:rgba(255,249,241,0.06);border:1px solid rgba(255,237,215,0.1);border-radius:14px;padding:18px;">
+            <div style="font-size:11px;font-weight:800;letter-spacing:0.09em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:12px;">Quick Access</div>
+            <div class="plat-links">
+              <a class="plat-link" href="student-account.html"><span>👤</span><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a>
+              <a class="plat-link" href="dashboard.html"><span>📋</span><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a>
+              <a class="plat-link" href="request-center.html"><span>📥</span><span data-lang="zh">申请处理</span><span data-lang="en">Request Center</span></a>
+              <a class="plat-link" href="course-selection.html"><span>📅</span><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div id="reviews" class="section-wrap">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-tag">Hear From Parents</div>
+        <h2 class="section-title">
+          <span data-lang="zh">家长和学员怎么说</span>
+          <span data-lang="en">What Parents & Students Say</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="zh">真实反馈，来自 MindDo 的在读家庭。</span>
+          <span data-lang="en">Real feedback from families currently enrolled at MindDo.</span>
+        </p>
+      </div>
+      <div class="reviews-grid">
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p><span data-lang="zh">"孩子第一次试听课就不想走了，回家还在问什么时候上下一节。MindDo 把枯燥的代码变成了他真正喜欢的东西。"</span><span data-lang="en">"My son didn't want to leave after his first class and came home asking when the next one would be. MindDo made code into something he genuinely loves."</span></p>
+          <div class="reviewer"><span data-lang="zh">李女士</span><span data-lang="en">Mrs. Li</span><span> · <span data-lang="zh">8岁学员家长</span><span data-lang="en">Parent of an 8-year-old</span></span></div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p><span data-lang="zh">"学员主页很完整，孩子能自己查课表、申请改期。进度报告也很清楚，我能随时了解她的情况。"</span><span data-lang="en">"The student portal is very complete. My daughter can check her schedule and request reschedules herself. The progress reports keep me informed in real time."</span></p>
+          <div class="reviewer"><span data-lang="zh">王先生</span><span data-lang="en">Mr. Wang</span><span> · <span data-lang="zh">12岁学员家长</span><span data-lang="en">Parent of a 12-year-old</span></span></div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p><span data-lang="zh">"两个月前孩子连鼠标都不太会用，现在已经能做出完整的 Scratch 游戏了。小班制让孩子得到了足够的关注。"</span><span data-lang="en">"Two months ago my child barely knew how to use a mouse. Now they've built a complete Scratch game. Small class sizes made all the difference."</span></p>
+          <div class="reviewer"><span data-lang="zh">张女士</span><span data-lang="en">Ms. Zhang</span><span> · <span data-lang="zh">7岁学员家长</span><span data-lang="en">Parent of a 7-year-old</span></span></div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p><span data-lang="zh">"假期集训营很值，一周时间孩子完成了完整的 AI 项目，还在展示会上给家长演示，那种成就感是在学校里很难有的。"</span><span data-lang="en">"The holiday camp was absolutely worth it. In one week my child completed a full AI project and presented it to parents — that sense of achievement is rare."</span></p>
+          <div class="reviewer"><span data-lang="zh">陈先生</span><span data-lang="en">Mr. Chen</span><span> · <span data-lang="zh">11岁学员家长</span><span data-lang="en">Parent of an 11-year-old</span></span></div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p><span data-lang="zh">"我很欣赏中英双语的教学环境，孩子在学编程的同时也在接触英文技术词汇，对以后的学习很有帮助。"</span><span data-lang="en">"I appreciate the bilingual learning environment. While coding, my child picks up English technical vocabulary too — a real advantage for their future studies."</span></p>
+          <div class="reviewer"><span data-lang="zh">赵女士</span><span data-lang="en">Mrs. Zhao</span><span> · <span data-lang="zh">10岁学员家长</span><span data-lang="en">Parent of a 10-year-old</span></span></div>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <p><span data-lang="zh">"运营团队响应非常快，我在 app 上提交了改期申请，两小时内就收到了确认。整个体验比之前带孩子去的任何培训机构都顺畅。"</span><span data-lang="en">"The team responds incredibly quickly. I submitted a reschedule request and got confirmation within two hours. Smoother than any other program we've tried."</span></p>
+          <div class="reviewer"><span data-lang="zh">刘先生</span><span data-lang="en">Mr. Liu</span><span> · <span data-lang="zh">9岁学员家长</span><span data-lang="en">Parent of a 9-year-old</span></span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="section-tag">Get Started</div>
+    <h2>
+      <span data-lang="zh">准备好让孩子开始了吗？</span>
+      <span data-lang="en">Ready to Get Your Child Started?</span>
+    </h2>
+    <p>
+      <span data-lang="zh">预约一节免费试课，无需提前准备，全程有老师指引。</span>
+      <span data-lang="en">Book a free trial session — no preparation needed, instructors guide every step.</span>
+    </p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="trial.html"><span data-lang="zh">预约免费试课</span><span data-lang="en">Book Free Trial</span></a>
+      <a class="btn-secondary" href="assessment.html"><span data-lang="zh">在线能力评估</span><span data-lang="en">Take Assessment</span></a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo-row">
+          <img src="assets/logo.png" alt="MindDo" />
+          <span>MindDo</span>
+        </div>
+        <p>
+          <span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span>
+          <span data-lang="en">AI and coding learning center for young learners, helping every child find their place in the AI era.</span>
+        </p>
+        <div class="footer-hours">
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
+          <span data-lang="zh">周一至周五 &nbsp;3:00pm – 7:30pm<br>周六 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9:30am – 5:00pm<br>周日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">休息</span></span>
+          <span data-lang="en">Mon – Fri &nbsp;&nbsp;3:00pm – 7:30pm<br>Saturday &nbsp;&nbsp;9:30am – 5:00pm<br>Sunday &nbsp;&nbsp;&nbsp;&nbsp;<span style="opacity:0.55">Closed</span></span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></h4>
+        <ul>
+          <li><a href="course-system.html"><span data-lang="zh">AI 基础</span><span data-lang="en">AI Basics</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Scratch 编程</span><span data-lang="en">Scratch Coding</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">Python 进阶</span><span data-lang="en">Python Advanced</span></a></li>
+          <li><a href="course-system.html"><span data-lang="zh">机器人课程</span><span data-lang="en">Robotics</span></a></li>
+          <li><a href="trial.html"><span data-lang="zh">假期集训营</span><span data-lang="en">Holiday Camps</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">快速入口</span><span data-lang="en">Quick Access</span></h4>
+        <ul>
+          <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
+          <li><a href="assessment.html"><span data-lang="zh">能力评估</span><span data-lang="en">Assessment</span></a></li>
+          <li><a href="signup.html"><span data-lang="zh">注册 / 登录</span><span data-lang="en">Sign Up / Login</span></a></li>
+          <li><a href="student-account.html"><span data-lang="zh">学员主页</span><span data-lang="en">Student Home</span></a></li>
+          <li><a href="course-selection.html"><span data-lang="zh">选课排课</span><span data-lang="en">Course Selection</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4><span data-lang="zh">运营后台</span><span data-lang="en">Operations</span></h4>
+        <ul>
+          <li><a href="dashboard.html"><span data-lang="zh">运营看板</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="student-management.html"><span data-lang="zh">学员管理</span><span data-lang="en">Student Management</span></a></li>
+          <li><a href="new-trials.html"><span data-lang="zh">新试课列表</span><span data-lang="en">New Trials</span></a></li>
+          <li><a href="new-students.html"><span data-lang="zh">新学员列表</span><span data-lang="en">New Students</span></a></li>
+          <li><a href="request-center.html"><span data-lang="zh">申请处理中心</span><span data-lang="en">Request Center</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 MindDo Learning Center · <span data-lang="zh">保留所有权利</span><span data-lang="en">All rights reserved</span></span>
+      <span><span data-lang="zh">隐私政策 · 服务条款</span><span data-lang="en">Privacy Policy · Terms of Service</span></span>
+    </div>
+  </footer>
 
   <script src="assets/minddo-flow.js"></script>
   <script>

@@ -140,6 +140,7 @@
       background: rgba(255, 252, 247, 0.97); border-radius: 24px;
       padding: 30px; box-shadow: 0 32px 80px rgba(0, 0, 0, 0.28);
       border: 1px solid rgba(255, 237, 200, 0.5);
+      text-align: left;
     }
     .hero-form-card .gift-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -148,8 +149,8 @@
       color: var(--clay); font-size: 11px; font-weight: 800;
       letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px;
     }
-    .hero-form-card h2 { font-size: 24px; font-weight: 900; color: var(--clay); line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.01em; }
-    .hero-form-card > p { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+    .hero-form-card h2 { font-size: 24px; font-weight: 900; color: var(--clay); line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.01em; text-align: left; }
+    .hero-form-card > p { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; text-align: left; }
     .trial-cta {
       display: flex; align-items: center; justify-content: center;
       width: 100%; padding: 15px 20px;
@@ -157,24 +158,29 @@
       color: #4b250f; border: none; border-radius: 14px;
       font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit;
       transition: 0.2s; box-shadow: 0 10px 26px rgba(215, 144, 22, 0.32); text-decoration: none;
+      text-align: center;
     }
     .trial-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(215, 144, 22, 0.42); }
     .trial-steps { display: grid; gap: 10px; margin: 20px 0 18px; }
     .trial-steps .step {
-      display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: flex-start;
+      display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center;
       padding: 12px 14px; border-radius: 12px;
       background: rgba(255, 248, 238, 0.8); border: 1px solid rgba(151, 84, 21, 0.1);
     }
     .trial-steps .step .sn {
-      width: 28px; height: 28px; border-radius: 999px;
+      width: 32px; height: 32px; border-radius: 999px;
       background: linear-gradient(135deg, #fff6de, #ffd977);
       color: var(--clay); display: grid; place-items: center;
-      font-size: 13px; font-weight: 800;
+      font-size: 14px; font-weight: 800;
     }
-    .trial-steps .step strong { display: block; font-size: 13px; font-weight: 800; color: var(--clay); margin-bottom: 2px; }
-    .trial-steps .step span { font-size: 12px; color: var(--muted); line-height: 1.5; }
-    .trial-perks { display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; font-size: 11px; color: var(--muted); padding: 10px 0; border-top: 1px dashed rgba(151, 84, 21, 0.16); }
-    .trial-perks span { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+    .trial-steps .step strong { display: block; font-size: 13px; font-weight: 800; color: var(--clay); margin-bottom: 2px; text-align: left; }
+    .trial-steps .step span { font-size: 12px; color: var(--muted); line-height: 1.5; text-align: left; }
+    .trial-perks {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      font-size: 11px; color: var(--muted); padding: 10px 0;
+      border-top: 1px dashed rgba(151, 84, 21, 0.16); margin-top: 4px;
+    }
+    .trial-perks span { display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-weight: 600; text-align: center; }
     .trial-perks span::before { content: "✓"; color: var(--success, #6f8f57); font-weight: 800; }
     .trial-secondary {
       display: block; text-align: center; font-size: 12px; font-weight: 700;
@@ -248,14 +254,27 @@
     }
     .program-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(100, 58, 22, 0.14); border-color: rgba(215, 144, 22, 0.3); }
     .program-banner {
-      height: 170px; position: relative;
+      height: 180px; position: relative; overflow: hidden;
       display: flex; align-items: flex-end; padding: 18px;
+    }
+    .program-banner::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
     }
     .prog-ai     { background: linear-gradient(135deg, #8f3c16, #c05a28); }
     .prog-code   { background: linear-gradient(135deg, #5f2c12, #8f3c16); }
     .prog-robot  { background: linear-gradient(135deg, #4a7c59, #6e8b58); }
     .prog-camp   { background: linear-gradient(135deg, #d79016, #ecab2f); }
+    .program-banner-icon {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -58%); font-size: 84px; line-height: 1;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.22));
+      user-select: none; pointer-events: none;
+    }
     .program-banner-tag {
+      position: relative; z-index: 1;
       background: rgba(255, 252, 247, 0.95); color: var(--clay);
       border-radius: 999px; padding: 5px 12px;
       font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
@@ -318,11 +337,26 @@
     .review-card {
       padding: 26px; border-radius: 20px;
       background: rgba(255, 252, 247, 0.95); border: 1px solid var(--line); transition: 0.2s;
+      display: flex; flex-direction: column;
     }
     .review-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
     .stars { color: var(--gold); font-size: 15px; margin-bottom: 14px; letter-spacing: 2px; }
-    .review-card p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
-    .reviewer { font-size: 13px; font-weight: 700; color: var(--brown); }
+    .review-card p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; flex: 1; }
+    .reviewer-row { display: flex; align-items: center; gap: 14px; padding-top: 14px; border-top: 1px dashed rgba(151, 84, 21, 0.14); }
+    .review-avatar {
+      width: 52px; height: 52px; border-radius: 999px; flex-shrink: 0;
+      display: grid; place-items: center; font-size: 26px;
+      box-shadow: 0 8px 20px rgba(100, 58, 22, 0.18);
+      border: 3px solid rgba(255, 248, 239, 0.95);
+    }
+    .review-avatar.av-1 { background: linear-gradient(135deg, #ffcda0, #f59b57); }
+    .review-avatar.av-2 { background: linear-gradient(135deg, #ffd6a0, #ecab2f); }
+    .review-avatar.av-3 { background: linear-gradient(135deg, #d4e9b8, #8bb26a); }
+    .review-avatar.av-4 { background: linear-gradient(135deg, #ffc5b0, #c46a4d); }
+    .review-avatar.av-5 { background: linear-gradient(135deg, #ffe5a7, #d79016); }
+    .review-avatar.av-6 { background: linear-gradient(135deg, #c7d9f0, #7ea5d4); }
+    .reviewer { font-size: 13px; font-weight: 700; color: var(--brown); line-height: 1.4; }
+    .reviewer-meta { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 2px; }
     .reviewer span { font-weight: 400; color: var(--muted); font-size: 12px; }
 
     /* CTA BAND */
@@ -448,7 +482,7 @@
           </a>
         </div>
         <div class="hero-stats">
-          <div class="hero-stat"><strong>200+</strong><span><span data-lang="zh">在读学员</span><span data-lang="en">Active students</span></span></div>
+          <div class="hero-stat"><strong>10000+</strong><span><span data-lang="zh">在读学员</span><span data-lang="en">Active students</span></span></div>
           <div class="hero-stat"><strong>5–18</strong><span><span data-lang="zh">适合年龄</span><span data-lang="en">Age range</span></span></div>
           <div class="hero-stat"><strong>4.9★</strong><span><span data-lang="zh">家长满意度</span><span data-lang="en">Parent rating</span></span></div>
         </div>
@@ -457,8 +491,8 @@
       <div class="hero-form-card">
         <div class="gift-badge">🎁 <span data-lang="zh">免费体验课</span><span data-lang="en">Free Trial Class</span></div>
         <h2>
-          <span data-lang="zh">45 分钟体验 AI 世界</span>
-          <span data-lang="en">45 Minutes in the AI World</span>
+          <span data-lang="zh">60 分钟体验 AI 世界</span>
+          <span data-lang="en">60 Minutes in the AI World</span>
         </h2>
         <p>
           <span data-lang="zh">无需先填表，直接选时间即可预约。首次试课完全免费，不收预付款。</span>
@@ -589,6 +623,7 @@
       <div class="programs-grid">
         <a class="program-card" href="course-system.html">
           <div class="program-banner prog-ai">
+            <span class="program-banner-icon" aria-hidden="true">🤖</span>
             <span class="program-banner-tag">AI Fundamentals</span>
           </div>
           <div class="program-body">
@@ -603,6 +638,7 @@
         </a>
         <a class="program-card" href="course-system.html">
           <div class="program-banner prog-code">
+            <span class="program-banner-icon" aria-hidden="true">🎨</span>
             <span class="program-banner-tag">AI Creative</span>
           </div>
           <div class="program-body">
@@ -617,6 +653,7 @@
         </a>
         <a class="program-card" href="course-system.html">
           <div class="program-banner prog-robot">
+            <span class="program-banner-icon" aria-hidden="true">💻</span>
             <span class="program-banner-tag">AI Programming</span>
           </div>
           <div class="program-body">
@@ -631,6 +668,7 @@
         </a>
         <a class="program-card" href="trial.html">
           <div class="program-banner prog-camp">
+            <span class="program-banner-icon" aria-hidden="true">🚀</span>
             <span class="program-banner-tag">AI Project Camp</span>
           </div>
           <div class="program-body">
@@ -786,32 +824,68 @@
         <article class="review-card">
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"孩子第一次试听课就不想走了，回家还在问什么时候上下一节。MindDo 把枯燥的代码变成了他真正喜欢的东西。"</span><span data-lang="en">"My son didn't want to leave after his first class and came home asking when the next one would be. MindDo made code into something he genuinely loves."</span></p>
-          <div class="reviewer"><span data-lang="zh">李女士</span><span data-lang="en">Mrs. Li</span><span> · <span data-lang="zh">8岁学员家长</span><span data-lang="en">Parent of an 8-year-old</span></span></div>
+          <div class="reviewer-row">
+            <div class="review-avatar av-1" aria-hidden="true">👦</div>
+            <div class="reviewer">
+              <span data-lang="zh">李同学 · 8 岁</span><span data-lang="en">Leo · Age 8</span>
+              <span class="reviewer-meta"><span data-lang="zh">家长：李女士</span><span data-lang="en">Parent: Mrs. Li</span></span>
+            </div>
+          </div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"学员主页很完整，孩子能自己查课表、申请改期。进度报告也很清楚，我能随时了解她的情况。"</span><span data-lang="en">"The student portal is very complete. My daughter can check her schedule and request reschedules herself. The progress reports keep me informed in real time."</span></p>
-          <div class="reviewer"><span data-lang="zh">王先生</span><span data-lang="en">Mr. Wang</span><span> · <span data-lang="zh">12岁学员家长</span><span data-lang="en">Parent of a 12-year-old</span></span></div>
+          <div class="reviewer-row">
+            <div class="review-avatar av-2" aria-hidden="true">👧</div>
+            <div class="reviewer">
+              <span data-lang="zh">王同学 · 12 岁</span><span data-lang="en">Lily · Age 12</span>
+              <span class="reviewer-meta"><span data-lang="zh">家长：王先生</span><span data-lang="en">Parent: Mr. Wang</span></span>
+            </div>
+          </div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"两个月前孩子连鼠标都不太会用，现在已经能用 AI 工具做出完整的小动画故事了。小班制让孩子得到了足够的关注。"</span><span data-lang="en">"Two months ago my child barely knew how to use a mouse. Now they've created a full animated story with AI tools. Small class sizes made all the difference."</span></p>
-          <div class="reviewer"><span data-lang="zh">张女士</span><span data-lang="en">Ms. Zhang</span><span> · <span data-lang="zh">7岁学员家长</span><span data-lang="en">Parent of a 7-year-old</span></span></div>
+          <div class="reviewer-row">
+            <div class="review-avatar av-3" aria-hidden="true">🧒</div>
+            <div class="reviewer">
+              <span data-lang="zh">张同学 · 7 岁</span><span data-lang="en">Emma · Age 7</span>
+              <span class="reviewer-meta"><span data-lang="zh">家长：张女士</span><span data-lang="en">Parent: Ms. Zhang</span></span>
+            </div>
+          </div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"AI 项目营很值，一周时间孩子完成了完整的 AI 项目，还在展示会上给家长演示，那种成就感是在学校里很难有的。"</span><span data-lang="en">"The AI Project Camp was absolutely worth it. In one week my child completed a full AI project and presented it to parents — that sense of achievement is rare."</span></p>
-          <div class="reviewer"><span data-lang="zh">陈先生</span><span data-lang="en">Mr. Chen</span><span> · <span data-lang="zh">11岁学员家长</span><span data-lang="en">Parent of an 11-year-old</span></span></div>
+          <div class="reviewer-row">
+            <div class="review-avatar av-4" aria-hidden="true">👦🏻</div>
+            <div class="reviewer">
+              <span data-lang="zh">陈同学 · 11 岁</span><span data-lang="en">Max · Age 11</span>
+              <span class="reviewer-meta"><span data-lang="zh">家长：陈先生</span><span data-lang="en">Parent: Mr. Chen</span></span>
+            </div>
+          </div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"我很欣赏中英双语的教学环境，孩子在学编程的同时也在接触英文技术词汇，对以后的学习很有帮助。"</span><span data-lang="en">"I appreciate the bilingual learning environment. While coding, my child picks up English technical vocabulary too — a real advantage for their future studies."</span></p>
-          <div class="reviewer"><span data-lang="zh">赵女士</span><span data-lang="en">Mrs. Zhao</span><span> · <span data-lang="zh">10岁学员家长</span><span data-lang="en">Parent of a 10-year-old</span></span></div>
+          <div class="reviewer-row">
+            <div class="review-avatar av-5" aria-hidden="true">👧🏻</div>
+            <div class="reviewer">
+              <span data-lang="zh">赵同学 · 10 岁</span><span data-lang="en">Sophia · Age 10</span>
+              <span class="reviewer-meta"><span data-lang="zh">家长：赵女士</span><span data-lang="en">Parent: Mrs. Zhao</span></span>
+            </div>
+          </div>
         </article>
         <article class="review-card">
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"运营团队响应非常快，我在 app 上提交了改期申请，两小时内就收到了确认。整个体验比之前带孩子去的任何培训机构都顺畅。"</span><span data-lang="en">"The team responds incredibly quickly. I submitted a reschedule request and got confirmation within two hours. Smoother than any other program we've tried."</span></p>
-          <div class="reviewer"><span data-lang="zh">刘先生</span><span data-lang="en">Mr. Liu</span><span> · <span data-lang="zh">9岁学员家长</span><span data-lang="en">Parent of a 9-year-old</span></span></div>
+          <div class="reviewer-row">
+            <div class="review-avatar av-6" aria-hidden="true">🧒🏻</div>
+            <div class="reviewer">
+              <span data-lang="zh">刘同学 · 9 岁</span><span data-lang="en">Ryan · Age 9</span>
+              <span class="reviewer-meta"><span data-lang="zh">家长：刘先生</span><span data-lang="en">Parent: Mr. Liu</span></span>
+            </div>
+          </div>
         </article>
       </div>
     </div>

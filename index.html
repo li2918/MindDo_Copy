@@ -344,17 +344,13 @@
     .review-card p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; flex: 1; }
     .reviewer-row { display: flex; align-items: center; gap: 14px; padding-top: 14px; border-top: 1px dashed rgba(151, 84, 21, 0.14); }
     .review-avatar {
-      width: 52px; height: 52px; border-radius: 999px; flex-shrink: 0;
-      display: grid; place-items: center; font-size: 26px;
+      width: 56px; height: 56px; border-radius: 999px; flex-shrink: 0;
+      object-fit: cover;
       box-shadow: 0 8px 20px rgba(100, 58, 22, 0.18);
       border: 3px solid rgba(255, 248, 239, 0.95);
+      background: var(--sand);
+      display: block;
     }
-    .review-avatar.av-1 { background: linear-gradient(135deg, #ffcda0, #f59b57); }
-    .review-avatar.av-2 { background: linear-gradient(135deg, #ffd6a0, #ecab2f); }
-    .review-avatar.av-3 { background: linear-gradient(135deg, #d4e9b8, #8bb26a); }
-    .review-avatar.av-4 { background: linear-gradient(135deg, #ffc5b0, #c46a4d); }
-    .review-avatar.av-5 { background: linear-gradient(135deg, #ffe5a7, #d79016); }
-    .review-avatar.av-6 { background: linear-gradient(135deg, #c7d9f0, #7ea5d4); }
     .reviewer { font-size: 13px; font-weight: 700; color: var(--brown); line-height: 1.4; }
     .reviewer-meta { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 2px; }
     .reviewer span { font-weight: 400; color: var(--muted); font-size: 12px; }
@@ -825,7 +821,7 @@
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"孩子第一次试听课就不想走了，回家还在问什么时候上下一节。MindDo 把枯燥的代码变成了他真正喜欢的东西。"</span><span data-lang="en">"My son didn't want to leave after his first class and came home asking when the next one would be. MindDo made code into something he genuinely loves."</span></p>
           <div class="reviewer-row">
-            <div class="review-avatar av-1" aria-hidden="true">👦</div>
+            <img class="review-avatar" alt="Leo" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Leo&backgroundColor=ffd6a0&radius=50" loading="lazy" />
             <div class="reviewer">
               <span data-lang="zh">李同学 · 8 岁</span><span data-lang="en">Leo · Age 8</span>
               <span class="reviewer-meta"><span data-lang="zh">家长：李女士</span><span data-lang="en">Parent: Mrs. Li</span></span>
@@ -836,7 +832,7 @@
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"学员主页很完整，孩子能自己查课表、申请改期。进度报告也很清楚，我能随时了解她的情况。"</span><span data-lang="en">"The student portal is very complete. My daughter can check her schedule and request reschedules herself. The progress reports keep me informed in real time."</span></p>
           <div class="reviewer-row">
-            <div class="review-avatar av-2" aria-hidden="true">👧</div>
+            <img class="review-avatar" alt="Lily" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lily&backgroundColor=fdbcbc&radius=50" loading="lazy" />
             <div class="reviewer">
               <span data-lang="zh">王同学 · 12 岁</span><span data-lang="en">Lily · Age 12</span>
               <span class="reviewer-meta"><span data-lang="zh">家长：王先生</span><span data-lang="en">Parent: Mr. Wang</span></span>
@@ -847,7 +843,7 @@
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"两个月前孩子连鼠标都不太会用，现在已经能用 AI 工具做出完整的小动画故事了。小班制让孩子得到了足够的关注。"</span><span data-lang="en">"Two months ago my child barely knew how to use a mouse. Now they've created a full animated story with AI tools. Small class sizes made all the difference."</span></p>
           <div class="reviewer-row">
-            <div class="review-avatar av-3" aria-hidden="true">🧒</div>
+            <img class="review-avatar" alt="Emma" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Emma&backgroundColor=c0aede&radius=50" loading="lazy" />
             <div class="reviewer">
               <span data-lang="zh">张同学 · 7 岁</span><span data-lang="en">Emma · Age 7</span>
               <span class="reviewer-meta"><span data-lang="zh">家长：张女士</span><span data-lang="en">Parent: Ms. Zhang</span></span>
@@ -858,7 +854,7 @@
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"AI 项目营很值，一周时间孩子完成了完整的 AI 项目，还在展示会上给家长演示，那种成就感是在学校里很难有的。"</span><span data-lang="en">"The AI Project Camp was absolutely worth it. In one week my child completed a full AI project and presented it to parents — that sense of achievement is rare."</span></p>
           <div class="reviewer-row">
-            <div class="review-avatar av-4" aria-hidden="true">👦🏻</div>
+            <img class="review-avatar" alt="Max" src="https://api.dicebear.com/7.x/avataaars/svg?seed=MaxTheKid&backgroundColor=b6e3f4&radius=50" loading="lazy" />
             <div class="reviewer">
               <span data-lang="zh">陈同学 · 11 岁</span><span data-lang="en">Max · Age 11</span>
               <span class="reviewer-meta"><span data-lang="zh">家长：陈先生</span><span data-lang="en">Parent: Mr. Chen</span></span>
@@ -869,7 +865,7 @@
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"我很欣赏中英双语的教学环境，孩子在学编程的同时也在接触英文技术词汇，对以后的学习很有帮助。"</span><span data-lang="en">"I appreciate the bilingual learning environment. While coding, my child picks up English technical vocabulary too — a real advantage for their future studies."</span></p>
           <div class="reviewer-row">
-            <div class="review-avatar av-5" aria-hidden="true">👧🏻</div>
+            <img class="review-avatar" alt="Sophia" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia&backgroundColor=d1d4f9&radius=50" loading="lazy" />
             <div class="reviewer">
               <span data-lang="zh">赵同学 · 10 岁</span><span data-lang="en">Sophia · Age 10</span>
               <span class="reviewer-meta"><span data-lang="zh">家长：赵女士</span><span data-lang="en">Parent: Mrs. Zhao</span></span>
@@ -880,7 +876,7 @@
           <div class="stars">★★★★★</div>
           <p><span data-lang="zh">"运营团队响应非常快，我在 app 上提交了改期申请，两小时内就收到了确认。整个体验比之前带孩子去的任何培训机构都顺畅。"</span><span data-lang="en">"The team responds incredibly quickly. I submitted a reschedule request and got confirmation within two hours. Smoother than any other program we've tried."</span></p>
           <div class="reviewer-row">
-            <div class="review-avatar av-6" aria-hidden="true">🧒🏻</div>
+            <img class="review-avatar" alt="Ryan" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ryan&backgroundColor=ffdfbf&radius=50" loading="lazy" />
             <div class="reviewer">
               <span data-lang="zh">刘同学 · 9 岁</span><span data-lang="en">Ryan · Age 9</span>
               <span class="reviewer-meta"><span data-lang="zh">家长：刘先生</span><span data-lang="en">Parent: Mr. Liu</span></span>

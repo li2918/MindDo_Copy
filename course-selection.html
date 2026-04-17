@@ -296,24 +296,6 @@
               </label>
             </div>
 
-            <h3><span data-lang="zh">课程形式 & 结算周期</span><span data-lang="en">Class Mode & Billing Cycle</span></h3>
-            <div class="form-grid">
-              <div class="field">
-                <label><span data-lang="zh">上课形式</span><span data-lang="en">Class Mode</span></label>
-                <select id="classMode">
-                  <option value="1v1">1v1 ($0)</option>
-                  <option value="small"><span data-lang="zh">小班 4 人 (-10%)</span>Small Group 1v4 (-10%)</option>
-                </select>
-              </div>
-              <div class="field">
-                <label><span data-lang="zh">结算周期</span><span data-lang="en">Billing Cycle</span></label>
-                <select id="billingCycle">
-                  <option value="monthly"><span data-lang="zh">按月</span>Monthly</option>
-                  <option value="term"><span data-lang="zh">按学期 (3 个月，-8%)</span>Per Term (3 mo, -8%)</option>
-                </select>
-              </div>
-            </div>
-
             <div class="action-row end">
               <button class="btn-primary" id="toStep2"><span data-lang="zh">下一步：选课时段 →</span><span data-lang="en">Next: Schedule →</span></button>
             </div>
@@ -453,7 +435,6 @@
           <div class="confirm-card">
             <h3><span data-lang="zh">课程信息</span><span data-lang="en">Course Details</span></h3>
             <div class="confirm-row"><span><span data-lang="zh">会员方案</span><span data-lang="en">Membership</span></span><span id="cfMembership">—</span></div>
-            <div class="confirm-row"><span><span data-lang="zh">上课形式</span><span data-lang="en">Class Mode</span></span><span id="cfMode">—</span></div>
             <div class="confirm-row"><span><span data-lang="zh">上课日</span><span data-lang="en">Class Day</span></span><span id="cfDay">—</span></div>
             <div class="confirm-row"><span><span data-lang="zh">时段</span><span data-lang="en">Time Slot</span></span><span id="cfTime">—</span></div>
             <div class="confirm-row"><span><span data-lang="zh">首课日期</span><span data-lang="en">First Class</span></span><span id="cfFirstClass">—</span></div>
@@ -462,7 +443,6 @@
             <h3><span data-lang="zh">支付信息</span><span data-lang="en">Payment Info</span></h3>
             <div class="confirm-row"><span><span data-lang="zh">订单编号</span><span data-lang="en">Order ID</span></span><span id="cfOrderId">—</span></div>
             <div class="confirm-row"><span><span data-lang="zh">支付方式</span><span data-lang="en">Method</span></span><span id="cfPayMethod">—</span></div>
-            <div class="confirm-row"><span><span data-lang="zh">结算周期</span><span data-lang="en">Billing</span></span><span id="cfBilling">—</span></div>
             <div class="confirm-row"><span><span data-lang="zh">支付金额</span><span data-lang="en">Amount Paid</span></span><span id="cfAmount">—</span></div>
             <div class="confirm-row"><span><span data-lang="zh">支付时间</span><span data-lang="en">Paid At</span></span><span id="cfPaidAt">—</span></div>
           </div>
@@ -598,8 +578,6 @@
       var state = {
         step: 1,
         plan: "weekly1",
-        classMode: "1v1",
-        billing: "monthly",
         day: "wed",
         slot: "evening",
         addons: [],
@@ -619,20 +597,14 @@
       function computeTotals() {
         var plan = PLANS[state.plan];
         var base = plan.price;
-        var modeDisc = state.classMode === "small" ? 0.9 : 1;
-        var afterMode = base * modeDisc;
-        var billingMul = state.billing === "term" ? 3 * 0.92 : 1;
-        var afterBilling = afterMode * billingMul;
         var addonSum = 0;
         state.addons.forEach(function (id) {
           var a = ADDONS.find(function (x) { return x.id === id; });
-          if (a) addonSum += a.price * (state.billing === "term" ? 3 : 1);
+          if (a) addonSum += a.price;
         });
-        var total = afterBilling + addonSum;
+        var total = base + addonSum;
         return {
           base: base,
-          afterMode: Math.round(afterMode * 100) / 100,
-          afterBilling: Math.round(afterBilling * 100) / 100,
           addonSum: addonSum,
           total: Math.round(total * 100) / 100
         };
@@ -682,13 +654,9 @@
       function summaryRows() {
         var plan = PLANS[state.plan];
         var t = computeTotals();
-        var modeLabel = state.classMode === "small" ? (k() === "zh" ? "小班 4 人" : "Small Group 1v4") : "1v1";
-        var billLabel = state.billing === "term" ? (k() === "zh" ? "学期 (3 月)" : "Per Term (3 mo)") : (k() === "zh" ? "按月" : "Monthly");
         var planLabel = k() === "zh" ? plan.labelZh : plan.labelEn;
         var rows = [
-          { l: k() === "zh" ? "Membership 方案" : "Membership", v: planLabel + " · " + money(plan.price) + "/mo" },
-          { l: k() === "zh" ? "上课形式" : "Class Mode", v: modeLabel + (state.classMode === "small" ? " (-10%)" : "") },
-          { l: k() === "zh" ? "结算周期" : "Billing", v: billLabel + (state.billing === "term" ? " (-8%)" : "") }
+          { l: k() === "zh" ? "Membership 方案" : "Membership", v: planLabel + " · " + money(plan.price) + "/mo" }
         ];
         if (state.step >= 2) {
           var day = DAYS.find(function (x) { return x.k === state.day; });
@@ -773,13 +741,11 @@
         var day = DAYS.find(function (x) { return x.k === state.day; });
         var slot = SLOTS.find(function (x) { return x.k === state.slot; });
         document.getElementById("cfMembership").textContent = (k() === "zh" ? plan.labelZh : plan.labelEn);
-        document.getElementById("cfMode").textContent = state.classMode === "small" ? (k() === "zh" ? "小班 4 人" : "Small Group 1v4") : "1v1";
         document.getElementById("cfDay").textContent = day ? (k() === "zh" ? day.zh : day.en) : "—";
         document.getElementById("cfTime").textContent = slot ? slot.time + " (" + (k() === "zh" ? slot.zh : slot.en) + ")" : "—";
         document.getElementById("cfFirstClass").textContent = firstClassDate(state.day);
         document.getElementById("cfOrderId").textContent = state.orderId;
         document.getElementById("cfPayMethod").textContent = k() === "zh" ? PAY_METHODS[state.payMethod].zh : PAY_METHODS[state.payMethod].en;
-        document.getElementById("cfBilling").textContent = state.billing === "term" ? (k() === "zh" ? "按学期 (3 月)" : "Per Term (3 mo)") : (k() === "zh" ? "按月" : "Monthly");
         document.getElementById("cfAmount").textContent = money(totals.total);
         document.getElementById("cfPaidAt").textContent = new Date(state.paidAt).toLocaleString(k() === "en" ? "en-US" : "zh-CN");
         document.getElementById("orderIdBadge").textContent = "#" + state.orderId;
@@ -813,8 +779,6 @@
             orderId: state.orderId,
             plan: state.plan,
             planLabel: k() === "zh" ? plan.labelZh : plan.labelEn,
-            classMode: state.classMode,
-            billingCycle: state.billing,
             weekday: day ? (k() === "zh" ? day.zh : day.en) : state.day,
             timeSlot: slot ? slot.time : state.slot,
             addons: state.addons.slice(),
@@ -896,8 +860,6 @@
         renderMembershipSelection();
         renderSummaries();
       });
-      document.getElementById("classMode").addEventListener("change", function (e) { state.classMode = e.target.value; renderSummaries(); });
-      document.getElementById("billingCycle").addEventListener("change", function (e) { state.billing = e.target.value; renderSummaries(); });
 
       document.getElementById("dayGrid").addEventListener("click", function (e) {
         var btn = e.target.closest("[data-day]");
@@ -951,7 +913,7 @@
 
       document.getElementById("payBtn").addEventListener("click", processPayment);
       document.getElementById("newOrderBtn").addEventListener("click", function () {
-        state = { step: 1, plan: "weekly1", classMode: "1v1", billing: "monthly", day: "wed", slot: "evening", addons: [], payMethod: "card", orderId: "", paidAt: "" };
+        state = { step: 1, plan: "weekly1", day: "wed", slot: "evening", addons: [], payMethod: "card", orderId: "", paidAt: "" };
         document.querySelectorAll("[data-pay]").forEach(function (t) { t.classList.toggle("active", t.getAttribute("data-pay") === "card"); });
         document.getElementById("payCard").classList.add("active");
         document.getElementById("payAlipay").classList.remove("active");
@@ -965,8 +927,6 @@
         renderDayGrid();
         renderSlotGrid();
         renderAddonList();
-        document.getElementById("classMode").value = "1v1";
-        document.getElementById("billingCycle").value = "monthly";
         setStep(1);
       });
 

@@ -160,30 +160,34 @@
       text-align: center;
     }
     .trial-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(215, 144, 22, 0.42); }
-    .trial-steps { display: grid; gap: 10px; margin: 20px 0 18px; }
-    .trial-steps .step {
-      display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center;
-      padding: 12px 14px; border-radius: 12px;
-      background: rgba(255, 248, 238, 0.8); border: 1px solid rgba(151, 84, 21, 0.1);
+    .trial-outcomes {
+      margin: 20px 0 18px;
+      padding: 16px; border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 248, 234, 0.7), rgba(255, 252, 244, 0.7));
+      border: 1px solid rgba(151, 84, 21, 0.1);
     }
-    .trial-steps .step .sn {
-      width: 32px; height: 32px; border-radius: 999px;
+    .trial-outcomes .oc-head {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
+      color: var(--gold-deep); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .trial-outcomes .oc-head::before { content: "✨"; font-size: 13px; }
+    .outcome-list { display: grid; gap: 12px; }
+    .outcome {
+      display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: center;
+    }
+    .outcome .oc-icon {
+      width: 38px; height: 38px; border-radius: 10px;
       background: linear-gradient(135deg, #fff6de, #ffd977);
-      color: var(--clay); display: grid; place-items: center;
-      font-size: 14px; font-weight: 800;
+      display: grid; place-items: center; font-size: 18px;
+      box-shadow: 0 4px 10px rgba(215, 144, 22, 0.2);
     }
-    .trial-steps .step strong { display: block; font-size: 13px; font-weight: 800; color: var(--clay); margin-bottom: 2px; text-align: left; }
-    .trial-steps .step span { font-size: 12px; color: var(--muted); line-height: 1.5; text-align: left; }
-    .trial-perks {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-      font-size: 11px; color: var(--muted); padding: 10px 0;
-      border-top: 1px dashed rgba(151, 84, 21, 0.16); margin-top: 4px;
-    }
-    .trial-perks span { display: inline-flex; align-items: center; justify-content: center; gap: 4px; font-weight: 600; text-align: center; }
-    .trial-perks span::before { content: "✓"; color: var(--success, #6f8f57); font-weight: 800; }
+    .outcome strong { display: block; font-size: 13px; font-weight: 800; color: var(--clay); line-height: 1.3; margin-bottom: 2px; text-align: left; }
+    .outcome .oc-desc { font-size: 12px; color: var(--muted); line-height: 1.5; text-align: left; display: block; }
+
     .trial-secondary {
       display: block; text-align: center; font-size: 12px; font-weight: 700;
-      color: var(--muted); padding-top: 10px; border-top: 1px dashed rgba(151, 84, 21, 0.16);
+      color: var(--muted); padding-top: 14px; border-top: 1px dashed rgba(151, 84, 21, 0.16);
       text-decoration: none; transition: 0.15s;
     }
     .trial-secondary:hover { color: var(--clay); }
@@ -495,34 +499,31 @@
           <span data-lang="en">Book My Free Trial →</span>
         </a>
 
-        <div class="trial-steps">
-          <div class="step">
-            <div class="sn">1</div>
-            <div>
-              <strong><span data-lang="zh">选择时间</span><span data-lang="en">Pick a Time</span></strong>
-              <span><span data-lang="zh">在线日历选择合适时段与意向课程</span><span data-lang="en">Choose a slot and AI track from the calendar</span></span>
+        <div class="trial-outcomes">
+          <div class="oc-head"><span data-lang="zh">这节课你将获得</span><span data-lang="en">What your child will take home</span></div>
+          <div class="outcome-list">
+            <div class="outcome">
+              <div class="oc-icon">🎨</div>
+              <div>
+                <strong><span data-lang="zh">第一件属于自己的 AI 作品</span><span data-lang="en">Their very first AI creation</span></strong>
+                <span class="oc-desc"><span data-lang="zh">和老师一起完成，下课就能展示给家长</span><span data-lang="en">Built with a teacher, ready to show parents</span></span>
+              </div>
+            </div>
+            <div class="outcome">
+              <div class="oc-icon">🧭</div>
+              <div>
+                <strong><span data-lang="zh">1 对 1 能力评估</span><span data-lang="en">One-on-one skill assessment</span></strong>
+                <span class="oc-desc"><span data-lang="zh">现场了解孩子的 AI 起点与学习偏好</span><span data-lang="en">Live snapshot of AI readiness and learning style</span></span>
+              </div>
+            </div>
+            <div class="outcome">
+              <div class="oc-icon">🎯</div>
+              <div>
+                <strong><span data-lang="zh">专属课程路径建议</span><span data-lang="en">Personalized learning path</span></strong>
+                <span class="oc-desc"><span data-lang="zh">根据试课表现匹配 5 条 AI 学习路线之一</span><span data-lang="en">Matched to one of our 5 AI tracks based on the trial</span></span>
+              </div>
             </div>
           </div>
-          <div class="step">
-            <div class="sn">2</div>
-            <div>
-              <strong><span data-lang="zh">完善信息</span><span data-lang="en">Enter Info</span></strong>
-              <span><span data-lang="zh">填写联系方式并完成邮箱或手机验证</span><span data-lang="en">Fill contact info and verify by email or SMS</span></span>
-            </div>
-          </div>
-          <div class="step">
-            <div class="sn">3</div>
-            <div>
-              <strong><span data-lang="zh">上课体验</span><span data-lang="en">Attend Class</span></strong>
-              <span><span data-lang="zh">和老师一起完成你的第一个 AI 小作品</span><span data-lang="en">Build your first AI project with an instructor</span></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="trial-perks">
-          <span><span data-lang="zh">无需预付</span><span data-lang="en">No prepayment</span></span>
-          <span><span data-lang="zh">首次免费</span><span data-lang="en">First free</span></span>
-          <span><span data-lang="zh">线上/线下</span><span data-lang="en">Online/in-person</span></span>
         </div>
 
         <a href="campuses.html" class="trial-secondary">

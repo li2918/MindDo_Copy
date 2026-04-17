@@ -408,117 +408,261 @@
     return saved === "en" ? "en" : "zh-CN";
   }
 
+  var COPY = {
+    "zh-CN": {
+      title: "流程测试面板",
+      desc: "填充示例数据测试完整学员流程。",
+      student: "学员",
+      noStudent: "暂无激活学员",
+      stage: "当前阶段",
+      next: "下一步",
+      seed: "填充示例数据",
+      payment: "模拟支付",
+      reset: "重置数据",
+      goNext: "前往下一步",
+      studentJourney: "学员旅程",
+      ops: "运营后台",
+      info: "信息页面",
+      collapse: "收起",
+      expand: "流程测试",
+      stages: {
+        start: "尚未开始",
+        trial: "已预约试课",
+        assessment: "已完成评估",
+        signup: "已注册账户",
+        payment: "已支付",
+        membership: "已选课排课",
+        feedback: "已收到反馈"
+      },
+      pages: {
+        "index.html": "首页",
+        "trial.html": "预约试课",
+        "assessment.html": "能力评估",
+        "signup.html": "注册登录",
+        "course-selection.html": "选课排课",
+        "student-account.html": "学员中心",
+        "feedback.html": "课堂反馈",
+        "semester-report.html": "学期报告",
+        "course-system.html": "课程体系",
+        "dashboard.html": "运营看板",
+        "student-management.html": "学员管理",
+        "request-center.html": "申请处理",
+        "new-trials.html": "新试课",
+        "new-students.html": "新学员"
+      }
+    },
+    en: {
+      title: "Flow Test Panel",
+      desc: "Seed demo data to test the full student flow.",
+      student: "Student",
+      noStudent: "No active student",
+      stage: "Stage",
+      next: "Next",
+      seed: "Seed Demo",
+      payment: "Mock Payment",
+      reset: "Reset",
+      goNext: "Go Next",
+      studentJourney: "Student Journey",
+      ops: "Operations",
+      info: "Info Pages",
+      collapse: "Collapse",
+      expand: "Flow Test",
+      stages: {
+        start: "Not Started",
+        trial: "Trial Booked",
+        assessment: "Assessment Done",
+        signup: "Account Created",
+        payment: "Payment Made",
+        membership: "Enrolled",
+        feedback: "Feedback Received"
+      },
+      pages: {
+        "index.html": "Home",
+        "trial.html": "Book Trial",
+        "assessment.html": "Assessment",
+        "signup.html": "Sign Up",
+        "course-selection.html": "Course Selection",
+        "student-account.html": "Student Hub",
+        "feedback.html": "Class Feedback",
+        "semester-report.html": "Semester Report",
+        "course-system.html": "Curriculum",
+        "dashboard.html": "Dashboard",
+        "student-management.html": "Students",
+        "request-center.html": "Requests",
+        "new-trials.html": "New Trials",
+        "new-students.html": "New Students"
+      }
+    }
+  };
+
+  var PAGE_GROUPS = {
+    journey: ["trial.html", "assessment.html", "signup.html", "course-selection.html", "student-account.html", "feedback.html", "semester-report.html"],
+    ops: ["dashboard.html", "student-management.html", "request-center.html", "new-trials.html", "new-students.html"],
+    info: ["index.html", "course-system.html"]
+  };
+
+  var STAGE_ORDER = ["start", "trial", "assessment", "signup", "payment", "membership", "feedback"];
+
+  function currentPageName() {
+    var path = (window.location.pathname || "").split("/").pop();
+    return path || "index.html";
+  }
+
+  function injectPanelStyles() {
+    if (document.getElementById("minddoFlowPanelStyle")) return;
+    var style = document.createElement("style");
+    style.id = "minddoFlowPanelStyle";
+    style.textContent =
+      ".minddo-flow-toggle{position:fixed;right:18px;bottom:18px;z-index:9998;width:52px;height:52px;border-radius:999px;border:none;cursor:pointer;background:linear-gradient(135deg,#ffe5a7,#ecab2f);color:#4b250f;box-shadow:0 8px 24px rgba(143,60,22,.28);font-family:'Avenir Next','Helvetica Neue','PingFang SC','Microsoft YaHei',sans-serif;font-size:20px;display:flex;align-items:center;justify-content:center;transition:.2s}" +
+      ".minddo-flow-toggle:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(143,60,22,.38)}" +
+      ".minddo-flow-toggle .dot{position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:999px;background:#c46a4d;border:2px solid #fff;display:none}" +
+      ".minddo-flow-toggle.has-data .dot{display:block}" +
+      ".minddo-flow-panel{position:fixed;right:18px;bottom:18px;z-index:9999;width:min(340px,calc(100vw - 24px));max-height:calc(100vh - 36px);overflow-y:auto;padding:18px;border:1px solid rgba(126,77,29,.14);border-radius:20px;background:rgba(255,252,246,.98);box-shadow:0 24px 60px rgba(100,58,22,.22);font-family:'Avenir Next','Helvetica Neue','PingFang SC','Microsoft YaHei',sans-serif;color:#45200d}" +
+      ".minddo-flow-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}" +
+      ".minddo-flow-head h3{margin:0;font-size:15px;font-weight:800;color:#8f3c16}" +
+      ".minddo-flow-close{background:none;border:none;color:#826956;cursor:pointer;font-size:18px;line-height:1;padding:2px 6px;border-radius:6px;font-family:inherit}" +
+      ".minddo-flow-close:hover{background:rgba(143,60,22,.08);color:#8f3c16}" +
+      ".minddo-flow-panel p.desc{margin:0 0 12px;font-size:12px;line-height:1.55;color:#826956}" +
+      ".minddo-flow-progress{display:flex;gap:3px;margin-bottom:12px}" +
+      ".minddo-flow-progress .seg{flex:1;height:5px;border-radius:999px;background:rgba(126,77,29,.12)}" +
+      ".minddo-flow-progress .seg.done{background:linear-gradient(90deg,#ecab2f,#d79016)}" +
+      ".minddo-flow-kv{display:grid;grid-template-columns:70px 1fr;gap:4px 10px;margin-bottom:12px;font-size:12px;line-height:1.5}" +
+      ".minddo-flow-kv strong{color:#8f3c16;font-weight:700}" +
+      ".minddo-flow-kv span{color:#45200d;word-break:break-all}" +
+      ".minddo-flow-group{margin-top:12px}" +
+      ".minddo-flow-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#826956;margin-bottom:6px}" +
+      ".minddo-flow-row{display:flex;flex-wrap:wrap;gap:6px}" +
+      ".minddo-flow-btn,.minddo-flow-link{display:inline-flex;align-items:center;justify-content:center;padding:7px 11px;border-radius:999px;border:1px solid rgba(126,77,29,.14);background:rgba(255,248,239,.98);color:#8f3c16;text-decoration:none;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:.15s}" +
+      ".minddo-flow-btn:hover,.minddo-flow-link:hover{background:#f2e4c9;border-color:rgba(236,171,47,.5)}" +
+      ".minddo-flow-btn.primary,.minddo-flow-link.primary{background:linear-gradient(135deg,#ffe5a7,#ecab2f);color:#4b250f;border-color:transparent;box-shadow:0 3px 10px rgba(215,144,22,.2)}" +
+      ".minddo-flow-btn.primary:hover,.minddo-flow-link.primary:hover{background:linear-gradient(135deg,#ffdd8e,#d79016);transform:translateY(-1px)}" +
+      ".minddo-flow-btn.danger{color:#c46a4d;border-color:rgba(196,106,77,.3)}" +
+      ".minddo-flow-btn.danger:hover{background:rgba(196,106,77,.1);border-color:#c46a4d}" +
+      ".minddo-flow-link.current{background:#f2e4c9;border-color:#ecab2f;color:#5f2c12;pointer-events:none;cursor:default}" +
+      "@media (max-width:760px){.minddo-flow-panel{left:12px;right:12px;bottom:12px;width:auto}.minddo-flow-toggle{right:12px;bottom:12px}}";
+    document.head.appendChild(style);
+  }
+
+  function renderPanelHTML(t, current, stage, currentPage) {
+    var pages = t.pages || {};
+    var stageIdx = STAGE_ORDER.indexOf(stage);
+    var segs = STAGE_ORDER.slice(1).map(function (_, i) {
+      return "<div class='seg" + (i < stageIdx ? " done" : "") + "'></div>";
+    }).join("");
+
+    var linkRow = function (list) {
+      return list.map(function (href) {
+        var label = pages[href] || href;
+        var cls = href === currentPage ? " current" : "";
+        return "<a class='minddo-flow-link" + cls + "' href='" + href + "'>" + label + "</a>";
+      }).join("");
+    };
+
+    var nextPage = getNextPage(stage);
+    var nextLabel = pages[nextPage] || nextPage;
+
+    return (
+      "<div class='minddo-flow-head'>" +
+      "<h3>" + t.title + "</h3>" +
+      "<button type='button' class='minddo-flow-close' data-flow-action='collapse' aria-label='Collapse'>×</button>" +
+      "</div>" +
+      "<p class='desc'>" + t.desc + "</p>" +
+      "<div class='minddo-flow-progress'>" + segs + "</div>" +
+      "<div class='minddo-flow-kv'>" +
+      "<strong>" + t.student + "</strong><span>" + (current.studentName || current.name || t.noStudent) + "</span>" +
+      "<strong>" + t.stage + "</strong><span>" + ((t.stages && t.stages[stage]) || stage) + "</span>" +
+      "<strong>" + t.next + "</strong><span>" + nextLabel + "</span>" +
+      "</div>" +
+      "<div class='minddo-flow-row'>" +
+      "<a class='minddo-flow-link primary' href='" + nextPage + "' data-flow-next='1'>→ " + t.goNext + "</a>" +
+      "<button type='button' class='minddo-flow-btn primary' data-flow-action='seed'>" + t.seed + "</button>" +
+      "<button type='button' class='minddo-flow-btn' data-flow-action='payment'>" + t.payment + "</button>" +
+      "<button type='button' class='minddo-flow-btn danger' data-flow-action='reset'>" + t.reset + "</button>" +
+      "</div>" +
+      "<div class='minddo-flow-group'>" +
+      "<div class='minddo-flow-label'>" + t.studentJourney + "</div>" +
+      "<div class='minddo-flow-row'>" + linkRow(PAGE_GROUPS.journey) + "</div>" +
+      "</div>" +
+      "<div class='minddo-flow-group'>" +
+      "<div class='minddo-flow-label'>" + t.ops + "</div>" +
+      "<div class='minddo-flow-row'>" + linkRow(PAGE_GROUPS.ops) + "</div>" +
+      "</div>" +
+      "<div class='minddo-flow-group'>" +
+      "<div class='minddo-flow-label'>" + t.info + "</div>" +
+      "<div class='minddo-flow-row'>" + linkRow(PAGE_GROUPS.info) + "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderPanel() {
+    var panel = document.getElementById("minddoFlowPanel");
+    if (!panel) return;
+    var lang = currentLang();
+    var t = COPY[lang] || COPY["zh-CN"];
+    var snapshot = getSnapshot();
+    var current = snapshot.currentStudent || {};
+    var stage = getStage(snapshot);
+    panel.innerHTML = renderPanelHTML(t, current, stage, currentPageName());
+  }
+
+  function setCollapsed(collapsed) {
+    try { localStorage.setItem("minddo_flow_collapsed", collapsed ? "1" : "0"); } catch (_) {}
+    var panel = document.getElementById("minddoFlowPanel");
+    var toggle = document.getElementById("minddoFlowToggle");
+    if (panel) panel.style.display = collapsed ? "none" : "block";
+    if (toggle) toggle.style.display = collapsed ? "flex" : "none";
+  }
+
   function injectPanel() {
     if (!document.body || document.getElementById("minddoFlowPanel")) return;
+    injectPanelStyles();
 
-    var style = document.createElement("style");
-    style.textContent =
-      ".minddo-flow-panel{position:fixed;right:18px;bottom:18px;z-index:99;width:min(320px,calc(100vw - 24px));padding:14px;border:1px solid rgba(151,84,21,.16);border-radius:18px;background:rgba(255,251,245,.95);box-shadow:0 18px 40px rgba(123,72,24,.16);backdrop-filter:blur(12px);font-family:'Avenir Next','Helvetica Neue','PingFang SC','Microsoft YaHei',sans-serif;color:#4f2410}" +
-      ".minddo-flow-panel h3{margin:0 0 6px;font-size:15px;color:#8c3d14}" +
-      ".minddo-flow-panel p{margin:0;font-size:12px;line-height:1.6;color:#8b6e58}" +
-      ".minddo-flow-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}" +
-      ".minddo-flow-btn,.minddo-flow-link{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;border:1px solid rgba(151,84,21,.14);background:rgba(255,247,236,.96);color:#8c3d14;text-decoration:none;font-size:12px;cursor:pointer}" +
-      ".minddo-flow-btn.primary,.minddo-flow-link.primary{background:linear-gradient(135deg,#fff6de,#ffd977)}" +
-      ".minddo-flow-kv{display:grid;grid-template-columns:88px 1fr;gap:6px;margin-top:10px;font-size:12px}" +
-      ".minddo-flow-kv strong{color:#8c3d14}" +
-      "@media (max-width:760px){.minddo-flow-panel{left:12px;right:12px;bottom:12px;width:auto}}";
-    document.head.appendChild(style);
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.id = "minddoFlowToggle";
+    toggle.className = "minddo-flow-toggle";
+    toggle.setAttribute("aria-label", "Flow Test");
+    toggle.innerHTML = "⚡<span class='dot'></span>";
+    toggle.addEventListener("click", function () { setCollapsed(false); });
+    document.body.appendChild(toggle);
 
     var panel = document.createElement("aside");
     panel.id = "minddoFlowPanel";
     panel.className = "minddo-flow-panel";
+    document.body.appendChild(panel);
 
-    var snapshot = getSnapshot();
-    var current = snapshot.currentStudent || {};
-    var stage = getStage(snapshot);
-    var lang = currentLang();
-    var copy = {
-      "zh-CN": {
-        title: "流程测试面板",
-        desc: "填充示例数据测试完整学员流程：试课 → 评估 → 注册 → 选课 → 学员中心 → 反馈。",
-        student: "学员",
-        noStudent: "暂无激活学员",
-        stage: "当前阶段",
-        next: "下一步",
-        seed: "填充示例数据",
-        payment: "模拟支付",
-        reset: "重置数据",
-        goNext: "前往下一步",
-        studentPage: "学员中心",
-        dashboard: "运营看板",
-        report: "学期报告",
-        trials: "新试课",
-        stages: {
-          start: "开始",
-          trial: "已预约试课",
-          assessment: "已完成评估",
-          signup: "已注册账户",
-          payment: "已支付",
-          membership: "已选课排课",
-          feedback: "已收到反馈"
-        }
-      },
-      en: {
-        title: "Flow Test Panel",
-        desc: "Seed demo data to test the full flow: Trial → Assessment → Signup → Course Selection → Student Hub → Feedback.",
-        student: "Student",
-        noStudent: "No active student",
-        stage: "Stage",
-        next: "Next",
-        seed: "Seed Demo",
-        payment: "Mock Payment",
-        reset: "Reset",
-        goNext: "Go Next",
-        studentPage: "Student Hub",
-        dashboard: "Dashboard",
-        report: "Semester Report",
-        trials: "New Trials",
-        stages: {
-          start: "Start",
-          trial: "Trial Booked",
-          assessment: "Assessment Done",
-          signup: "Account Created",
-          payment: "Payment Made",
-          membership: "Enrolled",
-          feedback: "Feedback Received"
-        }
-      }
-    };
-    var t = copy[lang] || copy["zh-CN"];
-
-    panel.innerHTML =
-      "<h3>" + t.title + "</h3>" +
-      "<p>" + t.desc + "</p>" +
-      "<div class='minddo-flow-kv'>" +
-      "<strong>" + t.student + "</strong><span>" + (current.studentName || current.name || t.noStudent) + "</span>" +
-      "<strong>" + t.stage + "</strong><span>" + ((t.stages && t.stages[stage]) || stage) + "</span>" +
-      "<strong>" + t.next + "</strong><span>" + getNextPage(stage) + "</span>" +
-      "</div>" +
-      "<div class='minddo-flow-row'>" +
-      "<button type='button' class='minddo-flow-btn primary' data-flow-action='seed'>" + t.seed + "</button>" +
-      "<button type='button' class='minddo-flow-btn' data-flow-action='payment'>" + t.payment + "</button>" +
-      "<button type='button' class='minddo-flow-btn' data-flow-action='reset'>" + t.reset + "</button>" +
-      "</div>" +
-      "<div class='minddo-flow-row'>" +
-      "<a class='minddo-flow-link primary' href='" + getNextPage(stage) + "'>" + t.goNext + "</a>" +
-      "<a class='minddo-flow-link' href='student-account.html'>" + t.studentPage + "</a>" +
-      "</div>" +
-      "<div class='minddo-flow-row'>" +
-      "<a class='minddo-flow-link' href='dashboard.html'>" + t.dashboard + "</a>" +
-      "<a class='minddo-flow-link' href='semester-report.html'>" + t.report + "</a>" +
-      "<a class='minddo-flow-link' href='new-trials.html'>" + t.trials + "</a>" +
-      "</div>";
+    renderPanel();
 
     panel.addEventListener("click", function (e) {
-      var action = e.target && e.target.getAttribute("data-flow-action");
-      if (!action) return;
+      var actionEl = e.target && e.target.closest && e.target.closest("[data-flow-action]");
+      if (!actionEl) return;
+      var action = actionEl.getAttribute("data-flow-action");
+      if (action === "collapse") {
+        e.preventDefault();
+        setCollapsed(true);
+        return;
+      }
       if (action === "seed") seedDemoData();
-      if (action === "reset") clearFlowData();
-      if (action === "payment") mockPaymentForCurrentStudent();
-      window.location.reload();
+      else if (action === "reset") clearFlowData();
+      else if (action === "payment") mockPaymentForCurrentStudent();
+      else return;
+      renderPanel();
+      var tgl = document.getElementById("minddoFlowToggle");
+      if (tgl) tgl.classList.toggle("has-data", !!getCurrentStudent());
     });
 
-    document.body.appendChild(panel);
+    var hasData = !!getCurrentStudent();
+    toggle.classList.toggle("has-data", hasData);
+
+    var savedCollapsed = null;
+    try { savedCollapsed = localStorage.getItem("minddo_flow_collapsed"); } catch (_) {}
+    setCollapsed(savedCollapsed === "1");
+
+    document.querySelectorAll("[data-set-lang]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setTimeout(renderPanel, 0);
+      });
+    });
   }
 
   document.addEventListener("DOMContentLoaded", function () {

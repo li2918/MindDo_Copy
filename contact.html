@@ -79,6 +79,7 @@
     .field { display:grid; gap:6px; }
     .field.full { grid-column:1 / -1; }
     .field label { font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
+    .field label .req { color:var(--error); margin-left:4px; font-size:14px; line-height:1; }
     .field input, .field select, .field textarea {
       width:100%; border:1px solid rgba(126,77,29,0.18); background:rgba(255,252,247,0.9); color:var(--text);
       border-radius:12px; padding:12px 14px; font-size:14px; font-family:inherit; outline:none; transition:.15s;
@@ -202,14 +203,14 @@
           <div class="channel-icon">📞</div>
           <h3><span data-lang="zh">电话联系</span><span data-lang="en">Call Us</span></h3>
           <p><span data-lang="zh">工作时间内拨打总机，接线员会转接到相应的顾问。</span><span data-lang="en">Dial our main line during business hours and we'll transfer you to the right advisor.</span></p>
-          <div class="value"><a href="tel:+18005551234">+1 (800) 555-MIND</a></div>
+          <div class="value"><a href="tel:+19492367896">(949) 236-7896</a></div>
           <div class="meta"><span data-lang="zh">工作时间实时接听</span><span data-lang="en">Live during business hours</span></div>
         </article>
         <article class="channel">
           <div class="channel-icon">✉️</div>
           <h3><span data-lang="zh">邮件联系</span><span data-lang="en">Email Us</span></h3>
           <p><span data-lang="zh">适合详细咨询、发送材料或工作外时间的问题。</span><span data-lang="en">Best for detailed questions, sharing documents, or after-hours inquiries.</span></p>
-          <div class="value"><a href="mailto:hello@minddo.example.com">hello@minddo.example.com</a></div>
+          <div class="value"><a href="mailto:hello@minddo.com">hello@minddo.com</a></div>
           <div class="meta"><span data-lang="zh">2 小时内回复（工作时间内）</span><span data-lang="en">Reply within 2 business hours</span></div>
         </article>
         <article class="channel">
@@ -234,11 +235,11 @@
             <form id="contactForm" class="form-card" novalidate>
               <div class="form-grid">
                 <div class="field">
-                  <label for="cName"><span data-lang="zh">你的姓名</span><span data-lang="en">Your Name</span></label>
+                  <label for="cName"><span data-lang="zh">你的姓名</span><span data-lang="en">Your Name</span><span class="req" aria-hidden="true">*</span></label>
                   <input id="cName" type="text" autocomplete="name" required />
                 </div>
                 <div class="field">
-                  <label for="cEmail"><span data-lang="zh">邮箱</span><span data-lang="en">Email</span></label>
+                  <label for="cEmail"><span data-lang="zh">邮箱</span><span data-lang="en">Email</span><span class="req" aria-hidden="true">*</span></label>
                   <input id="cEmail" type="email" autocomplete="email" placeholder="parent@example.com" required />
                 </div>
                 <div class="field">
@@ -317,7 +318,7 @@
                 <div class="ico">📞</div>
                 <div>
                   <span class="label"><span data-lang="zh">总机电话</span><span data-lang="en">Main Line</span></span>
-                  <span class="value"><a href="tel:+18005551234">+1 (800) 555-MIND</a></span>
+                  <span class="value"><a href="tel:+19492367896">(949) 236-7896</a></span>
                   <span class="sub"><span data-lang="zh">工作日 9:00 – 18:00（太平洋时间）</span><span data-lang="en">Mon–Fri 9:00–18:00 PT</span></span>
                 </div>
               </div>
@@ -325,28 +326,28 @@
                 <div class="ico">✉️</div>
                 <div>
                   <span class="label"><span data-lang="zh">通用邮箱</span><span data-lang="en">General</span></span>
-                  <span class="value"><a href="mailto:hello@minddo.example.com">hello@minddo.example.com</a></span>
+                  <span class="value"><a href="mailto:hello@minddo.com">hello@minddo.com</a></span>
                 </div>
               </div>
               <div class="info-row">
                 <div class="ico">🎓</div>
                 <div>
                   <span class="label"><span data-lang="zh">招生咨询</span><span data-lang="en">Admissions</span></span>
-                  <span class="value"><a href="mailto:admissions@minddo.example.com">admissions@minddo.example.com</a></span>
+                  <span class="value"><a href="mailto:admissions@minddo.com">admissions@minddo.com</a></span>
                 </div>
               </div>
               <div class="info-row">
                 <div class="ico">🤝</div>
                 <div>
                   <span class="label"><span data-lang="zh">合作 / 媒体</span><span data-lang="en">Partnerships / Press</span></span>
-                  <span class="value"><a href="mailto:partners@minddo.example.com">partners@minddo.example.com</a></span>
+                  <span class="value"><a href="mailto:partners@minddo.com">partners@minddo.com</a></span>
                 </div>
               </div>
               <div class="info-row">
                 <div class="ico">💼</div>
                 <div>
                   <span class="label"><span data-lang="zh">加入我们</span><span data-lang="en">Careers</span></span>
-                  <span class="value"><a href="mailto:careers@minddo.example.com">careers@minddo.example.com</a></span>
+                  <span class="value"><a href="mailto:careers@minddo.com">careers@minddo.com</a></span>
                 </div>
               </div>
               <div class="social-row">
@@ -498,7 +499,7 @@
             <h3><span data-lang="zh">线上课程</span><span data-lang="en">Online Classes</span></h3>
             <div class="region"><span data-lang="zh">虚拟校区 · 全球学员</span><span data-lang="en">Virtual · Global</span></div>
             <div class="addr"><span data-lang="zh">随时随地加入直播小班课</span><span data-lang="en">Join small-group live classes from anywhere</span></div>
-            <div class="phone">💬 <a href="mailto:online@minddo.example.com">online@minddo.example.com</a></div>
+            <div class="phone">💬 <a href="mailto:online@minddo.com">online@minddo.com</a></div>
             <div class="hours"><span data-lang="zh">时段灵活，覆盖北美全部时区</span><span data-lang="en">Flexible slots across all N.A. timezones</span></div>
             <a class="visit" href="campuses.html#campus-online"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
           </article>

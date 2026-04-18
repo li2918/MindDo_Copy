@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联系 MindDo | Contact MindDo</title>
+  <meta name="description" content="联系 MindDo 招生顾问、找到最近的校区电话、查看学员支持联系方式。 · Get in touch with a MindDo advisor, find your closest campus phone number, or reach student support." />
+  <meta name="author" content="MindDo AI Learning Center" />
+  <meta name="theme-color" content="#8f3c16" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="MindDo" />
+  <meta property="og:title" content="Contact MindDo" />
+  <meta property="og:description" content="Get in touch with a MindDo advisor, find your closest campus, or reach student support." />
+  <meta property="og:image" content="assets/favicon.svg" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="contact.html" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/favicon.svg" />
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    :root { --bg:#fbf7ef; --sand:#f2e4c9; --card:rgba(255,252,246,0.94); --line:rgba(126,77,29,0.14); --text:#45200d; --muted:#826956; --gold:#ecab2f; --gold-deep:#d79016; --clay:#8f3c16; --brown:#5f2c12; --success:#6f8f57; --error:#c46a4d; }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:"Avenir Next","Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif; color:var(--text); background:var(--bg); }
+    a { color:inherit; text-decoration:none; }
+    button { font:inherit; }
+    [data-lang] { display:none; }
+    html[lang="zh-CN"] [data-lang="zh"], html[lang="en"] [data-lang="en"] { display:inline; }
+    .skip-link { position:absolute; left:-9999px; top:0; background:#8f3c16; color:#fff; padding:10px 18px; border-radius:0 0 12px 0; z-index:1000; font-weight:700; text-decoration:none; }
+    .skip-link:focus { left:0; outline:3px solid #ecab2f; outline-offset:2px; }
+
+    .navbar { position:sticky; top:0; z-index:100; background:rgba(255,252,246,0.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); padding:0 40px; display:flex; align-items:center; justify-content:space-between; height:68px; }
+    .nav-brand { display:flex; align-items:center; gap:12px; }
+    .nav-brand img { width:44px; height:44px; object-fit:contain; }
+    .nav-brand-name { font-size:22px; font-weight:800; color:var(--clay); }
+    .nav-menu { display:flex; align-items:center; gap:4px; list-style:none; }
+    .nav-menu a { padding:8px 14px; border-radius:8px; font-size:14px; font-weight:600; color:var(--muted); transition:.15s; }
+    .nav-menu a:hover, .nav-menu a.active { color:var(--clay); background:rgba(143,60,22,0.06); }
+    .nav-right { display:flex; align-items:center; gap:10px; }
+    .lang-btn { background:none; border:1px solid var(--line); border-radius:999px; padding:7px 14px; cursor:pointer; font-size:13px; font-weight:600; color:var(--clay); font-family:inherit; }
+    .lang-btn:hover, .lang-btn.active { background:var(--sand); border-color:var(--gold); }
+    .nav-login { background:none; border:1px solid var(--line); border-radius:999px; padding:8px 16px; cursor:pointer; font-size:13px; font-weight:700; color:var(--clay); font-family:inherit; text-decoration:none; transition:.15s; }
+    .nav-login:hover { background:var(--sand); border-color:var(--gold); }
+    .btn-primary { background:linear-gradient(135deg,#ffe5a7,var(--gold)); color:#4b250f; border:none; border-radius:999px; padding:10px 22px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; transition:.2s; box-shadow:0 4px 14px rgba(215,144,22,.28); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+    .btn-primary:hover { transform:translateY(-2px); }
+
+    .page-hero { background:linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); padding:72px 0 48px; position:relative; overflow:hidden; }
+    .page-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 20% 40%,rgba(236,171,47,0.22),transparent 45%),radial-gradient(circle at 85% 70%,rgba(236,171,47,0.14),transparent 45%); }
+    .page-hero-inner { max-width:1280px; margin:0 auto; padding:0 48px; color:#fff8ef; text-align:center; position:relative; z-index:1; }
+    .page-tag { display:inline-flex; padding:6px 14px; border-radius:999px; background:rgba(236,171,47,0.22); border:1px solid rgba(236,171,47,0.4); color:#ffe5a7; font-size:12px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:18px; }
+    .page-hero h1 { font-size:clamp(32px,4vw,50px); font-weight:900; color:#fff8ef; letter-spacing:-0.02em; margin-bottom:14px; line-height:1.1; }
+    .page-hero p { font-size:16px; color:rgba(255,241,220,0.82); line-height:1.7; max-width:640px; margin:0 auto; }
+
+    /* Quick channels */
+    .channels-wrap { max-width:1180px; margin:-40px auto 0; padding:0 48px; position:relative; z-index:2; }
+    .channels { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:48px; }
+    .channel { background:rgba(255,252,246,0.98); border:1px solid var(--line); border-radius:20px; padding:26px; transition:.2s; box-shadow:0 18px 40px rgba(100,58,22,0.12); }
+    .channel:hover { transform:translateY(-3px); box-shadow:0 24px 52px rgba(100,58,22,0.16); border-color:rgba(208,129,36,0.3); }
+    .channel-icon { width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg,#ffe7af,var(--gold)); display:grid; place-items:center; font-size:24px; margin-bottom:16px; }
+    .channel h3 { font-size:17px; font-weight:800; color:var(--clay); margin-bottom:6px; }
+    .channel p { font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:12px; }
+    .channel .value { font-size:15px; font-weight:800; color:var(--clay); letter-spacing:0.01em; margin-bottom:6px; }
+    .channel .meta { font-size:11px; font-weight:700; color:var(--success); letter-spacing:0.04em; text-transform:uppercase; display:flex; align-items:center; gap:6px; }
+    .channel .meta::before { content:""; width:8px; height:8px; border-radius:999px; background:var(--success); box-shadow:0 0 0 3px rgba(111,143,87,0.22); }
+
+    /* Content */
+    .content { padding:64px 0 80px; }
+    .content-inner { max-width:1180px; margin:0 auto; padding:0 48px; }
+    .grid { display:grid; grid-template-columns:1.1fr 1fr; gap:36px; align-items:start; }
+
+    .eyebrow { display:inline-flex; padding:6px 12px; border-radius:999px; background:rgba(255,214,138,0.2); border:1px solid rgba(176,112,39,0.22); color:#9c5a1d; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px; }
+    h2 { font-size:clamp(24px,3vw,34px); font-weight:900; color:var(--clay); letter-spacing:-0.02em; line-height:1.15; margin-bottom:10px; }
+    .lead { font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:28px; }
+
+    /* Form card */
+    .form-card { background:rgba(255,252,246,0.98); border:1px solid var(--line); border-radius:24px; padding:32px; box-shadow:0 20px 48px rgba(100,58,22,0.08); }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+    .field { display:grid; gap:6px; }
+    .field.full { grid-column:1 / -1; }
+    .field label { font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
+    .field input, .field select, .field textarea {
+      width:100%; border:1px solid rgba(126,77,29,0.18); background:rgba(255,252,247,0.9); color:var(--text);
+      border-radius:12px; padding:12px 14px; font-size:14px; font-family:inherit; outline:none; transition:.15s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(236,171,47,0.15); background:#fff; }
+    .field textarea { min-height:120px; resize:vertical; }
+    .submit-row { margin-top:8px; }
+    .submit-btn {
+      padding:14px 30px; background:linear-gradient(135deg,#ffe5a7,var(--gold));
+      color:#4b250f; border:none; border-radius:12px; font-size:15px; font-weight:800;
+      cursor:pointer; font-family:inherit; transition:.2s; box-shadow:0 8px 20px rgba(215,144,22,0.3);
+    }
+    .submit-btn:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(215,144,22,0.4); }
+    .form-note { font-size:12px; color:var(--muted); margin-top:12px; }
+    .form-result { margin-top:14px; padding:12px 16px; border-radius:12px; font-size:14px; display:none; line-height:1.6; }
+    .form-result.success { display:block; background:rgba(111,143,87,0.12); border:1px solid rgba(111,143,87,0.3); color:var(--success); }
+    .form-result.error { display:block; background:rgba(196,106,77,0.1); border:1px solid rgba(196,106,77,0.3); color:var(--error); }
+
+    /* Right column: office info */
+    .info-card { background:linear-gradient(145deg,#3a1a08 0%,#5f2c12 50%,#8f3c16 100%); color:#fff8ef; border-radius:24px; padding:32px; position:relative; overflow:hidden; }
+    .info-card::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 80% 20%,rgba(236,171,47,0.2),transparent 50%); }
+    .info-card h3 { position:relative; font-size:20px; font-weight:900; color:#fff8ef; margin-bottom:8px; letter-spacing:-0.01em; }
+    .info-card p.intro { position:relative; font-size:14px; color:rgba(255,241,220,0.78); line-height:1.7; margin-bottom:22px; }
+    .info-row { position:relative; display:grid; grid-template-columns:24px 1fr; gap:14px; padding:14px 0; border-bottom:1px solid rgba(255,237,215,0.12); }
+    .info-row:last-child { border-bottom:none; }
+    .info-row .ico { font-size:18px; line-height:1; opacity:0.85; }
+    .info-row .label { display:block; font-size:11px; font-weight:800; color:rgba(255,237,215,0.55); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:4px; }
+    .info-row .value { font-size:14px; font-weight:700; color:#fff8ef; line-height:1.5; }
+    .info-row .value a { color:inherit; }
+    .info-row .value a:hover { text-decoration:underline; }
+    .info-row .sub { font-size:12px; color:rgba(255,241,220,0.6); margin-top:3px; display:block; }
+
+    .social-row { position:relative; margin-top:22px; display:flex; gap:10px; }
+    .social-btn {
+      width:40px; height:40px; border-radius:12px;
+      background:rgba(255,252,247,0.1); border:1px solid rgba(255,237,215,0.2);
+      display:grid; place-items:center; color:#fff8ef; font-size:16px;
+      transition:.2s; text-decoration:none;
+    }
+    .social-btn:hover { background:rgba(236,171,47,0.25); border-color:rgba(236,171,47,0.5); transform:translateY(-2px); }
+
+    /* Offices grid */
+    .offices { padding:72px 0; background:var(--sand); }
+    .offices-inner { max-width:1180px; margin:0 auto; padding:0 48px; }
+    .offices-head { text-align:center; margin-bottom:40px; }
+    .offices-head h2 { margin-inline:auto; }
+    .offices-head p { max-width:600px; margin:0 auto; }
+    .office-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .office { background:rgba(255,252,247,0.96); border:1px solid var(--line); border-radius:18px; padding:22px; transition:.2s; }
+    .office:hover { transform:translateY(-3px); box-shadow:0 18px 40px rgba(100,58,22,0.1); border-color:rgba(208,129,36,0.3); }
+    .office .flag { font-size:24px; margin-bottom:8px; }
+    .office h3 { font-size:17px; font-weight:800; color:var(--clay); margin-bottom:3px; }
+    .office .region { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; }
+    .office .addr, .office .phone { font-size:13px; color:var(--text); line-height:1.6; margin-bottom:6px; }
+    .office .phone a { color:var(--clay); font-weight:700; }
+    .office .hours { font-size:12px; color:var(--muted); line-height:1.55; margin-top:10px; padding-top:10px; border-top:1px dashed rgba(151,84,21,0.18); }
+    .office .visit { display:inline-flex; margin-top:10px; font-size:12px; font-weight:700; color:var(--gold-deep); gap:4px; }
+    .office .visit:hover { color:var(--clay); }
+
+    /* Response SLA */
+    .sla { padding:56px 0; }
+    .sla-inner { max-width:1180px; margin:0 auto; padding:0 48px; }
+    .sla-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .sla-card { padding:22px; border-radius:18px; background:rgba(255,252,247,0.95); border:1px solid var(--line); text-align:center; }
+    .sla-card strong { display:block; font-size:28px; font-weight:900; color:var(--gold-deep); letter-spacing:-0.02em; margin-bottom:6px; }
+    .sla-card .what { display:block; font-size:14px; font-weight:800; color:var(--clay); margin-bottom:4px; }
+    .sla-card .who { font-size:12px; color:var(--muted); line-height:1.5; }
+
+    /* Footer (shared) */
+    .footer { background:var(--brown); color:rgba(255,245,230,0.78); padding:60px 48px 32px; }
+    .footer-inner { max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px; }
+    .footer-logo-row { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+    .footer-logo-row img { width:36px; height:36px; object-fit:contain; filter:brightness(2) saturate(0.2); }
+    .footer-logo-row span { font-size:18px; font-weight:800; color:#fff8ef; }
+    .footer-brand p { font-size:13px; line-height:1.7; margin-bottom:16px; }
+    .footer-hours { background:rgba(255,245,230,0.07); border:1px solid rgba(255,237,215,0.1); border-radius:12px; padding:14px 16px; font-size:12px; line-height:1.8; }
+    .footer-col h4 { font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,237,215,0.5); margin-bottom:16px; }
+    .footer-col ul { list-style:none; display:grid; gap:10px; }
+    .footer-col ul a { font-size:14px; color:rgba(255,245,230,0.72); }
+    .footer-col ul a:hover { color:#fff8ef; }
+    .footer-bottom { max-width:1280px; margin:0 auto; padding-top:24px; border-top:1px solid rgba(255,237,215,0.1); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:rgba(255,245,230,0.45); }
+
+    @media (max-width:1000px){ .grid { grid-template-columns:1fr; } .channels { grid-template-columns:1fr; } .office-grid { grid-template-columns:repeat(2,1fr); } .sla-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:900px){ .navbar { padding:0 24px; } .nav-menu { display:none; } .channels-wrap, .content-inner, .offices-inner, .sla-inner, .page-hero-inner { padding:0 24px; } .footer-inner { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:640px){ .form-grid { grid-template-columns:1fr; } .office-grid { grid-template-columns:1fr; } .footer-inner { grid-template-columns:1fr; } .footer { padding:48px 24px 28px; } .form-card, .info-card { padding:24px 22px; } }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link"><span data-lang="zh">跳到正文</span><span data-lang="en">Skip to content</span></a>
+
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html" aria-label="MindDo home"><img src="assets/logo.png" alt="MindDo logo" /><span class="nav-brand-name">MindDo</span></a>
+    <ul class="nav-menu">
+      <li><a href="index.html#programs"><span data-lang="zh">课程</span><span data-lang="en">Programs</span></a></li>
+      <li><a href="index.html#teachers"><span data-lang="zh">师资</span><span data-lang="en">Teachers</span></a></li>
+      <li><a href="campuses.html"><span data-lang="zh">校区</span><span data-lang="en">Campuses</span></a></li>
+      <li><a href="about.html"><span data-lang="zh">关于我们</span><span data-lang="en">About</span></a></li>
+      <li><a href="index.html#faq"><span data-lang="zh">常见问题</span><span data-lang="en">FAQ</span></a></li>
+      <li><a href="contact.html" class="active"><span data-lang="zh">联系</span><span data-lang="en">Contact</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-btn active" type="button" data-set-lang="zh-CN">中文</button>
+      <button class="lang-btn" type="button" data-set-lang="en">English</button>
+      <a class="nav-login" href="login.html"><span data-lang="zh">登录</span><span data-lang="en">Log In</span></a>
+      <a class="btn-primary" href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="page-hero">
+      <div class="page-hero-inner">
+        <span class="page-tag"><span data-lang="zh">联系我们</span><span data-lang="en">Contact Us</span></span>
+        <h1><span data-lang="zh">和招生顾问聊聊你的孩子</span><span data-lang="en">Let's Talk About Your Child</span></h1>
+        <p><span data-lang="zh">我们的招生顾问平均 4 年 K-12 教育经验，工作时间内 2 小时响应。无论是课程咨询还是校区参观，先聊一下比反复对比评价更省时间。</span><span data-lang="en">Our advisors average 4 years in K-12 education and respond within 2 business hours. Whether it's a curriculum question or a campus tour — a quick conversation beats hours of review reading.</span></p>
+      </div>
+    </header>
+
+    <div class="channels-wrap">
+      <div class="channels">
+        <article class="channel">
+          <div class="channel-icon">📞</div>
+          <h3><span data-lang="zh">电话联系</span><span data-lang="en">Call Us</span></h3>
+          <p><span data-lang="zh">工作时间内拨打总机，接线员会转接到相应的顾问。</span><span data-lang="en">Dial our main line during business hours and we'll transfer you to the right advisor.</span></p>
+          <div class="value"><a href="tel:+18005551234">+1 (800) 555-MIND</a></div>
+          <div class="meta"><span data-lang="zh">工作时间实时接听</span><span data-lang="en">Live during business hours</span></div>
+        </article>
+        <article class="channel">
+          <div class="channel-icon">✉️</div>
+          <h3><span data-lang="zh">邮件联系</span><span data-lang="en">Email Us</span></h3>
+          <p><span data-lang="zh">适合详细咨询、发送材料或工作外时间的问题。</span><span data-lang="en">Best for detailed questions, sharing documents, or after-hours inquiries.</span></p>
+          <div class="value"><a href="mailto:hello@minddo.example.com">hello@minddo.example.com</a></div>
+          <div class="meta"><span data-lang="zh">2 小时内回复（工作时间内）</span><span data-lang="en">Reply within 2 business hours</span></div>
+        </article>
+        <article class="channel">
+          <div class="channel-icon">💬</div>
+          <h3><span data-lang="zh">在线咨询</span><span data-lang="en">Live Chat</span></h3>
+          <p><span data-lang="zh">直接和顾问一对一文字对话，适合快速问题。</span><span data-lang="en">Real-time text chat with an advisor — fastest path for quick questions.</span></p>
+          <div class="value"><span data-lang="zh">右下角开启对话</span><span data-lang="en">Launch chat at bottom-right</span></div>
+          <div class="meta"><span data-lang="zh">平均 90 秒接入</span><span data-lang="en">Avg. 90-second wait</span></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Form + Office -->
+    <section class="content">
+      <div class="content-inner">
+        <div class="grid">
+          <div>
+            <span class="eyebrow"><span data-lang="zh">发送消息</span><span data-lang="en">Send a Message</span></span>
+            <h2><span data-lang="zh">留下你的问题，顾问来找你</span><span data-lang="en">Leave a Message, We'll Reach Out</span></h2>
+            <p class="lead"><span data-lang="zh">不知道从哪里开始？填写下面的表单，告诉我们孩子的情况和你最关心的问题——我们会在 2 个工作小时内回复。</span><span data-lang="en">Not sure where to start? Fill in the form, tell us about your child and what you'd like to know — we'll reply within 2 business hours.</span></p>
+
+            <form id="contactForm" class="form-card" novalidate>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="cName"><span data-lang="zh">你的姓名</span><span data-lang="en">Your Name</span></label>
+                  <input id="cName" type="text" autocomplete="name" required />
+                </div>
+                <div class="field">
+                  <label for="cEmail"><span data-lang="zh">邮箱</span><span data-lang="en">Email</span></label>
+                  <input id="cEmail" type="email" autocomplete="email" placeholder="parent@example.com" required />
+                </div>
+                <div class="field">
+                  <label for="cPhone"><span data-lang="zh">电话（选填）</span><span data-lang="en">Phone (Optional)</span></label>
+                  <input id="cPhone" type="tel" autocomplete="tel" placeholder="+1 (555) 000-0000" />
+                </div>
+                <div class="field">
+                  <label for="cChildAge"><span data-lang="zh">孩子年龄</span><span data-lang="en">Child's Age</span></label>
+                  <select id="cChildAge">
+                    <option value="">—</option>
+                    <option>5–7</option>
+                    <option>8–10</option>
+                    <option>11–14</option>
+                    <option>15–18</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="cTopic"><span data-lang="zh">我想咨询</span><span data-lang="en">I'd like to discuss</span></label>
+                  <select id="cTopic">
+                    <option value="general"><span data-lang="zh">课程咨询（通用）</span>General program questions</option>
+                    <option value="trial"><span data-lang="zh">预约免费试课</span>Book a free trial class</option>
+                    <option value="enrollment"><span data-lang="zh">Membership 与学费</span>Membership & pricing</option>
+                    <option value="campus"><span data-lang="zh">校区参观</span>Campus tour</option>
+                    <option value="online"><span data-lang="zh">线上课程</span>Online classes</option>
+                    <option value="competition"><span data-lang="zh">竞赛培训</span>Competition track</option>
+                    <option value="partnership"><span data-lang="zh">机构 / 学校合作</span>Institutional partnership</option>
+                    <option value="media"><span data-lang="zh">媒体采访</span>Media inquiry</option>
+                    <option value="careers"><span data-lang="zh">加入 MindDo</span>Careers</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="cCampus"><span data-lang="zh">首选校区（选填）</span><span data-lang="en">Preferred Campus (Optional)</span></label>
+                  <select id="cCampus">
+                    <option value="">— <span data-lang="zh">未选择</span><span data-lang="en">No preference</span></option>
+                    <option value="irvine">Irvine, CA</option>
+                    <option value="arcadia">Arcadia, CA</option>
+                    <option value="diamond-bar">Diamond Bar, CA</option>
+                    <option value="san-diego">San Diego, CA</option>
+                    <option value="hollywood">Hollywood, CA</option>
+                    <option value="redmond">Redmond, WA</option>
+                    <option value="bothell">Bothell, WA</option>
+                    <option value="factoria">Factoria, WA</option>
+                    <option value="west-lafayette">West Lafayette, IN</option>
+                    <option value="ottawa">Ottawa, ON</option>
+                    <option value="online"><span data-lang="zh">线上</span>Online</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="cMessage"><span data-lang="zh">留言</span><span data-lang="en">Message</span></label>
+                  <textarea id="cMessage" placeholder=""
+                    data-placeholder-zh="比如：孩子今年 9 岁，想了解 AI 创意工坊适不适合..."
+                    data-placeholder-en="e.g. My child is 9 and I'd like to know if AI Creative Studio is a fit..."></textarea>
+                </div>
+              </div>
+              <div class="submit-row">
+                <button type="submit" class="submit-btn"><span data-lang="zh">发送消息 →</span><span data-lang="en">Send Message →</span></button>
+                <p class="form-note"><span data-lang="zh">提交即表示同意我们的</span><span data-lang="en">By submitting, you agree to our </span><a href="privacy.html" style="color:var(--clay);font-weight:700;"><span data-lang="zh">隐私政策</span><span data-lang="en">Privacy Policy</span></a>。</p>
+                <div id="formResult" class="form-result" role="status" aria-live="polite"></div>
+              </div>
+            </form>
+          </div>
+
+          <aside>
+            <div class="info-card">
+              <h3><span data-lang="zh">MindDo 总部</span><span data-lang="en">MindDo Headquarters</span></h3>
+              <p class="intro"><span data-lang="zh">公司总部位于加州尔湾旗舰校区。一般咨询建议先通过邮件或电话联系，我们会帮你转接到最合适的人。</span><span data-lang="en">Our HQ shares space with the Irvine flagship campus. For most inquiries, email or phone is the fastest route — we'll route you to the right person.</span></p>
+              <div class="info-row">
+                <div class="ico">📍</div>
+                <div>
+                  <span class="label"><span data-lang="zh">总部地址</span><span data-lang="en">Headquarters</span></span>
+                  <span class="value">5505 Alton Pkwy, Suite 300<br>Irvine, CA 92618</span>
+                  <span class="sub"><span data-lang="zh">（与 MindDo 尔湾旗舰校区同址）</span><span data-lang="en">(shared with MindDo Irvine flagship campus)</span></span>
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="ico">📞</div>
+                <div>
+                  <span class="label"><span data-lang="zh">总机电话</span><span data-lang="en">Main Line</span></span>
+                  <span class="value"><a href="tel:+18005551234">+1 (800) 555-MIND</a></span>
+                  <span class="sub"><span data-lang="zh">工作日 9:00 – 18:00（太平洋时间）</span><span data-lang="en">Mon–Fri 9:00–18:00 PT</span></span>
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="ico">✉️</div>
+                <div>
+                  <span class="label"><span data-lang="zh">通用邮箱</span><span data-lang="en">General</span></span>
+                  <span class="value"><a href="mailto:hello@minddo.example.com">hello@minddo.example.com</a></span>
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="ico">🎓</div>
+                <div>
+                  <span class="label"><span data-lang="zh">招生咨询</span><span data-lang="en">Admissions</span></span>
+                  <span class="value"><a href="mailto:admissions@minddo.example.com">admissions@minddo.example.com</a></span>
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="ico">🤝</div>
+                <div>
+                  <span class="label"><span data-lang="zh">合作 / 媒体</span><span data-lang="en">Partnerships / Press</span></span>
+                  <span class="value"><a href="mailto:partners@minddo.example.com">partners@minddo.example.com</a></span>
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="ico">💼</div>
+                <div>
+                  <span class="label"><span data-lang="zh">加入我们</span><span data-lang="en">Careers</span></span>
+                  <span class="value"><a href="mailto:careers@minddo.example.com">careers@minddo.example.com</a></span>
+                </div>
+              </div>
+              <div class="social-row">
+                <a class="social-btn" aria-label="Instagram" href="#" onclick="return false;">📷</a>
+                <a class="social-btn" aria-label="YouTube" href="#" onclick="return false;">▶</a>
+                <a class="social-btn" aria-label="LinkedIn" href="#" onclick="return false;">in</a>
+                <a class="social-btn" aria-label="X/Twitter" href="#" onclick="return false;">𝕏</a>
+                <a class="social-btn" aria-label="WeChat" href="#" onclick="return false;">💬</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Response SLA -->
+    <section class="sla">
+      <div class="sla-inner">
+        <div style="text-align:center; margin-bottom:32px;">
+          <span class="eyebrow"><span data-lang="zh">响应承诺</span><span data-lang="en">Response Times</span></span>
+          <h2 style="margin-inline:auto;"><span data-lang="zh">我们多久会回复你</span><span data-lang="en">How Fast We Get Back</span></h2>
+        </div>
+        <div class="sla-grid">
+          <div class="sla-card">
+            <strong>&lt; 2h</strong>
+            <span class="what"><span data-lang="zh">招生咨询</span><span data-lang="en">Admissions</span></span>
+            <span class="who"><span data-lang="zh">工作日 9:00–18:00</span><span data-lang="en">Business hours</span></span>
+          </div>
+          <div class="sla-card">
+            <strong>&lt; 24h</strong>
+            <span class="what"><span data-lang="zh">在读学员支持</span><span data-lang="en">Student Support</span></span>
+            <span class="who"><span data-lang="zh">每日响应</span><span data-lang="en">Every day</span></span>
+          </div>
+          <div class="sla-card">
+            <strong>&lt; 48h</strong>
+            <span class="what"><span data-lang="zh">合作咨询</span><span data-lang="en">Partnerships</span></span>
+            <span class="who"><span data-lang="zh">工作日响应</span><span data-lang="en">Business days</span></span>
+          </div>
+          <div class="sla-card">
+            <strong>&lt; 5d</strong>
+            <span class="what"><span data-lang="zh">媒体采访</span><span data-lang="en">Press Inquiries</span></span>
+            <span class="who"><span data-lang="zh">需预先安排</span><span data-lang="en">Scheduled intake</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Offices -->
+    <section class="offices">
+      <div class="offices-inner">
+        <div class="offices-head">
+          <span class="eyebrow"><span data-lang="zh">全部校区联系方式</span><span data-lang="en">All Campus Contacts</span></span>
+          <h2><span data-lang="zh">直接联系你关心的校区</span><span data-lang="en">Reach a Campus Directly</span></h2>
+          <p class="lead"><span data-lang="zh">每个校区都有专属的校区主管，最了解当地课程排期和老师。</span><span data-lang="en">Every campus has a dedicated campus lead who knows local scheduling and instructors best.</span></p>
+        </div>
+        <div class="office-grid">
+          <article class="office">
+            <div class="flag">🏖️</div>
+            <h3><span data-lang="zh">尔湾旗舰校区</span><span data-lang="en">Irvine Flagship</span></h3>
+            <div class="region">California · Orange County</div>
+            <div class="addr">5505 Alton Pkwy, Irvine, CA 92618</div>
+            <div class="phone">📞 <a href="tel:+19495550101">(949) 555-0101</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-irvine"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">🌴</div>
+            <h3><span data-lang="zh">阿凯迪亚校区</span><span data-lang="en">Arcadia</span></h3>
+            <div class="region">California · LA County</div>
+            <div class="addr">111 E Huntington Dr, Arcadia, CA 91006</div>
+            <div class="phone">📞 <a href="tel:+16265550102">(626) 555-0102</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-arcadia"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">💎</div>
+            <h3><span data-lang="zh">钻石吧校区</span><span data-lang="en">Diamond Bar</span></h3>
+            <div class="region">California · LA County</div>
+            <div class="addr">1450 S Bridge Gate Dr, Diamond Bar, CA 91765</div>
+            <div class="phone">📞 <a href="tel:+19095550103">(909) 555-0103</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-diamond-bar"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">⛵</div>
+            <h3><span data-lang="zh">圣地亚哥校区</span><span data-lang="en">San Diego</span></h3>
+            <div class="region">California · San Diego</div>
+            <div class="addr">101 W Broadway, San Diego, CA 92101</div>
+            <div class="phone">📞 <a href="tel:+16195550104">(619) 555-0104</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-san-diego"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">🎬</div>
+            <h3><span data-lang="zh">好莱坞校区</span><span data-lang="en">Hollywood</span></h3>
+            <div class="region">California · LA County</div>
+            <div class="addr">6801 Hollywood Blvd, Hollywood, CA 90028</div>
+            <div class="phone">📞 <a href="tel:+13235550105">(323) 555-0105</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-hollywood"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">🌲</div>
+            <h3><span data-lang="zh">雷德蒙德校区</span><span data-lang="en">Redmond</span></h3>
+            <div class="region">Washington · Seattle</div>
+            <div class="addr">16400 NE 83rd St, Redmond, WA 98052</div>
+            <div class="phone">📞 <a href="tel:+14255550106">(425) 555-0106</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-redmond"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">🌧️</div>
+            <h3><span data-lang="zh">博塞尔校区</span><span data-lang="en">Bothell</span></h3>
+            <div class="region">Washington · Seattle</div>
+            <div class="addr">18109 Bothell Way NE, Bothell, WA 98011</div>
+            <div class="phone">📞 <a href="tel:+14255550107">(425) 555-0107</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-bothell"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">☕</div>
+            <h3><span data-lang="zh">法克托里亚校区</span><span data-lang="en">Factoria</span></h3>
+            <div class="region">Washington · Bellevue</div>
+            <div class="addr">4052 Factoria Square Mall SE, Bellevue, WA 98006</div>
+            <div class="phone">📞 <a href="tel:+14255550108">(425) 555-0108</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-factoria"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">🏫</div>
+            <h3><span data-lang="zh">西拉斐特校区</span><span data-lang="en">West Lafayette</span></h3>
+            <div class="region">Indiana · Purdue</div>
+            <div class="addr">120 N Salisbury St, West Lafayette, IN 47906</div>
+            <div class="phone">📞 <a href="tel:+17655550109">(765) 555-0109</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-west-lafayette"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">🍁</div>
+            <h3><span data-lang="zh">渥太华校区</span><span data-lang="en">Ottawa</span></h3>
+            <div class="region">Canada · Ontario</div>
+            <div class="addr">99 Bank St, Ottawa, ON K1P 6B9</div>
+            <div class="phone">📞 <a href="tel:+16135550110">(613) 555-0110</a></div>
+            <div class="hours"><span data-lang="zh">周一至周五 3:00pm–7:30pm · 周六 9:30am–5:00pm</span><span data-lang="en">Mon–Fri 3–7:30pm · Sat 9:30am–5pm</span></div>
+            <a class="visit" href="campuses.html#campus-ottawa"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+          <article class="office">
+            <div class="flag">💻</div>
+            <h3><span data-lang="zh">线上课程</span><span data-lang="en">Online Classes</span></h3>
+            <div class="region"><span data-lang="zh">虚拟校区 · 全球学员</span><span data-lang="en">Virtual · Global</span></div>
+            <div class="addr"><span data-lang="zh">随时随地加入直播小班课</span><span data-lang="en">Join small-group live classes from anywhere</span></div>
+            <div class="phone">💬 <a href="mailto:online@minddo.example.com">online@minddo.example.com</a></div>
+            <div class="hours"><span data-lang="zh">时段灵活，覆盖北美全部时区</span><span data-lang="en">Flexible slots across all N.A. timezones</span></div>
+            <a class="visit" href="campuses.html#campus-online"><span data-lang="zh">查看详情 →</span><span data-lang="en">Details →</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo-row"><img src="assets/logo.png" alt="MindDo" /><span>MindDo</span></div>
+        <p><span data-lang="zh">AI、编程与未来技能青少年学习中心，致力于让每个孩子都能在 AI 时代找到自己的位置。</span><span data-lang="en">AI and coding learning center for young learners.</span></p>
+        <div class="footer-hours">
+          <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,237,215,0.45);margin-bottom:8px;"><span data-lang="zh">开放时间</span><span data-lang="en">Hours</span></div>
+          <span data-lang="zh">周一至周五 3:00pm – 7:30pm<br>周六 9:30am – 5:00pm<br>周日 休息</span>
+          <span data-lang="en">Mon – Fri 3:00pm – 7:30pm<br>Saturday 9:30am – 5:00pm<br>Sunday Closed</span>
+        </div>
+      </div>
+      <div class="footer-col"><h4><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></h4><ul>
+        <li><a href="index.html#programs"><span data-lang="zh">AI 启蒙入门</span><span data-lang="en">AI Fundamentals</span></a></li>
+        <li><a href="index.html#programs"><span data-lang="zh">AI 创意工坊</span><span data-lang="en">AI Creative Studio</span></a></li>
+        <li><a href="index.html#programs"><span data-lang="zh">AI 编程进阶</span><span data-lang="en">AI Programming</span></a></li>
+        <li><a href="index.html#programs"><span data-lang="zh">AI 竞赛冲刺</span><span data-lang="en">AI Competition</span></a></li>
+        <li><a href="trial.html"><span data-lang="zh">AI 项目营</span><span data-lang="en">AI Project Camp</span></a></li>
+      </ul></div>
+      <div class="footer-col"><h4><span data-lang="zh">公司</span><span data-lang="en">Company</span></h4><ul>
+        <li><a href="about.html"><span data-lang="zh">关于我们</span><span data-lang="en">About Us</span></a></li>
+        <li><a href="contact.html"><span data-lang="zh">联系我们</span><span data-lang="en">Contact</span></a></li>
+        <li><a href="campuses.html"><span data-lang="zh">校区分布</span><span data-lang="en">Campuses</span></a></li>
+        <li><a href="index.html#teachers"><span data-lang="zh">师资团队</span><span data-lang="en">Teachers</span></a></li>
+        <li><a href="index.html#faq"><span data-lang="zh">常见问题</span><span data-lang="en">FAQ</span></a></li>
+      </ul></div>
+      <div class="footer-col"><h4><span data-lang="zh">快速入口</span><span data-lang="en">Quick Access</span></h4><ul>
+        <li><a href="trial.html"><span data-lang="zh">预约试课</span><span data-lang="en">Book Trial</span></a></li>
+        <li><a href="login.html"><span data-lang="zh">学员登录</span><span data-lang="en">Log In</span></a></li>
+        <li><a href="signup.html"><span data-lang="zh">注册账户</span><span data-lang="en">Sign Up</span></a></li>
+        <li><a href="student-account.html"><span data-lang="zh">学员中心</span><span data-lang="en">Student Hub</span></a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MindDo Learning Center · <span data-lang="zh">保留所有权利</span><span data-lang="en">All rights reserved</span></span>
+      <span><a href="privacy.html" style="color:inherit;"><span data-lang="zh">隐私政策</span><span data-lang="en">Privacy</span></a> · <a href="terms.html" style="color:inherit;"><span data-lang="zh">服务条款</span><span data-lang="en">Terms</span></a></span>
+    </div>
+  </footer>
+
+  <script src="assets/consent.js" defer></script>
+  <script>
+    (function () {
+      var htmlEl = document.documentElement;
+      var form = document.getElementById("contactForm");
+      var result = document.getElementById("formResult");
+      var msgInput = document.getElementById("cMessage");
+
+      function langOf() { return htmlEl.getAttribute("lang") === "en" ? "en" : "zh-CN"; }
+
+      function setLang(lang) {
+        htmlEl.setAttribute("lang", lang);
+        localStorage.setItem("minddo_lang", lang);
+        document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+          b.classList.toggle("active", b.getAttribute("data-set-lang") === lang);
+        });
+        // Localize textarea placeholder
+        if (msgInput) {
+          var key = lang === "en" ? "data-placeholder-en" : "data-placeholder-zh";
+          msgInput.placeholder = msgInput.getAttribute(key) || "";
+        }
+      }
+
+      var saved = localStorage.getItem("minddo_lang");
+      setLang(saved === "en" ? "en" : "zh-CN");
+
+      document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+        b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        result.className = "form-result";
+        var name = document.getElementById("cName").value.trim();
+        var email = document.getElementById("cEmail").value.trim();
+        var message = msgInput.value.trim();
+        var lang = langOf();
+        if (!name || !email || !message) {
+          result.className = "form-result error";
+          result.textContent = lang === "en" ? "Please fill in name, email, and message." : "请填写姓名、邮箱和留言内容。";
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          result.className = "form-result error";
+          result.textContent = lang === "en" ? "Please enter a valid email address." : "请输入有效的邮箱地址。";
+          return;
+        }
+        // Persist locally (demo). Swap for a real API call in production.
+        try {
+          var key = "minddo_contact_messages";
+          var list = JSON.parse(localStorage.getItem(key) || "[]");
+          list.push({
+            name: name, email: email,
+            phone: document.getElementById("cPhone").value.trim(),
+            childAge: document.getElementById("cChildAge").value,
+            topic: document.getElementById("cTopic").value,
+            campus: document.getElementById("cCampus").value,
+            message: message, createdAt: new Date().toISOString()
+          });
+          localStorage.setItem(key, JSON.stringify(list));
+        } catch (_) {}
+        if (window.MindDoAnalytics) window.MindDoAnalytics.track("contact_submit", { topic: document.getElementById("cTopic").value });
+        result.className = "form-result success";
+        result.textContent = lang === "en"
+          ? "✓ Message received. An advisor will reach out within 2 business hours."
+          : "✓ 消息已收到，招生顾问将在 2 个工作小时内与你联系。";
+        form.reset();
+        setLang(lang); // re-apply placeholder
+      });
+    })();
+  </script>
+</body>
+</html>

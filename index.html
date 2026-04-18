@@ -367,6 +367,105 @@
     .reviewer-meta { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 2px; }
     .reviewer span { font-weight: 400; color: var(--muted); font-size: 12px; }
 
+    /* INSTRUCTORS */
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .team-card {
+      position: relative; padding: 24px 20px 20px; border-radius: 22px;
+      background: rgba(255, 252, 247, 0.95); border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(100, 58, 22, 0.06);
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      transition: 0.2s;
+    }
+    .team-card:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(100, 58, 22, 0.12); border-color: rgba(215, 144, 22, 0.3); }
+    .team-photo {
+      width: 96px; height: 96px; border-radius: 999px; object-fit: cover;
+      border: 4px solid #fff8ef; box-shadow: 0 12px 30px rgba(100, 58, 22, 0.18);
+      margin-bottom: 14px; background: var(--sand);
+    }
+    .team-card h3 { font-size: 17px; font-weight: 800; color: var(--clay); margin-bottom: 3px; }
+    .team-card .role { font-size: 12px; font-weight: 700; color: var(--gold-deep); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+    .team-card .bio { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; flex: 1; }
+    .team-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+    .team-tag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(236, 171, 47, 0.14); border: 1px solid rgba(208, 129, 36, 0.2); color: var(--clay); }
+
+    /* ACHIEVEMENTS */
+    .achieve-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
+    .achieve-main { padding: 32px; border-radius: 24px; background: linear-gradient(145deg, #3a1a08 0%, #5f2c12 50%, #8f3c16 100%); color: #fff8ef; position: relative; overflow: hidden; }
+    .achieve-main::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 80% 20%, rgba(236, 171, 47, 0.2), transparent 50%); }
+    .achieve-main .kicker { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgba(236, 171, 47, 0.22); border: 1px solid rgba(236, 171, 47, 0.4); color: #ffe5a7; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+    .achieve-main h3 { position: relative; font-size: clamp(22px, 2.6vw, 30px); font-weight: 900; color: #fff8ef; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px; }
+    .achieve-main p { position: relative; font-size: 15px; color: rgba(255, 241, 220, 0.82); line-height: 1.75; margin-bottom: 24px; max-width: 520px; }
+    .achieve-stats { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .achieve-stat { padding: 16px; border-radius: 14px; background: rgba(255, 249, 241, 0.08); border: 1px solid rgba(255, 237, 215, 0.12); }
+    .achieve-stat strong { display: block; font-size: 26px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .achieve-stat span { font-size: 12px; color: rgba(255, 241, 220, 0.7); line-height: 1.4; }
+    .achieve-list { display: grid; gap: 12px; }
+    .achieve-item { padding: 20px; border-radius: 18px; background: rgba(255, 252, 247, 0.95); border: 1px solid var(--line); transition: 0.2s; }
+    .achieve-item:hover { border-color: rgba(208, 129, 36, 0.3); box-shadow: 0 12px 28px rgba(100, 58, 22, 0.08); }
+    .achieve-item .date { font-size: 11px; font-weight: 700; color: var(--gold-deep); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .achieve-item strong { display: block; font-size: 15px; color: var(--clay); font-weight: 800; margin-bottom: 4px; line-height: 1.35; }
+    .achieve-item span { display: block; font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* FAQ */
+    .faq-wrap { max-width: 860px; margin: 0 auto; }
+    .faq-item { border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 252, 247, 0.9); margin-bottom: 12px; overflow: hidden; transition: 0.2s; }
+    .faq-item:hover { border-color: rgba(208, 129, 36, 0.32); }
+    .faq-item[open] { background: rgba(255, 248, 238, 0.95); border-color: rgba(208, 129, 36, 0.4); box-shadow: 0 10px 24px rgba(100, 58, 22, 0.06); }
+    .faq-item summary {
+      list-style: none; cursor: pointer;
+      padding: 18px 52px 18px 22px;
+      font-size: 16px; font-weight: 700; color: var(--clay);
+      position: relative;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: "+"; position: absolute; right: 22px; top: 50%;
+      transform: translateY(-50%); font-size: 22px; font-weight: 400;
+      color: var(--muted); transition: 0.2s;
+      width: 28px; height: 28px; border-radius: 999px;
+      background: rgba(236, 171, 47, 0.1); display: grid; place-items: center;
+    }
+    .faq-item[open] summary::after { content: "−"; color: var(--clay); background: linear-gradient(135deg, #fff6de, #ffd977); }
+    .faq-answer { padding: 0 22px 20px; font-size: 14px; line-height: 1.75; color: var(--muted); }
+    .faq-answer p { margin-bottom: 10px; }
+    .faq-answer p:last-child { margin-bottom: 0; }
+
+    /* NEWSLETTER */
+    .newsletter {
+      padding: 56px 48px; border-radius: 28px;
+      background: linear-gradient(135deg, #fff4cf 0%, #ffd977 50%, #ecab2f 100%);
+      position: relative; overflow: hidden; text-align: center;
+      box-shadow: 0 28px 60px rgba(208, 129, 36, 0.2);
+    }
+    .newsletter::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4), transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(143, 60, 22, 0.14), transparent 40%);
+    }
+    .newsletter h2 { position: relative; font-size: clamp(24px, 3vw, 36px); font-weight: 900; color: var(--brown); letter-spacing: -0.02em; margin-bottom: 10px; }
+    .newsletter p { position: relative; font-size: 15px; color: rgba(95, 44, 18, 0.85); line-height: 1.7; max-width: 540px; margin: 0 auto 26px; }
+    .newsletter-form { position: relative; display: flex; gap: 10px; max-width: 460px; margin: 0 auto; flex-wrap: wrap; }
+    .newsletter-form input {
+      flex: 1; min-width: 220px;
+      padding: 14px 20px; border-radius: 999px;
+      border: 1px solid rgba(143, 60, 22, 0.24);
+      background: rgba(255, 252, 247, 0.98);
+      color: var(--text); font-size: 15px; font-family: inherit; outline: none;
+      transition: 0.15s;
+    }
+    .newsletter-form input:focus { border-color: var(--clay); box-shadow: 0 0 0 4px rgba(143, 60, 22, 0.15); background: #fff; }
+    .newsletter-form button {
+      padding: 14px 26px; border-radius: 999px; border: none;
+      background: var(--brown); color: #fff8ef;
+      font-size: 14px; font-weight: 800; font-family: inherit; cursor: pointer;
+      transition: 0.2s; box-shadow: 0 10px 24px rgba(95, 44, 18, 0.32);
+      letter-spacing: 0.02em;
+    }
+    .newsletter-form button:hover { transform: translateY(-2px); background: #4a2310; }
+    .newsletter-note { position: relative; margin-top: 14px; font-size: 12px; color: rgba(95, 44, 18, 0.6); }
+    .newsletter-result { position: relative; margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--success, #6f8f57); min-height: 18px; }
+
     /* CTA BAND */
     .cta-band {
       background: linear-gradient(135deg, rgba(255, 248, 234, 0.98), rgba(249, 236, 205, 0.96));
@@ -414,6 +513,10 @@
       .why-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-inner { grid-template-columns: repeat(2, 1fr); }
     }
+    @media (max-width: 1100px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .achieve-grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 900px) {
       .hero-inner { grid-template-columns: 1fr; padding: 60px 32px; }
       .hero-form-card { max-width: 480px; }
@@ -421,6 +524,8 @@
       .reviews-grid { grid-template-columns: repeat(2, 1fr); }
       .navbar { padding: 0 24px; }
       .nav-menu { display: none; }
+      .achieve-main { padding: 28px 22px; }
+      .achieve-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; }
     }
     @media (max-width: 640px) {
       .section-wrap { padding: 60px 0; }
@@ -429,10 +534,15 @@
       .hero-inner { padding: 48px 24px; }
       .hero-copy h1 { font-size: 38px; }
       .hero-stats { gap: 22px; }
-      .why-grid, .reviews-grid { grid-template-columns: 1fr; }
+      .why-grid, .reviews-grid, .team-grid { grid-template-columns: 1fr; }
+      .achieve-stats { grid-template-columns: 1fr; }
       .footer { padding: 48px 24px 28px; }
       .footer-inner { grid-template-columns: 1fr; gap: 28px; }
       .cta-band { padding: 64px 24px; }
+      .newsletter { padding: 44px 24px; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form button { width: 100%; }
+      .faq-item summary { font-size: 15px; padding: 16px 48px 16px 18px; }
     }
   </style>
 </head>
@@ -446,11 +556,12 @@
       <span class="nav-brand-name">MindDo</span>
     </a>
     <ul class="nav-menu">
-      <li><a href="campuses.html"><span data-lang="zh">校区</span><span data-lang="en">Campus</span></a></li>
-      <li><a href="#programs"><span data-lang="zh">课程项目</span><span data-lang="en">Programs</span></a></li>
-      <li><a href="#why"><span data-lang="zh">为什么选我们</span><span data-lang="en">Why Us</span></a></li>
-      <li><a href="#reviews"><span data-lang="zh">家长评价</span><span data-lang="en">Reviews</span></a></li>
-      <li><a href="dashboard.html"><span data-lang="zh">运营后台</span><span data-lang="en">Dashboard</span></a></li>
+      <li><a href="#programs"><span data-lang="zh">课程</span><span data-lang="en">Programs</span></a></li>
+      <li><a href="#teachers"><span data-lang="zh">师资</span><span data-lang="en">Teachers</span></a></li>
+      <li><a href="campuses.html"><span data-lang="zh">校区</span><span data-lang="en">Campuses</span></a></li>
+      <li><a href="about.html"><span data-lang="zh">关于我们</span><span data-lang="en">About</span></a></li>
+      <li><a href="#faq"><span data-lang="zh">常见问题</span><span data-lang="en">FAQ</span></a></li>
+      <li><a href="contact.html"><span data-lang="zh">联系</span><span data-lang="en">Contact</span></a></li>
     </ul>
     <div class="nav-right">
       <button class="lang-btn" type="button" data-set-lang="zh-CN">中文</button>
@@ -463,6 +574,7 @@
     </div>
   </nav>
 
+  <main id="main">
   <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
@@ -550,11 +662,12 @@
       <span data-lang="en">As Featured In</span>
     </span>
     <div class="trust-logos">
+      <span class="trust-logo">TechCrunch</span>
+      <span class="trust-logo">Forbes Kids</span>
+      <span class="trust-logo">EdSurge</span>
+      <span class="trust-logo">NVIDIA Inception</span>
       <span class="trust-logo">ISTE Certified</span>
-      <span class="trust-logo">CCTV</span>
-      <span class="trust-logo">新华网</span>
-      <span class="trust-logo">腾讯教育</span>
-      <span class="trust-logo">南方周末</span>
+      <span class="trust-logo">Common Sense</span>
     </div>
   </div>
 
@@ -787,6 +900,99 @@
     </div>
   </div>
 
+  <!-- MEET YOUR TEACHERS -->
+  <div id="teachers" class="section-wrap bg-sand">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-tag">Meet the Team</div>
+        <h2 class="section-title">
+          <span data-lang="zh">教你 AI 的老师</span>
+          <span data-lang="en">The Teachers Behind Every Class</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="zh">每位主讲老师都来自 AI 研究、互联网产品或名校教育背景，平均教龄 7 年以上，并经过 120 小时的青少年教学认证。</span>
+          <span data-lang="en">Every lead instructor comes from AI research, product engineering, or top-tier education. Average 7+ years teaching, all certified through 120 hours of youth-focused training.</span>
+        </p>
+      </div>
+      <div class="team-grid">
+        <article class="team-card">
+          <img class="team-photo" src="https://api.dicebear.com/7.x/avataaars/svg?seed=DrSarahChen&backgroundColor=ffd6a0" alt="Dr. Sarah Chen" loading="lazy" />
+          <h3><span data-lang="zh">陈诗雯 博士</span><span data-lang="en">Dr. Sarah Chen</span></h3>
+          <div class="role"><span data-lang="zh">AI 研究首席 · 课程总负责人</span><span data-lang="en">AI Research Lead · Head of Curriculum</span></div>
+          <p class="bio"><span data-lang="zh">前 Google Brain 研究员，斯坦福 CS 博士。专注于让复杂 AI 概念对儿童变得直观易懂。</span><span data-lang="en">Former Google Brain researcher, Stanford CS PhD. Obsessed with making complex AI intuitive for kids.</span></p>
+          <div class="team-tags"><span class="team-tag">AI Research</span><span class="team-tag">PhD</span><span class="team-tag">10+ yrs</span></div>
+        </article>
+        <article class="team-card">
+          <img class="team-photo" src="https://api.dicebear.com/7.x/avataaars/svg?seed=MarcusJohnson&backgroundColor=b6e3f4" alt="Marcus Johnson" loading="lazy" />
+          <h3><span data-lang="zh">Marcus Johnson</span><span data-lang="en">Marcus Johnson</span></h3>
+          <div class="role"><span data-lang="zh">高级 AI 工程讲师</span><span data-lang="en">Senior AI Engineering Instructor</span></div>
+          <p class="bio"><span data-lang="zh">前 Microsoft Azure ML 工程师，MIT 硕士。擅长把生产级 AI 工程拆成少年能掌握的积木。</span><span data-lang="en">Ex-Microsoft Azure ML engineer, MIT master's. Breaks down production AI engineering into lego-sized pieces for teens.</span></p>
+          <div class="team-tags"><span class="team-tag">Python</span><span class="team-tag">ML Ops</span><span class="team-tag">MIT</span></div>
+        </article>
+        <article class="team-card">
+          <img class="team-photo" src="https://api.dicebear.com/7.x/avataaars/svg?seed=JennyLin&backgroundColor=fdbcbc" alt="Jenny Lin" loading="lazy" />
+          <h3><span data-lang="zh">林静怡</span><span data-lang="en">Jenny Lin</span></h3>
+          <div class="role"><span data-lang="zh">AI 创意教育主管</span><span data-lang="en">Head of Creative AI Education</span></div>
+          <p class="bio"><span data-lang="zh">RISD 数字媒体硕士，曾在 Adobe 教育团队任职 6 年。负责 AI 创意课程体系设计。</span><span data-lang="en">RISD master's in Digital Media, 6 years at Adobe Education. Designs the AI creative curriculum end-to-end.</span></p>
+          <div class="team-tags"><span class="team-tag">Generative AI</span><span class="team-tag">Design</span><span class="team-tag">K-12</span></div>
+        </article>
+        <article class="team-card">
+          <img class="team-photo" src="https://api.dicebear.com/7.x/avataaars/svg?seed=DavidParkTeacher&backgroundColor=d1d4f9" alt="David Park" loading="lazy" />
+          <h3><span data-lang="zh">朴俊赫</span><span data-lang="en">David Park</span></h3>
+          <div class="role"><span data-lang="zh">竞赛项目总教练</span><span data-lang="en">Head Coach, Competition Track</span></div>
+          <p class="bio"><span data-lang="zh">USACO Platinum 选手，UC Berkeley CS 本硕。近 3 年带领 42 位学员进入美国信息学奥赛决赛。</span><span data-lang="en">USACO Platinum, UC Berkeley CS B.S./M.S. Sent 42 students to USACO Gold+ in the last 3 years.</span></p>
+          <div class="team-tags"><span class="team-tag">USACO</span><span class="team-tag">Algorithms</span><span class="team-tag">Berkeley</span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENTS & PRESS -->
+  <div class="section-wrap">
+    <div class="section-inner">
+      <div class="section-head">
+        <div class="section-tag">Achievements & Press</div>
+        <h2 class="section-title">
+          <span data-lang="zh">被看见的成长，被认可的成果</span>
+          <span data-lang="en">Growth That Gets Noticed</span>
+        </h2>
+        <p class="section-sub">
+          <span data-lang="zh">我们的学员在校内外获得的每一个奖项，都让我们相信 AI 教育可以走得更远。</span>
+          <span data-lang="en">Every award our students bring home is a reminder why we invest so heavily in curriculum quality.</span>
+        </p>
+      </div>
+      <div class="achieve-grid">
+        <article class="achieve-main">
+          <span class="kicker"><span data-lang="zh">🏆 2025 旗舰战绩</span><span data-lang="en">🏆 2025 Highlights</span></span>
+          <h3><span data-lang="zh">8 人进入 USACO 金组，2 人获全国 AI 创新大赛一等奖</span><span data-lang="en">8 students advanced to USACO Gold, 2 won First Prize at the National AI Innovation Contest</span></h3>
+          <p><span data-lang="zh">在课程设计之外，我们把项目制学习、同伴反馈和竞赛辅导整合到每一节课，把"学过"变成"做过"。</span><span data-lang="en">Beyond curriculum, we weave project-based learning, peer review, and competition coaching into every class — turning "studied" into "shipped".</span></p>
+          <div class="achieve-stats">
+            <div class="achieve-stat"><strong>10,000+</strong><span><span data-lang="zh">在读学员</span><span data-lang="en">Active students</span></span></div>
+            <div class="achieve-stat"><strong>98%</strong><span><span data-lang="zh">续课率</span><span data-lang="en">Renewal rate</span></span></div>
+            <div class="achieve-stat"><strong>42</strong><span><span data-lang="zh">全国奖项</span><span data-lang="en">National awards</span></span></div>
+          </div>
+        </article>
+        <div class="achieve-list">
+          <div class="achieve-item">
+            <div class="date">Mar 2026 · TechCrunch</div>
+            <strong><span data-lang="zh">"MindDo 重新定义了华人家庭的 AI 启蒙方式"</span><span data-lang="en">"MindDo redefines AI literacy for Asian-American families"</span></strong>
+            <span><span data-lang="zh">TechCrunch 专题报道，深度采访创始团队与学员家庭。</span><span data-lang="en">TechCrunch feature with founder & family interviews.</span></span>
+          </div>
+          <div class="achieve-item">
+            <div class="date">Jan 2026 · EdTech Breakthrough</div>
+            <strong><span data-lang="zh">年度 K-12 AI 教育平台奖</span><span data-lang="en">K-12 AI Education Platform of the Year</span></strong>
+            <span><span data-lang="zh">在全球 3,500 份提名中脱颖而出。</span><span data-lang="en">Selected from 3,500 global nominations.</span></span>
+          </div>
+          <div class="achieve-item">
+            <div class="date">Nov 2025 · NVIDIA Inception</div>
+            <strong><span data-lang="zh">入选 NVIDIA Inception 教育合作伙伴</span><span data-lang="en">NVIDIA Inception Education Partner</span></strong>
+            <span><span data-lang="zh">获 GPU 算力资源与技术支持，支撑学员项目上线。</span><span data-lang="en">GPU access and technical support for student projects.</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- TESTIMONIALS -->
   <div id="reviews" class="section-wrap">
     <div class="section-inner">
@@ -872,6 +1078,89 @@
     </div>
   </div>
 
+  <!-- FAQ -->
+  <div id="faq" class="section-wrap bg-sand">
+    <div class="section-inner">
+      <div class="section-head" style="text-align:center;">
+        <div class="section-tag" style="margin-inline:auto;">FAQ</div>
+        <h2 class="section-title" style="margin-inline:auto;">
+          <span data-lang="zh">家长问得最多的 6 个问题</span>
+          <span data-lang="en">6 Questions Parents Ask Most</span>
+        </h2>
+        <p class="section-sub" style="margin-inline:auto;">
+          <span data-lang="zh">还没找到你的答案？随时 <a href="contact.html" style="color:var(--clay);font-weight:700;text-decoration:underline;">联系我们</a> 或在工作时间内致电校区顾问。</span>
+          <span data-lang="en">Still have questions? <a href="contact.html" style="color:var(--clay);font-weight:700;text-decoration:underline;">Reach out</a> or call your local campus during office hours.</span>
+        </p>
+      </div>
+      <div class="faq-wrap">
+        <details class="faq-item">
+          <summary><span data-lang="zh">孩子完全零基础可以吗？</span><span data-lang="en">My child has zero experience — is that okay?</span></summary>
+          <div class="faq-answer">
+            <p><span data-lang="zh">当然可以。我们 70% 的学员在入学时都是零基础。AI 启蒙入门课程（6–10 岁）从"什么是 AI"开始，用互动工具和小游戏让孩子自然建立认知。</span><span data-lang="en">Absolutely — 70% of our students start with zero background. AI Fundamentals (ages 6–10) begins with "what is AI" and uses interactive tools and mini-games to build intuition naturally.</span></p>
+            <p><span data-lang="zh">每位学员入学都会完成一次 1 对 1 能力评估，我们会根据评估结果安排到最合适的起点。</span><span data-lang="en">Every student completes a 1-on-1 skills assessment, and we place them at the right starting level accordingly.</span></p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary><span data-lang="zh">和学校 STEM 课程相比有什么不一样？</span><span data-lang="en">How is this different from school STEM?</span></summary>
+          <div class="faq-answer">
+            <p><span data-lang="zh">学校 STEM 偏重广度覆盖，MindDo 专注 AI 这一条主线，从应用到工程到竞赛一路打通。每一学期都以"可展示的项目"收尾：聊天机器人、图像分类器、AI 故事机等。</span><span data-lang="en">School STEM covers breadth; MindDo specializes in AI depth — from applications to engineering to competitions. Every term ends with a shippable project: chatbots, image classifiers, AI storytellers, etc.</span></p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary><span data-lang="zh">课程形式是线上还是线下？</span><span data-lang="en">Are classes online or in-person?</span></summary>
+          <div class="faq-answer">
+            <p><span data-lang="zh">两者都有。我们在北美 10 个城市设有线下校区，也提供小班直播在线课程。线上线下采用完全一致的教材、教师配置和评估体系。</span><span data-lang="en">Both. We operate 10 in-person campuses across North America and offer small-group live online classes. Identical curriculum, instructors, and assessments across formats.</span></p>
+            <p><span data-lang="zh">选择最近校区：<a href="campuses.html" style="color:var(--clay);font-weight:700;">按邮编查找 →</a></span><span data-lang="en">Find your closest campus: <a href="campuses.html" style="color:var(--clay);font-weight:700;">ZIP-based finder →</a></span></p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary><span data-lang="zh">家长能看到孩子的学习进度吗？</span><span data-lang="en">How do parents track a child's progress?</span></summary>
+          <div class="faq-answer">
+            <p><span data-lang="zh">家长账户可实时查看课表、每节课后的教师反馈、每 4 周的阶段小结和学期报告。所有数据可随时导出。</span><span data-lang="en">Your parent account shows live schedule, post-class teacher feedback, 4-week milestone summaries, and semester reports. Everything is exportable at any time.</span></p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary><span data-lang="zh">如果孩子请假或想转班怎么办？</span><span data-lang="en">What if my child misses a class or wants to change schedule?</span></summary>
+          <div class="faq-answer">
+            <p><span data-lang="zh">提前 24 小时在学员中心提交请假，可安排同周小班补课或 1v1 录播补课。转班需提前一周申请，通常 48 小时内处理完成。</span><span data-lang="en">Submit a leave request 24 hours in advance through your hub — we'll schedule a same-week makeup or a 1-on-1 recorded session. Class changes require a 1-week notice and typically resolve in 48 hours.</span></p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary><span data-lang="zh">学费怎么收？可以退款吗？</span><span data-lang="en">How does tuition work? Can I get a refund?</span></summary>
+          <div class="faq-answer">
+            <p><span data-lang="zh">支持按月或按学期预付，Membership 方案起价 $199/月。首月内未使用课时全额退款；之后按剩余课时比例退款。</span><span data-lang="en">Monthly or per-term billing, starting at $199/mo. Within the first month, unused classes are fully refundable; after that, refunds are prorated based on remaining classes.</span></p>
+            <p><span data-lang="zh">详情见 <a href="terms.html" style="color:var(--clay);font-weight:700;">服务条款 · 第 3 节</a>。</span><span data-lang="en">Full details in <a href="terms.html" style="color:var(--clay);font-weight:700;">Terms of Service §3</a>.</span></p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="section-wrap">
+    <div class="section-inner">
+      <div class="newsletter">
+        <h2>
+          <span data-lang="zh">每月一封 AI 学习周报</span>
+          <span data-lang="en">Monthly AI Learning Letter</span>
+        </h2>
+        <p>
+          <span data-lang="zh">精选适合亲子一起做的 AI 小项目、最新课程动态与家长心理课，每月 1 封，绝不打扰。</span>
+          <span data-lang="en">Hand-picked AI projects for parents and kids, new-class announcements, and parenting-with-AI reads. Once a month, never more.</span>
+        </p>
+        <form id="newsletterForm" class="newsletter-form" novalidate>
+          <input type="email" id="newsletterEmail" required autocomplete="email"
+            placeholder=""
+            data-placeholder-zh="你的邮箱 · parent@example.com"
+            data-placeholder-en="Your email · parent@example.com" />
+          <button type="submit"><span data-lang="zh">订阅 →</span><span data-lang="en">Subscribe →</span></button>
+        </form>
+        <div class="newsletter-note"><span data-lang="zh">🔒 我们不会共享你的邮箱。随时一键退订。</span><span data-lang="en">🔒 We never share your email. Unsubscribe anytime with one click.</span></div>
+        <div class="newsletter-result" id="newsletterResult" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- CTA BAND -->
   <div class="cta-band">
     <div class="section-tag">Get Started</div>
@@ -888,6 +1177,8 @@
       <a class="btn-secondary" href="assessment.html"><span data-lang="zh">在线能力评估</span><span data-lang="en">Take Assessment</span></a>
     </div>
   </div>
+
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -958,6 +1249,13 @@
         buttons.forEach(function (btn) {
           btn.classList.toggle("active", btn.getAttribute("data-set-lang") === lang);
         });
+        // Localize newsletter placeholder
+        var emailInput = document.getElementById("newsletterEmail");
+        if (emailInput) {
+          var key = lang === "en" ? "data-placeholder-en" : "data-placeholder-zh";
+          var ph = emailInput.getAttribute(key);
+          if (ph) emailInput.placeholder = ph;
+        }
       }
 
       setLang(initialLang);
@@ -967,6 +1265,34 @@
           setLang(btn.getAttribute("data-set-lang"));
         });
       });
+
+      // Newsletter subscribe (client-side only — stores locally for demo)
+      var nlForm = document.getElementById("newsletterForm");
+      if (nlForm) {
+        nlForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var email = document.getElementById("newsletterEmail").value.trim();
+          var resultEl = document.getElementById("newsletterResult");
+          var lang = html.getAttribute("lang") === "en" ? "en" : "zh-CN";
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            resultEl.style.color = "#c46a4d";
+            resultEl.textContent = lang === "en" ? "Please enter a valid email." : "请输入有效的邮箱地址。";
+            return;
+          }
+          try {
+            var key = "minddo_newsletter";
+            var list = JSON.parse(localStorage.getItem(key) || "[]");
+            if (list.indexOf(email) < 0) list.push(email);
+            localStorage.setItem(key, JSON.stringify(list));
+          } catch (_) {}
+          resultEl.style.color = "#4a2310";
+          resultEl.textContent = lang === "en"
+            ? "✓ You're in! Look out for our next letter."
+            : "✓ 订阅成功，下一期我们会直接发送到你的邮箱。";
+          nlForm.reset();
+          if (window.MindDoAnalytics) window.MindDoAnalytics.track("newsletter_subscribe", { email: email });
+        });
+      }
     })();
   </script>
   <script src="assets/consent.js" defer></script>

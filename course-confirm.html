@@ -263,6 +263,9 @@
   <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
+      if (window.MindDoFlow && window.MindDoFlow.requireLogin) {
+        if (!window.MindDoFlow.requireLogin("course-confirm.html", "enroll")) return;
+      }
       var KEY = "minddo_course_enrollment";
       var PLANS = {
         weekly1: { price: 199, labelZh: "每周一节课", labelEn: "1 Class / Week" },
@@ -326,12 +329,20 @@
         var current = window.MindDoFlow && window.MindDoFlow.getCurrentStudent && window.MindDoFlow.getCurrentStudent();
 
         var sessionLabels = state.sessions.map(function (sess) {
+          var o = (sess.offeringId && window.MindDoFlow && window.MindDoFlow.getOfferingById)
+            ? window.MindDoFlow.getOfferingById(sess.offeringId)
+            : null;
+          if (o) {
+            var courseName = o.courseName ? (k() === "zh" ? o.courseName.zh : o.courseName.en) : "";
+            var day = o.weekday ? (k() === "zh" ? o.weekday.zh : o.weekday.en) : "";
+            return courseName + " · " + day + " " + (o.timeSlot || "") + " · " + (o.teacher || "");
+          }
           var d = DAYS[sess.day];
           var s = SLOTS[sess.slot];
           var dText = d ? (k() === "zh" ? d.zh : d.en) : "—";
           var sTime = s ? s.time : "—";
           return dText + " · " + sTime;
-        }).join(" / ");
+        }).join("<br>");
 
         // First class = earliest upcoming session
         var upcoming = state.sessions.map(function (sess) {
@@ -343,7 +354,7 @@
         document.getElementById("cfStudent").textContent = (current && (current.studentName || current.name)) || "—";
         document.getElementById("cfMembership").textContent = k() === "zh" ? plan.labelZh : plan.labelEn;
         document.getElementById("cfSessionCount").textContent = state.sessions.length + (k() === "zh" ? " 节 / 周" : (state.sessions.length > 1 ? " classes / week" : " class / week"));
-        document.getElementById("cfSessions").textContent = sessionLabels;
+        document.getElementById("cfSessions").innerHTML = sessionLabels;
         document.getElementById("cfFirstClass").textContent = firstClassText;
         document.getElementById("cfOrderId").textContent = state.orderId;
         document.getElementById("cfPayMethod").textContent = PAY_METHODS[state.payMethod] ? (k() === "zh" ? PAY_METHODS[state.payMethod].zh : PAY_METHODS[state.payMethod].en) : state.payMethod;

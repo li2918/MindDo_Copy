@@ -1376,15 +1376,16 @@
       }
 
       function membershipSessions(item) {
-        // Returns [{weekday, timeSlot, dayKey, slotKey, classMode, plan, addons, billingCycle}]
-        // Falls back to a single session built from legacy weekday/timeSlot fields.
+        // Returns list of sessions; carries course/teacher info when present.
         if (!item) return [];
         if (Array.isArray(item.sessions) && item.sessions.length) {
           return item.sessions.map(function (s) {
             return Object.assign({}, s, {
               weekday: s.weekday || s.weekdayZh || s.weekdayEn || "",
               timeSlot: s.timeSlot || "",
-              classMode: item.classMode,
+              courseName: s.courseName || "",
+              teacher: s.teacher || "",
+              classMode: s.classMode || item.classMode,
               plan: item.plan,
               addons: item.addons,
               billingCycle: item.billingCycle
@@ -1395,6 +1396,8 @@
           return [{
             weekday: item.weekday || "",
             timeSlot: item.timeSlot || "",
+            courseName: "",
+            teacher: "",
             classMode: item.classMode,
             plan: item.plan,
             addons: item.addons,
@@ -1584,6 +1587,8 @@
               total: sessList.length,
               weekday: s.weekday,
               timeSlot: s.timeSlot,
+              courseName: s.courseName || "",
+              teacher: s.teacher || "",
               classMode: s.classMode,
               addons: s.addons,
               plan: s.plan
@@ -1593,11 +1598,13 @@
 
         if (sessionRows.length) {
           scheduleList.innerHTML = sessionRows.map(function (row) {
-            var label = row.total > 1
+            var leftParts = [row.total > 1
               ? (lang === "en" ? ("Class " + (row.sessionIndex + 1)) : ("第 " + (row.sessionIndex + 1) + " 节"))
-              : (lang === "en" ? "Weekly Class" : "每周课程");
-            var right = (row.weekday || t.scheduleItems[0].fallback) + " · " + (row.timeSlot || t.scheduleItems[1].fallback);
-            return "<li><span>" + label + "</span><strong>" + right + "</strong></li>";
+              : (lang === "en" ? "Weekly Class" : "每周课程")];
+            if (row.courseName) leftParts.push(row.courseName);
+            var rightParts = [(row.weekday || t.scheduleItems[0].fallback) + " · " + (row.timeSlot || t.scheduleItems[1].fallback)];
+            if (row.teacher) rightParts.push(row.teacher);
+            return "<li><span>" + leftParts.join(" · ") + "</span><strong>" + rightParts.join(" · ") + "</strong></li>";
           }).join("");
         } else {
           scheduleList.innerHTML =

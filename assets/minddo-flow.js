@@ -291,6 +291,45 @@
     });
   }
 
+  // Seeded class catalog — simulates the admin-configured offerings that students
+  // pick from. In a real deployment this would come from the backend.
+  var CLASS_OFFERINGS = [
+    { id: "ai-fund-mon-16",  courseName: { zh: "AI 启蒙入门",   en: "AI Fundamentals" },  level: { zh: "入门", en: "Beginner" },     teacher: "Dr. Sarah Chen",  classMode: "small", dayKey: "mon", weekday: { zh: "周一", en: "Mon" }, slotKey: "t16", timeSlot: "16:00 – 17:00", seatsTotal: 6, seatsTaken: 3 },
+    { id: "ai-fund-wed-16",  courseName: { zh: "AI 启蒙入门",   en: "AI Fundamentals" },  level: { zh: "入门", en: "Beginner" },     teacher: "Dr. Sarah Chen",  classMode: "small", dayKey: "wed", weekday: { zh: "周三", en: "Wed" }, slotKey: "t16", timeSlot: "16:00 – 17:00", seatsTotal: 6, seatsTaken: 5 },
+    { id: "ai-create-tue-17",courseName: { zh: "AI 创意工坊",   en: "AI Creative Studio" },level: { zh: "中级", en: "Intermediate" }, teacher: "Jenny Lin",       classMode: "small", dayKey: "tue", weekday: { zh: "周二", en: "Tue" }, slotKey: "t17", timeSlot: "17:00 – 18:00", seatsTotal: 6, seatsTaken: 4 },
+    { id: "ai-create-thu-17",courseName: { zh: "AI 创意工坊",   en: "AI Creative Studio" },level: { zh: "中级", en: "Intermediate" }, teacher: "Jenny Lin",       classMode: "small", dayKey: "thu", weekday: { zh: "周四", en: "Thu" }, slotKey: "t17", timeSlot: "17:00 – 18:00", seatsTotal: 6, seatsTaken: 2 },
+    { id: "ai-prog-mon-18",  courseName: { zh: "AI 编程进阶",   en: "AI Programming" },   level: { zh: "进阶", en: "Advanced" },    teacher: "Marcus Johnson",  classMode: "small", dayKey: "mon", weekday: { zh: "周一", en: "Mon" }, slotKey: "t18", timeSlot: "18:00 – 19:00", seatsTotal: 6, seatsTaken: 6 },
+    { id: "ai-prog-fri-17",  courseName: { zh: "AI 编程进阶",   en: "AI Programming" },   level: { zh: "进阶", en: "Advanced" },    teacher: "Marcus Johnson",  classMode: "small", dayKey: "fri", weekday: { zh: "周五", en: "Fri" }, slotKey: "t17", timeSlot: "17:00 – 18:00", seatsTotal: 6, seatsTaken: 3 },
+    { id: "ai-comp-wed-18",  courseName: { zh: "AI 竞赛冲刺",   en: "AI Competition" },   level: { zh: "竞赛", en: "Competition" },teacher: "David Park",      classMode: "1v1",   dayKey: "wed", weekday: { zh: "周三", en: "Wed" }, slotKey: "t18", timeSlot: "18:00 – 19:00", seatsTotal: 1, seatsTaken: 0 },
+    { id: "ai-fund-sat-10",  courseName: { zh: "AI 启蒙入门",   en: "AI Fundamentals" },  level: { zh: "入门", en: "Beginner" },     teacher: "Dr. Sarah Chen",  classMode: "small", dayKey: "sat", weekday: { zh: "周六", en: "Sat" }, slotKey: "t10", timeSlot: "10:00 – 11:00", seatsTotal: 6, seatsTaken: 4 },
+    { id: "ai-create-sat-13",courseName: { zh: "AI 创意工坊",   en: "AI Creative Studio" },level: { zh: "中级", en: "Intermediate" }, teacher: "Jenny Lin",       classMode: "small", dayKey: "sat", weekday: { zh: "周六", en: "Sat" }, slotKey: "t13", timeSlot: "13:00 – 14:00", seatsTotal: 6, seatsTaken: 1 },
+    { id: "ai-project-sat-15",courseName:{ zh: "AI 项目营",     en: "AI Project Camp" },  level: { zh: "项目营", en: "Project Camp" },teacher: "David Park",    classMode: "small", dayKey: "sat", weekday: { zh: "周六", en: "Sat" }, slotKey: "t15", timeSlot: "15:00 – 16:00", seatsTotal: 8, seatsTaken: 5 },
+    { id: "ai-prog-sun-10",  courseName: { zh: "AI 编程进阶",   en: "AI Programming" },   level: { zh: "进阶", en: "Advanced" },    teacher: "Marcus Johnson",  classMode: "small", dayKey: "sun", weekday: { zh: "周日", en: "Sun" }, slotKey: "t10", timeSlot: "10:00 – 11:00", seatsTotal: 6, seatsTaken: 2 },
+    { id: "ai-create-sun-14",courseName: { zh: "AI 创意工坊",   en: "AI Creative Studio" },level: { zh: "中级", en: "Intermediate" }, teacher: "Jenny Lin",       classMode: "small", dayKey: "sun", weekday: { zh: "周日", en: "Sun" }, slotKey: "t14", timeSlot: "14:00 – 15:00", seatsTotal: 6, seatsTaken: 3 }
+  ];
+
+  function getClassOfferings() {
+    return CLASS_OFFERINGS.slice();
+  }
+  function getOfferingById(id) {
+    for (var i = 0; i < CLASS_OFFERINGS.length; i++) {
+      if (CLASS_OFFERINGS[i].id === id) return CLASS_OFFERINGS[i];
+    }
+    return null;
+  }
+
+  // Auth gate: redirect to login.html when no current student. Call from page scripts.
+  function requireLogin(nextPage, reason) {
+    var cur = getCurrentStudent();
+    if (cur && cur.email) return true;
+    var query = [];
+    if (nextPage) query.push("next=" + encodeURIComponent(nextPage));
+    if (reason) query.push("reason=" + encodeURIComponent(reason));
+    var qs = query.length ? "?" + query.join("&") : "";
+    window.location.replace("login.html" + qs);
+    return false;
+  }
+
   function seedDemoData() {
     clearFlowData();
 
@@ -372,11 +411,11 @@
       classMode: "1v1",
       billingCycle: "monthly",
       sessions: [
-        { dayKey: "mon", weekday: "周一", weekdayZh: "周一", weekdayEn: "Mon", slotKey: "t17", slotLabel: "17:00 – 18:00", timeSlot: "17:00 – 18:00" },
-        { dayKey: "wed", weekday: "周三", weekdayZh: "周三", weekdayEn: "Wed", slotKey: "t16", slotLabel: "16:00 – 17:00", timeSlot: "16:00 – 17:00" }
+        { offeringId: "ai-fund-mon-16", courseName: "AI 启蒙入门", courseNameZh: "AI 启蒙入门", courseNameEn: "AI Fundamentals", level: "入门", teacher: "Dr. Sarah Chen", classMode: "small", dayKey: "mon", weekday: "周一", weekdayZh: "周一", weekdayEn: "Mon", slotKey: "t16", slotLabel: "16:00 – 17:00", timeSlot: "16:00 – 17:00" },
+        { offeringId: "ai-fund-wed-16", courseName: "AI 启蒙入门", courseNameZh: "AI 启蒙入门", courseNameEn: "AI Fundamentals", level: "入门", teacher: "Dr. Sarah Chen", classMode: "small", dayKey: "wed", weekday: "周三", weekdayZh: "周三", weekdayEn: "Wed", slotKey: "t16", slotLabel: "16:00 – 17:00", timeSlot: "16:00 – 17:00" }
       ],
       weekday: "周一",
-      timeSlot: "17:00 – 18:00",
+      timeSlot: "16:00 – 17:00",
       totalMonthly: "$369.00",
       createdAt: daysAgo(2)
     }]);
@@ -434,6 +473,9 @@
     populateCourseMeta: populateCourseMeta,
     clearFlowData: clearFlowData,
     seedDemoData: seedDemoData,
-    mockPaymentForCurrentStudent: mockPaymentForCurrentStudent
+    mockPaymentForCurrentStudent: mockPaymentForCurrentStudent,
+    getClassOfferings: getClassOfferings,
+    getOfferingById: getOfferingById,
+    requireLogin: requireLogin
   };
 })();

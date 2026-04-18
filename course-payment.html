@@ -287,6 +287,9 @@
   <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
+      if (window.MindDoFlow && window.MindDoFlow.requireLogin) {
+        if (!window.MindDoFlow.requireLogin("course-payment.html", "enroll")) return;
+      }
       var KEY = "minddo_course_enrollment";
       var PLANS = {
         weekly1: { price: 199, labelZh: "每周一节课", labelEn: "1 Class / Week", sessions: 1 },
@@ -318,12 +321,28 @@
         state.sessions = (state.day && state.slot) ? [{ day: state.day, slot: state.slot }] : [];
       }
       var needed = PLANS[state.plan].sessions;
-      var complete = state.sessions.length === needed && state.sessions.every(function (s) { return s && s.day && s.slot; });
+      var complete = state.sessions.length === needed && state.sessions.every(function (s) {
+        return s && (s.offeringId || (s.day && s.slot));
+      });
       if (!complete) { window.location.replace("course-schedule.html"); return; }
       if (!state.payMethod) state.payMethod = "card";
 
+      function resolveOffering(sess) {
+        if (!sess) return null;
+        if (sess.offeringId && window.MindDoFlow && window.MindDoFlow.getOfferingById) {
+          return window.MindDoFlow.getOfferingById(sess.offeringId);
+        }
+        return null;
+      }
+
       function sessionLabelsText() {
         return state.sessions.map(function (sess) {
+          var o = resolveOffering(sess);
+          if (o) {
+            var courseName = o.courseName ? (k() === "zh" ? o.courseName.zh : o.courseName.en) : "";
+            var day = o.weekday ? (k() === "zh" ? o.weekday.zh : o.weekday.en) : "";
+            return courseName + " · " + day + " " + (o.timeSlot || "");
+          }
           var d = DAYS[sess.day];
           var s = SLOTS[sess.slot];
           var dText = d ? (k() === "zh" ? d.zh : d.en) : "—";
@@ -348,12 +367,19 @@
           { l: k() === "zh" ? "Membership 方案" : "Membership", v: planLabel + " · " + money(plan.price) + "/mo" }
         ];
         state.sessions.forEach(function (sess, i) {
-          var d = DAYS[sess.day];
-          var s = SLOTS[sess.slot];
-          var dText = d ? (k() === "zh" ? d.zh : d.en) : "—";
-          var sText = s ? s.time : "—";
           var label = k() === "zh" ? ("第 " + (i + 1) + " 节") : ("Class " + (i + 1));
-          rows.push({ l: label, v: dText + " · " + sText });
+          var o = resolveOffering(sess);
+          if (o) {
+            var courseName = o.courseName ? (k() === "zh" ? o.courseName.zh : o.courseName.en) : "";
+            var day = o.weekday ? (k() === "zh" ? o.weekday.zh : o.weekday.en) : "";
+            rows.push({ l: label, v: courseName + " · " + day + " " + (o.timeSlot || "") });
+          } else {
+            var d = DAYS[sess.day];
+            var s = SLOTS[sess.slot];
+            var dText = d ? (k() === "zh" ? d.zh : d.en) : "—";
+            var sText = s ? s.time : "—";
+            rows.push({ l: label, v: dText + " · " + sText });
+          }
         });
         document.getElementById("summary").innerHTML = rows.map(function (r) {
           return "<div><span>" + r.l + "</span><strong>" + r.v + "</strong></div>";
@@ -415,16 +441,26 @@
 
           var plan = PLANS[state.plan];
           var orderSessions = state.sessions.map(function (sess) {
-            var d = DAYS[sess.day];
-            var s = SLOTS[sess.slot];
+            var o = resolveOffering(sess);
+            var dayKey = o ? o.dayKey : sess.day;
+            var slotKey = o ? o.slotKey : sess.slot;
+            var d = DAYS[dayKey];
+            var s = SLOTS[slotKey];
             return {
-              dayKey: sess.day,
-              weekday: d ? (k() === "zh" ? d.zh : d.en) : sess.day,
-              weekdayZh: d ? d.zh : sess.day,
-              weekdayEn: d ? d.en : sess.day,
-              slotKey: sess.slot,
-              slotLabel: s ? s.time : sess.slot,
-              timeSlot: s ? s.time : sess.slot
+              offeringId: sess.offeringId || (o && o.id) || "",
+              courseName: o && o.courseName ? (k() === "zh" ? o.courseName.zh : o.courseName.en) : "",
+              courseNameZh: o && o.courseName ? o.courseName.zh : "",
+              courseNameEn: o && o.courseName ? o.courseName.en : "",
+              level: o && o.level ? (k() === "zh" ? o.level.zh : o.level.en) : "",
+              teacher: o ? o.teacher : "",
+              classMode: o ? o.classMode : "",
+              dayKey: dayKey,
+              weekday: o && o.weekday ? (k() === "zh" ? o.weekday.zh : o.weekday.en) : (d ? (k() === "zh" ? d.zh : d.en) : dayKey),
+              weekdayZh: o && o.weekday ? o.weekday.zh : (d ? d.zh : dayKey),
+              weekdayEn: o && o.weekday ? o.weekday.en : (d ? d.en : dayKey),
+              slotKey: slotKey,
+              slotLabel: o ? o.timeSlot : (s ? s.time : slotKey),
+              timeSlot: o ? o.timeSlot : (s ? s.time : slotKey)
             };
           });
           var firstSession = orderSessions[0] || {};

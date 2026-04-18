@@ -273,6 +273,10 @@
   <script src="assets/minddo-flow.js"></script>
   <script>
     (function () {
+      // Auth gate: enrollment is for registered students only
+      if (window.MindDoFlow && window.MindDoFlow.requireLogin) {
+        if (!window.MindDoFlow.requireLogin("course-selection.html", "enroll")) return;
+      }
       var KEY = "minddo_course_enrollment";
       var PLANS = {
         weekly1: { price: 199, labelZh: "每周一节课", labelEn: "1 Class / Week" },

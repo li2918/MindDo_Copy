@@ -110,8 +110,10 @@
     if (s.feedback) return "feedback";
     if (s.membership) return "membership";
     if (s.payment) return "payment";
-    if (s.signup) return "signup";
+    // Flow order: trial → signup → assessment → course-selection
+    // Assessment is a later stage than signup, so it takes priority in detection.
     if (s.assessment) return "assessment";
+    if (s.signup) return "signup";
     if (s.lead) return "trial";
     return "start";
   }
@@ -119,9 +121,9 @@
   function getNextPage(stage) {
     var map = {
       start: "trial.html",
-      trial: "assessment.html",
-      assessment: "signup.html",
-      signup: "course-selection.html",
+      trial: "signup.html",
+      signup: "assessment.html",
+      assessment: "course-selection.html",
       payment: "course-selection.html",
       membership: "student-account.html",
       feedback: "student-account.html"
@@ -513,7 +515,7 @@
     info: ["index.html", "campuses.html", "login.html", "course-system.html"]
   };
 
-  var STAGE_ORDER = ["start", "trial", "assessment", "signup", "payment", "membership", "feedback"];
+  var STAGE_ORDER = ["start", "trial", "signup", "assessment", "payment", "membership", "feedback"];
 
   function currentPageName() {
     var path = (window.location.pathname || "").split("/").pop();

@@ -281,7 +281,7 @@
           trialDate: "试课日期",
           trialTime: "试课时段",
           dateHelper: "未来 12 天内可选，今日过期时段自动置灰",
-          timeHelper: "点击可选中；需先选日期",
+          timeHelper: "工作日 15:00–19:00 / 周末 09:00–19:00；点击可选中，需先选日期",
           todayLabel: "今天",
           tomorrowLabel: "明天",
           selectionHint: "请先选择科目、日期和时段，然后点击\"下一步\"。",
@@ -294,14 +294,23 @@
             { value: "ai-project", label: "AI 项目营（12-16 岁）" },
             { value: "ai-competition", label: "AI 竞赛冲刺（14-18 岁）" }
           ],
-          trialTimeOptions: [
+          trialTimeWeekday: [
             { value: "15:00", label: "15:00" },
             { value: "16:00", label: "16:00" },
             { value: "17:00", label: "17:00" },
-            { value: "18:00", label: "18:00" },
-            { value: "19:00", label: "19:00" },
-            { value: "20:00", label: "20:00" },
-            { value: "21:00", label: "21:00" }
+            { value: "18:00", label: "18:00" }
+          ],
+          trialTimeWeekend: [
+            { value: "09:00", label: "09:00" },
+            { value: "10:00", label: "10:00" },
+            { value: "11:00", label: "11:00" },
+            { value: "12:00", label: "12:00" },
+            { value: "13:00", label: "13:00" },
+            { value: "14:00", label: "14:00" },
+            { value: "15:00", label: "15:00" },
+            { value: "16:00", label: "16:00" },
+            { value: "17:00", label: "17:00" },
+            { value: "18:00", label: "18:00" }
           ]
         },
         en: {
@@ -312,7 +321,7 @@
           trialDate: "Trial Date",
           trialTime: "Trial Time",
           dateHelper: "Next 12 days available — expired times are disabled automatically",
-          timeHelper: "Tap to select; pick a date first",
+          timeHelper: "Weekdays 3:00pm–7:00pm / Weekends 9:00am–7:00pm; pick a date first",
           todayLabel: "Today",
           tomorrowLabel: "Tomorrow",
           selectionHint: "Please select subject, date and time, then click \"Next\".",
@@ -325,14 +334,23 @@
             { value: "ai-project", label: "AI Project Camp (ages 12-16)" },
             { value: "ai-competition", label: "AI Competition Track (ages 14-18)" }
           ],
-          trialTimeOptions: [
+          trialTimeWeekday: [
             { value: "15:00", label: "15:00" },
             { value: "16:00", label: "16:00" },
             { value: "17:00", label: "17:00" },
-            { value: "18:00", label: "18:00" },
-            { value: "19:00", label: "19:00" },
-            { value: "20:00", label: "20:00" },
-            { value: "21:00", label: "21:00" }
+            { value: "18:00", label: "18:00" }
+          ],
+          trialTimeWeekend: [
+            { value: "09:00", label: "09:00" },
+            { value: "10:00", label: "10:00" },
+            { value: "11:00", label: "11:00" },
+            { value: "12:00", label: "12:00" },
+            { value: "13:00", label: "13:00" },
+            { value: "14:00", label: "14:00" },
+            { value: "15:00", label: "15:00" },
+            { value: "16:00", label: "16:00" },
+            { value: "17:00", label: "17:00" },
+            { value: "18:00", label: "18:00" }
           ]
         }
       };
@@ -393,8 +411,25 @@
         calendarGrid.innerHTML = items.join("");
       }
 
+      function isWeekendDate(iso) {
+        if (!iso) return false;
+        var dt = new Date(iso + "T00:00:00");
+        var d = dt.getDay();
+        return d === 0 || d === 6;
+      }
+      function currentTimeOptions(t) {
+        // Before a date is picked, show the wider weekend grid so users can see the full range.
+        if (!state.trialDate) return t.trialTimeWeekend;
+        return isWeekendDate(state.trialDate) ? t.trialTimeWeekend : t.trialTimeWeekday;
+      }
+
       function renderTimeGrid(t) {
-        var items = t.trialTimeOptions.map(function (o) {
+        var options = currentTimeOptions(t);
+        // Clear a previously-chosen time if it's no longer valid for the new date type
+        if (state.trialTime && !options.some(function (o) { return o.value === state.trialTime; })) {
+          state.trialTime = "";
+        }
+        var items = options.map(function (o) {
           var disabled = !state.trialDate || isTimeExpired(state.trialDate, o.value);
           var active = !disabled && state.trialTime === o.value ? " active" : "";
           return "<button type=\"button\" class=\"time-slot" + active + "\" data-time=\"" + o.value + "\"" + (disabled ? " disabled" : "") + ">" + o.label + "</button>";

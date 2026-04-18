@@ -318,6 +318,24 @@
     return null;
   }
 
+  // Simulated email outbox. In a real deployment this would be an API call to a
+  // transactional mailer (SendGrid / Postmark / etc). Here we just persist so the
+  // flow is transparent: the parent sees what would be mailed.
+  function sendMockEmail(message) {
+    var record = Object.assign({}, message, {
+      id: "MAIL-" + Date.now().toString(36).toUpperCase(),
+      sentAt: new Date().toISOString(),
+      status: "queued"
+    });
+    var list = readJson("minddo_email_outbox", []);
+    list.push(record);
+    writeJson("minddo_email_outbox", list);
+    return record;
+  }
+  function getEmailOutbox() {
+    return readJson("minddo_email_outbox", []);
+  }
+
   // Auth gate: redirect to login.html when no current student. Call from page scripts.
   function requireLogin(nextPage, reason) {
     var cur = getCurrentStudent();
@@ -476,6 +494,8 @@
     mockPaymentForCurrentStudent: mockPaymentForCurrentStudent,
     getClassOfferings: getClassOfferings,
     getOfferingById: getOfferingById,
-    requireLogin: requireLogin
+    requireLogin: requireLogin,
+    sendMockEmail: sendMockEmail,
+    getEmailOutbox: getEmailOutbox
   };
 })();

@@ -1,8 +1,93 @@
-/* MindDo shared mobile / responsive styles
-   Targets the navbar + common CTAs. Included on every page. */
+/* MindDo shared mobile / responsive + global a11y styles.
+   Loaded on every page. Navbar-level overrides live in the @media blocks;
+   the top section provides app-wide accessibility primitives (focus rings,
+   skip-link, reduced-motion, minimum tap sizes) that every page inherits. */
 
 html, body { max-width: 100%; }
 body { overflow-x: hidden; }
+
+/* ==========================================================================
+   Global accessibility baseline
+   ========================================================================== */
+
+/* Keyboard-only focus ring — visible on every interactive element.
+   Uses `outline` rather than `box-shadow` because page-level inline CSS
+   frequently defines `:hover { box-shadow: ... }` which would otherwise
+   eclipse the ring due to :where()'s zero specificity. Outline is
+   independent of the shadow layer and survives those overrides. */
+:where(a, button, [role="button"], input, select, textarea, summary,
+       [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--gold, #0ea5e9);
+  outline-offset: var(--focus-ring-offset, 2px);
+  border-radius: inherit;
+}
+/* Safari/older browsers that don't support :focus-visible fall back here
+   for keyboard OR mouse; still better than no indicator at all. */
+:where(a, button, [role="button"], input, select, textarea, summary,
+       [tabindex]:not([tabindex="-1"])):focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip-to-content link — many pages already include .skip-link; normalise it */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 12px;
+  background: var(--clay, #1e3a5f);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: var(--r-sm, 8px);
+  font-weight: 600;
+  text-decoration: none;
+  z-index: var(--z-modal, 1000);
+  transition: top 0.15s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 12px;
+}
+
+/* Screen-reader-only utility for elements that must announce but not display */
+.visually-hidden,
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+
+/* Respect prefers-reduced-motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Placeholder tone — readable without dominating */
+::placeholder { color: var(--muted-soft, #8695aa); opacity: 1; }
+
+/* Disabled controls — uniform affordance */
+:where(button, input, select, textarea)[disabled],
+:where(button, input, select, textarea):disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Invalid state mirror — any input.invalid gets a red accent,
+   even if the page's inline CSS only styled .field-input.invalid */
+input.invalid, select.invalid, textarea.invalid,
+.field-input.invalid, .input.invalid {
+  border-color: var(--error, #b2502d) !important;
+  background: var(--error-soft, #fbeee7) !important;
+}
+
+/* ==========================================================================
+   Navigation — hamburger + mobile drawer
+   ========================================================================== */
 
 /* Hamburger trigger — hidden on desktop, shown on mobile by injected JS */
 .minddo-hamburger {

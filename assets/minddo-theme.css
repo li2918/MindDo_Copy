@@ -1,19 +1,129 @@
-/* MindDo cool theme — navy + sky accents
-   Single source of truth for brand colors. Included on every page AFTER
-   the inline <style> block so it wins on equal specificity. Each page's
-   inline CSS continues to reference these via var(--clay) / var(--gold) /
-   var(--sand) / etc., so pages automatically pick up the new palette. */
+/* MindDo design tokens — single source of truth.
+   Loaded on every page AFTER inline <style> so it wins on equal specificity.
+   Pages reference these via var(--token) and automatically pick up updates. */
 
 :root {
+  /* ---------- Colour ---------- */
   --bg: #f6f8fb;                                 /* page background */
   --sand: #e8eef5;                               /* cool surface panel */
   --card: rgba(255, 255, 255, 0.96);             /* card background */
   --line: rgba(30, 58, 95, 0.12);                /* cool border */
+  --line-strong: rgba(30, 58, 95, 0.22);         /* emphasised border */
   --text: #0f172a;                               /* near-black navy */
   --muted: #5a6b81;                              /* slate muted */
+  --muted-soft: #8695aa;                         /* even softer body text */
   --gold: #0ea5e9;                               /* sky-500 accent */
   --gold-deep: #0284c7;                          /* sky-600 deeper accent */
+  --gold-soft: #bae6fd;                          /* sky-200 tint */
   --clay: #1e3a5f;                               /* navy primary */
+  --clay-deep: #162d49;                          /* navy hover/active */
   --brown: #14294a;                              /* deep navy surface */
-  --shadow: 0 24px 60px rgba(15, 23, 42, 0.10);  /* cool shadow */
+
+  /* Semantic */
+  --success: #2f855a;                            /* AA-compliant green */
+  --success-soft: #e7f3ec;
+  --error: #b2502d;                              /* warmer accessible red */
+  --error-soft: #fbeee7;
+  --warn: #b7791f;                               /* AA-compliant amber */
+  --warn-soft: #fbf3e0;
+  --info: var(--gold-deep);
+  --info-soft: #e0f2fe;
+
+  /* Focus ring — visible on both light & dark surfaces */
+  --focus-ring: 0 0 0 3px rgba(14, 165, 233, 0.35);
+  --focus-ring-offset: 2px;
+
+  /* ---------- Radii ---------- */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl: 24px;
+  --r-pill: 999px;
+
+  /* ---------- Spacing scale (4px grid) ---------- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+  --s-9: 48px;
+  --s-10: 64px;
+  --s-11: 80px;
+  --s-12: 96px;
+
+  /* ---------- Typography ---------- */
+  --font-sans: "Avenir Next", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  /* Modular scale (1.125 ratio, fluid where it matters) */
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-24: clamp(20px, 2.2vw, 24px);
+  --fs-28: clamp(22px, 2.6vw, 28px);
+  --fs-32: clamp(26px, 3vw, 32px);
+  --fs-40: clamp(30px, 3.8vw, 40px);
+  --fs-48: clamp(34px, 4.6vw, 48px);
+  --fs-56: clamp(38px, 5.2vw, 56px);
+
+  --lh-tight: 1.15;
+  --lh-snug: 1.35;
+  --lh-normal: 1.55;
+  --lh-loose: 1.75;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 800;
+
+  /* ---------- Shadows ---------- */
+  --shadow: 0 24px 60px rgba(15, 23, 42, 0.10);          /* legacy alias */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 12px 28px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.10);
+  --shadow-xl: 0 40px 90px rgba(15, 23, 42, 0.14);
+  --shadow-ring: 0 0 0 1px var(--line);
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+
+  /* ---------- Z-index scale ---------- */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky: 80;
+  --z-nav: 90;
+  --z-dropdown: 100;
+  --z-overlay: 800;
+  --z-modal: 1000;
+  --z-toast: 1100;
+  --z-tooltip: 1200;
+
+  /* ---------- Layout ---------- */
+  --container: 1200px;
+  --container-narrow: 900px;
+  --container-wide: 1440px;
+}
+
+/* Respect user's motion preference at the document level */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+  }
 }

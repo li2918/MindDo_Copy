@@ -242,15 +242,15 @@
             <div class="field-group">
               <label class="field-label" for="password"><span><span data-lang="zh">设置密码</span><span data-lang="en">Password</span></span><span class="required">*</span></label>
               <input id="password" name="password" class="field-input" type="password" autocomplete="new-password" required />
-              <div class="pw-meter" id="pwMeter"><div class="pw-bar"></div><div class="pw-bar"></div><div class="pw-bar"></div><div class="pw-bar"></div></div>
-              <div class="pw-level" id="pwLevel"></div>
+              <div class="pw-meter" id="pwMeter" aria-hidden="true"><div class="pw-bar"></div><div class="pw-bar"></div><div class="pw-bar"></div><div class="pw-bar"></div></div>
+              <div class="pw-level" id="pwLevel" role="status" aria-live="polite"></div>
               <div class="field-hint" id="pwHint"><span data-lang="zh">至少 8 个字符，建议包含字母、数字和符号。</span><span data-lang="en">At least 8 characters. Mix of letters, numbers, and symbols recommended.</span></div>
             </div>
 
             <div class="field-group">
               <label class="field-label" for="confirmPassword"><span><span data-lang="zh">确认密码</span><span data-lang="en">Confirm Password</span></span><span class="required">*</span></label>
               <input id="confirmPassword" name="confirmPassword" class="field-input" type="password" autocomplete="new-password" required />
-              <div class="field-hint" id="confirmHint"></div>
+              <div class="field-hint" id="confirmHint" role="status" aria-live="polite"></div>
             </div>
 
             <div class="consent-row">

@@ -277,39 +277,39 @@
 
           <div class="row">
             <div class="field">
-              <label><span class="required"><span data-lang="zh">学员姓名</span><span data-lang="en">Student Name</span></span></label>
-              <input id="studentName" name="studentName" type="text" required />
+              <label for="studentName"><span class="required"><span data-lang="zh">学员姓名</span><span data-lang="en">Student Name</span></span></label>
+              <input id="studentName" name="studentName" type="text" autocomplete="name" required />
             </div>
             <div class="field">
-              <label><span class="required"><span data-lang="zh">年级</span><span data-lang="en">Grade</span></span></label>
+              <label for="grade"><span class="required"><span data-lang="zh">年级</span><span data-lang="en">Grade</span></span></label>
               <input id="grade" name="grade" type="text" required placeholder="e.g. 六年级 / Grade 6" />
             </div>
           </div>
 
           <div class="row">
             <div class="field">
-              <label><span class="required"><span data-lang="zh">生日</span><span data-lang="en">Birthday</span></span></label>
-              <input id="birthday" name="birthday" type="date" required />
+              <label for="birthday"><span class="required"><span data-lang="zh">生日</span><span data-lang="en">Birthday</span></span></label>
+              <input id="birthday" name="birthday" type="date" autocomplete="bday" required />
             </div>
             <div class="field">
-              <label><span class="required"><span data-lang="zh">所在城市</span><span data-lang="en">City</span></span></label>
-              <input id="city" name="city" type="text" required />
+              <label for="city"><span class="required"><span data-lang="zh">所在城市</span><span data-lang="en">City</span></span></label>
+              <input id="city" name="city" type="text" autocomplete="address-level2" required />
             </div>
           </div>
 
           <div class="row">
             <div class="field">
-              <label><span class="required"><span data-lang="zh">家长姓名</span><span data-lang="en">Parent Name</span></span></label>
-              <input id="parentName" name="parentName" type="text" required />
+              <label for="parentName"><span class="required"><span data-lang="zh">家长姓名</span><span data-lang="en">Parent Name</span></span></label>
+              <input id="parentName" name="parentName" type="text" autocomplete="name" required />
             </div>
             <div class="field">
-              <label><span data-lang="zh">学习目标（选填）</span><span data-lang="en">Learning Goal (Optional)</span></label>
+              <label for="goal"><span data-lang="zh">学习目标（选填）</span><span data-lang="en">Learning Goal (Optional)</span></label>
               <input id="goal" name="goal" type="text" />
             </div>
           </div>
 
           <div class="field field-full">
-            <label><span data-lang="zh">您从哪里了解到我们</span><span data-lang="en">How did you hear about us?</span></label>
+            <label for="channel"><span data-lang="zh">您从哪里了解到我们</span><span data-lang="en">How did you hear about us?</span></label>
             <select id="channel" name="channel">
               <option value="">—</option>
               <option value="douyin" data-lang-zh="抖音" data-lang-en="Douyin">抖音</option>
@@ -321,7 +321,7 @@
           </div>
 
           <div class="field field-full">
-            <label><span data-lang="zh">时间备注（选填）</span><span data-lang="en">Time Note (Optional)</span></label>
+            <label for="timeNote"><span data-lang="zh">时间备注（选填）</span><span data-lang="en">Time Note (Optional)</span></label>
             <input id="timeNote" name="timeNote" type="text" placeholder="" />
           </div>
         </div>
@@ -341,15 +341,15 @@
           <div id="emailPanel" class="verify-panel">
             <div class="verify-grid">
               <div class="field">
-                <label><span class="required"><span data-lang="zh">邮箱地址</span><span data-lang="en">Email Address</span></span></label>
-                <input id="email" name="email" type="email" required placeholder="parent@example.com" />
+                <label for="email"><span class="required"><span data-lang="zh">邮箱地址</span><span data-lang="en">Email Address</span></span></label>
+                <input id="email" name="email" type="email" autocomplete="email" required placeholder="parent@example.com" />
               </div>
               <button type="button" class="btn-sm" id="emailSendBtn"><span data-lang="zh">发送验证码</span><span data-lang="en">Send Code</span></button>
             </div>
             <div class="code-row" id="emailCodeRow" style="display:none;">
               <div class="field">
-                <label><span class="required"><span data-lang="zh">邮箱验证码</span><span data-lang="en">Verification Code</span></span></label>
-                <input id="emailCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 位数字 / 6 digits" />
+                <label for="emailCode"><span class="required"><span data-lang="zh">邮箱验证码</span><span data-lang="en">Verification Code</span></span></label>
+                <input id="emailCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6 位数字 / 6 digits" />
               </div>
               <button type="button" class="btn-sm" id="emailVerifyBtn"><span data-lang="zh">验证</span><span data-lang="en">Verify</span></button>
             </div>
@@ -359,15 +359,15 @@
           <div id="phonePanel" class="verify-panel" style="display:none;">
             <div class="verify-grid">
               <div class="field">
-                <label><span class="required"><span data-lang="zh">手机号码</span><span data-lang="en">Phone Number</span></span></label>
-                <input id="phone" name="phone" type="tel" placeholder="+86 138-0000-0000 / (317) 555-0100" />
+                <label for="phone"><span class="required"><span data-lang="zh">手机号码</span><span data-lang="en">Phone Number</span></span></label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+86 138-0000-0000 / (317) 555-0100" />
               </div>
               <button type="button" class="btn-sm" id="phoneSendBtn"><span data-lang="zh">发送短信</span><span data-lang="en">Send Code</span></button>
             </div>
             <div class="code-row" id="phoneCodeRow" style="display:none;">
               <div class="field">
-                <label><span class="required"><span data-lang="zh">短信验证码</span><span data-lang="en">SMS Code</span></span></label>
-                <input id="phoneCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 位数字 / 6 digits" />
+                <label for="phoneCode"><span class="required"><span data-lang="zh">短信验证码</span><span data-lang="en">SMS Code</span></span></label>
+                <input id="phoneCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6 位数字 / 6 digits" />
               </div>
               <button type="button" class="btn-sm" id="phoneVerifyBtn"><span data-lang="zh">验证</span><span data-lang="en">Verify</span></button>
             </div>
@@ -384,11 +384,11 @@
 
           <div class="bot-check">
             <div>
-              <div class="bot-challenge"><span data-lang="zh">请计算：</span><span data-lang="en">Please solve:</span> <strong id="botChallenge">? + ? = ?</strong></div>
+              <div class="bot-challenge" id="botChallengeText"><span data-lang="zh">请计算：</span><span data-lang="en">Please solve:</span> <strong id="botChallenge">? + ? = ?</strong></div>
               <button type="button" class="bot-refresh" id="botRefresh"><span data-lang="zh">换一题</span><span data-lang="en">New challenge</span></button>
-              <div id="botStatus" class="bot-status"></div>
+              <div id="botStatus" class="bot-status" role="status" aria-live="polite"></div>
             </div>
-            <input id="botAnswer" class="bot-answer" type="text" inputmode="numeric" autocomplete="off" />
+            <input id="botAnswer" class="bot-answer" type="text" inputmode="numeric" autocomplete="off" aria-labelledby="botChallengeText" />
           </div>
         </div>
 
